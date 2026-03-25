@@ -43,8 +43,8 @@ export default function Contact() {
         <div className="grid lg:grid-cols-3 gap-5 mb-10">
           {[
             { icon: MapPin, label: 'Office Address', value: 'Ward No. 10, Kathmandu Metropolitan City,\nBagmati Province, Nepal', color: 'text-crimson', bg: 'bg-crimson-50 border-crimson-100' },
-            { icon: Phone, label: 'Phone', value: '+977 01-4XXXXXX\n+977 98XXXXXXXX', color: 'text-blue-600', bg: 'bg-blue-50 border-blue-100' },
-            { icon: Mail, label: 'Email', value: 'contact@mukeshjungkhadka.com.np\ninfo@mjk2024.com', color: 'text-emerald', bg: 'bg-emerald-50 border-emerald-light/30' },
+            { icon: Phone, label: 'Phone', value: '+977 9851241656', color: 'text-blue-600', bg: 'bg-blue-50 border-blue-100' },
+            { icon: Mail, label: 'Email', value: 'khadkamukesh423@gmail.com', color: 'text-emerald', bg: 'bg-emerald-50 border-emerald-light/30' },
           ].map((info, i) => (
             <motion.div
               key={info.label}

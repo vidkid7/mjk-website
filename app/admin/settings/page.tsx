@@ -7,8 +7,8 @@ import { loadData, saveData } from '@/lib/storage'
 const defaultForm = {
   site_title: 'Mukesh Jung Khadka | Mayor Candidate',
   meta_description: 'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Mayor Candidate for Kathmandu.',
-  phone: '+977 01-4XXXXXX',
-  email: 'contact@mukeshjungkhadka.com.np',
+  phone: '+977 9851241656',
+  email: 'khadkamukesh423@gmail.com',
   address: 'Ward No. 10, Kathmandu Metropolitan City, Bagmati Province, Nepal',
   facebook_url: 'https://facebook.com/mjk',
   instagram_url: 'https://instagram.com/mjk',
