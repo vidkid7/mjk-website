@@ -1,0 +1,182 @@
+'use client'
+import { useState, useEffect } from 'react'
+import { Plus, Trash2, Upload, X, Edit2, GripVertical } from 'lucide-react'
+import { galleryData } from '@/lib/placeholder-data'
+import { loadData, saveData } from '@/lib/storage'
+
+const categories = ['Community', 'Events', 'Youth', 'Business']
+
+export default function AdminGallery() {
+  const [photos, setPhotos] = useState(galleryData)
+  const [showModal, setShowModal] = useState(false)
+  const [editingId, setEditingId] = useState<string | null>(null)
+  const [form, setForm] = useState({ url: '', caption: '', category: 'Community' })
+  const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
+
+  useEffect(() => {
+    setPhotos(loadData('gallery', galleryData))
+  }, [])
+
+  const openCreate = () => {
+    setEditingId(null)
+    setForm({ url: '', caption: '', category: 'Community' })
+    setShowModal(true)
+  }
+
+  const openEdit = (photo: typeof galleryData[0]) => {
+    setEditingId(photo.id)
+    setForm({ url: photo.url, caption: photo.caption, category: photo.category })
+    setShowModal(true)
+  }
+
+  const handleSave = async () => {
+    let updated: typeof photos
+    if (editingId) {
+      updated = photos.map(p => p.id === editingId ? { ...p, ...form } : p)
+    } else {
+      updated = [...photos, { id: Date.now().toString(), ...form }]
+    }
+    setPhotos(updated)
+    saveData('gallery', updated)
+    setShowModal(false)
+  }
+
+  const handleDelete = (id: string) => {
+    const updated = photos.filter(p => p.id !== id)
+    setPhotos(updated)
+    saveData('gallery', updated)
+    setDeleteConfirm(null)
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-bold text-gray-800">Gallery Management</h2>
+          <p className="text-sm text-gray-500">{photos.length} photos in gallery</p>
+        </div>
+        <button
+          onClick={openCreate}
+          className="px-4 py-2 bg-crimson text-white rounded-lg text-sm font-semibold hover:bg-crimson-dark transition-colors flex items-center gap-2"
+        >
+          <Plus size={16} /> Add Photo
+        </button>
+      </div>
+
+      {/* Photo Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {photos.map((photo) => (
+          <div key={photo.id} className="group relative bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all">
+            <div className="relative h-40">
+              <img src={photo.url} alt={photo.caption} className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                <button
+                  onClick={() => openEdit(photo)}
+                  className="w-8 h-8 rounded-full bg-white text-gray-800 flex items-center justify-center hover:bg-gold transition-colors"
+                >
+                  <Edit2 size={14} />
+                </button>
+                <button
+                  onClick={() => setDeleteConfirm(photo.id)}
+                  className="w-8 h-8 rounded-full bg-white text-red-600 flex items-center justify-center hover:bg-red-50 transition-colors"
+                >
+                  <Trash2 size={14} />
+                </button>
+              </div>
+            </div>
+            <div className="p-3">
+              <span className="text-xs font-semibold text-crimson bg-crimson/10 px-2 py-0.5 rounded-full">
+                {photo.category}
+              </span>
+              <p className="text-sm text-gray-700 mt-1 truncate">{photo.caption}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Create/Edit Modal */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl w-full max-w-lg p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-bold text-gray-800">
+                {editingId ? 'Edit Photo' : 'Add New Photo'}
+              </h3>
+              <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-600">
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Photo URL</label>
+                <input
+                  type="url"
+                  value={form.url}
+                  onChange={e => setForm({ ...form, url: e.target.value })}
+                  placeholder="https://..."
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson"
+                />
+                <div className="mt-2 border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-crimson/50 cursor-pointer">
+                  <Upload size={24} className="mx-auto text-gray-400 mb-1" />
+                  <p className="text-xs text-gray-500">Or upload from your device</p>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Caption</label>
+                <input
+                  type="text"
+                  value={form.caption}
+                  onChange={e => setForm({ ...form, caption: e.target.value })}
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                <select
+                  value={form.category}
+                  onChange={e => setForm({ ...form, category: e.target.value })}
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson"
+                >
+                  {categories.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              <button onClick={() => setShowModal(false)} className="flex-1 py-2.5 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">
+                Cancel
+              </button>
+              <button onClick={handleSave} className="flex-1 py-2.5 bg-crimson text-white rounded-lg font-semibold hover:bg-crimson-dark">
+                {editingId ? 'Save Changes' : 'Add Photo'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirm && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-sm w-full p-6 text-center">
+            <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
+              <Trash2 className="text-red-600" size={20} />
+            </div>
+            <h3 className="text-lg font-bold text-gray-800 mb-2">Delete Photo?</h3>
+            <p className="text-sm text-gray-500 mb-6">This action cannot be undone.</p>
+            <div className="flex gap-3">
+              <button onClick={() => setDeleteConfirm(null)} className="flex-1 py-2.5 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">
+                Cancel
+              </button>
+              <button onClick={() => handleDelete(deleteConfirm)} className="flex-1 py-2.5 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
