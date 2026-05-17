@@ -16,6 +16,7 @@ import {
   CheckCircle,
 } from "lucide-react"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
+import { DhakaPattern } from "@/components/ui/NepalFlag"
 
 export default function AboutMukeshSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -106,41 +107,17 @@ export default function AboutMukeshSection() {
     <section
       id="about"
       ref={sectionRef}
-      className="w-full py-24 px-4 bg-gradient-to-b from-[#F2F2EB] to-[#F8F8F2] text-[#202e44] overflow-hidden relative"
+      className="w-full py-24 px-4 bg-[#fbfaf7] text-[#202e44] overflow-hidden relative"
     >
       {/* Decorative background elements */}
+      <DhakaPattern className="opacity-[0.04]" />
       <motion.div
-        className="absolute top-20 left-10 w-64 h-64 rounded-full bg-crimson/5 blur-3xl"
+        className="absolute left-0 top-16 h-28 w-1/3 bg-gradient-to-r from-crimson/10 to-transparent"
         style={{ y: y1, rotate: rotate1 }}
       />
       <motion.div
-        className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-blue-400/5 blur-3xl"
+        className="absolute bottom-20 right-0 h-32 w-1/3 bg-gradient-to-l from-[#003893]/10 to-transparent"
         style={{ y: y2, rotate: rotate2 }}
-      />
-      <motion.div
-        className="absolute top-1/2 left-1/4 w-4 h-4 rounded-full bg-crimson/30"
-        animate={{
-          y: [0, -15, 0],
-          opacity: [0.5, 1, 0.5],
-        }}
-        transition={{
-          duration: 3,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute bottom-1/3 right-1/4 w-6 h-6 rounded-full bg-blue-400/30"
-        animate={{
-          y: [0, 20, 0],
-          opacity: [0.5, 1, 0.5],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 1,
-        }}
       />
 
       <motion.div
@@ -163,7 +140,7 @@ export default function AboutMukeshSection() {
             About Mukesh
           </h2>
           <motion.div
-            className="w-24 h-1 bg-gradient-to-r from-crimson to-gold rounded-full"
+            className="w-24 h-1 bg-gradient-to-r from-crimson via-gold to-[#003893]"
             initial={{ width: 0 }}
             animate={{ width: 96 }}
             transition={{ duration: 1, delay: 0.5 }}
@@ -198,7 +175,7 @@ export default function AboutMukeshSection() {
           <div className="flex justify-center items-center order-first md:order-none mb-8 md:mb-0">
             <motion.div className="relative w-full max-w-xs" variants={itemVariants}>
               <motion.div
-                className="rounded-2xl overflow-hidden shadow-xl"
+                className="rounded-lg overflow-hidden shadow-xl shadow-slate-900/10"
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
@@ -208,18 +185,20 @@ export default function AboutMukeshSection() {
                   <img
                     src="/mukk-removebg-preview.png"
                     alt="Mukesh Jung Khadka"
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-auto object-contain"
                   />
                 </div>
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-t from-[#202e44]/40 to-transparent flex items-end justify-center p-4 rounded-2xl"
+                  className="absolute inset-0 bg-gradient-to-t from-[#202e44]/40 to-transparent flex items-end justify-center p-4 rounded-lg"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.8, delay: 0.9 }}
                 >
                   <motion.a
                     href="#vision"
-                    className="bg-white text-[#202e44] px-4 py-2 rounded-full flex items-center gap-2 text-sm font-medium shadow-lg"
+                    className="bg-white text-[#202e44] px-4 py-2 flex items-center gap-2 text-sm font-semibold shadow-lg"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -228,7 +207,7 @@ export default function AboutMukeshSection() {
                 </motion.div>
               </motion.div>
               <motion.div
-                className="absolute inset-0 border-4 border-crimson/20 rounded-2xl -m-3 z-[-1]"
+                className="absolute inset-0 border-4 border-crimson/20 rounded-lg -m-3 z-[-1]"
                 initial={{ opacity: 0, scale: 1.1 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
@@ -236,14 +215,14 @@ export default function AboutMukeshSection() {
 
               {/* Floating accent elements */}
               <motion.div
-                className="absolute -top-4 -right-8 w-16 h-16 rounded-full bg-crimson/10"
+                className="absolute -top-4 -right-8 h-16 w-1 bg-crimson/25"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.9 }}
                 style={{ y: y1 }}
               />
               <motion.div
-                className="absolute -bottom-6 -left-10 w-20 h-20 rounded-full bg-blue-400/10"
+                className="absolute -bottom-6 -left-10 h-20 w-1 bg-[#003893]/25"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 1.1 }}
@@ -251,7 +230,7 @@ export default function AboutMukeshSection() {
               />
 
               <motion.div
-                className="absolute -top-10 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-crimson"
+                className="hidden"
                 animate={{
                   y: [0, -10, 0],
                   opacity: [0.5, 1, 0.5],
@@ -263,7 +242,7 @@ export default function AboutMukeshSection() {
                 }}
               />
               <motion.div
-                className="absolute -bottom-12 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-gold"
+                className="hidden"
                 animate={{
                   y: [0, 10, 0],
                   opacity: [0.5, 1, 0.5],
@@ -299,7 +278,7 @@ export default function AboutMukeshSection() {
 
         {/* CTA Section */}
         <motion.div
-          className="mt-20 bg-gradient-to-r from-[#202e44] to-slate-800 text-white p-8 rounded-xl flex flex-col md:flex-row items-center justify-between gap-6"
+          className="mt-20 bg-gradient-to-r from-[#071224] to-[#102642] text-white p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl shadow-slate-900/10"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -311,7 +290,7 @@ export default function AboutMukeshSection() {
           </div>
           <motion.a
             href="#support"
-            className="bg-gradient-to-r from-crimson to-crimson-dark hover:from-crimson-dark hover:to-crimson text-white px-6 py-3 rounded-xl flex items-center gap-2 font-medium transition-all"
+            className="bg-crimson hover:bg-crimson-dark text-white px-6 py-3 flex items-center gap-2 font-bold uppercase tracking-[0.12em] text-xs transition-all"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -351,7 +330,7 @@ function QualityItem({ icon, secondaryIcon, title, description, variants, delay,
         transition={{ duration: 0.6, delay: delay + 0.2 }}
       >
         <motion.div
-          className="text-crimson bg-crimson/10 p-3 rounded-lg transition-colors duration-300 group-hover:bg-crimson/20 relative"
+          className="text-crimson bg-crimson/10 p-3 transition-colors duration-300 group-hover:bg-crimson/20 relative"
           whileHover={{ rotate: [0, -10, 10, -5, 0], transition: { duration: 0.5 } }}
         >
           {icon}

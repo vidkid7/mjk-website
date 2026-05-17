@@ -27,16 +27,38 @@
 }
 
 html {
+  scroll-padding-top: 80px;
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   font-family: 'Inter', 'DM Sans', sans-serif;
   color: var(--text-dark);
-  background: var(--white);
+  background: #fbfaf7;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
+}
+
+img,
+video {
+  max-width: 100%;
+}
+
+video {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+@supports (content-visibility: auto) {
+  main > section:not(#gallery):not(#news) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+  }
 }
 
 /* Custom Scrollbar */
@@ -132,6 +154,108 @@ body {
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
+}
+
+/* Nepali flag hero motion */
+.nepal-flag-wave {
+  transform-origin: 50% 50%;
+  filter: saturate(1.1) contrast(1.02);
+  animation:
+    flag-wave 8s ease-in-out infinite,
+    flag-drift 18s ease-in-out infinite;
+}
+
+.nepal-flag-wave img {
+  transform-origin: center;
+  animation: flag-ripple 6.5s ease-in-out infinite;
+}
+
+.nepal-flag-wave-delayed,
+.nepal-flag-wave-delayed img {
+  animation-delay: -3.5s;
+}
+
+.flag-light-band {
+  animation: flag-light 7s ease-in-out infinite;
+}
+
+.proper-nepal-flag {
+  transform-origin: 18% 45%;
+  animation: proper-flag-sway 5.8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.proper-nepal-flag-cloth {
+  transform-origin: 16% 44%;
+  animation: proper-flag-cloth 3.8s ease-in-out infinite;
+}
+
+.hero-portrait-static {
+  filter: drop-shadow(0 26px 44px rgba(2, 6, 23, 0.42));
+}
+
+.hero-flag-video {
+  animation: hero-flag-drift 9s ease-in-out infinite;
+  transform-origin: 18% 44%;
+  will-change: transform;
+}
+
+@keyframes flag-wave {
+  0%, 100% {
+    clip-path: polygon(0 10%, 12% 7%, 25% 11%, 38% 8%, 52% 12%, 67% 9%, 82% 12%, 100% 8%, 100% 88%, 86% 92%, 70% 88%, 55% 91%, 39% 87%, 22% 91%, 8% 88%, 0 92%);
+  }
+  50% {
+    clip-path: polygon(0 12%, 13% 15%, 27% 10%, 40% 14%, 55% 9%, 68% 13%, 84% 8%, 100% 12%, 100% 90%, 86% 86%, 71% 91%, 56% 87%, 40% 92%, 24% 88%, 9% 93%, 0 89%);
+  }
+}
+
+@keyframes flag-ripple {
+  0%, 100% { transform: translate3d(-1.2%, 0, 0) scaleX(1.035) skewY(-0.35deg); }
+  50% { transform: translate3d(1.2%, -0.6%, 0) scaleX(1.055) skewY(0.35deg); }
+}
+
+@keyframes flag-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-1deg); }
+  50% { transform: translate3d(1.8%, -1%, 0) rotate(1.2deg); }
+}
+
+@keyframes flag-light {
+  0%, 100% { opacity: 0.18; transform: translateX(-4%) rotate(-5deg); }
+  50% { opacity: 0.32; transform: translateX(7%) rotate(-4deg); }
+}
+
+@keyframes proper-flag-sway {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-3deg) skewY(-0.5deg); }
+  50% { transform: translate3d(1.5%, -1%, 0) rotate(2deg) skewY(0.8deg); }
+}
+
+@keyframes proper-flag-cloth {
+  0%, 100% { transform: translateX(0) scaleX(1); }
+  50% { transform: translateX(10px) scaleX(1.025); }
+}
+
+@keyframes hero-flag-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.015) rotate(-0.4deg); }
+  50% { transform: translate3d(1.1%, -0.7%, 0) scale(1.03) rotate(0.6deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+
+  .nepal-flag-wave,
+  .nepal-flag-wave img,
+  .flag-light-band,
+  .hero-flag-video,
+  .proper-nepal-flag,
+  .proper-nepal-flag-cloth {
+    animation: none !important;
+  }
 }
 
 /* Colored accents on hover */

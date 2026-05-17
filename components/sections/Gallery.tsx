@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion'
 import { Camera } from 'lucide-react'
 import InteractiveBentoGallery from '@/components/ui/interactive-bento-gallery'
+import { DhakaPattern } from '@/components/ui/NepalFlag'
 
 const mediaItems = [
   {
@@ -64,7 +65,8 @@ const mediaItems = [
 
 export default function Gallery() {
   return (
-    <section id="gallery" className="relative py-24 md:py-32 bg-white">
+    <section id="gallery" className="relative overflow-hidden py-24 md:py-32 bg-[#fbfaf7]">
+      <DhakaPattern className="opacity-[0.03]" />
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         {/* Section Header */}
         <div className="text-center mb-4">
@@ -74,7 +76,7 @@ export default function Gallery() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs font-semibold uppercase tracking-wider mb-4">
+            <span className="inline-flex items-center gap-2 border border-blue-100 bg-blue-50 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-blue-700 mb-4">
               <Camera size={12} />
               Gallery
             </span>
@@ -84,7 +86,7 @@ export default function Gallery() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-playfair text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-4"
+            className="font-playfair text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-4"
           >
             On The Ground
           </motion.h2>
@@ -93,7 +95,7 @@ export default function Gallery() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-slate-500 max-w-2xl mx-auto leading-relaxed"
+            className="text-slate-500 max-w-2xl mx-auto leading-7"
           >
             Real moments from the field — community gatherings, youth events, and the work that matters.
           </motion.p>

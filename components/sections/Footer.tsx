@@ -48,16 +48,16 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-slate-900">
+    <footer className="bg-[#071224]">
       {/* Gradient top border */}
-      <div className="h-1 bg-gradient-to-r from-crimson via-gold to-blue-500" />
+      <div className="h-1 bg-gradient-to-r from-crimson via-gold to-[#003893]" />
       
       <div className="max-w-6xl mx-auto px-5 sm:px-8 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-crimson to-crimson-dark flex items-center justify-center">
+              <div className="w-9 h-9 bg-crimson flex items-center justify-center">
                 <span className="font-bold text-white text-sm">M</span>
               </div>
               <span className="font-semibold text-white text-lg">MJK</span>
@@ -71,7 +71,7 @@ export default function Footer() {
                 <a
                   key={i}
                   href={social.url}
-                  className={`w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-500 hover:text-white transition-all duration-300 ${social.color}`}
+                  className={`w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-500 hover:text-white transition-all duration-300 ${social.color}`}
                 >
                   <social.icon size={14} />
                 </a>
@@ -122,10 +122,10 @@ export default function Footer() {
                 aria-label="Email for newsletter"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="flex-1 px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-600 text-sm focus:outline-none focus:border-crimson/40 focus:ring-1 focus:ring-crimson/40 transition-all"
+                className="flex-1 px-3.5 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-slate-600 text-sm focus:outline-none focus:border-crimson/40 focus:ring-1 focus:ring-crimson/40 transition-all"
                 required
               />
-              <button type="submit" className="px-4 py-2.5 bg-gradient-to-r from-crimson to-crimson-dark text-white rounded-xl font-medium text-sm hover:shadow-glow-crimson transition-all">
+              <button type="submit" className="px-4 py-2.5 bg-crimson text-white rounded-lg font-bold text-sm hover:bg-crimson-dark hover:shadow-glow-crimson transition-all">
                 {subscribed ? 'Subscribed ✓' : 'Join'}
               </button>
             </form>
@@ -134,13 +134,13 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-white/5">
+      <div className="border-t border-white/5 bg-crimson">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-slate-600 text-xs text-center sm:text-left">
+          <p className="text-white/80 text-xs text-center sm:text-left">
             © 2025 Mukesh Jung Khadka. All Rights Reserved.
           </p>
-          <p className="text-slate-600 text-xs inline-flex items-center gap-1">
-            Made with <Heart size={10} className="text-crimson fill-crimson" /> for Nepal
+          <p className="text-white/80 text-xs inline-flex items-center gap-1">
+            Made with <Heart size={10} className="text-white fill-white" /> for Nepal
           </p>
         </div>
       </div>

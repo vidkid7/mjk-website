@@ -109,7 +109,7 @@ export function NewsCards({
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: index * 0.12 }}
             whileHover={{ y: -4, transition: { type: "spring", stiffness: 400, damping: 25 } }}
-            className="bg-white border border-slate-200/50 rounded-xl overflow-hidden cursor-pointer group shadow-sm hover:shadow-lg transition-shadow duration-300"
+            className="bg-white border border-slate-200 rounded-lg overflow-hidden cursor-pointer group shadow-sm hover:shadow-xl hover:shadow-slate-900/10 transition-shadow duration-300"
             onClick={() => openCard(card)}
           >
             {/* Image */}
@@ -117,6 +117,8 @@ export function NewsCards({
               <img
                 src={card.image}
                 alt={card.title}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover transform-gpu group-hover:scale-105 transition-transform duration-700 ease-out"
               />
               <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent" />
@@ -136,14 +138,14 @@ export function NewsCards({
 
               {/* Category & time */}
               <div className="absolute bottom-3 left-3 text-white">
-                <div className="text-xs mb-0.5 font-medium opacity-95">{card.category} · {card.subcategory}</div>
+                <div className="text-xs mb-0.5 font-bold uppercase tracking-[0.12em] opacity-95">{card.category} · {card.subcategory}</div>
                 <div className="text-[11px] opacity-75">{card.timeAgo} · {card.location}</div>
               </div>
             </div>
 
             {/* Title */}
             <div className="p-5">
-              <h3 className="font-semibold text-lg leading-tight line-clamp-3 text-slate-900 group-hover:text-crimson transition-colors">
+              <h3 className="font-playfair font-bold text-xl leading-tight line-clamp-3 text-slate-900 group-hover:text-crimson transition-colors">
                 {card.title}
               </h3>
             </div>
@@ -168,7 +170,7 @@ export function NewsCards({
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              className="fixed inset-4 md:inset-8 lg:inset-16 bg-white border border-slate-200 rounded-xl overflow-hidden z-50 shadow-2xl"
+              className="fixed inset-4 md:inset-8 lg:inset-16 bg-white border border-slate-200 rounded-lg overflow-hidden z-50 shadow-2xl"
             >
               <motion.button
                 className="absolute top-4 right-4 w-8 h-8 bg-white/80 hover:bg-white rounded-full flex items-center justify-center z-10 shadow-md"
@@ -181,7 +183,13 @@ export function NewsCards({
 
               <div className="h-full overflow-y-auto">
                 <div className="relative h-64 md:h-80">
-                  <img src={selectedCard.image} alt={selectedCard.title} className="w-full h-full object-cover" />
+                  <img
+                    src={selectedCard.image}
+                    alt={selectedCard.title}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover"
+                  />
                   <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white/90 to-transparent" />
                   <div className="absolute bottom-4 left-4 text-white">
                     <div className="text-sm mb-1 opacity-90">{selectedCard.category} · {selectedCard.subcategory}</div>

@@ -28,7 +28,7 @@ export function FlippingCard({
     >
       <div
         className={cn(
-          "relative rounded-xl border border-slate-200 bg-white shadow-lg transition-all duration-700 [transform-style:preserve-3d] group-hover/flipping-card:[transform:rotateY(180deg)]",
+          "relative rounded-lg border border-slate-200 bg-white shadow-lg shadow-slate-900/10 transition-all duration-700 [transform-style:preserve-3d] group-hover/flipping-card:[transform:rotateY(180deg)]",
           "h-[var(--height)] w-full max-w-[var(--width)]"
         )}
       >

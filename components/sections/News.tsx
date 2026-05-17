@@ -2,10 +2,12 @@
 import { motion } from 'framer-motion'
 import { Sparkles } from 'lucide-react'
 import { NewsCards } from '@/components/ui/news-cards'
+import { DhakaPattern } from '@/components/ui/NepalFlag'
 
 export default function News() {
   return (
-    <section id="news" className="relative py-24 md:py-32 bg-slate-50">
+    <section id="news" className="relative overflow-hidden py-24 md:py-32 bg-white">
+      <DhakaPattern className="opacity-[0.03]" />
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         {/* Section Header */}
         <div className="text-center mb-8">
@@ -15,7 +17,7 @@ export default function News() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-crimson/10 text-crimson text-xs font-semibold uppercase tracking-wider mb-4">
+            <span className="inline-flex items-center gap-2 border border-crimson-100 bg-crimson-50 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-crimson mb-4">
               <Sparkles size={12} />
               Latest Updates
             </span>
@@ -25,7 +27,7 @@ export default function News() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-playfair text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-4"
+            className="font-playfair text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-4"
           >
             Latest From The Campaign
           </motion.h2>
@@ -34,7 +36,7 @@ export default function News() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-slate-500 max-w-2xl mx-auto leading-relaxed"
+            className="text-slate-500 max-w-2xl mx-auto leading-7"
           >
             Stay informed about our movement, achievements, and upcoming events.
           </motion.p>

@@ -15,15 +15,15 @@ const items = [
 export default function Marquee() {
   const renderItems = [...items, ...items, ...items, ...items]
   return (
-    <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 overflow-hidden py-4 border-y border-slate-700/50">
+    <div className="relative z-30 overflow-hidden border-t-2 border-crimson/70 border-b border-white/10 bg-gradient-to-r from-[#071224] via-[#102642] to-[#071224] py-4 shadow-[0_-2px_12px_rgba(0,0,0,0.35)]">
       <div className="flex animate-marquee whitespace-nowrap">
         {renderItems.map((item, i) => (
           <span key={i} className="inline-flex items-center gap-2.5 mx-6 sm:mx-8">
             <item.icon size={15} className={item.color} />
-            <span className="text-sm font-medium tracking-widest uppercase text-slate-300">
+            <span className="text-sm font-bold tracking-widest uppercase text-slate-200">
               {item.text}
             </span>
-            <span className="text-gold/60 mx-3">◆</span>
+            <span className="text-crimson/80 mx-3">◆</span>
           </span>
         ))}
       </div>

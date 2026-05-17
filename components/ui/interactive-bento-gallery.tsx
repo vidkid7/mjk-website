@@ -86,12 +86,11 @@ const MediaItem = ({
           playsInline
           muted
           loop
-          preload="auto"
+          preload="metadata"
           style={{
             opacity: isBuffering ? 0.8 : 1,
             transition: 'opacity 0.2s',
             transform: 'translateZ(0)',
-            willChange: 'transform',
           }}
         >
           <source src={item.url} type="video/mp4" />
@@ -206,7 +205,7 @@ const GalleryModal = ({
         }}
         className="fixed z-50 left-1/2 bottom-4 -translate-x-1/2 touch-none"
       >
-        <motion.div className="relative rounded-xl bg-crimson/20 backdrop-blur-xl border border-crimson/30 shadow-lg cursor-grab active:cursor-grabbing">
+        <motion.div className="relative rounded-lg bg-crimson/20 backdrop-blur-xl border border-crimson/30 shadow-lg cursor-grab active:cursor-grabbing">
           <div className="flex items-center -space-x-2 px-3 py-2">
             {mediaItems.map((item, index) => (
               <motion.div
@@ -290,7 +289,7 @@ const InteractiveBentoGallery: React.FC<InteractiveBentoGalleryProps> = ({
   const [isDragging, setIsDragging] = useState(false)
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl">
+    <div className="container mx-auto px-0 py-8 max-w-5xl">
       <div className="mb-8 text-center">
         <motion.h1
           className="text-2xl sm:text-3xl md:text-4xl font-bold font-playfair bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-crimson-dark to-slate-900"
@@ -337,7 +336,7 @@ const InteractiveBentoGallery: React.FC<InteractiveBentoGalleryProps> = ({
               <motion.div
                 key={item.id}
                 layoutId={`media-${item.id}`}
-                className={`relative overflow-hidden rounded-xl cursor-move ${item.span}`}
+                className={`relative overflow-hidden rounded-lg cursor-move border border-white shadow-sm ${item.span}`}
                 onClick={() => !isDragging && setSelectedItem(item)}
                 variants={{
                   hidden: { y: 50, scale: 0.9, opacity: 0 },

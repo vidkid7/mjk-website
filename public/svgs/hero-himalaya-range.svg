@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 520" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="skyMist" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#dbeafe" stop-opacity=".62"/>
+      <stop offset=".45" stop-color="#bfdbfe" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#061122" stop-opacity=".72"/>
+    </linearGradient>
+    <linearGradient id="backMountain" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f8fafc" stop-opacity=".82"/>
+      <stop offset=".38" stop-color="#8fb2d5" stop-opacity=".62"/>
+      <stop offset="1" stop-color="#10213f" stop-opacity=".88"/>
+    </linearGradient>
+    <linearGradient id="frontMountain" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".95"/>
+      <stop offset=".32" stop-color="#7da0c4" stop-opacity=".75"/>
+      <stop offset="1" stop-color="#071224" stop-opacity=".96"/>
+    </linearGradient>
+    <filter id="mountainGlow" x="-10%" y="-25%" width="120%" height="150%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0.75 0 1 0 0 0.86 0 0 1 0 1 0 0 0 .38 0"/>
+      <feBlend in="SourceGraphic"/>
+    </filter>
+  </defs>
+
+  <rect width="1800" height="520" fill="url(#skyMist)" opacity=".22"/>
+
+  <g filter="url(#mountainGlow)">
+    <path d="M0 520V346l102-68 74 33 102-111 102 92 88-156 118 116 96-176 140 192 102-112 122 154 118-204 162 220 98-118 134 160 92-82 150 120v114H0Z" fill="url(#backMountain)" opacity=".72"/>
+    <path d="M466 137l-40 70 58-26 45 37-61-81Zm212-61l-46 84 65-27 54 43-73-100Zm590 31l-60 101 78-33 63 50-81-118Z" fill="#fff" opacity=".68"/>
+  </g>
+
+  <path d="M0 520V397l98-78 92 42 120-132 126 112 112-184 152 166 116-236 176 260 126-140 144 176 130-244 200 266 104-138 204 176v77H0Z" fill="url(#frontMountain)" opacity=".9"/>
+  <path d="M548 157l-56 94 74-32 64 56-82-118Zm268-70l-72 144 96-51 72 72-96-165Zm474 53l-80 151 108-61 78 77-106-167Zm304 128l-55 73 73-34 54 53-72-92Z" fill="#fff" opacity=".82"/>
+  <path d="M0 476c180-36 312-20 452 0 186 27 364 31 566-8 234-45 420-34 782 13v39H0v-44Z" fill="#071224" opacity=".82"/>
+  <path d="M0 441c254-42 382-31 556 0 188 34 366 38 588-12 244-55 427-28 656 8v83H0v-79Z" fill="#0b1b32" opacity=".52"/>
+</svg>

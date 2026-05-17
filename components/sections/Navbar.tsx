@@ -1,7 +1,8 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Heart, Sparkles } from 'lucide-react'
+import { Menu, X, Heart } from 'lucide-react'
+import { NepalFlagPennant } from '@/components/ui/NepalFlag'
 
 const navLinks = [
   { label: 'About', href: '#about' },
@@ -41,41 +42,29 @@ export default function Navbar() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? 'bg-white/80 backdrop-blur-2xl shadow-lg shadow-slate-900/5 border-b border-slate-200/50 py-2.5'
-            : 'bg-slate-900/20 backdrop-blur-md border-b border-white/5 py-4'
+        className={`fixed left-0 right-0 top-0 z-50 border-b border-slate-200/60 bg-white/95 text-[#0b2b55] shadow-sm shadow-slate-900/[0.03] backdrop-blur-xl transition-all duration-300 ${
+          scrolled ? 'py-2' : 'py-2.5 lg:py-3'
         }`}
       >
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between">
+        <div className="mx-auto flex items-center justify-between px-4 sm:px-7 lg:px-10 xl:px-12">
           {/* Logo */}
-          <a href="#home" className="flex items-center gap-3 group">
-            <motion.div
-              whileHover={{ scale: 1.05, rotate: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-crimson via-crimson-dark to-red-800 flex items-center justify-center shadow-lg shadow-crimson/25"
-            >
-              <span className="font-bold text-white text-sm tracking-tight">M</span>
-              <div className="absolute inset-0 rounded-xl ring-1 ring-white/20" />
-            </motion.div>
+          <a href="#home" className="group flex items-center gap-3">
+            <div className="relative h-10 w-9 shrink-0 sm:h-12 sm:w-10">
+              <NepalFlagPennant className="absolute left-0 top-0 drop-shadow-sm" width={30} height={38} />
+              <NepalFlagPennant className="absolute bottom-0 left-0 drop-shadow-sm" width={30} height={38} />
+            </div>
             <div className="flex flex-col">
-              <span className={`font-bold text-base leading-none tracking-tight transition-colors duration-300 ${
-                scrolled ? 'text-slate-900' : 'text-white'
-              }`}>
+              <span className="font-playfair text-2xl font-extrabold leading-none tracking-tight text-[#12375f] sm:text-3xl">
                 MJK
               </span>
-              <span className={`text-[9px] font-medium uppercase tracking-[0.15em] mt-0.5 transition-colors duration-300 ${
-                scrolled ? 'text-crimson/70' : 'text-white/40'
-              }`}>
+              <span className="mt-0.5 text-[8px] font-extrabold uppercase tracking-[0.42em] text-[#12375f]/70 sm:text-[10px]">
                 For Kathmandu
               </span>
             </div>
           </a>
 
           {/* Desktop Nav */}
-          <div className={`hidden lg:flex items-center gap-0.5 px-2 py-1.5 rounded-2xl transition-all duration-300 ${
-            scrolled ? 'bg-slate-100/60' : 'bg-white/[0.06]'
-          }`}>
+          <div className="hidden items-center gap-8 lg:flex xl:gap-11">
             {navLinks.map((link, i) => {
               const isActive = activeSection === link.href.replace('#', '')
               return (
@@ -85,23 +74,15 @@ export default function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.05 * i, duration: 0.3 }}
                   href={link.href}
-                  className={`relative px-4 py-2 text-[13px] font-medium transition-all duration-300 rounded-xl ${
-                    isActive
-                      ? scrolled
-                        ? 'text-crimson bg-white shadow-sm'
-                        : 'text-white bg-white/15'
-                      : scrolled
-                        ? 'text-slate-500 hover:text-slate-900 hover:bg-white/80'
-                        : 'text-white/60 hover:text-white hover:bg-white/10'
+                  className={`relative py-2 text-base font-bold tracking-tight transition-colors duration-300 ${
+                    isActive ? 'text-crimson' : 'text-[#0b2b55] hover:text-crimson'
                   }`}
                 >
                   {link.label}
                   {isActive && (
                     <motion.div
                       layoutId="navIndicator"
-                      className={`absolute bottom-0.5 left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full ${
-                        scrolled ? 'bg-crimson' : 'bg-white'
-                      }`}
+                      className="absolute -bottom-1 left-1/2 h-0.5 w-5 -translate-x-1/2 bg-crimson"
                       transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                     />
                   )}
@@ -116,20 +97,14 @@ export default function Navbar() {
               href="#support"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className={`hidden md:inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-xl transition-all duration-300 ${
-                scrolled
-                  ? 'bg-gradient-to-r from-crimson to-crimson-dark text-white shadow-lg shadow-crimson/20 hover:shadow-crimson/30'
-                  : 'bg-white/10 text-white border border-white/15 hover:bg-white/20 backdrop-blur-sm'
-              }`}
+              className="hidden items-center gap-3 rounded-md bg-crimson px-5 py-3 text-xs font-extrabold uppercase tracking-[0.15em] text-white shadow-lg shadow-crimson/20 transition-all duration-300 hover:bg-crimson-dark hover:shadow-crimson/30 md:inline-flex xl:px-7"
             >
-              <Heart size={13} className={scrolled ? 'text-white' : 'text-crimson-50'} />
+              <Heart size={16} className="text-white" />
               Support
             </motion.a>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className={`lg:hidden p-2.5 rounded-xl transition-all duration-300 ${
-                scrolled ? 'text-slate-700 hover:bg-slate-100' : 'text-white hover:bg-white/10'
-              }`}
+              className="rounded-lg p-2 text-[#0b2b55] transition-all duration-300 hover:bg-slate-100 lg:hidden"
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -146,12 +121,12 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 bg-white/95 backdrop-blur-2xl flex flex-col lg:hidden"
+            className="fixed inset-0 z-40 bg-white/[0.98] backdrop-blur-2xl flex flex-col lg:hidden"
           >
             <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-crimson to-crimson-dark flex items-center justify-center shadow-lg shadow-crimson/20">
-                  <span className="font-bold text-white text-sm">M</span>
+                <div className="flex h-10 w-10 items-center justify-center overflow-hidden bg-white shadow-lg shadow-slate-900/10 ring-1 ring-slate-200">
+                  <NepalFlagPennant width={24} height={30} />
                 </div>
                 <div>
                   <span className="font-bold text-slate-900 block leading-none">MJK</span>
@@ -174,7 +149,7 @@ export default function Navbar() {
                   transition={{ delay: i * 0.06, duration: 0.3 }}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="text-lg text-slate-600 font-medium py-3 hover:text-crimson transition-colors w-full flex items-center gap-3"
+                  className="text-lg text-slate-600 font-semibold py-3 hover:text-crimson transition-colors w-full flex items-center gap-3"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-crimson/30" />
                   {link.label}
@@ -185,7 +160,7 @@ export default function Navbar() {
               <a
                 href="#support"
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-center gap-2 w-full px-6 py-3.5 bg-gradient-to-r from-crimson to-crimson-dark text-white font-medium rounded-xl shadow-lg shadow-crimson/20 transition-all"
+                className="flex items-center justify-center gap-2 w-full px-6 py-3.5 bg-crimson text-white font-bold uppercase tracking-[0.14em] shadow-lg shadow-crimson/20 transition-all"
               >
                 <Heart size={14} />
                 Support the Campaign

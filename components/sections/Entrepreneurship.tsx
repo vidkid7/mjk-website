@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion'
 import { Rocket, Users, TrendingUp, Quote, Briefcase, ArrowUpRight, Building2, Zap } from 'lucide-react'
 import { useState } from 'react'
+import { DhakaPattern } from '@/components/ui/NepalFlag'
 
 const businesses = [
   {
@@ -46,14 +47,13 @@ export default function Entrepreneurship() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
 
   return (
-    <section className="relative py-24 md:py-32 bg-slate-900 overflow-hidden">
+    <section className="relative py-24 md:py-32 bg-[#071224] overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-crimson/8 rounded-full blur-[150px] animate-pulse" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/8 rounded-full blur-[120px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold/5 rounded-full blur-[180px]" />
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+        <DhakaPattern className="opacity-[0.06]" />
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+        <div className="absolute -right-24 top-12 h-52 w-1/2 bg-gradient-to-l from-crimson/20 to-transparent" />
+        <div className="absolute -left-24 bottom-12 h-52 w-1/2 bg-gradient-to-r from-[#003893]/20 to-transparent" />
       </div>
 
       <div className="relative max-w-6xl mx-auto px-5 sm:px-8">
@@ -65,7 +65,7 @@ export default function Entrepreneurship() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 border border-gold/20 text-gold-light text-xs font-semibold uppercase tracking-wider mb-5">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-gold/10 border border-gold/20 text-gold-light text-[11px] font-bold uppercase tracking-[0.2em] mb-5">
               <Rocket size={12} />
               Entrepreneurship
             </span>
@@ -75,7 +75,7 @@ export default function Entrepreneurship() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-5 leading-tight"
+            className="font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-5 leading-tight tracking-tight"
           >
             Building Nepal&apos;s Future
             <br />
@@ -88,7 +88,7 @@ export default function Entrepreneurship() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-slate-400 max-w-2xl mx-auto text-base md:text-lg leading-relaxed"
+            className="text-slate-300/80 max-w-2xl mx-auto text-base md:text-lg leading-8"
           >
             From startups to social enterprises, creating sustainable prosperity and empowering communities across Nepal.
           </motion.p>
@@ -106,7 +106,7 @@ export default function Entrepreneurship() {
             <motion.div
               key={stat.label}
               whileHover={{ scale: 1.05, y: -2 }}
-              className="text-center p-4 md:p-5 rounded-2xl bg-white/[0.04] border border-white/[0.06] backdrop-blur-sm"
+              className="text-center p-4 md:p-5 bg-white/[0.04] border border-white/[0.08] backdrop-blur-sm"
             >
               <stat.icon size={18} className="text-gold/60 mx-auto mb-2" />
               <div className="text-2xl md:text-3xl font-bold text-white mb-1">{stat.value}</div>
@@ -131,14 +131,14 @@ export default function Entrepreneurship() {
               <motion.div
                 whileHover={{ y: -8 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                className="relative rounded-2xl p-6 border border-slate-700/50 bg-slate-800/60 backdrop-blur-sm overflow-hidden h-full transition-colors duration-300 hover:border-slate-600"
+                className="relative rounded-lg p-6 border border-white/10 bg-white/[0.055] backdrop-blur-sm overflow-hidden h-full transition-colors duration-300 hover:border-white/20"
               >
                 {/* Glow effect on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${biz.gradient} opacity-0 group-hover:opacity-[0.06] transition-opacity duration-500`} />
 
                 {/* Top row: icon + stat */}
                 <div className="relative flex items-center justify-between mb-5">
-                  <div className={`w-12 h-12 rounded-xl ${biz.bg} flex items-center justify-center border border-white/5`}>
+                  <div className={`w-12 h-12 ${biz.bg} flex items-center justify-center border border-white/10`}>
                     <biz.icon className={biz.color} size={22} />
                   </div>
                   <motion.div
@@ -186,9 +186,9 @@ export default function Entrepreneurship() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="relative rounded-2xl p-8 md:p-10 border border-slate-700/40 bg-gradient-to-br from-slate-800/50 via-slate-800/30 to-slate-900/50 backdrop-blur-sm text-center"
+          className="relative rounded-lg p-8 md:p-10 border border-white/10 bg-white/[0.055] backdrop-blur-sm text-center"
         >
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center border border-gold/20">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-gold/10 flex items-center justify-center border border-gold/20">
             <Quote size={16} className="text-gold" />
           </div>
           <blockquote className="font-playfair text-xl md:text-2xl lg:text-3xl text-slate-200 italic leading-relaxed max-w-3xl mx-auto mb-6 pt-2">

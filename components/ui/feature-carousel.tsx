@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { motion, AnimatePresence, useInView, useReducedMotion } from "framer-motion";
 import {
   Building2,
   Briefcase,
@@ -78,6 +78,9 @@ const wrap = (min: number, max: number, v: number) => {
 };
 
 export function VisionCarousel() {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(carouselRef, { amount: 0.2 });
+  const shouldReduceMotion = useReducedMotion();
   const [step, setStep] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -94,10 +97,10 @@ export function VisionCarousel() {
   };
 
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || !isInView || shouldReduceMotion) return;
     const interval = setInterval(nextStep, AUTO_PLAY_INTERVAL);
     return () => clearInterval(interval);
-  }, [nextStep, isPaused]);
+  }, [nextStep, isPaused, isInView, shouldReduceMotion]);
 
   const getCardStatus = (index: number) => {
     const diff = index - currentIndex;
@@ -114,10 +117,10 @@ export function VisionCarousel() {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto md:p-8">
-      <div className="relative overflow-hidden rounded-[2.5rem] lg:rounded-[4rem] flex flex-col lg:flex-row min-h-[600px] lg:aspect-video border border-slate-200/60">
+    <div ref={carouselRef} className="w-full max-w-7xl mx-auto md:p-6">
+      <div className="relative overflow-hidden rounded-lg flex flex-col lg:flex-row min-h-[600px] lg:aspect-video border border-slate-200 bg-white shadow-xl shadow-slate-900/10">
         {/* Left side - Feature list */}
-        <div className="w-full lg:w-[40%] min-h-[350px] md:min-h-[450px] lg:h-full relative z-30 flex flex-col items-start justify-center overflow-hidden px-8 md:px-16 lg:pl-16 bg-gradient-to-br from-crimson to-crimson-dark">
+        <div className="w-full lg:w-[40%] min-h-[350px] md:min-h-[450px] lg:h-full relative z-30 flex flex-col items-start justify-center overflow-hidden px-8 md:px-16 lg:pl-16 bg-gradient-to-br from-crimson via-crimson-dark to-[#771323]">
           <div className="absolute inset-x-0 top-0 h-12 md:h-20 lg:h-16 bg-gradient-to-b from-crimson via-crimson/80 to-transparent z-40" />
           <div className="absolute inset-x-0 bottom-0 h-12 md:h-20 lg:h-16 bg-gradient-to-t from-crimson-dark via-crimson-dark/80 to-transparent z-40" />
           <div className="relative w-full h-full flex items-center justify-center lg:justify-start z-20">
@@ -155,7 +158,7 @@ export function VisionCarousel() {
                     onMouseEnter={() => setIsPaused(true)}
                     onMouseLeave={() => setIsPaused(false)}
                     className={cn(
-                      "relative flex items-center gap-4 px-6 md:px-10 lg:px-8 py-3.5 md:py-5 lg:py-4 rounded-full transition-all duration-700 text-left group border",
+                      "relative flex items-center gap-4 px-6 md:px-10 lg:px-8 py-3.5 md:py-5 lg:py-4 transition-all duration-700 text-left group border",
                       isActive
                         ? "bg-white text-crimson border-white z-10 shadow-lg"
                         : "bg-transparent text-white/60 border-white/20 hover:border-white/40 hover:text-white"
@@ -181,7 +184,7 @@ export function VisionCarousel() {
         </div>
 
         {/* Right side - Image cards */}
-        <div className="flex-1 min-h-[500px] md:min-h-[600px] lg:h-full relative bg-slate-50 flex items-center justify-center py-16 md:py-24 lg:py-16 px-6 md:px-12 lg:px-10 overflow-hidden border-t lg:border-t-0 lg:border-l border-slate-200/40">
+        <div className="flex-1 min-h-[500px] md:min-h-[600px] lg:h-full relative bg-[#fbfaf7] flex items-center justify-center py-16 md:py-24 lg:py-16 px-6 md:px-12 lg:px-10 overflow-hidden border-t lg:border-t-0 lg:border-l border-slate-200/70">
           <div className="relative w-full max-w-[420px] aspect-[4/5] flex items-center justify-center">
             {FEATURES.map((feature, index) => {
               const status = getCardStatus(index);
@@ -207,11 +210,13 @@ export function VisionCarousel() {
                     damping: 25,
                     mass: 0.8,
                   }}
-                  className="absolute inset-0 rounded-[2rem] md:rounded-[2.8rem] overflow-hidden border-4 md:border-8 border-white bg-white origin-center shadow-xl"
+                  className="absolute inset-0 rounded-lg overflow-hidden border-4 md:border-8 border-white bg-white origin-center shadow-xl"
                 >
                   <img
                     src={feature.image}
                     alt={feature.label}
+                    loading={isActive || isPrev || isNext ? "eager" : "lazy"}
+                    decoding="async"
                     className={cn(
                       "w-full h-full object-cover transition-all duration-700",
                       isActive
@@ -228,7 +233,7 @@ export function VisionCarousel() {
                         exit={{ opacity: 0, y: 10 }}
                         className="absolute inset-x-0 bottom-0 p-10 pt-32 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end pointer-events-none"
                       >
-                        <div className="bg-white text-slate-900 px-4 py-1.5 rounded-full text-[11px] font-medium uppercase tracking-[0.2em] w-fit shadow-lg mb-3 border border-slate-100">
+                        <div className="bg-white text-slate-900 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] w-fit shadow-lg mb-3 border border-slate-100">
                           {index + 1} • {feature.label}
                         </div>
                         <p className="text-white font-medium text-xl md:text-2xl leading-tight drop-shadow-md tracking-tight">
