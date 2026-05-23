@@ -9,8 +9,19 @@ import {
   Heart,
   TreePine,
   GraduationCap,
+  Globe,
+  Shield,
+  Users,
+  Zap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+interface VisionFeatureInput {
+  id: string;
+  icon: string;
+  heading: string;
+  description: string;
+}
 
 const FEATURES = [
   {
@@ -69,6 +80,21 @@ const FEATURES = [
   },
 ];
 
+const DEFAULT_IMAGES = FEATURES.map(feature => feature.image);
+
+const ICON_MAP: Record<string, React.ComponentType<any>> = {
+  Building2,
+  Briefcase,
+  Laptop,
+  Heart,
+  TreePine,
+  GraduationCap,
+  Globe,
+  Shield,
+  Users,
+  Zap,
+};
+
 const AUTO_PLAY_INTERVAL = 3500;
 const ITEM_HEIGHT = 65;
 
@@ -77,22 +103,31 @@ const wrap = (min: number, max: number, v: number) => {
   return ((((v - min) % rangeSize) + rangeSize) % rangeSize) + min;
 };
 
-export function VisionCarousel() {
+export function VisionCarousel({ features }: { features?: VisionFeatureInput[] }) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(carouselRef, { amount: 0.2 });
   const shouldReduceMotion = useReducedMotion();
   const [step, setStep] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const carouselFeatures = features?.length
+    ? features.map((feature, index) => ({
+        id: feature.id,
+        label: feature.heading,
+        icon: ICON_MAP[feature.icon] || Building2,
+        image: DEFAULT_IMAGES[index % DEFAULT_IMAGES.length],
+        description: feature.description,
+      }))
+    : FEATURES;
 
   const currentIndex =
-    ((step % FEATURES.length) + FEATURES.length) % FEATURES.length;
+    ((step % carouselFeatures.length) + carouselFeatures.length) % carouselFeatures.length;
 
   const nextStep = useCallback(() => {
     setStep((prev) => prev + 1);
   }, []);
 
   const handleChipClick = (index: number) => {
-    const diff = (index - currentIndex + FEATURES.length) % FEATURES.length;
+    const diff = (index - currentIndex + carouselFeatures.length) % carouselFeatures.length;
     if (diff > 0) setStep((s) => s + diff);
   };
 
@@ -104,7 +139,7 @@ export function VisionCarousel() {
 
   const getCardStatus = (index: number) => {
     const diff = index - currentIndex;
-    const len = FEATURES.length;
+    const len = carouselFeatures.length;
 
     let normalizedDiff = diff;
     if (diff > len / 2) normalizedDiff -= len;
@@ -124,12 +159,12 @@ export function VisionCarousel() {
           <div className="absolute inset-x-0 top-0 h-12 md:h-20 lg:h-16 bg-gradient-to-b from-crimson via-crimson/80 to-transparent z-40" />
           <div className="absolute inset-x-0 bottom-0 h-12 md:h-20 lg:h-16 bg-gradient-to-t from-crimson-dark via-crimson-dark/80 to-transparent z-40" />
           <div className="relative w-full h-full flex items-center justify-center lg:justify-start z-20">
-            {FEATURES.map((feature, index) => {
+            {carouselFeatures.map((feature, index) => {
               const isActive = index === currentIndex;
               const distance = index - currentIndex;
               const wrappedDistance = wrap(
-                -(FEATURES.length / 2),
-                FEATURES.length / 2,
+                -(carouselFeatures.length / 2),
+                carouselFeatures.length / 2,
                 distance
               );
               const Icon = feature.icon;
@@ -186,7 +221,7 @@ export function VisionCarousel() {
         {/* Right side - Image cards */}
         <div className="flex-1 min-h-[500px] md:min-h-[600px] lg:h-full relative bg-[#fbfaf7] flex items-center justify-center py-16 md:py-24 lg:py-16 px-6 md:px-12 lg:px-10 overflow-hidden border-t lg:border-t-0 lg:border-l border-slate-200/70">
           <div className="relative w-full max-w-[420px] aspect-[4/5] flex items-center justify-center">
-            {FEATURES.map((feature, index) => {
+            {carouselFeatures.map((feature, index) => {
               const status = getCardStatus(index);
               const isActive = status === "active";
               const isPrev = status === "prev";

@@ -18,13 +18,15 @@ export default function AdminLogin() {
     setError('')
 
     try {
-      await new Promise(r => setTimeout(r, 500))
-      if (password === 'mjk2025admin') {
-        document.cookie = 'mjk_admin_auth=authenticated_mjk_session; path=/; max-age=86400'
-        router.push('/admin')
-      } else {
-        setError('Invalid credentials. Please try again.')
-      }
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      })
+      const payload = await response.json()
+      if (!response.ok) throw new Error(payload.error || 'Invalid credentials. Please try again.')
+      router.replace('/admin')
+      router.refresh()
     } catch (err: any) {
       setError(err.message || 'Something went wrong')
     } finally {
@@ -46,7 +48,7 @@ export default function AdminLogin() {
               <NepalFlagPennant width={48} height={62} />
             </div>
             <h1 className="font-yatra text-3xl text-crimson">MJK Admin</h1>
-            <p className="text-gray-500 text-sm mt-1">Sign in to manage your website</p>
+            <p className="text-gray-500 text-sm mt-1">Sign in securely to manage your website</p>
           </div>
 
           {/* Error */}

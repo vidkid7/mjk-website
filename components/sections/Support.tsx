@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Heart, Users, Check, Sparkles } from 'lucide-react'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+import { addVolunteer } from '@/lib/storage'
 
 const donationTiers = [
   { amount: 500, label: 'NPR 500', desc: 'Support a youth event', emoji: '🎯' },
@@ -17,8 +18,20 @@ export default function Support() {
 
   const handleVolunteerSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3000)
+    try {
+      await addVolunteer({
+        name: volunteerForm.name,
+        email: volunteerForm.email,
+        phone: volunteerForm.phone,
+        city: volunteerForm.city,
+        help_type: volunteerForm.help || 'General support',
+      })
+      setVolunteerForm({ name: '', email: '', phone: '', city: '', help: '' })
+      setSubmitted(true)
+      setTimeout(() => setSubmitted(false), 3000)
+    } catch {
+      alert('Failed to submit your request. Please try again.')
+    }
   }
 
   return (

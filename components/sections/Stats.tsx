@@ -4,6 +4,7 @@ import { Hammer, Heart, MapPin, GraduationCap } from 'lucide-react'
 import { Counter } from '@/components/ui/Counter'
 import { statsData } from '@/lib/placeholder-data'
 import { DhakaPattern } from '@/components/ui/NepalFlag'
+import { useStoredData } from '@/lib/storage'
 
 const statConfig = [
   { icon: Hammer, gradient: 'from-crimson to-crimson-dark', hoverShadow: 'hover:shadow-glow-crimson' },
@@ -13,6 +14,8 @@ const statConfig = [
 ]
 
 export default function Stats() {
+  const stats = useStoredData('stats', statsData)
+
   return (
     <section className="relative py-24 md:py-32 bg-crimson overflow-hidden">
       <DhakaPattern className="opacity-[0.08]" />
@@ -27,8 +30,8 @@ export default function Stats() {
           transition={{ duration: 0.5 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0"
         >
-          {statsData.map((stat, i) => {
-            const config = statConfig[i]
+          {stats.map((stat, i) => {
+            const config = statConfig[i % statConfig.length]
             const Icon = config.icon
             return (
               <motion.div

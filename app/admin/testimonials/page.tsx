@@ -2,9 +2,12 @@
 import { useState } from 'react'
 import { Plus, Edit2, Trash2, X, Star, GripVertical } from 'lucide-react'
 import { testimonialsData } from '@/lib/placeholder-data'
+import { useAdminContent } from '@/lib/admin-data'
+import AdminDataNotice from '@/components/admin/AdminDataNotice'
+import ImageUploadField from '@/components/admin/ImageUploadField'
 
 export default function AdminTestimonials() {
-  const [items, setItems] = useState(testimonialsData)
+  const { data: items, save, loading, saving, error, usingStarter } = useAdminContent('testimonials', testimonialsData)
   const [showModal, setShowModal] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [form, setForm] = useState({ photo: '', name: '', role: '', quote: '', rating: 5 })
@@ -12,10 +15,11 @@ export default function AdminTestimonials() {
   const openCreate = () => { setEditingId(null); setForm({ photo: '', name: '', role: '', quote: '', rating: 5 }); setShowModal(true) }
   const openEdit = (item: typeof items[0]) => { setEditingId(item.id); setForm({ photo: item.photo, name: item.name, role: item.role, quote: item.quote, rating: item.rating }); setShowModal(true) }
 
-  const handleSave = () => {
-    if (editingId) { setItems(items.map(i => i.id === editingId ? { ...i, ...form } : i)) }
-    else { setItems([...items, { id: Date.now().toString(), ...form }]) }
-    setShowModal(false)
+  const handleSave = async () => {
+    const updated = editingId
+      ? items.map(i => i.id === editingId ? { ...i, ...form } : i)
+      : [...items, { id: Date.now().toString(), ...form }]
+    if (await save(updated)) setShowModal(false)
   }
 
   return (
@@ -26,6 +30,8 @@ export default function AdminTestimonials() {
         <button onClick={openCreate} className="px-4 py-2 bg-crimson text-white rounded-lg text-sm font-semibold hover:bg-crimson-dark flex items-center gap-2">
           <Plus size={16} /> Add Testimonial</button>
       </div>
+
+      <AdminDataNotice loading={loading} error={error} usingStarter={usingStarter} />
 
       <div className="grid md:grid-cols-2 gap-4">
         {items.map((item) => (
@@ -40,7 +46,7 @@ export default function AdminTestimonials() {
               </div>
               <div className="flex gap-1">
                 <button onClick={() => openEdit(item)} className="p-1.5 text-gray-400 hover:text-blue-600 rounded hover:bg-blue-50"><Edit2 size={14} /></button>
-                <button onClick={() => setItems(items.filter(i => i.id !== item.id))} className="p-1.5 text-gray-400 hover:text-red-600 rounded hover:bg-red-50"><Trash2 size={14} /></button>
+                <button disabled={saving} onClick={() => void save(items.filter(i => i.id !== item.id))} className="p-1.5 text-gray-400 hover:text-red-600 rounded hover:bg-red-50 disabled:opacity-50"><Trash2 size={14} /></button>
               </div>
             </div>
             <div className="flex gap-0.5 mb-2">
@@ -67,9 +73,7 @@ export default function AdminTestimonials() {
                   <input type="text" value={form.role} onChange={e => setForm({ ...form, role: e.target.value })}
                     className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50" /></div>
               </div>
-              <div><label className="block text-sm font-medium text-gray-700 mb-1">Photo URL</label>
-                <input type="url" value={form.photo} onChange={e => setForm({ ...form, photo: e.target.value })}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50" /></div>
+              <ImageUploadField label="Photo" value={form.photo || ''} onChange={value => setForm({ ...form, photo: value })} />
               <div><label className="block text-sm font-medium text-gray-700 mb-1">Quote</label>
                 <textarea value={form.quote} onChange={e => setForm({ ...form, quote: e.target.value })} rows={3}
                   className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 resize-none" /></div>
@@ -86,7 +90,7 @@ export default function AdminTestimonials() {
             </div>
             <div className="flex gap-3 mt-6">
               <button onClick={() => setShowModal(false)} className="flex-1 py-2.5 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">Cancel</button>
-              <button onClick={handleSave} className="flex-1 py-2.5 bg-crimson text-white rounded-lg font-semibold hover:bg-crimson-dark">Save</button>
+              <button disabled={saving} onClick={() => void handleSave()} className="flex-1 py-2.5 bg-crimson text-white rounded-lg font-semibold hover:bg-crimson-dark disabled:opacity-60">{saving ? 'Saving...' : 'Save'}</button>
             </div>
           </div>
         </div>

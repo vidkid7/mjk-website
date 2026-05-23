@@ -1,7 +1,8 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { Save, Briefcase, TrendingUp, Quote } from 'lucide-react'
-import { loadData, saveData } from '@/lib/storage'
+import { useAdminContent } from '@/lib/admin-data'
+import AdminDataNotice from '@/components/admin/AdminDataNotice'
 
 const defaultBusinesses = [
   {
@@ -43,6 +44,7 @@ const defaultData = {
 }
 
 export default function AdminEntrepreneurship() {
+  const live = useAdminContent('entrepreneurship', defaultData)
   const [sectionTitle, setSectionTitle] = useState(defaultData.sectionTitle)
   const [sectionSubtitle, setSectionSubtitle] = useState(defaultData.sectionSubtitle)
   const [businesses, setBusinesses] = useState(defaultBusinesses)
@@ -53,22 +55,23 @@ export default function AdminEntrepreneurship() {
   const [saved, setSaved] = useState(false)
 
   useEffect(() => {
-    const stored = loadData('entrepreneurship', defaultData)
+    const stored = live.data
     setSectionTitle(stored.sectionTitle)
     setSectionSubtitle(stored.sectionSubtitle)
     setBusinesses(stored.businesses)
     setStats(stored.stats)
     setQuoteText(stored.quoteText)
     setQuoteAttribution(stored.quoteAttribution)
-  }, [])
+  }, [live.data])
 
   const handleSave = async () => {
     setSaving(true)
-    saveData('entrepreneurship', { sectionTitle, sectionSubtitle, businesses, stats, quoteText, quoteAttribution })
-    await new Promise(r => setTimeout(r, 1000))
+    const success = await live.save({ sectionTitle, sectionSubtitle, businesses, stats, quoteText, quoteAttribution })
     setSaving(false)
-    setSaved(true)
-    setTimeout(() => setSaved(false), 2000)
+    if (success) {
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2000)
+    }
   }
 
   const updateBusiness = (index: number, field: string, value: string) => {
@@ -106,6 +109,8 @@ export default function AdminEntrepreneurship() {
           )}
         </button>
       </div>
+
+      <AdminDataNotice loading={live.loading} error={live.error} usingStarter={live.usingStarter} />
 
       {/* Section Title & Subtitle */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">

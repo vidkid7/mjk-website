@@ -1,10 +1,10 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import {
   LayoutDashboard, Image, Newspaper, MessageSquare, Users, Settings,
   LogOut, ChevronLeft, ChevronRight, Home, Info, Target, Rocket,
-  Briefcase, GraduationCap, BarChart3, Menu, X
+  Briefcase, GraduationCap, BarChart3, Menu, X, Award, Star
 } from 'lucide-react'
 import { NepalFlagPennant } from '@/components/ui/NepalFlag'
 
@@ -12,10 +12,12 @@ const sidebarLinks = [
   { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
   { label: 'Hero Content', href: '/admin/hero', icon: Home },
   { label: 'About Section', href: '/admin/about', icon: Info },
+  { label: 'Achievements', href: '/admin/achievements', icon: Award },
   { label: 'Vision Cards', href: '/admin/vision', icon: Target },
   { label: 'Initiatives', href: '/admin/initiatives', icon: Rocket },
   { label: 'Entrepreneurship', href: '/admin/entrepreneurship', icon: Briefcase },
   { label: 'Youth Inspiration', href: '/admin/youth', icon: GraduationCap },
+  { label: 'Testimonials', href: '/admin/testimonials', icon: Star },
   { label: 'Gallery', href: '/admin/gallery', icon: Image },
   { label: 'News / Blog', href: '/admin/news', icon: Newspaper },
   { label: 'Stats / Numbers', href: '/admin/stats', icon: BarChart3 },
@@ -29,6 +31,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const router = useRouter()
   const [collapsed, setCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+
+  const logout = async () => {
+    await fetch('/api/admin/logout', { method: 'POST' })
+    router.replace('/admin/login')
+    router.refresh()
+  }
 
   // Skip sidebar for login page
   if (pathname === '/admin/login') {
@@ -79,7 +87,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Footer */}
         <div className="p-4 border-t border-white/10">
           <button
-            onClick={() => { document.cookie = 'mjk_admin_auth=; path=/; max-age=0'; router.push('/admin/login') }}
+            onClick={() => void logout()}
             className={`flex items-center gap-3 px-3 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 text-sm w-full transition-all ${
               collapsed ? 'justify-center' : ''
             }`}

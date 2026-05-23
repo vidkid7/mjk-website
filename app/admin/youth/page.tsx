@@ -1,7 +1,9 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { Save, GraduationCap, MessageCircle, MousePointerClick } from 'lucide-react'
-import { loadData, saveData } from '@/lib/storage'
+import { useAdminContent } from '@/lib/admin-data'
+import AdminDataNotice from '@/components/admin/AdminDataNotice'
+import ImageUploadField from '@/components/admin/ImageUploadField'
 
 const defaultTestimonials = [
   {
@@ -35,6 +37,7 @@ const defaultData = {
 }
 
 export default function AdminYouth() {
+  const live = useAdminContent('youth', defaultData)
   const [heading, setHeading] = useState(defaultData.heading)
   const [description, setDescription] = useState(defaultData.description)
   const [testimonials, setTestimonials] = useState(defaultTestimonials)
@@ -43,20 +46,21 @@ export default function AdminYouth() {
   const [saved, setSaved] = useState(false)
 
   useEffect(() => {
-    const stored = loadData('youth', defaultData)
+    const stored = live.data
     setHeading(stored.heading)
     setDescription(stored.description)
     setTestimonials(stored.testimonials)
     setCtaText(stored.ctaText)
-  }, [])
+  }, [live.data])
 
   const handleSave = async () => {
     setSaving(true)
-    saveData('youth', { heading, description, testimonials, ctaText })
-    await new Promise(r => setTimeout(r, 1000))
+    const success = await live.save({ heading, description, testimonials, ctaText })
     setSaving(false)
-    setSaved(true)
-    setTimeout(() => setSaved(false), 2000)
+    if (success) {
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2000)
+    }
   }
 
   const updateTestimonial = (index: number, field: string, value: string) => {
@@ -90,6 +94,8 @@ export default function AdminYouth() {
           )}
         </button>
       </div>
+
+      <AdminDataNotice loading={live.loading} error={live.error} usingStarter={live.usingStarter} />
 
       {/* Section Heading & Description */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
@@ -142,15 +148,7 @@ export default function AdminYouth() {
                   />
                 </div>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Photo URL</label>
-                <input
-                  type="text"
-                  value={t.photo}
-                  onChange={e => updateTestimonial(i, 'photo', e.target.value)}
-                  className={inputClass}
-                />
-              </div>
+              <ImageUploadField label="Photo" value={t.photo || ''} onChange={value => updateTestimonial(i, 'photo', value)} />
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Quote</label>
                 <textarea

@@ -4,6 +4,10 @@ import { ArrowRight, BookOpen, Leaf, HeartHandshake, HeartPulse, Building, Spark
 import { FlippingCard } from '@/components/ui/flipping-card'
 import { initiativesData } from '@/lib/placeholder-data'
 import { DhakaPattern } from '@/components/ui/NepalFlag'
+import { useStoredData } from '@/lib/storage'
+
+const defaultItems = initiativesData.map(item => ({ ...item, is_published: true }))
+type InitiativeItem = typeof defaultItems[0]
 
 const categoryConfig: Record<string, { color: string; bg: string; border: string; icon: React.ComponentType<any> }> = {
   Education: { color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-100', icon: BookOpen },
@@ -13,7 +17,7 @@ const categoryConfig: Record<string, { color: string; bg: string; border: string
   Infrastructure: { color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-200/60', icon: Building },
 }
 
-function CardFront({ item }: { item: typeof initiativesData[0] }) {
+function CardFront({ item }: { item: InitiativeItem }) {
   return (
     <div className="relative h-full w-full overflow-hidden rounded-md">
       <img
@@ -33,7 +37,7 @@ function CardFront({ item }: { item: typeof initiativesData[0] }) {
   )
 }
 
-function CardBack({ item }: { item: typeof initiativesData[0] }) {
+function CardBack({ item }: { item: InitiativeItem }) {
   const cat = categoryConfig[item.category] || categoryConfig.Education
   const CatIcon = cat.icon
   return (
@@ -58,6 +62,8 @@ function CardBack({ item }: { item: typeof initiativesData[0] }) {
 }
 
 export default function Initiatives() {
+  const items = useStoredData('initiatives', defaultItems).filter(item => item.is_published)
+
   return (
     <section id="initiatives" className="relative overflow-hidden py-24 md:py-32 bg-[#fbfaf7]">
       <DhakaPattern className="opacity-[0.035]" />
@@ -97,7 +103,7 @@ export default function Initiatives() {
 
         {/* Flipping Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-          {initiativesData.map((item, index) => (
+          {items.map((item, index) => (
             <motion.div
               key={item.id}
               initial={{ opacity: 0, y: 30 }}

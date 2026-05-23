@@ -2,11 +2,13 @@
 import { useState } from 'react'
 import { Plus, Edit2, Trash2, X, GripVertical } from 'lucide-react'
 import { achievementsData } from '@/lib/placeholder-data'
+import { useAdminContent } from '@/lib/admin-data'
+import AdminDataNotice from '@/components/admin/AdminDataNotice'
 
 const iconOptions = ['Rocket', 'TreePine', 'Award', 'Heart', 'Code', 'Laptop', 'ShieldCheck', 'Flag', 'Star', 'Globe']
 
 export default function AdminAchievements() {
-  const [items, setItems] = useState(achievementsData)
+  const { data: items, save, loading, saving, error, usingStarter } = useAdminContent('achievements', achievementsData)
   const [showModal, setShowModal] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [form, setForm] = useState({ year: '', title: '', description: '', icon: 'Award' })
@@ -14,10 +16,11 @@ export default function AdminAchievements() {
   const openCreate = () => { setEditingId(null); setForm({ year: '', title: '', description: '', icon: 'Award' }); setShowModal(true) }
   const openEdit = (item: typeof items[0]) => { setEditingId(item.id); setForm({ year: item.year, title: item.title, description: item.description, icon: item.icon }); setShowModal(true) }
 
-  const handleSave = () => {
-    if (editingId) { setItems(items.map(i => i.id === editingId ? { ...i, ...form } : i)) }
-    else { setItems([...items, { id: Date.now().toString(), ...form, order_index: items.length }]) }
-    setShowModal(false)
+  const handleSave = async () => {
+    const updated = editingId
+      ? items.map(i => i.id === editingId ? { ...i, ...form } : i)
+      : [...items, { id: Date.now().toString(), ...form, order_index: items.length }]
+    if (await save(updated)) setShowModal(false)
   }
 
   return (
@@ -28,6 +31,8 @@ export default function AdminAchievements() {
         <button onClick={openCreate} className="px-4 py-2 bg-crimson text-white rounded-lg text-sm font-semibold hover:bg-crimson-dark flex items-center gap-2">
           <Plus size={16} /> Add Milestone</button>
       </div>
+
+      <AdminDataNotice loading={loading} error={error} usingStarter={usingStarter} />
 
       <div className="space-y-3">
         {items.map((item) => (
@@ -40,7 +45,7 @@ export default function AdminAchievements() {
             </div>
             <div className="flex gap-2 flex-shrink-0">
               <button onClick={() => openEdit(item)} className="p-2 text-gray-400 hover:text-blue-600 rounded-lg hover:bg-blue-50"><Edit2 size={16} /></button>
-              <button onClick={() => setItems(items.filter(i => i.id !== item.id))} className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50"><Trash2 size={16} /></button>
+              <button disabled={saving} onClick={() => void save(items.filter(i => i.id !== item.id))} className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 disabled:opacity-50"><Trash2 size={16} /></button>
             </div>
           </div>
         ))}
@@ -73,7 +78,7 @@ export default function AdminAchievements() {
             </div>
             <div className="flex gap-3 mt-6">
               <button onClick={() => setShowModal(false)} className="flex-1 py-2.5 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">Cancel</button>
-              <button onClick={handleSave} className="flex-1 py-2.5 bg-crimson text-white rounded-lg font-semibold hover:bg-crimson-dark">Save</button>
+              <button disabled={saving} onClick={() => void handleSave()} className="flex-1 py-2.5 bg-crimson text-white rounded-lg font-semibold hover:bg-crimson-dark disabled:opacity-60">{saving ? 'Saving...' : 'Save'}</button>
             </div>
           </div>
         </div>

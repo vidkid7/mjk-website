@@ -1,20 +1,18 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { Plus, Edit2, Trash2, Eye, EyeOff, X, Save } from 'lucide-react'
+import { useState } from 'react'
+import { Plus, Edit2, Trash2, X, Save } from 'lucide-react'
 import { initiativesData } from '@/lib/placeholder-data'
-import { loadData, saveData } from '@/lib/storage'
+import { useAdminContent } from '@/lib/admin-data'
+import AdminDataNotice from '@/components/admin/AdminDataNotice'
+import ImageUploadField from '@/components/admin/ImageUploadField'
 
 const defaultItems = initiativesData.map(i => ({ ...i, is_published: true }))
 
 export default function AdminInitiatives() {
-  const [items, setItems] = useState(defaultItems)
+  const { data: items, save, loading, saving, error, usingStarter } = useAdminContent('initiatives', defaultItems)
   const [showEditor, setShowEditor] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [form, setForm] = useState({ photo: '', category: 'Education', title: '', description: '', impact: '', is_published: true })
-
-  useEffect(() => {
-    setItems(loadData('initiatives', defaultItems))
-  }, [])
 
   const openCreate = () => {
     setEditingId(null)
@@ -28,13 +26,11 @@ export default function AdminInitiatives() {
     setShowEditor(true)
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     let updated: typeof items
     if (editingId) { updated = items.map(i => i.id === editingId ? { ...i, ...form } : i) }
     else { updated = [...items, { id: Date.now().toString(), ...form }] }
-    setItems(updated)
-    saveData('initiatives', updated)
-    setShowEditor(false)
+    if (await save(updated)) setShowEditor(false)
   }
 
   if (showEditor) {
@@ -44,7 +40,7 @@ export default function AdminInitiatives() {
           <h2 className="text-xl font-bold text-gray-800">{editingId ? 'Edit Initiative' : 'New Initiative'}</h2>
           <div className="flex gap-3">
             <button onClick={() => setShowEditor(false)} className="px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2"><X size={16} /> Cancel</button>
-            <button onClick={handleSave} className="px-6 py-2 bg-crimson text-white rounded-lg text-sm font-semibold hover:bg-crimson-dark flex items-center gap-2"><Save size={16} /> Save</button>
+            <button disabled={saving} onClick={() => void handleSave()} className="px-6 py-2 bg-crimson text-white rounded-lg text-sm font-semibold hover:bg-crimson-dark flex items-center gap-2 disabled:opacity-60"><Save size={16} /> {saving ? 'Saving...' : 'Save'}</button>
           </div>
         </div>
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-5">
@@ -61,9 +57,7 @@ export default function AdminInitiatives() {
               <input type="text" value={form.impact} onChange={e => setForm({ ...form, impact: e.target.value })} placeholder="e.g. 3,000 students trained"
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50" /></div>
           </div>
-          <div><label className="block text-sm font-medium text-gray-700 mb-1">Photo URL</label>
-            <input type="url" value={form.photo} onChange={e => setForm({ ...form, photo: e.target.value })}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50" /></div>
+          <ImageUploadField label="Photo" value={form.photo || ''} onChange={value => setForm({ ...form, photo: value })} />
           <div><label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
             <textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} rows={4}
               className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 resize-none" /></div>
@@ -80,6 +74,7 @@ export default function AdminInitiatives() {
         <button onClick={openCreate} className="px-4 py-2 bg-crimson text-white rounded-lg text-sm font-semibold hover:bg-crimson-dark flex items-center gap-2">
           <Plus size={16} /> Add Initiative</button>
       </div>
+      <AdminDataNotice loading={loading} error={error} usingStarter={usingStarter} />
       <div className="space-y-3">
         {items.map((item) => (
           <div key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 flex items-center gap-4 hover:shadow-md transition-all">
@@ -93,7 +88,7 @@ export default function AdminInitiatives() {
             </div>
             <div className="flex gap-2 flex-shrink-0">
               <button onClick={() => openEdit(item)} className="p-2 text-gray-400 hover:text-blue-600 rounded-lg hover:bg-blue-50"><Edit2 size={16} /></button>
-              <button onClick={() => { const updated = items.filter(i => i.id !== item.id); setItems(updated); saveData('initiatives', updated) }} className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50"><Trash2 size={16} /></button>
+              <button disabled={saving} onClick={() => void save(items.filter(i => i.id !== item.id))} className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 disabled:opacity-50"><Trash2 size={16} /></button>
             </div>
           </div>
         ))}

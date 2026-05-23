@@ -4,27 +4,30 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { testimonialsData } from '@/lib/placeholder-data'
+import { useStoredData } from '@/lib/storage'
 
 export default function Testimonials() {
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(0)
+  const testimonials = useStoredData('testimonials', testimonialsData)
 
   useEffect(() => {
+    if (!testimonials.length) return
     const timer = setInterval(() => {
       setDirection(1)
-      setCurrent(prev => (prev + 1) % testimonialsData.length)
+      setCurrent(prev => (prev + 1) % testimonials.length)
     }, 5000)
     return () => clearInterval(timer)
-  }, [])
+  }, [testimonials.length])
 
   const next = () => {
     setDirection(1)
-    setCurrent(prev => (prev + 1) % testimonialsData.length)
+    setCurrent(prev => (prev + 1) % testimonials.length)
   }
 
   const prev = () => {
     setDirection(-1)
-    setCurrent(prev => (prev - 1 + testimonialsData.length) % testimonialsData.length)
+    setCurrent(prev => (prev - 1 + testimonials.length) % testimonials.length)
   }
 
   const variants = {
@@ -32,6 +35,10 @@ export default function Testimonials() {
     center: { x: 0, opacity: 1 },
     exit: (dir: number) => ({ x: dir > 0 ? -200 : 200, opacity: 0 }),
   }
+
+  if (!testimonials.length) return null
+
+  const active = testimonials[current] || testimonials[0]
 
   return (
     <section className="relative py-24 md:py-32 bg-white">
@@ -67,19 +74,19 @@ export default function Testimonials() {
                 </div>
 
                 <blockquote className="font-playfair text-lg md:text-xl text-slate-700 italic leading-relaxed mb-6">
-                  &ldquo;{testimonialsData[current].quote}&rdquo;
+                  &ldquo;{active.quote}&rdquo;
                 </blockquote>
 
                 <div className="flex justify-center mb-3">
                   <img
-                    src={testimonialsData[current].photo}
-                    alt={testimonialsData[current].name}
+                    src={active.photo}
+                    alt={active.name}
                     className="w-14 h-14 rounded-full object-cover ring-2 ring-crimson/10 ring-offset-2"
                   />
                 </div>
                 <div>
-                  <div className="font-semibold text-slate-900 text-sm">{testimonialsData[current].name}</div>
-                  <div className="text-crimson/70 text-xs mt-0.5 font-medium">{testimonialsData[current].role}</div>
+                  <div className="font-semibold text-slate-900 text-sm">{active.name}</div>
+                  <div className="text-crimson/70 text-xs mt-0.5 font-medium">{active.role}</div>
                 </div>
               </motion.div>
             </AnimatePresence>
@@ -91,7 +98,7 @@ export default function Testimonials() {
               <ChevronLeft size={18} />
             </button>
             <div className="flex gap-1.5">
-              {testimonialsData.map((_, i) => (
+              {testimonials.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => { setDirection(i > current ? 1 : -1); setCurrent(i); }}

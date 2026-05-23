@@ -178,35 +178,11 @@ ALTER TABLE volunteer_submissions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contact_messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE site_settings ENABLE ROW LEVEL SECURITY;
 
--- Public read access for all content tables
-CREATE POLICY "Public can read hero" ON hero_content FOR SELECT USING (true);
-CREATE POLICY "Public can read about" ON about_content FOR SELECT USING (true);
-CREATE POLICY "Public can read vision" ON vision_cards FOR SELECT USING (true);
-CREATE POLICY "Public can read initiatives" ON initiatives FOR SELECT USING (is_published = true);
-CREATE POLICY "Public can read gallery" ON gallery_photos FOR SELECT USING (true);
-CREATE POLICY "Public can read news" ON news_posts FOR SELECT USING (is_published = true);
-CREATE POLICY "Public can read testimonials" ON testimonials FOR SELECT USING (true);
-CREATE POLICY "Public can read achievements" ON achievements FOR SELECT USING (true);
-CREATE POLICY "Public can read stats" ON site_stats FOR SELECT USING (true);
-CREATE POLICY "Public can read settings" ON site_settings FOR SELECT USING (true);
-
--- Public can submit volunteer forms and contact messages
-CREATE POLICY "Public can submit volunteer" ON volunteer_submissions FOR INSERT WITH CHECK (true);
-CREATE POLICY "Public can submit contact" ON contact_messages FOR INSERT WITH CHECK (true);
-
--- Authenticated admin can do everything
-CREATE POLICY "Admin full access hero" ON hero_content FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access about" ON about_content FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access vision" ON vision_cards FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access initiatives" ON initiatives FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access gallery" ON gallery_photos FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access news" ON news_posts FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access testimonials" ON testimonials FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access achievements" ON achievements FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access stats" ON site_stats FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access volunteers" ON volunteer_submissions FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access messages" ON contact_messages FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin full access settings" ON site_settings FOR ALL USING (auth.role() = 'authenticated');
+-- All reads and writes are performed by validated server API routes.
+-- Keep direct Supabase browser roles away from both content and submissions.
+REVOKE ALL ON TABLE hero_content, about_content, vision_cards, initiatives, gallery_photos, news_posts,
+  testimonials, achievements, site_stats, volunteer_submissions, contact_messages, site_settings
+  FROM anon, authenticated;
 
 -- ===== UPDATED_AT TRIGGER =====
 CREATE OR REPLACE FUNCTION update_updated_at()

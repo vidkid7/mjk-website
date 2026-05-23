@@ -1,8 +1,9 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { Save, Upload, Globe, Phone, Mail, MapPin, Share2 } from 'lucide-react'
+import { useState } from 'react'
+import { Save, Globe, Phone, Mail, MapPin, Share2 } from 'lucide-react'
 import { FaFacebook, FaInstagram, FaYoutube, FaTwitter, FaTiktok } from 'react-icons/fa'
-import { loadData, saveData } from '@/lib/storage'
+import { useAdminContent } from '@/lib/admin-data'
+import AdminDataNotice from '@/components/admin/AdminDataNotice'
 
 const defaultForm = {
   site_title: 'Mukesh Jung Khadka | Mayor Candidate',
@@ -15,23 +16,49 @@ const defaultForm = {
   youtube_url: 'https://youtube.com/@mjk',
   twitter_url: 'https://twitter.com/mjk',
   tiktok_url: 'https://tiktok.com/@mjk',
+  visible_sections: {
+    hero: true,
+    about: true,
+    achievements: true,
+    vision: true,
+    initiatives: true,
+    entrepreneurship: true,
+    youth: true,
+    testimonials: true,
+    gallery: true,
+    news: true,
+    stats: true,
+    support: true,
+    contact: true,
+  },
 }
 
-export default function AdminSettings() {
-  const [form, setForm] = useState(defaultForm)
-  const [saving, setSaving] = useState(false)
-  const [saved, setSaved] = useState(false)
+const sectionVisibilityOptions = [
+  { key: 'hero', label: 'Hero' },
+  { key: 'about', label: 'About' },
+  { key: 'achievements', label: 'Achievements' },
+  { key: 'vision', label: 'Vision' },
+  { key: 'initiatives', label: 'Initiatives' },
+  { key: 'entrepreneurship', label: 'Entrepreneurship' },
+  { key: 'youth', label: 'Youth Inspiration' },
+  { key: 'testimonials', label: 'Testimonials' },
+  { key: 'gallery', label: 'Gallery' },
+  { key: 'news', label: 'News' },
+  { key: 'stats', label: 'Stats' },
+  { key: 'support', label: 'Support' },
+  { key: 'contact', label: 'Contact' },
+] as const
 
-  useEffect(() => {
-    setForm(loadData('settings', defaultForm))
-  }, [])
+export default function AdminSettings() {
+  const { data: form, setData: setForm, save, loading, saving, error, usingStarter } = useAdminContent('settings', defaultForm)
+  const [saved, setSaved] = useState(false)
+  const visibleSections = { ...defaultForm.visible_sections, ...(form.visible_sections || {}) }
 
   const handleSave = async () => {
-    setSaving(true)
-    saveData('settings', form)
-    await new Promise(r => setTimeout(r, 1000))
-    setSaving(false); setSaved(true)
-    setTimeout(() => setSaved(false), 2000)
+    if (await save({ ...form, visible_sections: visibleSections })) {
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2000)
+    }
   }
 
   const inputClass = "w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson transition-all"
@@ -49,6 +76,8 @@ export default function AdminSettings() {
         </button>
       </div>
 
+      <AdminDataNotice loading={loading} error={error} usingStarter={usingStarter} />
+
       {/* SEO Settings */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
@@ -65,24 +94,6 @@ export default function AdminSettings() {
               className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson resize-none" />
             <p className="text-xs text-gray-400 mt-1">{form.meta_description.length}/160 characters</p>
           </div>
-        </div>
-      </div>
-
-      {/* Logo & Images */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
-          <Upload size={18} className="text-crimson" /> Logo & Images
-        </h3>
-        <div className="grid sm:grid-cols-3 gap-4">
-          {['Site Logo', 'Hero Portrait', 'About Photo'].map(label => (
-            <div key={label}>
-              <p className="text-sm font-medium text-gray-700 mb-2">{label}</p>
-              <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-crimson/50 cursor-pointer transition-colors">
-                <Upload size={24} className="mx-auto text-gray-400 mb-1" />
-                <p className="text-xs text-gray-500">Upload {label}</p>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
 
@@ -144,10 +155,21 @@ export default function AdminSettings() {
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <h3 className="font-semibold text-gray-800 mb-4">Section Visibility</h3>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {['Hero', 'About', 'Vision', 'Initiatives', 'Entrepreneurship', 'Youth Inspiration', 'Gallery', 'News', 'Stats', 'Contact'].map(section => (
-            <label key={section} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
-              <input type="checkbox" defaultChecked className="w-4 h-4 accent-crimson rounded" />
-              <span className="text-sm font-medium text-gray-700">{section}</span>
+          {sectionVisibilityOptions.map(section => (
+            <label key={section.key} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+              <input
+                type="checkbox"
+                checked={visibleSections[section.key]}
+                onChange={e => setForm({
+                  ...form,
+                  visible_sections: {
+                    ...visibleSections,
+                    [section.key]: e.target.checked,
+                  },
+                })}
+                className="w-4 h-4 accent-crimson rounded"
+              />
+              <span className="text-sm font-medium text-gray-700">{section.label}</span>
             </label>
           ))}
         </div>

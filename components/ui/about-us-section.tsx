@@ -18,9 +18,32 @@ import {
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
 import { DhakaPattern } from "@/components/ui/NepalFlag"
 
-export default function AboutMukeshSection() {
+interface AboutContent {
+  pill: string
+  heading: string
+  paragraphs: string
+  community_trust: number
+  youth_engagement: number
+  photo: string
+}
+
+const fallbackContent: AboutContent = {
+  pill: "Discover His Story",
+  heading: "About Mukesh",
+  paragraphs:
+    "Born and raised in the heart of Kathmandu, Mukesh Jung Khadka grew up witnessing both the immense potential and the daily struggles of the Nepali people. A son of Nepal, built for service.",
+  community_trust: 94,
+  youth_engagement: 88,
+  photo: "/mukk-removebg-preview.png",
+}
+
+export default function AboutMukeshSection({ content = fallbackContent }: { content?: AboutContent }) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(sectionRef, { once: false, amount: 0.1 })
+  const paragraphs = content.paragraphs
+    .split(/\n\s*\n/)
+    .map(paragraph => paragraph.trim())
+    .filter(Boolean)
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -134,10 +157,10 @@ export default function AboutMukeshSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <Zap className="w-4 h-4" />
-            Discover His Story
+            {content.pill}
           </motion.span>
           <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-4 text-center text-[#202e44]">
-            About Mukesh
+            {content.heading}
           </h2>
           <motion.div
             className="w-24 h-1 bg-gradient-to-r from-crimson via-gold to-[#003893]"
@@ -148,8 +171,7 @@ export default function AboutMukeshSection() {
         </motion.div>
 
         <motion.p className="text-center max-w-2xl mx-auto mb-16 text-[#202e44]/70 leading-relaxed" variants={itemVariants}>
-          Born and raised in the heart of Kathmandu, Mukesh Jung Khadka grew up witnessing both the
-          immense potential and the daily struggles of the Nepali people. A son of Nepal, built for service.
+          {paragraphs[0]}
         </motion.p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
@@ -183,7 +205,7 @@ export default function AboutMukeshSection() {
               >
                 <div className="bg-gradient-to-b from-slate-100 via-slate-50 to-white">
                   <img
-                    src="/mukk-removebg-preview.png"
+                    src={content.photo || "/mukk-removebg-preview.png"}
                     alt="Mukesh Jung Khadka"
                     loading="lazy"
                     decoding="async"
@@ -275,6 +297,30 @@ export default function AboutMukeshSection() {
               ))}
           </div>
         </div>
+
+        <motion.div
+          className="mt-16 grid gap-5 rounded-lg border border-slate-200 bg-white/80 p-6 shadow-sm md:grid-cols-[1fr_220px]"
+          variants={itemVariants}
+        >
+          <div className="space-y-4">
+            {(paragraphs.length > 1 ? paragraphs.slice(1) : paragraphs).map((paragraph, index) => (
+              <p key={index} className="text-sm leading-7 text-[#202e44]/70">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-1">
+            {[
+              { label: "Community Trust", value: content.community_trust },
+              { label: "Youth Engagement", value: content.youth_engagement },
+            ].map(stat => (
+              <div key={stat.label} className="rounded-lg bg-slate-50 p-4 text-center">
+                <div className="font-playfair text-3xl font-bold text-crimson">{stat.value}%</div>
+                <div className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
 
         {/* CTA Section */}
         <motion.div

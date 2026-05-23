@@ -1,34 +1,29 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { Plus, Edit2, Trash2, X, Save, GripVertical } from 'lucide-react'
+import { useState } from 'react'
+import { Plus, Edit2, Trash2, X, GripVertical } from 'lucide-react'
 import { visionCards } from '@/lib/placeholder-data'
-import { loadData, saveData } from '@/lib/storage'
+import { useAdminContent } from '@/lib/admin-data'
+import AdminDataNotice from '@/components/admin/AdminDataNotice'
 
 const iconOptions = ['Building2', 'Briefcase', 'Laptop', 'Heart', 'TreePine', 'GraduationCap', 'Zap', 'Shield', 'Globe', 'Users']
 
 export default function AdminVision() {
-  const [cards, setCards] = useState(visionCards)
+  const { data: cards, save, loading, saving, error, usingStarter } = useAdminContent('vision', visionCards)
   const [showModal, setShowModal] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [form, setForm] = useState({ icon: 'Building2', heading: '', description: '' })
 
-  useEffect(() => {
-    setCards(loadData('vision', visionCards))
-  }, [])
-
   const openCreate = () => { setEditingId(null); setForm({ icon: 'Building2', heading: '', description: '' }); setShowModal(true) }
   const openEdit = (card: typeof cards[0]) => { setEditingId(card.id); setForm({ icon: card.icon, heading: card.heading, description: card.description }); setShowModal(true) }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     let updated: typeof cards
     if (editingId) {
       updated = cards.map(c => c.id === editingId ? { ...c, ...form } : c)
     } else {
       updated = [...cards, { id: Date.now().toString(), ...form, order_index: cards.length }]
     }
-    setCards(updated)
-    saveData('vision', updated)
-    setShowModal(false)
+    if (await save(updated)) setShowModal(false)
   }
 
   return (
@@ -43,6 +38,8 @@ export default function AdminVision() {
         </button>
       </div>
 
+      <AdminDataNotice loading={loading} error={error} usingStarter={usingStarter} />
+
       <div className="space-y-3">
         {cards.map((card, i) => (
           <div key={card.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 flex items-center gap-4 hover:shadow-md transition-all">
@@ -56,7 +53,7 @@ export default function AdminVision() {
             </div>
             <div className="flex gap-2">
               <button onClick={() => openEdit(card)} className="p-2 text-gray-400 hover:text-blue-600 rounded-lg hover:bg-blue-50"><Edit2 size={16} /></button>
-              <button onClick={() => { const updated = cards.filter(c => c.id !== card.id); setCards(updated); saveData('vision', updated) }} className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50"><Trash2 size={16} /></button>
+              <button disabled={saving} onClick={() => void save(cards.filter(c => c.id !== card.id))} className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 disabled:opacity-50"><Trash2 size={16} /></button>
             </div>
           </div>
         ))}
@@ -90,7 +87,7 @@ export default function AdminVision() {
             </div>
             <div className="flex gap-3 mt-6">
               <button onClick={() => setShowModal(false)} className="flex-1 py-2.5 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">Cancel</button>
-              <button onClick={handleSave} className="flex-1 py-2.5 bg-crimson text-white rounded-lg font-semibold hover:bg-crimson-dark">Save</button>
+              <button disabled={saving} onClick={() => void handleSave()} className="flex-1 py-2.5 bg-crimson text-white rounded-lg font-semibold hover:bg-crimson-dark disabled:opacity-60">{saving ? 'Saving...' : 'Save'}</button>
             </div>
           </div>
         </div>

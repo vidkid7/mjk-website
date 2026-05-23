@@ -3,67 +3,27 @@ import { motion } from 'framer-motion'
 import { Camera } from 'lucide-react'
 import InteractiveBentoGallery from '@/components/ui/interactive-bento-gallery'
 import { DhakaPattern } from '@/components/ui/NepalFlag'
+import { galleryData } from '@/lib/placeholder-data'
+import { useStoredData } from '@/lib/storage'
 
-const mediaItems = [
-  {
-    id: 1,
-    type: 'image',
-    title: 'Community Gathering',
-    desc: 'Bringing Kathmandu together for a brighter future',
-    url: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800',
-    span: 'md:col-span-1 md:row-span-3 sm:col-span-1 sm:row-span-2',
-  },
-  {
-    id: 2,
-    type: 'image',
-    title: 'Youth Leadership Summit',
-    desc: 'Empowering the next generation of leaders',
-    url: 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800',
-    span: 'md:col-span-2 md:row-span-2 col-span-1 sm:col-span-2 sm:row-span-2',
-  },
-  {
-    id: 3,
-    type: 'image',
-    title: 'Coding Bootcamp',
-    desc: 'Free tech education for youth across the valley',
-    url: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800',
-    span: 'md:col-span-1 md:row-span-3 sm:col-span-2 sm:row-span-2',
-  },
-  {
-    id: 4,
-    type: 'image',
-    title: 'Campaign Rally',
-    desc: 'Thousands united for change in Lalitpur',
-    url: 'https://images.unsplash.com/photo-1560439514-4e9645039924?w=800',
-    span: 'md:col-span-2 md:row-span-2 sm:col-span-1 sm:row-span-2',
-  },
-  {
-    id: 5,
-    type: 'image',
-    title: 'Volunteer Clean-Up Drive',
-    desc: 'Community-driven Bagmati river restoration',
-    url: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800',
-    span: 'md:col-span-1 md:row-span-3 sm:col-span-1 sm:row-span-2',
-  },
-  {
-    id: 6,
-    type: 'image',
-    title: 'Business Innovation Forum',
-    desc: 'Connecting entrepreneurs with opportunity',
-    url: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800',
-    span: 'md:col-span-2 md:row-span-2 sm:col-span-1 sm:row-span-2',
-  },
-  {
-    id: 7,
-    type: 'image',
-    title: 'Youth Mentorship Program',
-    desc: 'Guiding young minds toward success',
-    url: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800',
-    span: 'md:col-span-1 md:row-span-3 sm:col-span-1 sm:row-span-2',
-  },
+const gallerySpans = [
+  'md:col-span-1 md:row-span-3 sm:col-span-1 sm:row-span-2',
+  'md:col-span-2 md:row-span-2 col-span-1 sm:col-span-2 sm:row-span-2',
+  'md:col-span-1 md:row-span-3 sm:col-span-2 sm:row-span-2',
+  'md:col-span-2 md:row-span-2 sm:col-span-1 sm:row-span-2',
 ]
 
 export default function Gallery() {
+  const photos = useStoredData('gallery', galleryData)
+  const mediaItems = photos.map((photo, index) => ({
+    id: Number(photo.id) || index + 1,
+    type: 'image',
+    title: photo.caption,
+    desc: photo.category,
+    url: photo.url,
+    span: gallerySpans[index % gallerySpans.length],
+  }))
+
   return (
     <section id="gallery" className="relative overflow-hidden py-24 md:py-32 bg-[#fbfaf7]">
       <DhakaPattern className="opacity-[0.03]" />

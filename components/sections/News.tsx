@@ -3,8 +3,26 @@ import { motion } from 'framer-motion'
 import { Sparkles } from 'lucide-react'
 import { NewsCards } from '@/components/ui/news-cards'
 import { DhakaPattern } from '@/components/ui/NepalFlag'
+import { newsData } from '@/lib/placeholder-data'
+import { useStoredData } from '@/lib/storage'
+
+const defaultPosts = newsData.map(post => ({ ...post, is_published: true, content: post.excerpt }))
 
 export default function News() {
+  const posts = useStoredData('news', defaultPosts)
+  const newsCards = posts
+    .filter(post => post.is_published)
+    .map(post => ({
+      id: post.id,
+      title: post.title,
+      category: post.category,
+      subcategory: 'Campaign Update',
+      timeAgo: post.date,
+      location: 'Kathmandu',
+      image: post.cover,
+      content: (post.content || post.excerpt).split(/\n\s*\n/).filter(Boolean),
+    }))
+
   return (
     <section id="news" className="relative overflow-hidden py-24 md:py-32 bg-white">
       <DhakaPattern className="opacity-[0.03]" />
@@ -43,7 +61,7 @@ export default function News() {
         </div>
 
         {/* News Cards */}
-        <NewsCards />
+        <NewsCards newsCards={newsCards} />
       </div>
     </section>
   )

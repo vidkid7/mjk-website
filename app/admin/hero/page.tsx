@@ -1,8 +1,10 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { Save, Upload, Eye } from 'lucide-react'
+import { useState } from 'react'
+import { Save, Eye } from 'lucide-react'
 import { heroData } from '@/lib/placeholder-data'
-import { loadData, saveData } from '@/lib/storage'
+import { useAdminContent } from '@/lib/admin-data'
+import AdminDataNotice from '@/components/admin/AdminDataNotice'
+import ImageUploadField from '@/components/admin/ImageUploadField'
 
 const defaultForm = {
   label: heroData.label,
@@ -11,6 +13,7 @@ const defaultForm = {
   bio: heroData.bio,
   cta_primary: heroData.cta_primary,
   cta_secondary: heroData.cta_secondary,
+  hero_image: '/mk-removebg-preview.webp',
   stat_projects: heroData.stats[0].value,
   stat_lives: heroData.stats[1].value,
   stat_years: heroData.stats[2].value,
@@ -18,21 +21,14 @@ const defaultForm = {
 }
 
 export default function AdminHero() {
-  const [form, setForm] = useState(defaultForm)
-  const [saving, setSaving] = useState(false)
+  const { data: form, setData: setForm, save, loading, saving, error, usingStarter } = useAdminContent('hero', defaultForm)
   const [saved, setSaved] = useState(false)
 
-  useEffect(() => {
-    setForm(loadData('hero', defaultForm))
-  }, [])
-
   const handleSave = async () => {
-    setSaving(true)
-    saveData('hero', form)
-    await new Promise(r => setTimeout(r, 1000))
-    setSaving(false)
-    setSaved(true)
-    setTimeout(() => setSaved(false), 2000)
+    if (await save(form)) {
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2000)
+    }
   }
 
   return (
@@ -55,6 +51,8 @@ export default function AdminHero() {
           </button>
         </div>
       </div>
+
+      <AdminDataNotice loading={loading} error={error} usingStarter={usingStarter} />
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-6">
         {/* Label */}
@@ -123,15 +121,13 @@ export default function AdminHero() {
           </div>
         </div>
 
-        {/* Hero Image Upload */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Hero Portrait Image</label>
-          <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-crimson/50 transition-colors cursor-pointer">
-            <Upload size={32} className="mx-auto text-gray-400 mb-2" />
-            <p className="text-sm text-gray-500">Click to upload or drag and drop</p>
-            <p className="text-xs text-gray-400 mt-1">PNG, JPG up to 5MB • Recommended: 600x800px</p>
-          </div>
-        </div>
+        {/* Hero Image */}
+        <ImageUploadField
+          label="Hero Portrait Image"
+          value={form.hero_image || ''}
+          onChange={value => setForm({ ...form, hero_image: value })}
+          placeholder="/mk-removebg-preview.webp or https://..."
+        />
 
         {/* Stats */}
         <div>

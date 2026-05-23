@@ -1,11 +1,12 @@
 'use client'
 import { motion } from 'framer-motion'
-import { Rocket, TreePine, Award, Heart, Code, Laptop, ShieldCheck, Flag } from 'lucide-react'
+import { Rocket, TreePine, Award, Heart, Code, Laptop, ShieldCheck, Flag, Star, Globe } from 'lucide-react'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { achievementsData } from '@/lib/placeholder-data'
+import { useStoredData } from '@/lib/storage'
 
 const iconMap: Record<string, React.ComponentType<any>> = {
-  Rocket, TreePine, Award, Heart, Code, Laptop, ShieldCheck, Flag
+  Rocket, TreePine, Award, Heart, Code, Laptop, ShieldCheck, Flag, Star, Globe
 }
 
 const iconColors: Record<string, { bg: string; text: string; dot: string }> = {
@@ -20,6 +21,8 @@ const iconColors: Record<string, { bg: string; text: string; dot: string }> = {
 }
 
 export default function Achievements() {
+  const achievements = useStoredData('achievements', achievementsData)
+
   return (
     <section id="achievements" className="relative py-24 md:py-32 bg-slate-50">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
@@ -35,7 +38,7 @@ export default function Achievements() {
           {/* Center Line — gradient */}
           <div className="absolute left-5 md:left-1/2 top-0 bottom-0 w-px md:-translate-x-px bg-gradient-to-b from-crimson/30 via-blue-500/30 to-gold/30" />
 
-          {achievementsData.map((item, i) => {
+          {achievements.map((item, i) => {
             const Icon = iconMap[item.icon] || Award
             const colors = iconColors[item.icon] || iconColors.Award
             const isLeft = i % 2 === 0

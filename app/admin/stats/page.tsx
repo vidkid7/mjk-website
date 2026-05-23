@@ -1,17 +1,13 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Save } from 'lucide-react'
 import { statsData } from '@/lib/placeholder-data'
-import { loadData, saveData } from '@/lib/storage'
+import { useAdminContent } from '@/lib/admin-data'
+import AdminDataNotice from '@/components/admin/AdminDataNotice'
 
 export default function AdminStats() {
-  const [stats, setStats] = useState(statsData)
-  const [saving, setSaving] = useState(false)
+  const { data: stats, setData: setStats, save, loading, saving, error, usingStarter } = useAdminContent('stats', statsData)
   const [saved, setSaved] = useState(false)
-
-  useEffect(() => {
-    setStats(loadData('stats', statsData))
-  }, [])
 
   const updateStat = (index: number, field: string, value: any) => {
     const updated = [...stats]
@@ -20,11 +16,10 @@ export default function AdminStats() {
   }
 
   const handleSave = async () => {
-    setSaving(true)
-    saveData('stats', stats)
-    await new Promise(r => setTimeout(r, 1000))
-    setSaving(false); setSaved(true)
-    setTimeout(() => setSaved(false), 2000)
+    if (await save(stats)) {
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2000)
+    }
   }
 
   return (
@@ -37,6 +32,8 @@ export default function AdminStats() {
           {saving ? <div className="spinner" /> : saved ? '✓ Saved!' : <><Save size={16} /> Save</>}
         </button>
       </div>
+
+      <AdminDataNotice loading={loading} error={error} usingStarter={usingStarter} />
 
       <div className="grid sm:grid-cols-2 gap-4">
         {stats.map((stat, i) => (

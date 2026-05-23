@@ -183,35 +183,11 @@ ALTER TABLE volunteer_submissions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contact_messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE site_settings ENABLE ROW LEVEL SECURITY;
 
--- Public read access for published content
-CREATE POLICY "Public read hero_content" ON hero_content FOR SELECT TO anon USING (true);
-CREATE POLICY "Public read about_content" ON about_content FOR SELECT TO anon USING (true);
-CREATE POLICY "Public read vision_cards" ON vision_cards FOR SELECT TO anon USING (true);
-CREATE POLICY "Public read initiatives" ON initiatives FOR SELECT TO anon USING (is_published = true);
-CREATE POLICY "Public read gallery_photos" ON gallery_photos FOR SELECT TO anon USING (true);
-CREATE POLICY "Public read news_posts" ON news_posts FOR SELECT TO anon USING (is_published = true);
-CREATE POLICY "Public read testimonials" ON testimonials FOR SELECT TO anon USING (true);
-CREATE POLICY "Public read achievements" ON achievements FOR SELECT TO anon USING (true);
-CREATE POLICY "Public read site_stats" ON site_stats FOR SELECT TO anon USING (true);
-CREATE POLICY "Public read site_settings" ON site_settings FOR SELECT TO anon USING (true);
-
--- Public insert for contact/volunteer forms
-CREATE POLICY "Public insert volunteer_submissions" ON volunteer_submissions FOR INSERT TO anon WITH CHECK (true);
-CREATE POLICY "Public insert contact_messages" ON contact_messages FOR INSERT TO anon WITH CHECK (true);
-
--- Authenticated admin full access
-CREATE POLICY "Admin full access hero_content" ON hero_content FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin full access about_content" ON about_content FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin full access vision_cards" ON vision_cards FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin full access initiatives" ON initiatives FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin full access gallery_photos" ON gallery_photos FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin full access news_posts" ON news_posts FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin full access testimonials" ON testimonials FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin full access achievements" ON achievements FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin full access site_stats" ON site_stats FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin full access volunteer_submissions" ON volunteer_submissions FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin full access contact_messages" ON contact_messages FOR ALL TO authenticated USING (true) WITH CHECK (true);
-CREATE POLICY "Admin full access site_settings" ON site_settings FOR ALL TO authenticated USING (true) WITH CHECK (true);
+-- All reads and writes are performed by validated server API routes.
+-- Keep direct Supabase browser roles away from both content and submissions.
+REVOKE ALL ON TABLE hero_content, about_content, vision_cards, initiatives, gallery_photos, news_posts,
+  testimonials, achievements, site_stats, volunteer_submissions, contact_messages, site_settings
+  FROM anon, authenticated;
 
 -- ============================================================
 -- Seed initial data

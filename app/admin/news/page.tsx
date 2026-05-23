@@ -1,27 +1,22 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Plus, Edit2, Trash2, Eye, EyeOff, X, Save, Calendar } from 'lucide-react'
 import { newsData } from '@/lib/placeholder-data'
-import { loadData, saveData } from '@/lib/storage'
+import { useAdminContent } from '@/lib/admin-data'
+import AdminDataNotice from '@/components/admin/AdminDataNotice'
+import ImageUploadField from '@/components/admin/ImageUploadField'
 
-const defaultPosts = newsData.map(n => ({ ...n, is_published: true }))
+const defaultPosts = newsData.map(n => ({ ...n, content: n.excerpt, is_published: true }))
 
 export default function AdminNews() {
-  const [posts, setPosts] = useState(defaultPosts)
+  const { data: posts, save, loading, saving, error, usingStarter } = useAdminContent('news', defaultPosts)
   const [showEditor, setShowEditor] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [form, setForm] = useState({
     title: '', excerpt: '', content: '', category: 'Campaign', cover: '', is_published: true, date: ''
   })
 
-  useEffect(() => {
-    setPosts(loadData('news', defaultPosts))
-  }, [])
-
-  const persistPosts = (updated: typeof posts) => {
-    setPosts(updated)
-    saveData('news', updated)
-  }
+  const persistPosts = (updated: typeof posts) => save(updated)
 
   const openCreate = () => {
     setEditingId(null)
@@ -32,27 +27,27 @@ export default function AdminNews() {
   const openEdit = (post: typeof posts[0]) => {
     setEditingId(post.id)
     setForm({
-      title: post.title, excerpt: post.excerpt, content: '', category: post.category,
+      title: post.title, excerpt: post.excerpt, content: post.content || post.excerpt, category: post.category,
       cover: post.cover, is_published: post.is_published, date: post.date,
     })
     setShowEditor(true)
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (editingId) {
-      persistPosts(posts.map(p => p.id === editingId ? { ...p, ...form } : p))
+      if (!(await persistPosts(posts.map(p => p.id === editingId ? { ...p, ...form } : p)))) return
     } else {
-      persistPosts([{ id: Date.now().toString(), ...form }, ...posts])
+      if (!(await persistPosts([{ id: Date.now().toString(), ...form }, ...posts]))) return
     }
     setShowEditor(false)
   }
 
-  const togglePublish = (id: string) => {
-    persistPosts(posts.map(p => p.id === id ? { ...p, is_published: !p.is_published } : p))
+  const togglePublish = async (id: string) => {
+    await persistPosts(posts.map(p => p.id === id ? { ...p, is_published: !p.is_published } : p))
   }
 
-  const deletePost = (id: string) => {
-    persistPosts(posts.filter(p => p.id !== id))
+  const deletePost = async (id: string) => {
+    await persistPosts(posts.filter(p => p.id !== id))
   }
 
   if (showEditor) {
@@ -66,8 +61,8 @@ export default function AdminNews() {
             <button onClick={() => setShowEditor(false)} className="px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
               <X size={16} /> Cancel
             </button>
-            <button onClick={handleSave} className="px-6 py-2 bg-crimson text-white rounded-lg text-sm font-semibold hover:bg-crimson-dark flex items-center gap-2">
-              <Save size={16} /> {editingId ? 'Save Changes' : 'Publish'}
+            <button disabled={saving} onClick={() => void handleSave()} className="px-6 py-2 bg-crimson text-white rounded-lg text-sm font-semibold hover:bg-crimson-dark flex items-center gap-2 disabled:opacity-60">
+              <Save size={16} /> {saving ? 'Saving...' : editingId ? 'Save Changes' : 'Publish'}
             </button>
           </div>
         </div>
@@ -102,11 +97,7 @@ export default function AdminNews() {
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Cover Image URL</label>
-            <input type="url" value={form.cover} onChange={e => setForm({ ...form, cover: e.target.value })}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson" placeholder="https://..." />
-          </div>
+          <ImageUploadField label="Cover Image" value={form.cover || ''} onChange={value => setForm({ ...form, cover: value })} />
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Excerpt</label>
@@ -138,6 +129,8 @@ export default function AdminNews() {
         </button>
       </div>
 
+      <AdminDataNotice loading={loading} error={error} usingStarter={usingStarter} />
+
       {/* Posts List */}
       <div className="space-y-3">
         {posts.map((post) => (
@@ -156,13 +149,13 @@ export default function AdminNews() {
               </div>
             </div>
             <div className="flex items-center gap-2 flex-shrink-0">
-              <button onClick={() => togglePublish(post.id)} className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100" title={post.is_published ? 'Unpublish' : 'Publish'}>
+              <button disabled={saving} onClick={() => void togglePublish(post.id)} className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100 disabled:opacity-50" title={post.is_published ? 'Unpublish' : 'Publish'}>
                 {post.is_published ? <Eye size={16} /> : <EyeOff size={16} />}
               </button>
               <button onClick={() => openEdit(post)} className="p-2 text-gray-400 hover:text-blue-600 rounded-lg hover:bg-blue-50">
                 <Edit2 size={16} />
               </button>
-              <button onClick={() => deletePost(post.id)} className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50">
+              <button disabled={saving} onClick={() => void deletePost(post.id)} className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 disabled:opacity-50">
                 <Trash2 size={16} />
               </button>
             </div>

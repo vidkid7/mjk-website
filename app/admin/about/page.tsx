@@ -1,8 +1,10 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { Save, Upload, Eye } from 'lucide-react'
+import { useState } from 'react'
+import { Save, Eye } from 'lucide-react'
 import { aboutData } from '@/lib/placeholder-data'
-import { loadData, saveData } from '@/lib/storage'
+import { useAdminContent } from '@/lib/admin-data'
+import AdminDataNotice from '@/components/admin/AdminDataNotice'
+import ImageUploadField from '@/components/admin/ImageUploadField'
 
 const defaultForm = {
   pill: aboutData.pill,
@@ -10,24 +12,18 @@ const defaultForm = {
   paragraphs: aboutData.paragraphs.join('\n\n'),
   community_trust: aboutData.community_trust,
   youth_engagement: aboutData.youth_engagement,
+  photo: '/mukk-removebg-preview.png',
 }
 
 export default function AdminAbout() {
-  const [form, setForm] = useState(defaultForm)
-  const [saving, setSaving] = useState(false)
+  const { data: form, setData: setForm, save, loading, saving, error, usingStarter } = useAdminContent('about', defaultForm)
   const [saved, setSaved] = useState(false)
 
-  useEffect(() => {
-    setForm(loadData('about', defaultForm))
-  }, [])
-
   const handleSave = async () => {
-    setSaving(true)
-    saveData('about', form)
-    await new Promise(r => setTimeout(r, 1000))
-    setSaving(false)
-    setSaved(true)
-    setTimeout(() => setSaved(false), 2000)
+    if (await save(form)) {
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2000)
+    }
   }
 
   return (
@@ -47,6 +43,8 @@ export default function AdminAbout() {
           </button>
         </div>
       </div>
+
+      <AdminDataNotice loading={loading} error={error} usingStarter={usingStarter} />
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-6">
         <div className="grid sm:grid-cols-2 gap-4">
@@ -68,13 +66,12 @@ export default function AdminAbout() {
             rows={12} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson resize-none" />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">About Photo</label>
-          <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-crimson/50 cursor-pointer">
-            <Upload size={32} className="mx-auto text-gray-400 mb-2" />
-            <p className="text-sm text-gray-500">Upload about section portrait</p>
-          </div>
-        </div>
+        <ImageUploadField
+          label="About Photo"
+          value={form.photo || ''}
+          onChange={value => setForm({ ...form, photo: value })}
+          placeholder="/mukk-removebg-preview.png or https://..."
+        />
 
         <div className="grid sm:grid-cols-2 gap-4">
           <div>

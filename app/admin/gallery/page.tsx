@@ -1,21 +1,19 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { Plus, Trash2, Upload, X, Edit2, GripVertical } from 'lucide-react'
+import { useState } from 'react'
+import { Plus, Trash2, X, Edit2 } from 'lucide-react'
 import { galleryData } from '@/lib/placeholder-data'
-import { loadData, saveData } from '@/lib/storage'
+import { useAdminContent } from '@/lib/admin-data'
+import AdminDataNotice from '@/components/admin/AdminDataNotice'
+import ImageUploadField from '@/components/admin/ImageUploadField'
 
 const categories = ['Community', 'Events', 'Youth', 'Business']
 
 export default function AdminGallery() {
-  const [photos, setPhotos] = useState(galleryData)
+  const { data: photos, save, loading, saving, error, usingStarter } = useAdminContent('gallery', galleryData)
   const [showModal, setShowModal] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [form, setForm] = useState({ url: '', caption: '', category: 'Community' })
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
-
-  useEffect(() => {
-    setPhotos(loadData('gallery', galleryData))
-  }, [])
 
   const openCreate = () => {
     setEditingId(null)
@@ -36,16 +34,12 @@ export default function AdminGallery() {
     } else {
       updated = [...photos, { id: Date.now().toString(), ...form }]
     }
-    setPhotos(updated)
-    saveData('gallery', updated)
-    setShowModal(false)
+    if (await save(updated)) setShowModal(false)
   }
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     const updated = photos.filter(p => p.id !== id)
-    setPhotos(updated)
-    saveData('gallery', updated)
-    setDeleteConfirm(null)
+    if (await save(updated)) setDeleteConfirm(null)
   }
 
   return (
@@ -62,6 +56,8 @@ export default function AdminGallery() {
           <Plus size={16} /> Add Photo
         </button>
       </div>
+
+      <AdminDataNotice loading={loading} error={error} usingStarter={usingStarter} />
 
       {/* Photo Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -108,20 +104,7 @@ export default function AdminGallery() {
             </div>
 
             <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Photo URL</label>
-                <input
-                  type="url"
-                  value={form.url}
-                  onChange={e => setForm({ ...form, url: e.target.value })}
-                  placeholder="https://..."
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson"
-                />
-                <div className="mt-2 border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-crimson/50 cursor-pointer">
-                  <Upload size={24} className="mx-auto text-gray-400 mb-1" />
-                  <p className="text-xs text-gray-500">Or upload from your device</p>
-                </div>
-              </div>
+              <ImageUploadField label="Photo" value={form.url || ''} onChange={value => setForm({ ...form, url: value })} />
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Caption</label>
@@ -149,8 +132,8 @@ export default function AdminGallery() {
               <button onClick={() => setShowModal(false)} className="flex-1 py-2.5 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">
                 Cancel
               </button>
-              <button onClick={handleSave} className="flex-1 py-2.5 bg-crimson text-white rounded-lg font-semibold hover:bg-crimson-dark">
-                {editingId ? 'Save Changes' : 'Add Photo'}
+              <button disabled={saving} onClick={() => void handleSave()} className="flex-1 py-2.5 bg-crimson text-white rounded-lg font-semibold hover:bg-crimson-dark disabled:opacity-60">
+                {saving ? 'Saving...' : editingId ? 'Save Changes' : 'Add Photo'}
               </button>
             </div>
           </div>
@@ -170,8 +153,8 @@ export default function AdminGallery() {
               <button onClick={() => setDeleteConfirm(null)} className="flex-1 py-2.5 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">
                 Cancel
               </button>
-              <button onClick={() => handleDelete(deleteConfirm)} className="flex-1 py-2.5 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700">
-                Delete
+              <button disabled={saving} onClick={() => void handleDelete(deleteConfirm)} className="flex-1 py-2.5 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 disabled:opacity-60">
+                {saving ? 'Deleting...' : 'Delete'}
               </button>
             </div>
           </div>

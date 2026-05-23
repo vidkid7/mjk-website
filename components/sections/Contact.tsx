@@ -4,24 +4,37 @@ import { motion } from 'framer-motion'
 import { MapPin, Phone, Mail, Send, Check } from 'lucide-react'
 import { FaFacebook, FaInstagram, FaYoutube, FaTwitter, FaTiktok } from 'react-icons/fa'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { addMessage } from '@/lib/storage'
+import { addMessage, useStoredData } from '@/lib/storage'
 
-const socialLinks = [
-  { icon: FaFacebook, label: 'Facebook', url: '#', color: 'hover:text-blue-600 hover:bg-blue-50 hover:border-blue-100' },
-  { icon: FaInstagram, label: 'Instagram', url: '#', color: 'hover:text-pink-600 hover:bg-pink-50 hover:border-pink-100' },
-  { icon: FaYoutube, label: 'YouTube', url: '#', color: 'hover:text-red-600 hover:bg-red-50 hover:border-red-100' },
-  { icon: FaTwitter, label: 'Twitter/X', url: '#', color: 'hover:text-sky-600 hover:bg-sky-50 hover:border-sky-100' },
-  { icon: FaTiktok, label: 'TikTok', url: '#', color: 'hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200' },
-]
+const defaultSettings = {
+  site_title: 'Mukesh Jung Khadka | Mayor Candidate',
+  meta_description: 'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Mayor Candidate for Kathmandu.',
+  phone: '+977 9851241656',
+  email: 'khadkamukesh423@gmail.com',
+  address: 'Ward No. 10, Kathmandu Metropolitan City, Bagmati Province, Nepal',
+  facebook_url: 'https://facebook.com/mjk',
+  instagram_url: 'https://instagram.com/mjk',
+  youtube_url: 'https://youtube.com/@mjk',
+  twitter_url: 'https://twitter.com/mjk',
+  tiktok_url: 'https://tiktok.com/@mjk',
+}
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
+  const settings = useStoredData('settings', defaultSettings)
+  const socialLinks = [
+    { icon: FaFacebook, label: 'Facebook', url: settings.facebook_url, color: 'hover:text-blue-600 hover:bg-blue-50 hover:border-blue-100' },
+    { icon: FaInstagram, label: 'Instagram', url: settings.instagram_url, color: 'hover:text-pink-600 hover:bg-pink-50 hover:border-pink-100' },
+    { icon: FaYoutube, label: 'YouTube', url: settings.youtube_url, color: 'hover:text-red-600 hover:bg-red-50 hover:border-red-100' },
+    { icon: FaTwitter, label: 'Twitter/X', url: settings.twitter_url, color: 'hover:text-sky-600 hover:bg-sky-50 hover:border-sky-100' },
+    { icon: FaTiktok, label: 'TikTok', url: settings.tiktok_url, color: 'hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200' },
+  ]
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      addMessage({ name: form.name, email: form.email, subject: form.subject, message: form.message })
+      await addMessage({ name: form.name, email: form.email, subject: form.subject, message: form.message })
       setSubmitted(true)
       setForm({ name: '', email: '', subject: '', message: '' })
       setTimeout(() => setSubmitted(false), 3000)
@@ -42,9 +55,9 @@ export default function Contact() {
 
         <div className="grid lg:grid-cols-3 gap-5 mb-10">
           {[
-            { icon: MapPin, label: 'Office Address', value: 'Ward No. 10, Kathmandu Metropolitan City,\nBagmati Province, Nepal', color: 'text-crimson', bg: 'bg-crimson-50 border-crimson-100' },
-            { icon: Phone, label: 'Phone', value: '+977 9851241656', color: 'text-blue-600', bg: 'bg-blue-50 border-blue-100' },
-            { icon: Mail, label: 'Email', value: 'khadkamukesh423@gmail.com', color: 'text-emerald', bg: 'bg-emerald-50 border-emerald-light/30' },
+            { icon: MapPin, label: 'Office Address', value: settings.address, color: 'text-crimson', bg: 'bg-crimson-50 border-crimson-100' },
+            { icon: Phone, label: 'Phone', value: settings.phone, color: 'text-blue-600', bg: 'bg-blue-50 border-blue-100' },
+            { icon: Mail, label: 'Email', value: settings.email, color: 'text-emerald', bg: 'bg-emerald-50 border-emerald-light/30' },
           ].map((info, i) => (
             <motion.div
               key={info.label}

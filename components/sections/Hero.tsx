@@ -2,8 +2,26 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, MapPin, Play } from 'lucide-react'
 import { heroData } from '@/lib/placeholder-data'
+import { useStoredData } from '@/lib/storage'
+
+const defaultHero = {
+  label: heroData.label,
+  headline: heroData.headline.replace('\n', '\\n'),
+  subheadline: heroData.subheadline,
+  bio: heroData.bio,
+  cta_primary: heroData.cta_primary,
+  cta_secondary: heroData.cta_secondary,
+  hero_image: '/mk-removebg-preview.webp',
+  stat_projects: heroData.stats[0].value,
+  stat_lives: heroData.stats[1].value,
+  stat_years: heroData.stats[2].value,
+  stat_youth: heroData.stats[3].value,
+}
 
 export default function Hero() {
+  const content = useStoredData('hero', defaultHero)
+  const headlineParts = content.headline.replace(/\\n/g, '\n').split('\n').filter(Boolean)
+
   return (
     <div id="home" className="relative isolate pt-[72px] sm:pt-[80px] lg:pt-[88px]">
       <section className="relative min-h-[calc(100svh-72px)] overflow-hidden bg-[#f7f9fc] text-[#12375f] sm:min-h-[calc(100svh-80px)] lg:min-h-[calc(100svh-88px)]">
@@ -92,7 +110,7 @@ export default function Hero() {
         </div>
 
         <img
-          src="/mk-removebg-preview.webp"
+          src={content.hero_image || '/mk-removebg-preview.webp'}
           alt="Mukesh Jung Khadka"
           width={403}
           height={620}
@@ -115,7 +133,7 @@ export default function Hero() {
             >
               <span className="inline-flex items-center gap-2 rounded-md border border-[#12375f]/18 bg-white/80 px-3 py-1.5 text-[9px] font-extrabold uppercase tracking-[0.24em] text-[#12375f] shadow-sm shadow-slate-900/5 backdrop-blur-sm sm:gap-3 sm:px-4 sm:py-2 sm:text-[11px] sm:tracking-[0.28em]">
                 <span className="h-2.5 w-2.5 rounded-full bg-crimson sm:h-3 sm:w-3" />
-                Leading Nepal
+                {content.label}
               </span>
             </motion.div>
 
@@ -125,8 +143,8 @@ export default function Hero() {
               transition={{ duration: 0.65, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
               className="font-playfair text-[3rem] font-extrabold leading-[0.95] tracking-tight text-[#12375f] min-[420px]:text-[3.5rem] sm:text-6xl md:text-7xl lg:text-[5rem]"
             >
-              Forward
-              <span className="block text-crimson">Together</span>
+              {headlineParts[0] || 'Forward'}
+              <span className="block text-crimson">{headlineParts.slice(1).join(' ') || 'Together'}</span>
             </motion.h1>
 
             <motion.p
@@ -135,7 +153,7 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.18 }}
               className="mt-4 max-w-xl text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#12375f]/78 sm:mt-5 sm:text-[13px] sm:tracking-[0.27em]"
             >
-              {heroData.subheadline}
+              {content.subheadline}
             </motion.p>
             <div className="mx-auto mt-2.5 h-0.5 w-14 bg-crimson sm:mx-0" />
 
@@ -145,7 +163,7 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.26 }}
               className="mx-auto mt-3 max-w-[31rem] text-[13px] leading-6 text-[#12375f]/82 sm:mx-0 sm:mt-4 sm:text-sm sm:leading-7 md:text-[15px] md:leading-7"
             >
-              {heroData.bio}
+              {content.bio}
             </motion.p>
 
             <motion.div
@@ -158,14 +176,14 @@ export default function Hero() {
                 href="#vision"
                 className="group inline-flex items-center gap-2 rounded-md bg-crimson px-5 py-2.5 text-[10px] font-extrabold uppercase tracking-[0.15em] text-white shadow-xl shadow-crimson/20 transition-all duration-300 hover:bg-crimson-dark sm:gap-3 sm:px-7 sm:py-3.5 sm:text-xs sm:tracking-[0.18em]"
               >
-                Explore My Vision <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+                {content.cta_primary} <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
               </a>
               <a
                 href="#about"
                 className="inline-flex items-center gap-2 rounded-md border border-[#12375f]/45 bg-white/50 px-5 py-2.5 text-[10px] font-extrabold uppercase tracking-[0.15em] text-[#12375f] backdrop-blur-sm transition-all hover:border-crimson hover:text-crimson sm:gap-3 sm:px-7 sm:py-3.5 sm:text-xs sm:tracking-[0.18em]"
               >
                 <Play size={15} className="text-crimson" />
-                Learn More
+                {content.cta_secondary}
               </a>
             </motion.div>
 

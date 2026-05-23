@@ -3,39 +3,50 @@ import { motion } from 'framer-motion'
 import { Sparkles, ArrowRight, Quote, Flame, Star, Heart } from 'lucide-react'
 import { useState } from 'react'
 import { DhakaPattern } from '@/components/ui/NepalFlag'
+import { useStoredData } from '@/lib/storage'
 
-const youthTestimonials = [
+const defaultTestimonials = [
   {
     photo: 'https://randomuser.me/api/portraits/men/45.jpg',
     name: 'Aarav Poudel',
     role: 'Software Engineer',
     quote: 'Mukesh sir taught me that my background doesn\'t define my future. Today I\'m a software engineer at a Kathmandu startup. His belief in us changed everything.',
-    gradient: 'from-blue-500 to-cyan-500',
-    bgGlow: 'bg-blue-500/10',
-    icon: Star,
   },
   {
     photo: 'https://randomuser.me/api/portraits/women/32.jpg',
     name: 'Priya Maharjan',
     role: 'CS Scholarship Holder',
     quote: 'From a girl who couldn\'t afford college to a scholarship holder studying computer science — Mukesh dai\'s program gave me wings I didn\'t know I had.',
-    gradient: 'from-violet to-purple-500',
-    bgGlow: 'bg-violet/10',
-    icon: Heart,
   },
   {
     photo: 'https://randomuser.me/api/portraits/men/28.jpg',
     name: 'Sagar Rai',
     role: 'Youth Leader',
     quote: 'The youth bootcamp wasn\'t just about coding. It taught us leadership, teamwork, and that we — the youth of Nepal — have the power to transform this nation.',
-    gradient: 'from-emerald to-teal-500',
-    bgGlow: 'bg-emerald/10',
-    icon: Flame,
   },
+]
+
+const defaultData = {
+  heading: 'If I Can, You Can',
+  description: 'Every young Nepali has the potential to become a leader, an entrepreneur, a changemaker. Our mission is to unlock that potential and build a generation that will take Nepal to unprecedented heights.',
+  testimonials: defaultTestimonials,
+  ctaText: 'Join Our Youth Movement',
+}
+
+const testimonialStyles = [
+  { gradient: 'from-blue-500 to-cyan-500', bgGlow: 'bg-blue-500/10', icon: Star },
+  { gradient: 'from-violet to-purple-500', bgGlow: 'bg-violet/10', icon: Heart },
+  { gradient: 'from-emerald to-teal-500', bgGlow: 'bg-emerald/10', icon: Flame },
 ]
 
 export default function YouthInspiration() {
   const [activeCard, setActiveCard] = useState<number | null>(null)
+  const content = useStoredData('youth', defaultData)
+  const headingParts = content.heading.split(',')
+  const testimonials = content.testimonials.map((testimonial, index) => ({
+    ...testimonial,
+    ...testimonialStyles[index % testimonialStyles.length],
+  }))
 
   return (
     <section className="relative py-24 md:py-32 bg-white overflow-hidden">
@@ -68,9 +79,10 @@ export default function YouthInspiration() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="font-playfair text-3xl md:text-4xl lg:text-6xl font-extrabold text-slate-900 mb-4 leading-tight tracking-tight"
           >
-            If I Can,{' '}
+            {headingParts[0]}
+            {headingParts[1] ? ', ' : ' '}
             <span className="relative inline-block">
-              <span className="gradient-text-warm">You Can</span>
+              <span className="gradient-text-warm">{headingParts.slice(1).join(',').trim()}</span>
               <motion.div
                 className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-crimson to-gold rounded-full"
                 initial={{ scaleX: 0 }}
@@ -89,15 +101,13 @@ export default function YouthInspiration() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-slate-500 text-base md:text-lg max-w-2xl mx-auto leading-8"
           >
-            Every young Nepali has the potential to become a leader, an entrepreneur, a changemaker.
-            Our mission is to unlock that potential and build a generation that will take Nepal to
-            unprecedented heights.
+            {content.description}
           </motion.p>
         </div>
 
         {/* Testimonial Cards */}
         <div className="grid md:grid-cols-3 gap-6 mb-14">
-          {youthTestimonials.map((t, i) => (
+          {testimonials.map((t, i) => (
             <motion.div
               key={t.name}
               initial={{ opacity: 0, y: 30 }}
@@ -177,7 +187,7 @@ export default function YouthInspiration() {
               className="group inline-flex items-center gap-2.5 px-8 py-4 bg-crimson text-white font-bold uppercase tracking-[0.12em] text-xs shadow-lg hover:bg-crimson-dark hover:shadow-xl hover:shadow-crimson/20 transition-all duration-300"
           >
             <Sparkles size={16} />
-            Join Our Youth Movement
+            {content.ctaText}
             <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
           </motion.a>
         </motion.div>

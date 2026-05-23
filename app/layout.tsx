@@ -1,14 +1,38 @@
 import type { Metadata } from 'next'
+import { createClient } from '@supabase/supabase-js'
 import './globals.css'
 
-export const metadata: Metadata = {
-  title: 'Mukesh Jung Khadka | Mayor Candidate — Moving Forward Together',
-  description: 'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Mayor Candidate for Kathmandu. सँगै अगाडि बढौं — Moving Forward Together.',
+const defaultTitle = 'Mukesh Jung Khadka | Mayor Candidate — Moving Forward Together'
+const defaultDescription = 'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Mayor Candidate for Kathmandu. सँगै अगाडि बढौं — Moving Forward Together.'
+
+async function readMetadataSettings() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+  if (!url || !key) return null
+
+  const client = createClient(url, key, { auth: { persistSession: false } })
+  const { data } = await client
+    .from('site_settings')
+    .select('site_title,meta_description')
+    .not('site_title', 'like', '__cms__%')
+    .limit(1)
+    .maybeSingle()
+  return data
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await readMetadataSettings()
+  const title = settings?.site_title || defaultTitle
+  const description = settings?.meta_description || defaultDescription
+
+  return {
+  title,
+  description,
   keywords: 'Mukesh Jung Khadka, MJK, Nepal, Mayor, Kathmandu, Youth, Social Worker, Entrepreneur',
   metadataBase: new URL('https://mukeshjungkhadka.com.np'),
   openGraph: {
-    title: 'Mukesh Jung Khadka | Moving Forward Together',
-    description: 'Entrepreneur. Social Worker. Youth Champion. Mayor Candidate for Kathmandu.',
+    title,
+    description,
     type: 'website',
     locale: 'en_US',
     url: 'https://mukeshjungkhadka.com.np',
@@ -17,14 +41,15 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Mukesh Jung Khadka | Moving Forward Together',
-    description: 'Entrepreneur. Social Worker. Youth Champion. Mayor Candidate for Kathmandu.',
+    title,
+    description,
     images: ['/og-image.png'],
   },
   robots: {
     index: true,
     follow: true,
   },
+  }
 }
 
 export default function RootLayout({

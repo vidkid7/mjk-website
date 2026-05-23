@@ -3,8 +3,12 @@ import { motion } from 'framer-motion'
 import { Sparkles } from 'lucide-react'
 import VisionCarousel from '@/components/ui/feature-carousel'
 import { DhakaPattern } from '@/components/ui/NepalFlag'
+import { visionCards } from '@/lib/placeholder-data'
+import { useStoredData } from '@/lib/storage'
 
 export default function Vision() {
+  const cards = useStoredData('vision', visionCards)
+
   return (
     <section id="vision" className="relative overflow-hidden py-24 md:py-32 bg-white">
       <DhakaPattern className="opacity-[0.035]" />
@@ -49,7 +53,7 @@ export default function Vision() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.3 }}
         >
-          <VisionCarousel />
+          <VisionCarousel features={cards} />
         </motion.div>
       </div>
     </section>
