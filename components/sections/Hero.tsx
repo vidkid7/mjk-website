@@ -1,6 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
-import { ArrowRight, MapPin, Play } from 'lucide-react'
+import { ArrowRight, Globe, Play } from 'lucide-react'
 import { heroData } from '@/lib/placeholder-data'
 import { useStoredData } from '@/lib/storage'
 
@@ -193,8 +193,8 @@ export default function Hero() {
               transition={{ duration: 0.45, delay: 0.44 }}
               className="mt-6 hidden items-center gap-3 text-left text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#12375f]/78 sm:inline-flex"
             >
-              <MapPin size={16} className="text-crimson" />
-              Mayor Candidate - Kathmandu Metropolitan City
+              <Globe size={16} className="text-crimson" />
+              Building Digital Solutions for Nepal
             </motion.div>
           </div>
         </div>

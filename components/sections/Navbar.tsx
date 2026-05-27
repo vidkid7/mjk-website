@@ -1,8 +1,8 @@
 'use client'
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Heart } from 'lucide-react'
-import { NepalFlagPennant } from '@/components/ui/NepalFlag'
 
 const navLinks = [
   { label: 'About', href: '#about' },
@@ -48,23 +48,29 @@ export default function Navbar() {
       >
         <div className="mx-auto flex items-center justify-between px-4 sm:px-7 lg:px-10 xl:px-12">
           {/* Logo */}
-          <a href="#home" className="group flex items-center gap-3">
-            <div className="relative h-10 w-9 shrink-0 sm:h-12 sm:w-10">
-              <NepalFlagPennant className="absolute left-0 top-0 drop-shadow-sm" width={30} height={38} />
-              <NepalFlagPennant className="absolute bottom-0 left-0 drop-shadow-sm" width={30} height={38} />
+          <a href="#home" className="group flex shrink-0 items-center gap-2.5 sm:gap-3">
+            <div className="relative h-10 w-16 shrink-0 sm:h-12 sm:w-[5.25rem]">
+              <Image
+                src="/heritage-palace-logo.png"
+                alt=""
+                fill
+                priority
+                sizes="(min-width: 640px) 84px, 64px"
+                className="object-contain object-left drop-shadow-sm"
+              />
             </div>
-            <div className="flex flex-col">
-              <span className="font-playfair text-2xl font-extrabold leading-none tracking-tight text-[#12375f] sm:text-3xl">
-                MJK
+            <div className="flex flex-col whitespace-nowrap">
+              <span className="font-playfair text-lg font-extrabold leading-none tracking-tight text-[#12375f] sm:text-xl xl:text-2xl">
+                Mukesh Khadka
               </span>
-              <span className="mt-0.5 text-[8px] font-extrabold uppercase tracking-[0.42em] text-[#12375f]/70 sm:text-[10px]">
-                For Kathmandu
+              <span className="mt-1 text-[8px] font-extrabold uppercase tracking-[0.4em] text-[#12375f]/70 sm:text-[9px]">
+                For Nepal
               </span>
             </div>
           </a>
 
           {/* Desktop Nav */}
-          <div className="hidden items-center gap-8 lg:flex xl:gap-11">
+          <div className="hidden items-center gap-8 xl:flex xl:gap-11">
             {navLinks.map((link, i) => {
               const isActive = activeSection === link.href.replace('#', '')
               return (
@@ -104,7 +110,7 @@ export default function Navbar() {
             </motion.a>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="rounded-lg p-2 text-[#0b2b55] transition-all duration-300 hover:bg-slate-100 lg:hidden"
+              className="rounded-lg p-2 text-[#0b2b55] transition-all duration-300 hover:bg-slate-100 xl:hidden"
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -121,16 +127,22 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 bg-white/[0.98] backdrop-blur-2xl flex flex-col lg:hidden"
+            className="fixed inset-0 z-40 bg-white/[0.98] backdrop-blur-2xl flex flex-col xl:hidden"
           >
             <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center overflow-hidden bg-white shadow-lg shadow-slate-900/10 ring-1 ring-slate-200">
-                  <NepalFlagPennant width={24} height={30} />
+              <div className="flex items-center gap-2.5">
+                <div className="relative h-10 w-16 shrink-0">
+                  <Image
+                    src="/heritage-palace-logo.png"
+                    alt=""
+                    fill
+                    sizes="64px"
+                    className="object-contain object-left drop-shadow-sm"
+                  />
                 </div>
                 <div>
-                  <span className="font-bold text-slate-900 block leading-none">MJK</span>
-                  <span className="text-[9px] text-crimson/60 font-medium uppercase tracking-wider">For Kathmandu</span>
+                  <span className="font-playfair text-base font-bold text-slate-900 block leading-none whitespace-nowrap">Mukesh Khadka</span>
+                  <span className="text-[9px] text-crimson/60 font-medium uppercase tracking-[0.28em]">For Nepal</span>
                 </div>
               </div>
               <button

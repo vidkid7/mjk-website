@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image'
 import { useState } from 'react'
 import { FaFacebook, FaInstagram, FaYoutube, FaTwitter, FaTiktok } from 'react-icons/fa'
 import { ArrowRight, Heart } from 'lucide-react'
@@ -71,14 +72,23 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 bg-crimson flex items-center justify-center">
-                <span className="font-bold text-white text-sm">M</span>
+              <div className="relative h-11 w-[4.5rem] shrink-0">
+                <Image
+                  src="/heritage-palace-logo.png"
+                  alt=""
+                  fill
+                  sizes="72px"
+                  className="object-contain object-left drop-shadow-sm"
+                />
               </div>
-              <span className="font-semibold text-white text-lg">MJK</span>
+              <div className="flex flex-col whitespace-nowrap">
+                <span className="font-playfair font-semibold text-white text-base leading-none">Mukesh Khadka</span>
+                <span className="mt-1 text-[8px] font-semibold uppercase tracking-[0.34em] text-white/60">For Nepal</span>
+              </div>
             </div>
             <p className="text-slate-500 text-sm leading-relaxed mb-5">
               सँगै अगाडि बढौं — Moving Forward Together. Building a transparent, youth-driven, 
-              and prosperous future for Kathmandu.
+              and prosperous future for Nepal.
             </p>
             <div className="flex gap-2">
               {socialLinks.map((social, i) => (
