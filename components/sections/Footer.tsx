@@ -72,13 +72,13 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="relative h-11 w-[4.5rem] shrink-0">
+              <div className="relative h-11 w-24 shrink-0">
                 <Image
-                  src="/heritage-palace-logo.png"
+                  src="/janaki-temple-logo.png"
                   alt=""
                   fill
-                  sizes="72px"
-                  className="object-contain object-left drop-shadow-sm"
+                  sizes="96px"
+                  className="object-contain object-center drop-shadow-sm"
                 />
               </div>
               <div className="flex flex-col whitespace-nowrap">

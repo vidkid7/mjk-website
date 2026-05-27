@@ -49,14 +49,14 @@ export default function Navbar() {
         <div className="mx-auto flex items-center justify-between px-4 sm:px-7 lg:px-10 xl:px-12">
           {/* Logo */}
           <a href="#home" className="group flex shrink-0 items-center gap-2.5 sm:gap-3">
-            <div className="relative h-10 w-16 shrink-0 sm:h-12 sm:w-[5.25rem]">
+            <div className="relative h-10 w-20 shrink-0 sm:h-12 sm:w-24">
               <Image
-                src="/heritage-palace-logo.png"
+                src="/janaki-temple-logo.png"
                 alt=""
                 fill
                 priority
-                sizes="(min-width: 640px) 84px, 64px"
-                className="object-contain object-left drop-shadow-sm"
+                sizes="(min-width: 640px) 96px, 80px"
+                className="object-contain object-center drop-shadow-sm"
               />
             </div>
             <div className="flex flex-col whitespace-nowrap">
@@ -131,13 +131,13 @@ export default function Navbar() {
           >
             <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
               <div className="flex items-center gap-2.5">
-                <div className="relative h-10 w-16 shrink-0">
+                <div className="relative h-10 w-20 shrink-0">
                   <Image
-                    src="/heritage-palace-logo.png"
+                    src="/janaki-temple-logo.png"
                     alt=""
                     fill
-                    sizes="64px"
-                    className="object-contain object-left drop-shadow-sm"
+                    sizes="80px"
+                    className="object-contain object-center drop-shadow-sm"
                   />
                 </div>
                 <div>
