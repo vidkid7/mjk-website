@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import { useState } from 'react'
-import { FaFacebook, FaInstagram, FaYoutube, FaTwitter, FaTiktok } from 'react-icons/fa'
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa'
 import { ArrowRight, Heart } from 'lucide-react'
 import { useStoredData } from '@/lib/storage'
 
@@ -19,30 +19,34 @@ const campaignLinks = [
   { label: 'News & Updates', href: '#news' },
 ]
 
+const socialUrl = (url: string | undefined, fallback: string, legacyFallback?: string) =>
+  !url || url === legacyFallback ? fallback : url
+
 const defaultSettings = {
   site_title: 'Mukesh Jung Khadka | Mayor Candidate',
   meta_description: 'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Mayor Candidate for Kathmandu.',
   phone: '+977 9851241656',
   email: 'khadkamukesh423@gmail.com',
   address: 'Ward No. 10, Kathmandu Metropolitan City, Bagmati Province, Nepal',
-  facebook_url: 'https://facebook.com/mjk',
-  instagram_url: 'https://instagram.com/mjk',
-  youtube_url: 'https://youtube.com/@mjk',
-  twitter_url: 'https://twitter.com/mjk',
-  tiktok_url: 'https://tiktok.com/@mjk',
+  linkedin_url: 'https://www.linkedin.com/in/mukesh-khadka-960401324/',
+  facebook_url: 'https://www.facebook.com/Nepali.man.67',
+  instagram_url: 'https://www.instagram.com/khadka3546?utm_source=qr',
+  youtube_url: '',
+  twitter_url: 'https://x.com/khadkamukesh422?s=11',
+  tiktok_url: '',
 }
 
 export default function Footer() {
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
-  const settings = useStoredData('settings', defaultSettings)
+  const storedSettings = useStoredData('settings', defaultSettings)
+  const settings = { ...defaultSettings, ...storedSettings }
   const socialLinks = [
-    { icon: FaFacebook, url: settings.facebook_url, color: 'hover:bg-blue-600 hover:border-blue-600' },
-    { icon: FaInstagram, url: settings.instagram_url, color: 'hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-500 hover:border-pink-500' },
-    { icon: FaYoutube, url: settings.youtube_url, color: 'hover:bg-red-600 hover:border-red-600' },
-    { icon: FaTwitter, url: settings.twitter_url, color: 'hover:bg-sky-500 hover:border-sky-500' },
-    { icon: FaTiktok, url: settings.tiktok_url, color: 'hover:bg-white hover:border-white' },
-  ]
+    { icon: FaLinkedin, url: socialUrl(settings.linkedin_url, defaultSettings.linkedin_url), color: 'hover:bg-blue-700 hover:border-blue-700' },
+    { icon: FaFacebook, url: socialUrl(settings.facebook_url, defaultSettings.facebook_url, 'https://facebook.com/mjk'), color: 'hover:bg-blue-600 hover:border-blue-600' },
+    { icon: FaTwitter, url: socialUrl(settings.twitter_url, defaultSettings.twitter_url, 'https://twitter.com/mjk'), color: 'hover:bg-sky-500 hover:border-sky-500' },
+    { icon: FaInstagram, url: socialUrl(settings.instagram_url, defaultSettings.instagram_url, 'https://instagram.com/mjk'), color: 'hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-500 hover:border-pink-500' },
+  ].filter(social => Boolean(social.url))
 
   const handleNewsletter = (e: React.FormEvent) => {
     e.preventDefault()

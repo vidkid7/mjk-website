@@ -154,6 +154,7 @@ CREATE TABLE site_settings (
   phone TEXT,
   email TEXT,
   address TEXT,
+  linkedin_url TEXT,
   facebook_url TEXT,
   instagram_url TEXT,
   youtube_url TEXT,

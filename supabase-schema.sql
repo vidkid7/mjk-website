@@ -156,6 +156,7 @@ CREATE TABLE IF NOT EXISTS site_settings (
   phone TEXT,
   email TEXT,
   address TEXT,
+  linkedin_url TEXT,
   facebook_url TEXT,
   instagram_url TEXT,
   youtube_url TEXT,
@@ -192,11 +193,25 @@ REVOKE ALL ON TABLE hero_content, about_content, vision_cards, initiatives, gall
 -- ============================================================
 -- Seed initial data
 -- ============================================================
-INSERT INTO site_settings (site_title, meta_description, phone, email, address)
+INSERT INTO site_settings (
+  site_title,
+  meta_description,
+  phone,
+  email,
+  address,
+  linkedin_url,
+  facebook_url,
+  instagram_url,
+  twitter_url
+)
 VALUES (
   'Mukesh Jung Khadka | Mayor Candidate — Moving Forward Together',
   'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Mayor Candidate for Kathmandu.',
   '+977 01-4XXXXXX',
   'contact@mukeshjungkhadka.com.np',
-  'Ward No. 10, Kathmandu Metropolitan City, Bagmati Province, Nepal'
+  'Ward No. 10, Kathmandu Metropolitan City, Bagmati Province, Nepal',
+  'https://www.linkedin.com/in/mukesh-khadka-960401324/',
+  'https://www.facebook.com/Nepali.man.67',
+  'https://www.instagram.com/khadka3546?utm_source=qr',
+  'https://x.com/khadkamukesh422?s=11'
 ) ON CONFLICT DO NOTHING;

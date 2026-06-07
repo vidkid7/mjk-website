@@ -2,9 +2,12 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { MapPin, Phone, Mail, Send, Check } from 'lucide-react'
-import { FaFacebook, FaInstagram, FaYoutube, FaTwitter, FaTiktok } from 'react-icons/fa'
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { addMessage, useStoredData } from '@/lib/storage'
+
+const socialUrl = (url: string | undefined, fallback: string, legacyFallback?: string) =>
+  !url || url === legacyFallback ? fallback : url
 
 const defaultSettings = {
   site_title: 'Mukesh Jung Khadka | Mayor Candidate',
@@ -12,24 +15,25 @@ const defaultSettings = {
   phone: '+977 9851241656',
   email: 'khadkamukesh423@gmail.com',
   address: 'Ward No. 10, Kathmandu Metropolitan City, Bagmati Province, Nepal',
-  facebook_url: 'https://facebook.com/mjk',
-  instagram_url: 'https://instagram.com/mjk',
-  youtube_url: 'https://youtube.com/@mjk',
-  twitter_url: 'https://twitter.com/mjk',
-  tiktok_url: 'https://tiktok.com/@mjk',
+  linkedin_url: 'https://www.linkedin.com/in/mukesh-khadka-960401324/',
+  facebook_url: 'https://www.facebook.com/Nepali.man.67',
+  instagram_url: 'https://www.instagram.com/khadka3546?utm_source=qr',
+  youtube_url: '',
+  twitter_url: 'https://x.com/khadkamukesh422?s=11',
+  tiktok_url: '',
 }
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
-  const settings = useStoredData('settings', defaultSettings)
+  const storedSettings = useStoredData('settings', defaultSettings)
+  const settings = { ...defaultSettings, ...storedSettings }
   const socialLinks = [
-    { icon: FaFacebook, label: 'Facebook', url: settings.facebook_url, color: 'hover:text-blue-600 hover:bg-blue-50 hover:border-blue-100' },
-    { icon: FaInstagram, label: 'Instagram', url: settings.instagram_url, color: 'hover:text-pink-600 hover:bg-pink-50 hover:border-pink-100' },
-    { icon: FaYoutube, label: 'YouTube', url: settings.youtube_url, color: 'hover:text-red-600 hover:bg-red-50 hover:border-red-100' },
-    { icon: FaTwitter, label: 'Twitter/X', url: settings.twitter_url, color: 'hover:text-sky-600 hover:bg-sky-50 hover:border-sky-100' },
-    { icon: FaTiktok, label: 'TikTok', url: settings.tiktok_url, color: 'hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200' },
-  ]
+    { icon: FaLinkedin, label: 'LinkedIn', url: socialUrl(settings.linkedin_url, defaultSettings.linkedin_url), color: 'hover:text-blue-700 hover:bg-blue-50 hover:border-blue-100' },
+    { icon: FaFacebook, label: 'Facebook', url: socialUrl(settings.facebook_url, defaultSettings.facebook_url, 'https://facebook.com/mjk'), color: 'hover:text-blue-600 hover:bg-blue-50 hover:border-blue-100' },
+    { icon: FaTwitter, label: 'Twitter/X', url: socialUrl(settings.twitter_url, defaultSettings.twitter_url, 'https://twitter.com/mjk'), color: 'hover:text-sky-600 hover:bg-sky-50 hover:border-sky-100' },
+    { icon: FaInstagram, label: 'Instagram', url: socialUrl(settings.instagram_url, defaultSettings.instagram_url, 'https://instagram.com/mjk'), color: 'hover:text-pink-600 hover:bg-pink-50 hover:border-pink-100' },
+  ].filter(social => Boolean(social.url))
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

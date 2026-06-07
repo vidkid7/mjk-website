@@ -90,12 +90,33 @@ async function saveSiteSettings(client: ReturnType<typeof getSupabaseAdmin>, pay
 
   if (existing?.id) {
     const { error } = await client.from('site_settings').update(payload).eq('id', existing.id)
+    if (error && shouldRetrySettingsWithoutLinkedIn(error)) {
+      const { error: legacyError } = await client.from('site_settings').update(withoutLinkedInUrl(payload)).eq('id', existing.id)
+      if (legacyError) throw legacyError
+      return
+    }
     if (error) throw error
     return
   }
 
   const { error } = await client.from('site_settings').insert(payload)
+  if (error && shouldRetrySettingsWithoutLinkedIn(error)) {
+    const { error: legacyError } = await client.from('site_settings').insert(withoutLinkedInUrl(payload))
+    if (legacyError) throw legacyError
+    return
+  }
   if (error) throw error
+}
+
+function shouldRetrySettingsWithoutLinkedIn(error: any) {
+  const message = `${error?.message || ''} ${error?.details || ''} ${error?.hint || ''}`
+  return error?.code === 'PGRST204' || message.includes('linkedin_url')
+}
+
+function withoutLinkedInUrl(payload: Record<string, any>) {
+  const next = { ...payload }
+  delete next.linkedin_url
+  return next
 }
 
 async function readCmsSection(client: ReturnType<typeof getSupabaseAdmin>, key: ContentKey) {
@@ -322,6 +343,7 @@ async function readContent(key: ContentKey, isAdmin = false) {
             phone: row.phone || '',
             email: row.email || '',
             address: row.address || '',
+            linkedin_url: row.linkedin_url || '',
             facebook_url: row.facebook_url || '',
             instagram_url: row.instagram_url || '',
             youtube_url: row.youtube_url || '',
@@ -514,6 +536,7 @@ async function saveContent(key: ContentKey, data: any, mode?: 'append') {
         phone: data.phone,
         email: data.email,
         address: data.address,
+        linkedin_url: data.linkedin_url,
         facebook_url: data.facebook_url,
         instagram_url: data.instagram_url,
         youtube_url: data.youtube_url,
