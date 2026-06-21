@@ -16,7 +16,7 @@ export default function News() {
       id: post.id,
       title: post.title,
       category: post.category,
-      subcategory: 'Campaign Update',
+      subcategory: 'Community Update',
       timeAgo: post.date,
       location: 'Kathmandu',
       image: post.cover,
@@ -47,7 +47,7 @@ export default function News() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="font-playfair text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-4"
           >
-            Latest From The Campaign
+            Latest News & Updates
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 16 }}

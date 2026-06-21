@@ -25,7 +25,7 @@ const defaultNewsCards: NewsCard[] = [
   {
     id: "1",
     title: "Mukesh Jung Khadka Launches Vision 2030 for Kathmandu",
-    category: "Campaign",
+    category: "Community",
     subcategory: "Vision 2030",
     timeAgo: "Jan 15, 2024",
     location: "Kathmandu",
