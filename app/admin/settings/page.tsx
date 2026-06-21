@@ -9,8 +9,8 @@ const socialUrl = (url: string | undefined, fallback: string, legacyFallback?: s
   !url || url === legacyFallback ? fallback : url
 
 const defaultForm = {
-  site_title: 'Mukesh Jung Khadka | Mayor Candidate',
-  meta_description: 'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Mayor Candidate for Kathmandu.',
+  site_title: 'Mukesh Jung Khadka | Community Leader',
+  meta_description: 'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Community Leader for Kathmandu.',
   phone: '+977 9851241656',
   email: 'khadkamukesh423@gmail.com',
   address: 'Ward No. 10, Kathmandu Metropolitan City, Bagmati Province, Nepal',
@@ -32,7 +32,6 @@ const defaultForm = {
     gallery: true,
     news: true,
     stats: true,
-    support: true,
     contact: true,
   },
 }
@@ -49,7 +48,6 @@ const sectionVisibilityOptions = [
   { key: 'gallery', label: 'Gallery' },
   { key: 'news', label: 'News' },
   { key: 'stats', label: 'Stats' },
-  { key: 'support', label: 'Support' },
   { key: 'contact', label: 'Contact' },
 ] as const
 

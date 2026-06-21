@@ -58,7 +58,7 @@ export default function AdminDashboard() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl bg-gradient-to-r from-crimson to-crimson-dark p-6 text-white md:p-8">
         <div>
-          <h2 className="font-playfair text-2xl font-bold md:text-3xl">Campaign Dashboard</h2>
+          <h2 className="font-playfair text-2xl font-bold md:text-3xl">Dashboard</h2>
           <p className="mt-2 text-sm text-white/75">Live content and supporter submissions from Supabase.</p>
         </div>
         <button onClick={() => void refresh()} className="inline-flex items-center gap-2 rounded-lg border border-white/25 px-4 py-2 text-sm font-medium hover:bg-white/10">
