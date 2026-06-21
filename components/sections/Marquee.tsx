@@ -5,7 +5,7 @@ const items = [
   { text: 'ENTREPRENEUR', icon: Rocket, color: 'text-crimson-light' },
   { text: 'SOCIAL WORKER', icon: Heart, color: 'text-rose-400' },
   { text: 'YOUTH LEADER', icon: Users, color: 'text-blue-400' },
-  { text: 'MAYOR CANDIDATE', icon: Building2, color: 'text-gold-light' },
+  { text: 'COMMUNITY LEADER', icon: Building2, color: 'text-gold-light' },
   { text: 'VISIONARY', icon: Lightbulb, color: 'text-amber-400' },
   { text: 'CHANGE MAKER', icon: Zap, color: 'text-emerald-light' },
   { text: 'COMMUNITY BUILDER', icon: Globe, color: 'text-violet-light' },

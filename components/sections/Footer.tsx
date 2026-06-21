@@ -14,17 +14,17 @@ const quickLinks = [
 ]
 
 const campaignLinks = [
-  { label: 'Support the Campaign', href: '#support' },
-  { label: 'Volunteer', href: '#support' },
+  { label: 'Initiatives', href: '#initiatives' },
   { label: 'News & Updates', href: '#news' },
+  { label: 'Contact', href: '#contact' },
 ]
 
 const socialUrl = (url: string | undefined, fallback: string, legacyFallback?: string) =>
   !url || url === legacyFallback ? fallback : url
 
 const defaultSettings = {
-  site_title: 'Mukesh Jung Khadka | Mayor Candidate',
-  meta_description: 'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Mayor Candidate for Kathmandu.',
+  site_title: 'Mukesh Jung Khadka | Community Leader',
+  meta_description: 'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Community Leader for Kathmandu.',
   phone: '+977 9851241656',
   email: 'khadkamukesh423@gmail.com',
   address: 'Ward No. 10, Kathmandu Metropolitan City, Bagmati Province, Nepal',
@@ -141,7 +141,7 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold text-white text-sm mb-4">Stay Updated</h4>
             <p className="text-slate-500 text-sm mb-4 leading-relaxed">
-              Subscribe to receive the latest campaign updates directly in your inbox.
+              Subscribe to receive the latest updates directly in your inbox.
             </p>
             <form onSubmit={handleNewsletter} className="flex gap-2">
               <input

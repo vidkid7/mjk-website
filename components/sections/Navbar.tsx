@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Heart } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 
 const navLinks = [
   { label: 'About', href: '#about' },
@@ -97,17 +97,8 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* CTA + Mobile Toggle */}
+          {/* Mobile Toggle */}
           <div className="flex items-center gap-3">
-            <motion.a
-              href="#support"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="hidden items-center gap-3 rounded-md bg-crimson px-5 py-3 text-xs font-extrabold uppercase tracking-[0.15em] text-white shadow-lg shadow-crimson/20 transition-all duration-300 hover:bg-crimson-dark hover:shadow-crimson/30 md:inline-flex xl:px-7"
-            >
-              <Heart size={16} className="text-white" />
-              Support
-            </motion.a>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="rounded-lg p-2 text-[#0b2b55] transition-all duration-300 hover:bg-slate-100 xl:hidden"
@@ -167,16 +158,6 @@ export default function Navbar() {
                   {link.label}
                 </motion.a>
               ))}
-            </div>
-            <div className="px-6 pb-8">
-              <a
-                href="#support"
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-center gap-2 w-full px-6 py-3.5 bg-crimson text-white font-bold uppercase tracking-[0.14em] shadow-lg shadow-crimson/20 transition-all"
-              >
-                <Heart size={14} />
-                Support the Campaign
-              </a>
             </div>
           </motion.div>
         )}

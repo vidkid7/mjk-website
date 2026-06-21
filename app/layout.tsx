@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { createClient } from '@supabase/supabase-js'
 import './globals.css'
 
-const defaultTitle = 'Mukesh Jung Khadka | Mayor Candidate — Moving Forward Together'
-const defaultDescription = 'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Mayor Candidate for Kathmandu. सँगै अगाडि बढौं — Moving Forward Together.'
+const defaultTitle = 'Mukesh Jung Khadka | Community Leader — Moving Forward Together'
+const defaultDescription = 'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Community Leader for Kathmandu. सँगै अगाडि बढौं — Moving Forward Together.'
 
 async function readMetadataSettings() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -28,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
   title,
   description,
-  keywords: 'Mukesh Jung Khadka, MJK, Nepal, Mayor, Kathmandu, Youth, Social Worker, Entrepreneur',
+  keywords: 'Mukesh Jung Khadka, MJK, Nepal, Kathmandu, Youth, Social Worker, Entrepreneur, Community Leader',
   metadataBase: new URL('https://mukeshjungkhadka.com.np'),
   openGraph: {
     title,

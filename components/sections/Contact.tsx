@@ -10,8 +10,8 @@ const socialUrl = (url: string | undefined, fallback: string, legacyFallback?: s
   !url || url === legacyFallback ? fallback : url
 
 const defaultSettings = {
-  site_title: 'Mukesh Jung Khadka | Mayor Candidate',
-  meta_description: 'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Mayor Candidate for Kathmandu.',
+  site_title: 'Mukesh Jung Khadka | Community Leader',
+  meta_description: 'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Community Leader for Kathmandu.',
   phone: '+977 9851241656',
   email: 'khadkamukesh423@gmail.com',
   address: 'Ward No. 10, Kathmandu Metropolitan City, Bagmati Province, Nepal',
@@ -159,7 +159,7 @@ export default function Contact() {
 
             {/* Social Media Links */}
             <div className="bg-white rounded-lg p-6 border border-slate-200">
-              <h4 className="font-semibold text-slate-900 text-sm mb-4 text-center">Follow The Campaign</h4>
+              <h4 className="font-semibold text-slate-900 text-sm mb-4 text-center">Follow Us</h4>
               <div className="flex justify-center gap-3">
                 {socialLinks.map((social) => (
                   <a

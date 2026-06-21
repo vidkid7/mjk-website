@@ -12,7 +12,6 @@ import Testimonials from '@/components/sections/Testimonials'
 import Gallery from '@/components/sections/Gallery'
 import News from '@/components/sections/News'
 import Stats from '@/components/sections/Stats'
-import Support from '@/components/sections/Support'
 import Contact from '@/components/sections/Contact'
 import Footer from '@/components/sections/Footer'
 import { useStoredData } from '@/lib/storage'
@@ -30,7 +29,6 @@ const defaultSettings = {
     gallery: true,
     news: true,
     stats: true,
-    support: true,
     contact: true,
   },
 }
@@ -56,7 +54,6 @@ export default function Home() {
       {show('gallery') && <Gallery />}
       {show('news') && <News />}
       {show('stats') && <Stats />}
-      {show('support') && <Support />}
       {show('contact') && <Contact />}
       <Footer />
     </main>

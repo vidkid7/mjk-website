@@ -1,9 +1,9 @@
 // Placeholder data for all sections — used when Supabase is not connected
 
 export const heroData = {
-  label: '🇳🇵 Mayor Candidate — Kathmandu Metropolitan City',
+  label: '🇳🇵 Community Leader — Kathmandu Metropolitan City',
   headline: 'Leading Nepal\nForward Together',
-  subheadline: 'Entrepreneur. Social Worker. Youth Champion. Mayor Candidate.',
+  subheadline: 'Entrepreneur. Social Worker. Youth Champion. Community Leader.',
   bio: 'For over 15 years, Mukesh Jung Khadka has dedicated his life to empowering communities, creating opportunities for youth, and building a more prosperous Nepal. Now, he\'s ready to lead our great city into a brighter future.',
   cta_primary: 'Explore My Vision',
   cta_secondary: 'Watch My Story',
@@ -23,7 +23,7 @@ export const aboutData = {
     'Born and raised in the heart of Kathmandu, Mukesh Jung Khadka grew up witnessing both the immense potential and the daily struggles of the Nepali people. From a young age, he was driven by a simple yet powerful belief: that every citizen deserves the opportunity to thrive.',
     'After founding multiple successful enterprises that created hundreds of jobs for local communities, Mukesh turned his entrepreneurial spirit toward public service. His journey from the bustling streets of Ason to the boardrooms of Kathmandu\'s leading businesses gave him a unique understanding of what our city truly needs.',
     'Over the past decade, Mukesh has led over 50 community development projects across Kathmandu Valley, from youth coding bootcamps in Lalitpur to clean water initiatives in Bhaktapur. His hands-on approach and genuine connection with people from all walks of life have earned him the trust of thousands.',
-    'Now, as a candidate for Mayor, Mukesh brings his proven track record of leadership, innovation, and community service to the highest office in our city. His vision is clear: a transparent, youth-driven, digitally empowered local government that uplifts every citizen.'
+    'Now, as a community leader, Mukesh brings his proven track record of leadership, innovation, and community service to uplift every citizen. His vision is clear: a transparent, youth-driven, digitally empowered community that benefits everyone.'
   ],
   community_trust: 94,
   youth_engagement: 88,
@@ -134,7 +134,7 @@ export const achievementsData = [
   { id: '5', year: '2017', title: 'Youth Coding Bootcamp Launch', description: 'Launched free coding bootcamps across Kathmandu, training 3,000+ young Nepalis in software development.', icon: 'Code', order_index: 4 },
   { id: '6', year: '2019', title: 'Digital Nepal Initiative', description: 'Partnered with local government to digitize 15 municipal services, making governance more transparent and accessible.', icon: 'Laptop', order_index: 5 },
   { id: '7', year: '2021', title: 'COVID-19 Relief Fund', description: 'Organized food distribution, oxygen supply, and financial aid reaching 50,000+ families during the pandemic.', icon: 'ShieldCheck', order_index: 6 },
-  { id: '8', year: '2023', title: 'Mayoral Campaign Announced', description: 'Officially announced candidacy for Mayor of Kathmandu, rallying support from youth, entrepreneurs, and community leaders.', icon: 'Flag', order_index: 7 },
+  { id: '8', year: '2023', title: 'Community Leadership Initiative', description: 'Launched a comprehensive community leadership initiative, rallying support from youth, entrepreneurs, and local leaders.', icon: 'Flag', order_index: 7 },
 ]
 
 export const testimonialsData = [
