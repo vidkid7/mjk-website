@@ -6,9 +6,9 @@
 -- Hero Content
 CREATE TABLE IF NOT EXISTS hero_content (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  label TEXT NOT NULL DEFAULT '🇳🇵 Mayor Candidate — Kathmandu Metropolitan City',
+  label TEXT NOT NULL DEFAULT '🇳🇵 Community Leader — Kathmandu Metropolitan City',
   headline TEXT NOT NULL DEFAULT 'Leading Nepal\nForward Together',
-  subheadline TEXT NOT NULL DEFAULT 'Entrepreneur. Social Worker. Youth Champion. Mayor Candidate.',
+  subheadline TEXT NOT NULL DEFAULT 'Entrepreneur. Social Worker. Youth Champion. Community Leader.',
   bio TEXT,
   cta_primary_text TEXT DEFAULT 'Explore My Vision',
   cta_secondary_text TEXT DEFAULT 'Watch My Story',
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS gallery_photos (
 CREATE TABLE IF NOT EXISTS news_posts (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   cover_url TEXT,
-  category TEXT DEFAULT 'Campaign',
+  category TEXT DEFAULT 'Community',
   title TEXT NOT NULL,
   excerpt TEXT,
   content TEXT,
@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS contact_messages (
 -- Site Settings
 CREATE TABLE IF NOT EXISTS site_settings (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  site_title TEXT DEFAULT 'Mukesh Jung Khadka | Mayor Candidate',
+  site_title TEXT DEFAULT 'Mukesh Jung Khadka | Community Leader',
   meta_description TEXT,
   phone TEXT,
   email TEXT,
@@ -205,8 +205,8 @@ INSERT INTO site_settings (
   twitter_url
 )
 VALUES (
-  'Mukesh Jung Khadka | Mayor Candidate — Moving Forward Together',
-  'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Mayor Candidate for Kathmandu.',
+  'Mukesh Jung Khadka | Community Leader — Moving Forward Together',
+  'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Community Leader for Kathmandu.',
   '+977 01-4XXXXXX',
   'contact@mukeshjungkhadka.com.np',
   'Ward No. 10, Kathmandu Metropolitan City, Bagmati Province, Nepal',

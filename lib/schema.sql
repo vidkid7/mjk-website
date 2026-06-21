@@ -7,9 +7,9 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- ===== HERO CONTENT =====
 CREATE TABLE hero_content (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  label TEXT NOT NULL DEFAULT '🇳🇵 Mayor Candidate — Kathmandu Metropolitan City',
+  label TEXT NOT NULL DEFAULT '🇳🇵 Community Leader — Kathmandu Metropolitan City',
   headline TEXT NOT NULL DEFAULT 'Leading Nepal\nForward Together',
-  subheadline TEXT NOT NULL DEFAULT 'Entrepreneur. Social Worker. Youth Champion. Mayor Candidate.',
+  subheadline TEXT NOT NULL DEFAULT 'Entrepreneur. Social Worker. Youth Champion. Community Leader.',
   bio TEXT,
   cta_primary_text TEXT DEFAULT 'Explore My Vision',
   cta_secondary_text TEXT DEFAULT 'Watch My Story',
@@ -77,7 +77,7 @@ CREATE TABLE gallery_photos (
 CREATE TABLE news_posts (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   cover_url TEXT,
-  category TEXT DEFAULT 'Campaign',
+  category TEXT DEFAULT 'Community',
   title TEXT NOT NULL,
   excerpt TEXT,
   content TEXT,
