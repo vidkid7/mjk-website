@@ -21,6 +21,8 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 import { DhakaPattern } from '@/components/ui/NepalFlag'
 import { fadeInUp, staggerContainer, staggerItem } from '@/lib/animations'
 
+const aashaTechUrl = 'https://aashatech.com/'
+
 const portfolioItems = [
   {
     title: 'Digital Sifaris & Darta Chalani System',
@@ -195,6 +197,15 @@ export default function ClientPortfolio() {
                 whileHover={{ y: -6, transition: { duration: 0.25 } }}
                 className={`group relative overflow-hidden rounded-3xl bg-white border border-slate-100 p-6 shadow-sm transition-all duration-300 hover:shadow-xl ${tone.border} ${tone.glow}`}
               >
+                <a
+                  href={aashaTechUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`View ${item.title} on AashaTech`}
+                  className="absolute inset-0 z-10 rounded-3xl focus:outline-none focus:ring-2 focus:ring-crimson focus:ring-offset-2"
+                >
+                  <span className="sr-only">View {item.title} on AashaTech</span>
+                </a>
                 <div className="absolute right-0 top-0 h-24 w-24 translate-x-8 -translate-y-8 rounded-full bg-slate-100/70 transition-transform duration-300 group-hover:scale-125" />
                 <div className="relative flex items-start justify-between gap-4 mb-6">
                   <div className={`w-12 h-12 rounded-2xl ${tone.bg} flex items-center justify-center border border-white shadow-sm`}>
@@ -212,7 +223,7 @@ export default function ClientPortfolio() {
                   <p className="text-sm leading-7 text-slate-500 mb-6">{item.description}</p>
                   <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-slate-400 group-hover:text-crimson transition-colors">
                     <BadgeCheck size={15} />
-                    Delivered Solution
+                    View on AashaTech
                   </div>
                 </div>
               </motion.article>
@@ -284,7 +295,9 @@ export default function ClientPortfolio() {
               </h3>
             </div>
             <a
-              href="#contact"
+              href={aashaTechUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-bold text-slate-900 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-50 hover:text-crimson"
             >
               Start Your Project <ArrowRight size={16} />
