@@ -18,8 +18,19 @@ const defaultHero = {
   stat_youth: heroData.stats[3].value,
 }
 
+const legacyHeroTerms = [
+  'community leader', 'youth champion', 'social worker', 'entrepreneur.', 'leading nepal',
+  'moving forward', 'for nepal', 'kathmandu metropolitan', 'public service', 'vote', 'campaign'
+]
+
+function isLegacyHero(content: typeof defaultHero) {
+  const haystack = `${content.label} ${content.headline} ${content.subheadline} ${content.bio} ${content.cta_primary} ${content.cta_secondary}`.toLowerCase()
+  return legacyHeroTerms.some(term => haystack.includes(term))
+}
+
 export default function Hero() {
-  const content = useStoredData('hero', defaultHero)
+  const storedContent = useStoredData('hero', defaultHero)
+  const content = isLegacyHero(storedContent) ? defaultHero : storedContent
   const headlineParts = content.headline.replace(/\\n/g, '\n').split('\n').filter(Boolean)
 
   return (
@@ -111,7 +122,7 @@ export default function Hero() {
 
         <img
           src={content.hero_image || '/mk-removebg-preview.webp'}
-          alt="Mukesh Jung Khadka"
+          alt="Mukesh Khadka"
           width={403}
           height={620}
           loading="eager"
@@ -143,8 +154,8 @@ export default function Hero() {
               transition={{ duration: 0.65, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
               className="font-playfair text-[3rem] font-extrabold leading-[0.95] tracking-tight text-[#12375f] min-[420px]:text-[3.5rem] sm:text-6xl md:text-7xl lg:text-[5rem]"
             >
-              {headlineParts[0] || 'Forward'}
-              <span className="block text-crimson">{headlineParts.slice(1).join(' ') || 'Together'}</span>
+              {headlineParts[0] || 'Digital'}
+              <span className="block text-crimson">{headlineParts.slice(1).join(' ') || 'Solutions'}</span>
             </motion.h1>
 
             <motion.p
