@@ -1,195 +1,139 @@
 'use client'
 import { motion } from 'framer-motion'
-import { Sparkles, ArrowRight, Quote, Flame, Star, Heart } from 'lucide-react'
+import { ArrowRight, BookOpenText, CheckCircle2, Code2, Lightbulb, Quote, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { DhakaPattern } from '@/components/ui/NepalFlag'
 import { useStoredData } from '@/lib/storage'
 
 const defaultTestimonials = [
   {
-    photo: 'https://randomuser.me/api/portraits/men/45.jpg',
-    name: 'Aarav Poudel',
-    role: 'Software Engineer',
-    quote: 'Mukesh sir taught me that my background doesn\'t define my future. Today I\'m a software engineer at a Kathmandu startup. His belief in us changed everything.',
+    photo: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=300',
+    name: 'Software Architecture',
+    role: 'System Planning',
+    quote: 'Good software starts with structure. Architecture helps teams understand how features, data, security, and future changes fit together.',
   },
   {
-    photo: 'https://randomuser.me/api/portraits/women/32.jpg',
-    name: 'Priya Maharjan',
-    role: 'CS Scholarship Holder',
-    quote: 'From a girl who couldn\'t afford college to a scholarship holder studying computer science — Mukesh dai\'s program gave me wings I didn\'t know I had.',
+    photo: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=300',
+    name: 'User Experience',
+    role: 'Product Design',
+    quote: 'A useful system must be easy to understand. Clear interfaces improve adoption, trust, speed, and the value users get from the product.',
   },
   {
-    photo: 'https://randomuser.me/api/portraits/men/28.jpg',
-    name: 'Sagar Rai',
-    role: 'Youth Leader',
-    quote: 'The youth bootcamp wasn\'t just about coding. It taught us leadership, teamwork, and that we — the youth of Nepal — have the power to transform this nation.',
+    photo: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=300',
+    name: 'Development Roadmap',
+    role: 'Delivery Planning',
+    quote: 'A roadmap keeps everyone aligned on priorities, phases, responsibilities, and the expected progress of a software product.',
   },
 ]
 
 const defaultData = {
-  heading: 'If I Can, You Can',
-  description: 'Every young Nepali has the potential to become a leader, an entrepreneur, a changemaker. Our mission is to unlock that potential and build a generation that will take Nepal to unprecedented heights.',
+  heading: 'Knowledge, Insights & Digital Thinking',
+  description: 'A practical space for ideas about software, user experience, automation, websites, systems, and technology planning for organizations that want to improve digitally.',
   testimonials: defaultTestimonials,
-  ctaText: 'Join Our Youth Movement',
+  ctaText: 'Read Blog Posts',
 }
 
-const testimonialStyles = [
-  { gradient: 'from-blue-500 to-cyan-500', bgGlow: 'bg-blue-500/10', icon: Star },
-  { gradient: 'from-violet to-purple-500', bgGlow: 'bg-violet/10', icon: Heart },
-  { gradient: 'from-emerald to-teal-500', bgGlow: 'bg-emerald/10', icon: Flame },
+const cardStyles = [
+  { gradient: 'from-blue-500 to-cyan-500', icon: Code2 },
+  { gradient: 'from-violet to-purple-500', icon: Lightbulb },
+  { gradient: 'from-emerald to-teal-500', icon: BookOpenText },
 ]
 
 export default function YouthInspiration() {
   const [activeCard, setActiveCard] = useState<number | null>(null)
   const content = useStoredData('youth', defaultData)
-  const headingParts = content.heading.split(',')
-  const testimonials = content.testimonials.map((testimonial, index) => ({
+  const cards = content.testimonials.map((testimonial, index) => ({
     ...testimonial,
-    ...testimonialStyles[index % testimonialStyles.length],
+    ...cardStyles[index % cardStyles.length],
   }))
 
   return (
-    <section className="relative py-24 md:py-32 bg-white overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-full h-full">
-        <DhakaPattern className="opacity-[0.03]" />
-        <div className="absolute right-0 top-20 h-40 w-1/3 bg-gradient-to-l from-crimson/10 to-transparent" />
-        <div className="absolute bottom-20 left-0 h-40 w-1/3 bg-gradient-to-r from-[#003893]/10 to-transparent" />
-      </div>
+    <section id="insights" className="relative overflow-hidden bg-white px-4 py-24 md:py-32">
+      <DhakaPattern className="opacity-[0.025]" />
+      <div className="absolute right-0 top-20 h-40 w-1/3 bg-gradient-to-l from-emerald-100/80 to-transparent" />
+      <div className="absolute bottom-20 left-0 h-40 w-1/3 bg-gradient-to-r from-blue-100/80 to-transparent" />
 
-      <div className="relative max-w-6xl mx-auto px-5 sm:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <motion.div
+      <div className="relative mx-auto max-w-6xl">
+        <div className="mb-16 text-center">
+          <motion.span
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-emerald-700"
           >
-            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-bold tracking-[0.2em] uppercase bg-crimson-50 text-crimson border border-crimson-100 mb-5">
-              <Flame size={12} />
-              For The Youth
-            </span>
-          </motion.div>
-
+            <Sparkles size={14} />
+            Insights
+          </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-playfair text-3xl md:text-4xl lg:text-6xl font-extrabold text-slate-900 mb-4 leading-tight tracking-tight"
+            transition={{ duration: 0.6, delay: 0.08 }}
+            className="font-playfair text-3xl font-extrabold leading-tight tracking-tight text-slate-950 md:text-5xl lg:text-6xl"
           >
-            {headingParts[0]}
-            {headingParts[1] ? ', ' : ' '}
-            <span className="relative inline-block">
-              <span className="gradient-text-warm">{headingParts.slice(1).join(',').trim()}</span>
-              <motion.div
-                className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-crimson to-gold rounded-full"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                style={{ transformOrigin: 'left' }}
-              />
-            </span>
+            {content.heading}
           </motion.h2>
-
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-slate-500 text-base md:text-lg max-w-2xl mx-auto leading-8"
+            transition={{ duration: 0.5, delay: 0.16 }}
+            className="mx-auto mt-5 max-w-3xl text-base leading-8 text-slate-600 md:text-lg"
           >
             {content.description}
           </motion.p>
         </div>
 
-        {/* Testimonial Cards */}
-        <div className="grid md:grid-cols-3 gap-6 mb-14">
-          {testimonials.map((t, i) => (
-            <motion.div
-              key={t.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 + i * 0.12 }}
-              onMouseEnter={() => setActiveCard(i)}
-              onMouseLeave={() => setActiveCard(null)}
-            >
-              <motion.div
-                whileHover={{ y: -8 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                className="group relative bg-white rounded-lg p-7 text-left border border-slate-200 hover:border-slate-300 hover:shadow-xl transition-all duration-300 h-full overflow-hidden"
+        <div className="mb-14 grid gap-6 md:grid-cols-3">
+          {cards.map((card, i) => {
+            const Icon = card.icon
+            return (
+              <motion.article
+                key={card.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
+                onMouseEnter={() => setActiveCard(i)}
+                onMouseLeave={() => setActiveCard(null)}
+                className="group relative h-full overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-2xl hover:shadow-slate-900/10"
               >
-                {/* Background glow on hover */}
-                <div className={`absolute inset-x-0 top-0 h-1 ${t.bgGlow} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-
-                {/* Quote icon with gradient */}
-                  <div className={`w-10 h-10 bg-gradient-to-br ${t.gradient} flex items-center justify-center mb-5 shadow-lg`}>
-                  <Quote size={16} className="text-white" />
+                <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${card.gradient}`} />
+                <div className={`mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${card.gradient} text-white shadow-lg`}>
+                  <Icon size={20} />
                 </div>
-
-                {/* Quote text */}
-                <p className="relative text-slate-600 text-[15px] leading-relaxed mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-
-                {/* Author */}
-                <div className="relative flex items-center gap-3.5 pt-5 border-t border-slate-100">
-                  <div className="relative">
-                    <img
-                      src={t.photo}
-                      alt={t.name}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-12 h-12 rounded-full object-cover ring-2 ring-white shadow-md"
-                    />
-                    <motion.div
-                      className={`absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full bg-gradient-to-br ${t.gradient} border-2 border-white flex items-center justify-center`}
-                      animate={activeCard === i ? { scale: [1, 1.2, 1] } : {}}
-                      transition={{ duration: 0.6, repeat: activeCard === i ? Infinity : 0, repeatDelay: 1 }}
-                    >
-                      <t.icon size={8} className="text-white" />
-                    </motion.div>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-slate-900 text-sm">{t.name}</h4>
-                    <span className="text-slate-400 text-xs">{t.role}</span>
-                  </div>
+                <Quote className="absolute right-6 top-6 h-8 w-8 text-slate-100" />
+                <h3 className="text-xl font-black text-slate-950">{card.name}</h3>
+                <p className="mt-1 text-xs font-black uppercase tracking-[0.18em] text-slate-400">{card.role}</p>
+                <p className="mt-5 text-sm leading-7 text-slate-600">{card.quote}</p>
+                <div className="mt-6 flex items-center gap-2 text-xs font-black uppercase tracking-[0.16em] text-slate-400 transition group-hover:text-emerald-700">
+                  <CheckCircle2 size={14} />
+                  Practical insight
                 </div>
-
-                {/* Bottom gradient line */}
                 <motion.div
-                  className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${t.gradient}`}
+                  className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${card.gradient}`}
                   initial={{ scaleX: 0 }}
                   animate={activeCard === i ? { scaleX: 1 } : { scaleX: 0 }}
                   transition={{ duration: 0.3 }}
                   style={{ transformOrigin: 'left' }}
                 />
-              </motion.div>
-            </motion.div>
-          ))}
+              </motion.article>
+            )
+          })}
         </div>
 
-        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.25 }}
           className="text-center"
         >
-          <motion.a
-            href="#support"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-              className="group inline-flex items-center gap-2.5 px-8 py-4 bg-crimson text-white font-bold uppercase tracking-[0.12em] text-xs shadow-lg hover:bg-crimson-dark hover:shadow-xl hover:shadow-crimson/20 transition-all duration-300"
-          >
+          <a href="/blog" className="group inline-flex items-center gap-2.5 rounded-full bg-slate-950 px-8 py-4 text-xs font-black uppercase tracking-[0.14em] text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-emerald-700">
             <Sparkles size={16} />
             {content.ctaText}
-            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
-          </motion.a>
+            <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+          </a>
         </motion.div>
       </div>
     </section>
