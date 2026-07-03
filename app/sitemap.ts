@@ -1,15 +1,15 @@
 import { MetadataRoute } from 'next'
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://mukeshjungkhadka.com.np'
+const routes = ['', '#services', '#products', '#projects', '#about', '#contact']
 
-  return [
-    { url: baseUrl, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
-    { url: `${baseUrl}/#about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/#vision`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/#initiatives`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${baseUrl}/#gallery`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
-    { url: `${baseUrl}/#news`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
-    { url: `${baseUrl}/#contact`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
-  ]
+export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = 'https://www.aashatech.com'
+  const lastModified = new Date()
+
+  return routes.map((route, index) => ({
+    url: route ? `${baseUrl}/${route}` : baseUrl,
+    lastModified,
+    changeFrequency: index === 0 ? 'weekly' : 'monthly',
+    priority: index === 0 ? 1 : 0.8,
+  }))
 }
