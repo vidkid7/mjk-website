@@ -24,8 +24,18 @@ const iconMap: Record<string, React.ComponentType<any>> = {
   Code2,
 }
 
+const legacyVisionTerms = [
+  'infrastructure revolution', 'youth employment', 'women empowerment', 'green kathmandu',
+  'education reform', 'municipal', 'ward', 'bagmati', 'public wifi', 'citizen'
+]
+
+function hasLegacyVision(cards: typeof visionCards) {
+  return cards.some(card => legacyVisionTerms.some(term => `${card.heading} ${card.description}`.toLowerCase().includes(term)))
+}
+
 export default function Vision() {
-  const cards = useStoredData('vision', visionCards)
+  const storedCards = useStoredData('vision', visionCards)
+  const cards = hasLegacyVision(storedCards) ? visionCards : storedCards
 
   return (
     <section id="vision" className="relative overflow-hidden bg-white px-4 py-24 md:py-32">
