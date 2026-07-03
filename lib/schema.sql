@@ -1,23 +1,22 @@
--- Supabase Database Schema for MJK Political Portfolio Website
+-- Supabase Database Schema for MJK Digital Portfolio Website
 -- Run this in Supabase SQL Editor
 
--- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- ===== HERO CONTENT =====
 CREATE TABLE hero_content (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  label TEXT NOT NULL DEFAULT '🇳🇵 Community Leader — Kathmandu Metropolitan City',
-  headline TEXT NOT NULL DEFAULT 'Leading Nepal\nForward Together',
-  subheadline TEXT NOT NULL DEFAULT 'Entrepreneur. Social Worker. Youth Champion. Community Leader.',
+  label TEXT NOT NULL DEFAULT 'Digital Systems & Software Portfolio',
+  headline TEXT NOT NULL DEFAULT 'Building Practical\nDigital Solutions',
+  subheadline TEXT NOT NULL DEFAULT 'Software Systems • Web Platforms • Digital Transformation',
   bio TEXT,
-  cta_primary_text TEXT DEFAULT 'Explore My Vision',
-  cta_secondary_text TEXT DEFAULT 'Watch My Story',
+  cta_primary_text TEXT DEFAULT 'Explore The Work',
+  cta_secondary_text TEXT DEFAULT 'About Mukesh',
   hero_image_url TEXT,
-  stat_projects INT DEFAULT 50,
-  stat_lives INT DEFAULT 100000,
-  stat_years INT DEFAULT 15,
-  stat_youth INT DEFAULT 5000,
+  stat_projects INT DEFAULT 33,
+  stat_lives INT DEFAULT 26,
+  stat_years INT DEFAULT 7,
+  stat_youth INT DEFAULT 10,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -26,10 +25,10 @@ CREATE TABLE hero_content (
 CREATE TABLE about_content (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   pill_text TEXT DEFAULT 'About Mukesh',
-  heading TEXT DEFAULT 'A Son of Nepal, Built for Service',
+  heading TEXT DEFAULT 'A practical digital systems builder focused on useful results',
   bio_paragraphs JSONB DEFAULT '[]'::JSONB,
-  community_trust INT DEFAULT 94,
-  youth_engagement INT DEFAULT 88,
+  community_trust INT DEFAULT 96,
+  youth_engagement INT DEFAULT 92,
   photo_url TEXT,
   signature_url TEXT,
   cv_url TEXT,
@@ -48,7 +47,7 @@ CREATE TABLE vision_cards (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ===== INITIATIVES =====
+-- ===== SOLUTIONS =====
 CREATE TABLE initiatives (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   photo_url TEXT,
@@ -67,17 +66,17 @@ CREATE TABLE gallery_photos (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   url TEXT NOT NULL,
   caption TEXT,
-  category TEXT DEFAULT 'Community',
+  category TEXT DEFAULT 'Work',
   order_index INT DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ===== NEWS POSTS =====
+-- ===== BLOG POSTS =====
 CREATE TABLE news_posts (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   cover_url TEXT,
-  category TEXT DEFAULT 'Community',
+  category TEXT DEFAULT 'Software',
   title TEXT NOT NULL,
   excerpt TEXT,
   content TEXT,
@@ -100,7 +99,7 @@ CREATE TABLE testimonials (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ===== ACHIEVEMENTS =====
+-- ===== DELIVERY PROCESS =====
 CREATE TABLE achievements (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   year TEXT NOT NULL,
@@ -124,7 +123,7 @@ CREATE TABLE site_stats (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ===== VOLUNTEER SUBMISSIONS =====
+-- ===== LEAD SUBMISSIONS =====
 CREATE TABLE volunteer_submissions (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   name TEXT NOT NULL,
@@ -149,7 +148,7 @@ CREATE TABLE contact_messages (
 -- ===== SITE SETTINGS =====
 CREATE TABLE site_settings (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  site_title TEXT DEFAULT 'Mukesh Jung Khadka',
+  site_title TEXT DEFAULT 'Mukesh Khadka | Digital Systems Portfolio',
   meta_description TEXT,
   phone TEXT,
   email TEXT,
@@ -165,7 +164,6 @@ CREATE TABLE site_settings (
 );
 
 -- ===== ROW LEVEL SECURITY =====
--- Enable RLS on all tables
 ALTER TABLE hero_content ENABLE ROW LEVEL SECURITY;
 ALTER TABLE about_content ENABLE ROW LEVEL SECURITY;
 ALTER TABLE vision_cards ENABLE ROW LEVEL SECURITY;
@@ -179,8 +177,6 @@ ALTER TABLE volunteer_submissions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contact_messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE site_settings ENABLE ROW LEVEL SECURITY;
 
--- All reads and writes are performed by validated server API routes.
--- Keep direct Supabase browser roles away from both content and submissions.
 REVOKE ALL ON TABLE hero_content, about_content, vision_cards, initiatives, gallery_photos, news_posts,
   testimonials, achievements, site_stats, volunteer_submissions, contact_messages, site_settings
   FROM anon, authenticated;
@@ -194,7 +190,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Apply trigger to all content tables
 CREATE TRIGGER update_hero_timestamp BEFORE UPDATE ON hero_content FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 CREATE TRIGGER update_about_timestamp BEFORE UPDATE ON about_content FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 CREATE TRIGGER update_vision_timestamp BEFORE UPDATE ON vision_cards FOR EACH ROW EXECUTE FUNCTION update_updated_at();
