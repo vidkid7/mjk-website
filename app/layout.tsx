@@ -1,22 +1,22 @@
 import type { Metadata } from 'next'
 import './globals.css'
 
-const title = 'AashaTech | Software, Web & Mobile App Development in Nepal'
-const description = 'AashaTech builds custom software, web applications, mobile apps, digital systems, and government-focused technology solutions from Kathmandu, Nepal.'
+const title = 'Mukesh Khadka | Digital Systems & Software Portfolio'
+const description = 'Digital portfolio of Mukesh Khadka — practical software systems, web platforms, automation, UX thinking, and digital transformation work.'
 
 export const metadata: Metadata = {
   title,
   description,
-  keywords: 'AashaTech, software company Nepal, web development Nepal, mobile app development Nepal, custom software, digital systems, UI UX, government software Nepal',
-  metadataBase: new URL('https://www.aashatech.com'),
+  keywords: 'Mukesh Khadka, digital portfolio Nepal, software systems, web development Nepal, custom software, automation, UI UX, digital transformation',
+  metadataBase: new URL('https://mukeshjungkhadka.com.np'),
   openGraph: {
     title,
     description,
     type: 'website',
     locale: 'en_US',
-    url: 'https://www.aashatech.com',
-    siteName: 'AashaTech',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'AashaTech - Digital Systems Partner' }],
+    url: 'https://mukeshjungkhadka.com.np',
+    siteName: 'Mukesh Khadka Digital Portfolio',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Mukesh Khadka - Digital Systems Portfolio' }],
   },
   twitter: {
     card: 'summary_large_image',
