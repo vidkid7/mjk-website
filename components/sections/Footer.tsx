@@ -43,12 +43,17 @@ export default function Footer() {
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
   const storedSettings = useStoredData('settings', defaultSettings)
-  const settings = { ...defaultSettings, ...storedSettings }
+  const settings = {
+    ...defaultSettings,
+    ...storedSettings,
+    phone: defaultSettings.phone,
+    email: defaultSettings.email,
+  }
   const socialLinks = [
     { icon: FaLinkedin, url: socialUrl(settings.linkedin_url, defaultSettings.linkedin_url), color: 'hover:bg-blue-700 hover:border-blue-700' },
     { icon: FaFacebook, url: socialUrl(settings.facebook_url, defaultSettings.facebook_url, 'https://facebook.com/mjk'), color: 'hover:bg-blue-600 hover:border-blue-600' },
     { icon: FaTwitter, url: socialUrl(settings.twitter_url, defaultSettings.twitter_url, 'https://twitter.com/mjk'), color: 'hover:bg-sky-500 hover:border-sky-500' },
-    { icon: FaInstagram, url: socialUrl(settings.instagram_url, defaultSettings.instagram_url, 'https://instagram.com/mjk'), color: 'hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-500 hover:border-pink-500' },
+    { icon: FaInstagram, url: socialUrl(settings.instagram_url, defaultSettings.instagram_url, 'https://instagram.com/mjk'), color: 'hover:bg-pink-600 hover:border-pink-600' },
   ].filter(social => Boolean(social.url))
 
   const handleNewsletter = (e: React.FormEvent) => {
@@ -78,13 +83,7 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <div className="mb-4 flex items-center gap-2.5">
               <div className="relative h-11 w-24 shrink-0">
-                <Image
-                  src="/janaki-temple-logo.png"
-                  alt="Mukesh Khadka"
-                  fill
-                  sizes="96px"
-                  className="object-contain object-center drop-shadow-sm"
-                />
+                <Image src="/janaki-temple-logo.png" alt="Mukesh Khadka" fill sizes="96px" className="object-contain object-center drop-shadow-sm" />
               </div>
               <div className="flex flex-col whitespace-nowrap">
                 <span className="font-playfair text-base font-semibold leading-none text-white">Mukesh Khadka</span>
@@ -100,11 +99,7 @@ export default function Footer() {
             </div>
             <div className="flex gap-2">
               {socialLinks.map((social, i) => (
-                <a
-                  key={i}
-                  href={social.url}
-                  className={`flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-slate-500 transition-all duration-300 hover:text-white ${social.color}`}
-                >
+                <a key={i} href={social.url} className={`flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-slate-500 transition-all duration-300 hover:text-white ${social.color}`}>
                   <social.icon size={14} />
                 </a>
               ))}
@@ -141,22 +136,10 @@ export default function Footer() {
 
           <div>
             <h4 className="mb-4 text-sm font-semibold text-white">Stay Updated</h4>
-            <p className="mb-4 text-sm leading-relaxed text-slate-500">
-              Subscribe for software, design, automation, and project updates.
-            </p>
+            <p className="mb-4 text-sm leading-relaxed text-slate-500">Subscribe for software, design, automation, and project updates.</p>
             <form onSubmit={handleNewsletter} className="flex gap-2">
-              <input
-                type="email"
-                placeholder="Your email"
-                aria-label="Email for newsletter"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                className="flex-1 rounded-lg border border-white/10 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder:text-slate-600 transition-all focus:border-emerald-400/40 focus:outline-none focus:ring-1 focus:ring-emerald-400/40"
-                required
-              />
-              <button type="submit" className="rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-bold text-white transition-all hover:bg-emerald-700">
-                {subscribed ? 'Done ✓' : 'Join'}
-              </button>
+              <input type="email" placeholder="Your email" aria-label="Email for newsletter" value={email} onChange={e => setEmail(e.target.value)} className="flex-1 rounded-lg border border-white/10 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder:text-slate-600 transition-all focus:border-emerald-400/40 focus:outline-none focus:ring-1 focus:ring-emerald-400/40" required />
+              <button type="submit" className="rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-bold text-white transition-all hover:bg-emerald-700">{subscribed ? 'Done ✓' : 'Join'}</button>
             </form>
           </div>
         </div>
@@ -164,12 +147,8 @@ export default function Footer() {
 
       <div className="border-t border-white/5 bg-slate-950">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-5 py-4 sm:flex-row sm:px-8">
-          <p className="text-center text-xs text-white/70 sm:text-left">
-            © 2026 Mukesh Khadka. All Rights Reserved.
-          </p>
-          <p className="inline-flex items-center gap-1 text-xs text-white/70">
-            Built with <Code2 size={10} className="text-emerald-300" /> practical digital thinking
-          </p>
+          <p className="text-center text-xs text-white/70 sm:text-left">© 2026 Mukesh Khadka. All Rights Reserved.</p>
+          <p className="inline-flex items-center gap-1 text-xs text-white/70">Built with <Code2 size={10} className="text-emerald-300" /> practical digital thinking</p>
         </div>
       </div>
     </footer>
