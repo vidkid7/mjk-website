@@ -2,32 +2,35 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa'
-import { ArrowRight, Heart } from 'lucide-react'
+import { ArrowRight, Code2 } from 'lucide-react'
 import { useStoredData } from '@/lib/storage'
 
 const quickLinks = [
   { label: 'About', href: '#about' },
   { label: 'Vision', href: '#vision' },
-  { label: 'Initiatives', href: '#initiatives' },
-  { label: 'Gallery', href: '#gallery' },
+  { label: 'Solutions', href: '#initiatives' },
+  { label: 'Portfolio', href: '#client-portfolio' },
+  { label: 'Insights', href: '#insights' },
+  { label: 'Blog', href: '/blog' },
   { label: 'Contact', href: '#contact' },
 ]
 
-const campaignLinks = [
-  { label: 'Initiatives', href: '#initiatives' },
-  { label: 'News & Updates', href: '#news' },
-  { label: 'Contact', href: '#contact' },
+const serviceLinks = [
+  { label: 'Custom Software', href: '#client-portfolio' },
+  { label: 'Web Development', href: '#client-portfolio' },
+  { label: 'UI/UX Design', href: '#vision' },
+  { label: 'Workflow Automation', href: '#capabilities' },
 ]
 
 const socialUrl = (url: string | undefined, fallback: string, legacyFallback?: string) =>
   !url || url === legacyFallback ? fallback : url
 
 const defaultSettings = {
-  site_title: 'Mukesh Jung Khadka | Community Leader',
-  meta_description: 'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Community Leader for Kathmandu.',
-  phone: '+977 9851241656',
+  site_title: 'Mukesh Khadka | Digital Systems Portfolio',
+  meta_description: 'Digital portfolio of Mukesh Khadka — software systems, web platforms, automation, and digital transformation work.',
+  phone: '+977 985-1241656',
   email: 'khadkamukesh423@gmail.com',
-  address: 'Ward No. 10, Kathmandu Metropolitan City, Bagmati Province, Nepal',
+  address: 'Kathmandu, Bagmati Province, Nepal',
   linkedin_url: 'https://www.linkedin.com/in/mukesh-khadka-960401324/',
   facebook_url: 'https://www.facebook.com/Nepali.man.67',
   instagram_url: 'https://www.instagram.com/khadka3546?utm_source=qr',
@@ -68,38 +71,39 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#071224]">
-      {/* Gradient top border */}
-      <div className="h-1 bg-gradient-to-r from-crimson via-gold to-[#003893]" />
-      
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
-          {/* Brand */}
+      <div className="h-1 bg-gradient-to-r from-emerald-500 via-blue-500 to-gold" />
+
+      <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-2.5 mb-4">
+            <div className="mb-4 flex items-center gap-2.5">
               <div className="relative h-11 w-24 shrink-0">
                 <Image
                   src="/janaki-temple-logo.png"
-                  alt=""
+                  alt="Mukesh Khadka"
                   fill
                   sizes="96px"
                   className="object-contain object-center drop-shadow-sm"
                 />
               </div>
               <div className="flex flex-col whitespace-nowrap">
-                <span className="font-playfair font-semibold text-white text-base leading-none">Mukesh Khadka</span>
-                <span className="mt-1 text-[8px] font-semibold uppercase tracking-[0.34em] text-white/60">For Nepal</span>
+                <span className="font-playfair text-base font-semibold leading-none text-white">Mukesh Khadka</span>
+                <span className="mt-1 text-[8px] font-semibold uppercase tracking-[0.34em] text-white/60">Digital Systems</span>
               </div>
             </div>
-            <p className="text-slate-500 text-sm leading-relaxed mb-5">
-              सँगै अगाडि बढौं — Moving Forward Together. Building a transparent, youth-driven, 
-              and prosperous future for Nepal.
+            <p className="mb-5 text-sm leading-relaxed text-slate-500">
+              A professional digital portfolio focused on software systems, web platforms, automation, and practical technology solutions.
             </p>
+            <div className="mb-5 space-y-1 text-sm text-slate-500">
+              <p>{settings.phone}</p>
+              <p>{settings.email}</p>
+            </div>
             <div className="flex gap-2">
               {socialLinks.map((social, i) => (
                 <a
                   key={i}
                   href={social.url}
-                  className={`w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-500 hover:text-white transition-all duration-300 ${social.color}`}
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-slate-500 transition-all duration-300 hover:text-white ${social.color}`}
                 >
                   <social.icon size={14} />
                 </a>
@@ -107,14 +111,13 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
-            <h4 className="font-semibold text-white text-sm mb-4">Quick Links</h4>
+            <h4 className="mb-4 text-sm font-semibold text-white">Quick Links</h4>
             <ul className="space-y-2.5">
               {quickLinks.map(link => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-slate-500 text-sm hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1 group">
-                    <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <a href={link.href} className="group inline-flex items-center gap-1 text-sm text-slate-500 transition-all hover:translate-x-1 hover:text-white">
+                    <ArrowRight size={12} className="opacity-0 transition-opacity group-hover:opacity-100" />
                     {link.label}
                   </a>
                 </li>
@@ -122,14 +125,13 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Campaign */}
           <div>
-            <h4 className="font-semibold text-white text-sm mb-4">Campaign</h4>
+            <h4 className="mb-4 text-sm font-semibold text-white">Services</h4>
             <ul className="space-y-2.5">
-              {campaignLinks.map(link => (
+              {serviceLinks.map(link => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-slate-500 text-sm hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1 group">
-                    <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <a href={link.href} className="group inline-flex items-center gap-1 text-sm text-slate-500 transition-all hover:translate-x-1 hover:text-white">
+                    <ArrowRight size={12} className="opacity-0 transition-opacity group-hover:opacity-100" />
                     {link.label}
                   </a>
                 </li>
@@ -137,11 +139,10 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Newsletter */}
           <div>
-            <h4 className="font-semibold text-white text-sm mb-4">Stay Updated</h4>
-            <p className="text-slate-500 text-sm mb-4 leading-relaxed">
-              Subscribe to receive the latest updates directly in your inbox.
+            <h4 className="mb-4 text-sm font-semibold text-white">Stay Updated</h4>
+            <p className="mb-4 text-sm leading-relaxed text-slate-500">
+              Subscribe for software, design, automation, and project updates.
             </p>
             <form onSubmit={handleNewsletter} className="flex gap-2">
               <input
@@ -150,25 +151,24 @@ export default function Footer() {
                 aria-label="Email for newsletter"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="flex-1 px-3.5 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-slate-600 text-sm focus:outline-none focus:border-crimson/40 focus:ring-1 focus:ring-crimson/40 transition-all"
+                className="flex-1 rounded-lg border border-white/10 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder:text-slate-600 transition-all focus:border-emerald-400/40 focus:outline-none focus:ring-1 focus:ring-emerald-400/40"
                 required
               />
-              <button type="submit" className="px-4 py-2.5 bg-crimson text-white rounded-lg font-bold text-sm hover:bg-crimson-dark hover:shadow-glow-crimson transition-all">
-                {subscribed ? 'Subscribed ✓' : 'Join'}
+              <button type="submit" className="rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-bold text-white transition-all hover:bg-emerald-700">
+                {subscribed ? 'Done ✓' : 'Join'}
               </button>
             </form>
           </div>
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-white/5 bg-crimson">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-white/80 text-xs text-center sm:text-left">
-            © 2025 Mukesh Jung Khadka. All Rights Reserved.
+      <div className="border-t border-white/5 bg-slate-950">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-5 py-4 sm:flex-row sm:px-8">
+          <p className="text-center text-xs text-white/70 sm:text-left">
+            © 2026 Mukesh Khadka. All Rights Reserved.
           </p>
-          <p className="text-white/80 text-xs inline-flex items-center gap-1">
-            Made with <Heart size={10} className="text-white fill-white" /> for Nepal
+          <p className="inline-flex items-center gap-1 text-xs text-white/70">
+            Built with <Code2 size={10} className="text-emerald-300" /> practical digital thinking
           </p>
         </div>
       </div>
