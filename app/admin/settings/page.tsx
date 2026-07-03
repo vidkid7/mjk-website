@@ -9,11 +9,11 @@ const socialUrl = (url: string | undefined, fallback: string, legacyFallback?: s
   !url || url === legacyFallback ? fallback : url
 
 const defaultForm = {
-  site_title: 'Mukesh Jung Khadka | Community Leader',
-  meta_description: 'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Community Leader for Kathmandu.',
-  phone: '+977 9851241656',
+  site_title: 'Mukesh Khadka | Digital Systems Portfolio',
+  meta_description: 'Digital portfolio of Mukesh Khadka — practical software systems, web platforms, automation, and digital transformation work.',
+  phone: '+977 985-1241656',
   email: 'khadkamukesh423@gmail.com',
-  address: 'Ward No. 10, Kathmandu Metropolitan City, Bagmati Province, Nepal',
+  address: 'Kathmandu, Bagmati Province, Nepal',
   linkedin_url: 'https://www.linkedin.com/in/mukesh-khadka-960401324/',
   facebook_url: 'https://www.facebook.com/Nepali.man.67',
   instagram_url: 'https://www.instagram.com/khadka3546?utm_source=qr',
@@ -40,15 +40,15 @@ const defaultForm = {
 const sectionVisibilityOptions = [
   { key: 'hero', label: 'Hero' },
   { key: 'about', label: 'About' },
-  { key: 'achievements', label: 'Achievements' },
-  { key: 'portfolio', label: 'Client Portfolio' },
-  { key: 'vision', label: 'Vision' },
-  { key: 'initiatives', label: 'Initiatives' },
-  { key: 'entrepreneurship', label: 'Entrepreneurship' },
-  { key: 'youth', label: 'Youth Inspiration' },
+  { key: 'achievements', label: 'Delivery Process' },
+  { key: 'portfolio', label: 'Portfolio' },
+  { key: 'vision', label: 'Digital Vision' },
+  { key: 'initiatives', label: 'Solutions' },
+  { key: 'entrepreneurship', label: 'Delivery Capability' },
+  { key: 'youth', label: 'Insights' },
   { key: 'testimonials', label: 'Testimonials' },
   { key: 'gallery', label: 'Gallery' },
-  { key: 'news', label: 'News' },
+  { key: 'news', label: 'Blog Preview' },
   { key: 'stats', label: 'Stats' },
   { key: 'contact', label: 'Contact' },
 ] as const
@@ -81,70 +81,59 @@ export default function AdminSettings() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-xl font-bold text-gray-800">Site Settings</h2>
-          <p className="text-sm text-gray-500">Manage global site configuration</p>
+          <p className="text-sm text-gray-500">Manage global portfolio configuration</p>
         </div>
         <button onClick={handleSave} disabled={saving}
-          className="px-6 py-2 bg-crimson text-white rounded-lg text-sm font-semibold hover:bg-crimson-dark flex items-center gap-2 disabled:opacity-50">
+          className="flex items-center gap-2 rounded-lg bg-crimson px-6 py-2 text-sm font-semibold text-white hover:bg-crimson-dark disabled:opacity-50">
           {saving ? <div className="spinner" /> : saved ? '✓ Saved!' : <><Save size={16} /> Save Settings</>}
         </button>
       </div>
 
       <AdminDataNotice loading={loading} error={error} usingStarter={usingStarter} />
 
-      {/* SEO Settings */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <h3 className="mb-4 flex items-center gap-2 font-semibold text-gray-800">
           <Globe size={18} className="text-crimson" /> SEO & Meta
         </h3>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Site Title</label>
+            <label className="mb-1 block text-sm font-medium text-gray-700">Site Title</label>
             <input type="text" value={normalizedForm.site_title} onChange={e => setForm({ ...normalizedForm, site_title: e.target.value })} className={inputClass} />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Meta Description</label>
+            <label className="mb-1 block text-sm font-medium text-gray-700">Meta Description</label>
             <textarea value={normalizedForm.meta_description} onChange={e => setForm({ ...normalizedForm, meta_description: e.target.value })} rows={2}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson resize-none" />
-            <p className="text-xs text-gray-400 mt-1">{normalizedForm.meta_description.length}/160 characters</p>
+              className="w-full resize-none rounded-lg border border-gray-300 px-4 py-2.5 focus:border-crimson focus:ring-2 focus:ring-crimson/50" />
+            <p className="mt-1 text-xs text-gray-400">{normalizedForm.meta_description.length}/160 characters</p>
           </div>
         </div>
       </div>
 
-      {/* Contact Info */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <h3 className="mb-4 flex items-center gap-2 font-semibold text-gray-800">
           <Phone size={18} className="text-crimson" /> Contact Information
         </h3>
         <div className="space-y-4">
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1">
-                <Phone size={14} /> Phone
-              </label>
+              <label className="mb-1 flex items-center gap-1 text-sm font-medium text-gray-700"><Phone size={14} /> Phone</label>
               <input type="text" value={normalizedForm.phone} onChange={e => setForm({ ...normalizedForm, phone: e.target.value })} className={inputClass} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1">
-                <Mail size={14} /> Email
-              </label>
+              <label className="mb-1 flex items-center gap-1 text-sm font-medium text-gray-700"><Mail size={14} /> Email</label>
               <input type="email" value={normalizedForm.email} onChange={e => setForm({ ...normalizedForm, email: e.target.value })} className={inputClass} />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1">
-              <MapPin size={14} /> Office Address
-            </label>
+            <label className="mb-1 flex items-center gap-1 text-sm font-medium text-gray-700"><MapPin size={14} /> Office Address</label>
             <textarea value={normalizedForm.address} onChange={e => setForm({ ...normalizedForm, address: e.target.value })} rows={2}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson resize-none" />
+              className="w-full resize-none rounded-lg border border-gray-300 px-4 py-2.5 focus:border-crimson focus:ring-2 focus:ring-crimson/50" />
           </div>
         </div>
       </div>
 
-      {/* Social Media Links */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
-          <Share2 size={18} className="text-crimson" /> Social Media Links
-        </h3>
+      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <h3 className="mb-4 flex items-center gap-2 font-semibold text-gray-800"><Share2 size={18} className="text-crimson" /> Social Media Links</h3>
         <div className="space-y-3">
           {[
             { icon: FaLinkedin, label: 'LinkedIn', key: 'linkedin_url', color: 'text-blue-700' },
@@ -163,23 +152,19 @@ export default function AdminSettings() {
         </div>
       </div>
 
-      {/* Section Visibility */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h3 className="font-semibold text-gray-800 mb-4">Section Visibility</h3>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <h3 className="mb-4 font-semibold text-gray-800">Section Visibility</h3>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {sectionVisibilityOptions.map(section => (
-            <label key={section.key} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
+            <label key={section.key} className="flex cursor-pointer items-center gap-3 rounded-lg bg-gray-50 p-3 transition-colors hover:bg-gray-100">
               <input
                 type="checkbox"
                 checked={visibleSections[section.key]}
                 onChange={e => setForm({
                   ...normalizedForm,
-                  visible_sections: {
-                    ...visibleSections,
-                    [section.key]: e.target.checked,
-                  },
+                  visible_sections: { ...visibleSections, [section.key]: e.target.checked },
                 })}
-                className="w-4 h-4 accent-crimson rounded"
+                className="h-4 w-4 rounded accent-crimson"
               />
               <span className="text-sm font-medium text-gray-700">{section.label}</span>
             </label>
