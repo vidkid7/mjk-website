@@ -1,22 +1,22 @@
 -- ============================================================
--- MJK Political Portfolio — Supabase Database Schema
+-- MJK Digital Portfolio — Supabase Database Schema
 -- Run this in your Supabase SQL editor
 -- ============================================================
 
 -- Hero Content
 CREATE TABLE IF NOT EXISTS hero_content (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  label TEXT NOT NULL DEFAULT '🇳🇵 Community Leader — Kathmandu Metropolitan City',
-  headline TEXT NOT NULL DEFAULT 'Leading Nepal\nForward Together',
-  subheadline TEXT NOT NULL DEFAULT 'Entrepreneur. Social Worker. Youth Champion. Community Leader.',
+  label TEXT NOT NULL DEFAULT 'Digital Systems & Software Portfolio',
+  headline TEXT NOT NULL DEFAULT 'Building Practical\nDigital Solutions',
+  subheadline TEXT NOT NULL DEFAULT 'Software Systems • Web Platforms • Digital Transformation',
   bio TEXT,
-  cta_primary_text TEXT DEFAULT 'Explore My Vision',
-  cta_secondary_text TEXT DEFAULT 'Watch My Story',
+  cta_primary_text TEXT DEFAULT 'Explore The Work',
+  cta_secondary_text TEXT DEFAULT 'About Mukesh',
   hero_image_url TEXT,
-  stat_projects INT DEFAULT 50,
-  stat_lives INT DEFAULT 100000,
-  stat_years INT DEFAULT 15,
-  stat_youth INT DEFAULT 5000,
+  stat_projects INT DEFAULT 33,
+  stat_lives INT DEFAULT 26,
+  stat_years INT DEFAULT 7,
+  stat_youth INT DEFAULT 10,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -25,13 +25,13 @@ CREATE TABLE IF NOT EXISTS hero_content (
 CREATE TABLE IF NOT EXISTS about_content (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   pill_text TEXT DEFAULT 'About Mukesh',
-  heading TEXT DEFAULT 'A Son of Nepal, Built for Service',
+  heading TEXT DEFAULT 'A practical digital systems builder focused on useful results',
   bio_paragraph_1 TEXT,
   bio_paragraph_2 TEXT,
   bio_paragraph_3 TEXT,
   bio_paragraph_4 TEXT,
-  community_trust INT DEFAULT 94,
-  youth_engagement INT DEFAULT 88,
+  community_trust INT DEFAULT 96,
+  youth_engagement INT DEFAULT 92,
   photo_url TEXT,
   signature_url TEXT,
   cv_url TEXT,
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS about_content (
 -- Vision Cards
 CREATE TABLE IF NOT EXISTS vision_cards (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  icon TEXT NOT NULL DEFAULT 'Building2',
+  icon TEXT NOT NULL DEFAULT 'MonitorSmartphone',
   heading TEXT NOT NULL,
   description TEXT,
   order_index INT DEFAULT 0,
@@ -50,11 +50,11 @@ CREATE TABLE IF NOT EXISTS vision_cards (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Initiatives / Social Work
+-- Solutions / Digital Initiatives
 CREATE TABLE IF NOT EXISTS initiatives (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   photo_url TEXT,
-  category TEXT NOT NULL DEFAULT 'Education',
+  category TEXT NOT NULL DEFAULT 'Web',
   title TEXT NOT NULL,
   description TEXT,
   impact TEXT,
@@ -69,17 +69,17 @@ CREATE TABLE IF NOT EXISTS gallery_photos (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   url TEXT NOT NULL,
   caption TEXT,
-  category TEXT DEFAULT 'Community',
+  category TEXT DEFAULT 'Work',
   order_index INT DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- News Posts
+-- Blog Posts
 CREATE TABLE IF NOT EXISTS news_posts (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   cover_url TEXT,
-  category TEXT DEFAULT 'Community',
+  category TEXT DEFAULT 'Software',
   title TEXT NOT NULL,
   excerpt TEXT,
   content TEXT,
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS testimonials (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Achievements Timeline
+-- Delivery Process Timeline
 CREATE TABLE IF NOT EXISTS achievements (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   year TEXT NOT NULL,
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS site_stats (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Volunteer Submissions
+-- Lead Submissions
 CREATE TABLE IF NOT EXISTS volunteer_submissions (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS contact_messages (
 -- Site Settings
 CREATE TABLE IF NOT EXISTS site_settings (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  site_title TEXT DEFAULT 'Mukesh Jung Khadka | Community Leader',
+  site_title TEXT DEFAULT 'Mukesh Khadka | Digital Systems Portfolio',
   meta_description TEXT,
   phone TEXT,
   email TEXT,
@@ -170,7 +170,6 @@ CREATE TABLE IF NOT EXISTS site_settings (
 -- Row Level Security (RLS)
 -- ============================================================
 
--- Enable RLS on all tables
 ALTER TABLE hero_content ENABLE ROW LEVEL SECURITY;
 ALTER TABLE about_content ENABLE ROW LEVEL SECURITY;
 ALTER TABLE vision_cards ENABLE ROW LEVEL SECURITY;
@@ -205,11 +204,11 @@ INSERT INTO site_settings (
   twitter_url
 )
 VALUES (
-  'Mukesh Jung Khadka | Community Leader — Moving Forward Together',
-  'Official website of Mukesh Jung Khadka — Entrepreneur, Social Worker, Youth Inspirator, and Community Leader for Kathmandu.',
-  '+977 01-4XXXXXX',
-  'contact@mukeshjungkhadka.com.np',
-  'Ward No. 10, Kathmandu Metropolitan City, Bagmati Province, Nepal',
+  'Mukesh Khadka | Digital Systems & Software Portfolio',
+  'Digital portfolio of Mukesh Khadka — practical software systems, web platforms, automation, UX thinking, and digital transformation work.',
+  '+977 985-1241656',
+  'khadkamukesh423@gmail.com',
+  'Kathmandu, Bagmati Province, Nepal',
   'https://www.linkedin.com/in/mukesh-khadka-960401324/',
   'https://www.facebook.com/Nepali.man.67',
   'https://www.instagram.com/khadka3546?utm_source=qr',
