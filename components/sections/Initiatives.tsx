@@ -1,7 +1,17 @@
 'use client'
 import { motion } from 'framer-motion'
-import { ArrowRight, BookOpen, Leaf, HeartHandshake, HeartPulse, Building, Sparkles } from 'lucide-react'
-import { FlippingCard } from '@/components/ui/flipping-card'
+import {
+  ArrowRight,
+  BarChart3,
+  Building2,
+  Database,
+  FileText,
+  GraduationCap,
+  Landmark,
+  LayoutDashboard,
+  MonitorSmartphone,
+  Sparkles,
+} from 'lucide-react'
 import { initiativesData } from '@/lib/placeholder-data'
 import { DhakaPattern } from '@/components/ui/NepalFlag'
 import { useStoredData } from '@/lib/storage'
@@ -10,116 +20,98 @@ const defaultItems = initiativesData.map(item => ({ ...item, is_published: true 
 type InitiativeItem = typeof defaultItems[0]
 
 const categoryConfig: Record<string, { color: string; bg: string; border: string; icon: React.ComponentType<any> }> = {
-  Education: { color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-100', icon: BookOpen },
-  Environment: { color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-200/60', icon: Leaf },
-  Empowerment: { color: 'text-violet-600', bg: 'bg-violet-50', border: 'border-violet-100', icon: HeartHandshake },
-  Health: { color: 'text-rose-600', bg: 'bg-rose-50', border: 'border-rose-100', icon: HeartPulse },
-  Infrastructure: { color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-200/60', icon: Building },
-}
-
-function CardFront({ item }: { item: InitiativeItem }) {
-  return (
-    <div className="relative h-full w-full overflow-hidden rounded-md">
-      <img
-        src={item.photo}
-        alt={item.title}
-        loading="lazy"
-        decoding="async"
-        className="w-full h-full object-cover"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
-      <div className="absolute bottom-3 left-3 right-3">
-        <h3 className="font-playfair text-base font-bold text-white drop-shadow-md leading-snug">
-          {item.title}
-        </h3>
-      </div>
-    </div>
-  )
-}
-
-function CardBack({ item }: { item: InitiativeItem }) {
-  const cat = categoryConfig[item.category] || categoryConfig.Education
-  const CatIcon = cat.icon
-  return (
-    <div className="flex flex-col items-center justify-center h-full w-full p-5 text-center">
-      <div className={`w-12 h-12 ${cat.bg} flex items-center justify-center mb-4 border ${cat.border}`}>
-        <CatIcon size={22} className={cat.color} />
-      </div>
-      <h3 className="font-playfair text-base font-bold text-slate-900 mb-2">
-        {item.title}
-      </h3>
-      <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 border border-amber-100 mb-3">
-        <span className="text-xs font-semibold text-amber-600">✨ {item.impact}</span>
-      </div>
-      <p className="text-slate-500 text-[12.5px] leading-relaxed mb-4">
-        {item.description}
-      </p>
-      <a href="#" className="inline-flex items-center gap-1.5 bg-crimson text-white px-4 py-1.5 text-xs font-bold uppercase tracking-[0.1em] hover:bg-crimson-dark transition-colors">
-        Learn More <ArrowRight size={12} />
-      </a>
-    </div>
-  )
+  GovTech: { color: 'text-blue-700', bg: 'bg-blue-50', border: 'border-blue-100', icon: Landmark },
+  'Data System': { color: 'text-violet-700', bg: 'bg-violet-50', border: 'border-violet-100', icon: Database },
+  'Business System': { color: 'text-emerald-700', bg: 'bg-emerald-50', border: 'border-emerald-100', icon: BarChart3 },
+  Education: { color: 'text-amber-700', bg: 'bg-amber-50', border: 'border-amber-100', icon: GraduationCap },
+  'Document System': { color: 'text-slate-700', bg: 'bg-slate-50', border: 'border-slate-200', icon: FileText },
+  'Retail System': { color: 'text-crimson', bg: 'bg-crimson-50', border: 'border-crimson-100', icon: LayoutDashboard },
+  Web: { color: 'text-cyan-700', bg: 'bg-cyan-50', border: 'border-cyan-100', icon: MonitorSmartphone },
 }
 
 export default function Initiatives() {
   const items = useStoredData('initiatives', defaultItems).filter(item => item.is_published)
 
   return (
-    <section id="initiatives" className="relative overflow-hidden py-24 md:py-32 bg-[#fbfaf7]">
-      <DhakaPattern className="opacity-[0.035]" />
-      <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-14">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <span className="inline-flex items-center gap-2 border border-emerald-100 bg-emerald-50 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-600 mb-4">
-              <Sparkles size={12} />
-              Social Work
-            </span>
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-playfair text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-4"
-          >
-            Initiatives That Changed Lives
-          </motion.h2>
+    <section id="initiatives" className="relative overflow-hidden bg-[#fbfaf7] px-4 py-24 md:py-32">
+      <DhakaPattern className="opacity-[0.025]" />
+      <div className="absolute -left-28 top-28 h-80 w-80 rounded-full bg-amber-100/80 blur-3xl" />
+      <div className="absolute -right-28 bottom-16 h-96 w-96 rounded-full bg-emerald-100/80 blur-3xl" />
+
+      <div className="relative mx-auto max-w-6xl">
+        <div className="mb-14 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+          <div className="max-w-3xl">
+            <motion.span
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-emerald-700"
+            >
+              <Sparkles size={14} />
+              Solutions in Action
+            </motion.span>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="font-playfair text-3xl font-extrabold leading-tight tracking-tight text-slate-950 sm:text-5xl"
+            >
+              Practical digital initiatives for institutions, businesses, and public-facing teams.
+            </motion.h2>
+          </div>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-slate-500 max-w-2xl mx-auto leading-7"
+            transition={{ delay: 0.1 }}
+            className="max-w-md text-base leading-8 text-slate-600"
           >
-            Real projects. Real impact. Hover on any card to discover the difference each initiative has made across Nepal.
+            Each initiative represents a real category of work: government digitization, data systems, billing, school operations, records, POS, and mobile-ready business tools.
           </motion.p>
         </div>
 
-        {/* Flipping Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-          {items.map((item, index) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="w-full max-w-[340px]"
-            >
-              <FlippingCard
-                width={340}
-                height={360}
-                frontContent={<CardFront item={item} />}
-                backContent={<CardBack item={item} />}
-              />
-            </motion.div>
-          ))}
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {items.map((item, index) => {
+            const cat = categoryConfig[item.category] || categoryConfig.Web
+            const Icon = cat.icon
+            return (
+              <motion.article
+                key={item.id}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: index * 0.06 }}
+                className="group overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-2xl hover:shadow-slate-900/10"
+              >
+                <div className="relative h-56 overflow-hidden bg-slate-100">
+                  <img
+                    src={item.photo}
+                    alt={item.title}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent" />
+                  <div className="absolute left-4 top-4">
+                    <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] ${cat.bg} ${cat.color} ${cat.border}`}>
+                      <Icon size={13} />
+                      {item.category}
+                    </span>
+                  </div>
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <h3 className="font-playfair text-2xl font-bold leading-tight text-white drop-shadow">{item.title}</h3>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <div className="mb-4 inline-flex rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700">{item.impact}</div>
+                  <p className="text-sm leading-7 text-slate-500">{item.description}</p>
+                  <a href="#contact" className="mt-6 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.16em] text-slate-400 transition group-hover:text-crimson">
+                    Discuss similar project <ArrowRight size={14} />
+                  </a>
+                </div>
+              </motion.article>
+            )
+          })}
         </div>
       </div>
     </section>
