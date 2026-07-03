@@ -1,6 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
-import { Sparkles } from 'lucide-react'
+import { ArrowRight, Sparkles } from 'lucide-react'
 import { NewsCards } from '@/components/ui/news-cards'
 import { DhakaPattern } from '@/components/ui/NepalFlag'
 import { newsData } from '@/lib/placeholder-data'
@@ -16,28 +16,27 @@ export default function News() {
       id: post.id,
       title: post.title,
       category: post.category,
-      subcategory: 'Community Update',
+      subcategory: 'Insight',
       timeAgo: post.date,
-      location: 'Kathmandu',
+      location: 'Digital Portfolio',
       image: post.cover,
       content: (post.content || post.excerpt).split(/\n\s*\n/).filter(Boolean),
     }))
 
   return (
-    <section id="news" className="relative overflow-hidden py-24 md:py-32 bg-white">
-      <DhakaPattern className="opacity-[0.03]" />
-      <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-8">
+    <section id="news" className="relative overflow-hidden bg-white py-24 md:py-32">
+      <DhakaPattern className="opacity-[0.025]" />
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <div className="mb-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-flex items-center gap-2 border border-crimson-100 bg-crimson-50 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-crimson mb-4">
+            <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-[11px] font-black uppercase tracking-[0.2em] text-emerald-700">
               <Sparkles size={12} />
-              Latest Updates
+              Blog
             </span>
           </motion.div>
           <motion.h2
@@ -45,23 +44,28 @@ export default function News() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-playfair text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-4"
+            className="mb-4 font-playfair text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl"
           >
-            Latest News & Updates
+            Latest Blog Posts & Digital Insights
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-slate-500 max-w-2xl mx-auto leading-7"
+            className="mx-auto max-w-2xl leading-7 text-slate-500"
           >
-            Stay informed about our movement, achievements, and upcoming events.
+            Articles about software systems, UX, digital planning, websites, automation, and project delivery.
           </motion.p>
         </div>
 
-        {/* News Cards */}
         <NewsCards newsCards={newsCards} />
+
+        <div className="mt-10 text-center">
+          <a href="/blog" className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-sm font-bold text-white transition hover:bg-emerald-700">
+            View all blog posts <ArrowRight size={16} />
+          </a>
+        </div>
       </div>
     </section>
   )
