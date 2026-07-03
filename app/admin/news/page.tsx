@@ -7,20 +7,21 @@ import AdminDataNotice from '@/components/admin/AdminDataNotice'
 import ImageUploadField from '@/components/admin/ImageUploadField'
 
 const defaultPosts = newsData.map(n => ({ ...n, content: n.excerpt, is_published: true }))
+const categories = ['Software', 'UX', 'Web Development', 'Automation', 'Planning', 'Case Study', 'Company Update']
 
 export default function AdminNews() {
   const { data: posts, save, loading, saving, error, usingStarter } = useAdminContent('news', defaultPosts)
   const [showEditor, setShowEditor] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [form, setForm] = useState({
-    title: '', excerpt: '', content: '', category: 'Campaign', cover: '', is_published: true, date: ''
+    title: '', excerpt: '', content: '', category: 'Software', cover: '', is_published: true, date: ''
   })
 
   const persistPosts = (updated: typeof posts) => save(updated)
 
   const openCreate = () => {
     setEditingId(null)
-    setForm({ title: '', excerpt: '', content: '', category: 'Campaign', cover: '', is_published: false, date: new Date().toISOString().split('T')[0] })
+    setForm({ title: '', excerpt: '', content: '', category: 'Software', cover: '', is_published: false, date: new Date().toISOString().split('T')[0] })
     setShowEditor(true)
   }
 
@@ -55,43 +56,43 @@ export default function AdminNews() {
       <div className="max-w-4xl space-y-6">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold text-gray-800">
-            {editingId ? 'Edit News Post' : 'Create New Post'}
+            {editingId ? 'Edit Blog Post' : 'Create New Blog Post'}
           </h2>
           <div className="flex gap-3">
-            <button onClick={() => setShowEditor(false)} className="px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
+            <button onClick={() => setShowEditor(false)} className="flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">
               <X size={16} /> Cancel
             </button>
-            <button disabled={saving} onClick={() => void handleSave()} className="px-6 py-2 bg-crimson text-white rounded-lg text-sm font-semibold hover:bg-crimson-dark flex items-center gap-2 disabled:opacity-60">
-              <Save size={16} /> {saving ? 'Saving...' : editingId ? 'Save Changes' : 'Publish'}
+            <button disabled={saving} onClick={() => void handleSave()} className="flex items-center gap-2 rounded-lg bg-crimson px-6 py-2 text-sm font-semibold text-white hover:bg-crimson-dark disabled:opacity-60">
+              <Save size={16} /> {saving ? 'Saving...' : editingId ? 'Save Changes' : 'Save Post'}
             </button>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-5">
+        <div className="space-y-5 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Post Title</label>
+            <label className="mb-1 block text-sm font-medium text-gray-700">Post Title</label>
             <input type="text" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson text-lg font-semibold" placeholder="Enter post title..." />
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-lg font-semibold focus:border-crimson focus:ring-2 focus:ring-crimson/50" placeholder="Enter blog post title..." />
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-4">
+          <div className="grid gap-4 sm:grid-cols-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+              <label className="mb-1 block text-sm font-medium text-gray-700">Category</label>
               <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })}
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson">
-                <option>Campaign</option><option>Youth</option><option>Community</option><option>Business</option><option>Events</option>
+                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:border-crimson focus:ring-2 focus:ring-crimson/50">
+                {categories.map(category => <option key={category}>{category}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+              <label className="mb-1 block text-sm font-medium text-gray-700">Date</label>
               <input type="date" value={form.date} onChange={e => setForm({ ...form, date: e.target.value })}
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson" />
+                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:border-crimson focus:ring-2 focus:ring-crimson/50" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+              <label className="mb-1 block text-sm font-medium text-gray-700">Status</label>
               <select value={form.is_published ? 'published' : 'draft'}
                 onChange={e => setForm({ ...form, is_published: e.target.value === 'published' })}
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson">
+                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:border-crimson focus:ring-2 focus:ring-crimson/50">
                 <option value="published">Published</option><option value="draft">Draft</option>
               </select>
             </div>
@@ -100,17 +101,17 @@ export default function AdminNews() {
           <ImageUploadField label="Cover Image" value={form.cover || ''} onChange={value => setForm({ ...form, cover: value })} />
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Excerpt</label>
+            <label className="mb-1 block text-sm font-medium text-gray-700">Excerpt</label>
             <textarea value={form.excerpt} onChange={e => setForm({ ...form, excerpt: e.target.value })} rows={2}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson resize-none" placeholder="Short summary..." />
+              className="w-full resize-none rounded-lg border border-gray-300 px-4 py-2.5 focus:border-crimson focus:ring-2 focus:ring-crimson/50" placeholder="Short summary shown on the blog card..." />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Content (Rich Text)</label>
+            <label className="mb-1 block text-sm font-medium text-gray-700">Full Content</label>
             <textarea value={form.content} onChange={e => setForm({ ...form, content: e.target.value })} rows={12}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson resize-none font-mono text-sm"
-              placeholder="Write your full article content here... (HTML supported)" />
-            <p className="text-xs text-gray-400 mt-1">Tip: In production, this will be a rich text editor (TipTap/Quill)</p>
+              className="w-full resize-none rounded-lg border border-gray-300 px-4 py-2.5 font-mono text-sm focus:border-crimson focus:ring-2 focus:ring-crimson/50"
+              placeholder="Write the full blog post here. Use blank lines between paragraphs." />
+            <p className="mt-1 text-xs text-gray-400">Tip: Use blank lines to create separate paragraphs. Published posts appear on /blog and the homepage blog preview.</p>
           </div>
         </div>
       </div>
@@ -121,41 +122,40 @@ export default function AdminNews() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold text-gray-800">News & Blog Posts</h2>
-          <p className="text-sm text-gray-500">{posts.length} posts total</p>
+          <h2 className="text-xl font-bold text-gray-800">Blog Posts</h2>
+          <p className="text-sm text-gray-500">{posts.length} posts total · Published posts appear on /blog</p>
         </div>
-        <button onClick={openCreate} className="px-4 py-2 bg-crimson text-white rounded-lg text-sm font-semibold hover:bg-crimson-dark flex items-center gap-2">
-          <Plus size={16} /> New Post
+        <button onClick={openCreate} className="flex items-center gap-2 rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-dark">
+          <Plus size={16} /> New Blog Post
         </button>
       </div>
 
       <AdminDataNotice loading={loading} error={error} usingStarter={usingStarter} />
 
-      {/* Posts List */}
       <div className="space-y-3">
         {posts.map((post) => (
-          <div key={post.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 flex items-center gap-4 hover:shadow-md transition-all">
-            <img src={post.cover} alt={post.title} className="w-20 h-16 rounded-lg object-cover flex-shrink-0" />
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1">
-                <h3 className="font-semibold text-gray-800 truncate">{post.title}</h3>
-                <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${post.is_published ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+          <div key={post.id} className="flex items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition-all hover:shadow-md">
+            <img src={post.cover} alt={post.title} className="h-16 w-20 flex-shrink-0 rounded-lg object-cover" />
+            <div className="min-w-0 flex-1">
+              <div className="mb-1 flex items-center gap-2">
+                <h3 className="truncate font-semibold text-gray-800">{post.title}</h3>
+                <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${post.is_published ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
                   {post.is_published ? 'Published' : 'Draft'}
                 </span>
               </div>
               <div className="flex items-center gap-3 text-xs text-gray-400">
-                <span className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded">{post.category}</span>
+                <span className="rounded bg-gray-100 px-2 py-0.5 text-gray-600">{post.category}</span>
                 <span className="flex items-center gap-1"><Calendar size={12} /> {post.date}</span>
               </div>
             </div>
-            <div className="flex items-center gap-2 flex-shrink-0">
-              <button disabled={saving} onClick={() => void togglePublish(post.id)} className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100 disabled:opacity-50" title={post.is_published ? 'Unpublish' : 'Publish'}>
+            <div className="flex flex-shrink-0 items-center gap-2">
+              <button disabled={saving} onClick={() => void togglePublish(post.id)} className="rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 disabled:opacity-50" title={post.is_published ? 'Unpublish' : 'Publish'}>
                 {post.is_published ? <Eye size={16} /> : <EyeOff size={16} />}
               </button>
-              <button onClick={() => openEdit(post)} className="p-2 text-gray-400 hover:text-blue-600 rounded-lg hover:bg-blue-50">
+              <button onClick={() => openEdit(post)} className="rounded-lg p-2 text-gray-400 hover:bg-blue-50 hover:text-blue-600">
                 <Edit2 size={16} />
               </button>
-              <button disabled={saving} onClick={() => void deletePost(post.id)} className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 disabled:opacity-50">
+              <button disabled={saving} onClick={() => void deletePost(post.id)} className="rounded-lg p-2 text-gray-400 hover:bg-red-50 hover:text-red-600 disabled:opacity-50">
                 <Trash2 size={16} />
               </button>
             </div>
