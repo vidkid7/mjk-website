@@ -3,7 +3,6 @@ import { motion } from 'framer-motion'
 import {
   ArrowRight,
   BarChart3,
-  Building2,
   Database,
   FileText,
   GraduationCap,
@@ -19,6 +18,15 @@ import { useStoredData } from '@/lib/storage'
 const defaultItems = initiativesData.map(item => ({ ...item, is_published: true }))
 type InitiativeItem = typeof defaultItems[0]
 
+const legacyInitiativeTerms = [
+  'youth coding bootcamp', 'clean bagmati', 'women entrepreneur', 'free health camps',
+  'solar street', 'scholarship', 'social work', 'environment', 'empowerment', 'health camp', 'riverbank'
+]
+
+function hasLegacyInitiatives(items: InitiativeItem[]) {
+  return items.some(item => legacyInitiativeTerms.some(term => `${item.category} ${item.title} ${item.description} ${item.impact}`.toLowerCase().includes(term)))
+}
+
 const categoryConfig: Record<string, { color: string; bg: string; border: string; icon: React.ComponentType<any> }> = {
   GovTech: { color: 'text-blue-700', bg: 'bg-blue-50', border: 'border-blue-100', icon: Landmark },
   'Data System': { color: 'text-violet-700', bg: 'bg-violet-50', border: 'border-violet-100', icon: Database },
@@ -30,7 +38,9 @@ const categoryConfig: Record<string, { color: string; bg: string; border: string
 }
 
 export default function Initiatives() {
-  const items = useStoredData('initiatives', defaultItems).filter(item => item.is_published)
+  const storedItems = useStoredData('initiatives', defaultItems)
+  const sourceItems = hasLegacyInitiatives(storedItems) ? defaultItems : storedItems
+  const items = sourceItems.filter(item => item.is_published)
 
   return (
     <section id="initiatives" className="relative overflow-hidden bg-[#fbfaf7] px-4 py-24 md:py-32">
@@ -84,30 +94,15 @@ export default function Initiatives() {
                 className="group overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-2xl hover:shadow-slate-900/10"
               >
                 <div className="relative h-56 overflow-hidden bg-slate-100">
-                  <img
-                    src={item.photo}
-                    alt={item.title}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                  />
+                  <img src={item.photo} alt={item.title} loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent" />
-                  <div className="absolute left-4 top-4">
-                    <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] ${cat.bg} ${cat.color} ${cat.border}`}>
-                      <Icon size={13} />
-                      {item.category}
-                    </span>
-                  </div>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="font-playfair text-2xl font-bold leading-tight text-white drop-shadow">{item.title}</h3>
-                  </div>
+                  <div className="absolute left-4 top-4"><span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] ${cat.bg} ${cat.color} ${cat.border}`}><Icon size={13} />{item.category}</span></div>
+                  <div className="absolute bottom-4 left-4 right-4"><h3 className="font-playfair text-2xl font-bold leading-tight text-white drop-shadow">{item.title}</h3></div>
                 </div>
                 <div className="p-6">
                   <div className="mb-4 inline-flex rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700">{item.impact}</div>
                   <p className="text-sm leading-7 text-slate-500">{item.description}</p>
-                  <a href="#contact" className="mt-6 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.16em] text-slate-400 transition group-hover:text-crimson">
-                    Discuss similar project <ArrowRight size={14} />
-                  </a>
+                  <a href="#contact" className="mt-6 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.16em] text-slate-400 transition group-hover:text-crimson">Discuss similar project <ArrowRight size={14} /></a>
                 </div>
               </motion.article>
             )
