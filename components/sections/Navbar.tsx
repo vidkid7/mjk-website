@@ -7,9 +7,10 @@ import { Menu, X } from 'lucide-react'
 const navLinks = [
   { label: 'About', href: '#about' },
   { label: 'Vision', href: '#vision' },
-  { label: 'Initiatives', href: '#initiatives' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'News', href: '#news' },
+  { label: 'Solutions', href: '#initiatives' },
+  { label: 'Portfolio', href: '#client-portfolio' },
+  { label: 'Insights', href: '#insights' },
+  { label: 'Blog', href: '/blog' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -22,8 +23,9 @@ export default function Navbar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
 
-      // Detect active section
-      const sections = navLinks.map(l => l.href.replace('#', ''))
+      const sections = navLinks
+        .filter(l => l.href.startsWith('#'))
+        .map(l => l.href.replace('#', ''))
       for (let i = sections.length - 1; i >= 0; i--) {
         const el = document.getElementById(sections[i])
         if (el && el.getBoundingClientRect().top <= 150) {
@@ -47,12 +49,11 @@ export default function Navbar() {
         }`}
       >
         <div className="mx-auto flex items-center justify-between px-4 sm:px-7 lg:px-10 xl:px-12">
-          {/* Logo */}
-          <a href="#home" className="group flex shrink-0 items-center gap-2.5 sm:gap-3">
+          <a href="/#home" className="group flex shrink-0 items-center gap-2.5 sm:gap-3">
             <div className="relative h-10 w-20 shrink-0 sm:h-12 sm:w-24">
               <Image
                 src="/janaki-temple-logo.png"
-                alt=""
+                alt="Mukesh Khadka"
                 fill
                 priority
                 sizes="(min-width: 640px) 96px, 80px"
@@ -63,23 +64,23 @@ export default function Navbar() {
               <span className="font-playfair text-lg font-extrabold leading-none tracking-tight text-[#12375f] sm:text-xl xl:text-2xl">
                 Mukesh Khadka
               </span>
-              <span className="mt-1 text-[8px] font-extrabold uppercase tracking-[0.4em] text-[#12375f]/70 sm:text-[9px]">
-                For Nepal
+              <span className="mt-1 text-[8px] font-extrabold uppercase tracking-[0.36em] text-[#12375f]/70 sm:text-[9px]">
+                Digital Systems
               </span>
             </div>
           </a>
 
-          {/* Desktop Nav */}
-          <div className="hidden items-center gap-8 xl:flex xl:gap-11">
+          <div className="hidden items-center gap-6 xl:flex xl:gap-8">
             {navLinks.map((link, i) => {
-              const isActive = activeSection === link.href.replace('#', '')
+              const isHash = link.href.startsWith('#')
+              const isActive = isHash && activeSection === link.href.replace('#', '')
               return (
                 <motion.a
                   key={link.label}
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.05 * i, duration: 0.3 }}
-                  href={link.href}
+                  href={isHash ? link.href : link.href}
                   className={`relative py-2 text-base font-bold tracking-tight transition-colors duration-300 ${
                     isActive ? 'text-crimson' : 'text-[#0b2b55] hover:text-crimson'
                   }`}
@@ -97,8 +98,10 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* Mobile Toggle */}
           <div className="flex items-center gap-3">
+            <a href="#contact" className="hidden rounded-full bg-slate-950 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-emerald-700 md:inline-flex">
+              Start Project
+            </a>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="rounded-lg p-2 text-[#0b2b55] transition-all duration-300 hover:bg-slate-100 xl:hidden"
@@ -110,7 +113,6 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -118,32 +120,29 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 bg-white/[0.98] backdrop-blur-2xl flex flex-col xl:hidden"
+            className="fixed inset-0 z-40 flex flex-col bg-white/[0.98] backdrop-blur-2xl xl:hidden"
           >
-            <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
+            <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
               <div className="flex items-center gap-2.5">
                 <div className="relative h-10 w-20 shrink-0">
                   <Image
                     src="/janaki-temple-logo.png"
-                    alt=""
+                    alt="Mukesh Khadka"
                     fill
                     sizes="80px"
                     className="object-contain object-center drop-shadow-sm"
                   />
                 </div>
                 <div>
-                  <span className="font-playfair text-base font-bold text-slate-900 block leading-none whitespace-nowrap">Mukesh Khadka</span>
-                  <span className="text-[9px] text-crimson/60 font-medium uppercase tracking-[0.28em]">For Nepal</span>
+                  <span className="block whitespace-nowrap font-playfair text-base font-bold leading-none text-slate-900">Mukesh Khadka</span>
+                  <span className="text-[9px] font-medium uppercase tracking-[0.28em] text-emerald-700">Digital Systems</span>
                 </div>
               </div>
-              <button
-                onClick={() => setMobileOpen(false)}
-                className="p-2.5 text-slate-500 hover:bg-slate-100 rounded-xl"
-              >
+              <button onClick={() => setMobileOpen(false)} className="rounded-xl p-2.5 text-slate-500 hover:bg-slate-100">
                 <X size={22} />
               </button>
             </div>
-            <div className="flex-1 flex flex-col items-start px-6 py-8 gap-1">
+            <div className="flex flex-1 flex-col items-start gap-1 px-6 py-8">
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.label}
@@ -152,9 +151,9 @@ export default function Navbar() {
                   transition={{ delay: i * 0.06, duration: 0.3 }}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="text-lg text-slate-600 font-semibold py-3 hover:text-crimson transition-colors w-full flex items-center gap-3"
+                  className="flex w-full items-center gap-3 py-3 text-lg font-semibold text-slate-600 transition-colors hover:text-crimson"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-crimson/30" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-600/40" />
                   {link.label}
                 </motion.a>
               ))}
