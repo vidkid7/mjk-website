@@ -12,16 +12,16 @@ const sidebarLinks = [
   { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
   { label: 'Hero Content', href: '/admin/hero', icon: Home },
   { label: 'About Section', href: '/admin/about', icon: Info },
-  { label: 'Achievements', href: '/admin/achievements', icon: Award },
-  { label: 'Vision Cards', href: '/admin/vision', icon: Target },
-  { label: 'Initiatives', href: '/admin/initiatives', icon: Rocket },
-  { label: 'Entrepreneurship', href: '/admin/entrepreneurship', icon: Briefcase },
-  { label: 'Youth Inspiration', href: '/admin/youth', icon: GraduationCap },
+  { label: 'Delivery Process', href: '/admin/achievements', icon: Award },
+  { label: 'Digital Vision', href: '/admin/vision', icon: Target },
+  { label: 'Solutions', href: '/admin/initiatives', icon: Rocket },
+  { label: 'Delivery Capability', href: '/admin/entrepreneurship', icon: Briefcase },
+  { label: 'Insights', href: '/admin/youth', icon: GraduationCap },
   { label: 'Testimonials', href: '/admin/testimonials', icon: Star },
   { label: 'Gallery', href: '/admin/gallery', icon: Image },
-  { label: 'News / Blog', href: '/admin/news', icon: Newspaper },
+  { label: 'Blog Posts', href: '/admin/news', icon: Newspaper },
   { label: 'Stats / Numbers', href: '/admin/stats', icon: BarChart3 },
-  { label: 'Volunteers', href: '/admin/volunteers', icon: Users },
+  { label: 'Contacts / Leads', href: '/admin/volunteers', icon: Users },
   { label: 'Messages', href: '/admin/messages', icon: MessageSquare },
   { label: 'Site Settings', href: '/admin/settings', icon: Settings },
 ]
@@ -38,42 +38,36 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     router.refresh()
   }
 
-  // Skip sidebar for login page
   if (pathname === '/admin/login') {
     return <>{children}</>
   }
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      {/* Sidebar */}
       <aside
-        className={`admin-sidebar fixed lg:sticky top-0 h-screen z-40 flex flex-col transition-all duration-300 ${
+        className={`admin-sidebar fixed top-0 z-40 flex h-screen flex-col transition-all duration-300 lg:sticky ${
           collapsed ? 'w-16' : 'w-64'
         } ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
       >
-        {/* Header */}
-        <div className="flex items-center gap-3 p-4 border-b border-white/10">
+        <div className="flex items-center gap-3 border-b border-white/10 p-4">
           <NepalFlagPennant width={24} height={32} />
           {!collapsed && (
             <div>
               <span className="font-yatra text-lg text-gold">MJK</span>
-              <span className="block text-[10px] text-white/50">Admin Panel</span>
+              <span className="block text-[10px] text-white/50">Portfolio Admin</span>
             </div>
           )}
         </div>
 
-        {/* Nav Links */}
-        <nav className="flex-1 overflow-y-auto py-4 px-2 space-y-1">
+        <nav className="flex-1 space-y-1 overflow-y-auto px-2 py-4">
           {sidebarLinks.map((link) => {
             const isActive = pathname === link.href
             return (
               <a
                 key={link.href}
                 href={link.href}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 ${
-                  isActive
-                    ? 'bg-crimson text-white shadow-lg'
-                    : 'text-gray-400 hover:text-white hover:bg-white/5'
+                className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all duration-200 ${
+                  isActive ? 'bg-crimson text-white shadow-lg' : 'text-gray-400 hover:bg-white/5 hover:text-white'
                 } ${collapsed ? 'justify-center' : ''}`}
                 title={collapsed ? link.label : undefined}
               >
@@ -84,45 +78,30 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           })}
         </nav>
 
-        {/* Footer */}
-        <div className="p-4 border-t border-white/10">
+        <div className="border-t border-white/10 p-4">
           <button
             onClick={() => void logout()}
-            className={`flex items-center gap-3 px-3 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 text-sm w-full transition-all ${
-              collapsed ? 'justify-center' : ''
-            }`}
+            className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-400 transition-all hover:bg-white/5 hover:text-white ${collapsed ? 'justify-center' : ''}`}
           >
             <LogOut size={18} />
             {!collapsed && <span>Logout</span>}
           </button>
         </div>
 
-        {/* Collapse Toggle */}
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="hidden lg:flex absolute -right-3 top-20 w-6 h-6 rounded-full bg-crimson text-white items-center justify-center shadow-lg hover:bg-crimson-dark transition-colors"
+          className="absolute -right-3 top-20 hidden h-6 w-6 items-center justify-center rounded-full bg-crimson text-white shadow-lg transition-colors hover:bg-crimson-dark lg:flex"
         >
           {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
         </button>
       </aside>
 
-      {/* Mobile Overlay */}
-      {mobileOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
-          onClick={() => setMobileOpen(false)}
-        />
-      )}
+      {mobileOpen && <div className="fixed inset-0 z-30 bg-black/50 lg:hidden" onClick={() => setMobileOpen(false)} />}
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col min-h-screen">
-        {/* Top Bar */}
-        <header className="sticky top-0 z-20 bg-white shadow-sm border-b border-gray-200 px-4 py-3 flex items-center justify-between">
+      <div className="flex min-h-screen flex-1 flex-col">
+        <header className="sticky top-0 z-20 flex items-center justify-between border-b border-gray-200 bg-white px-4 py-3 shadow-sm">
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => setMobileOpen(true)}
-              className="lg:hidden text-gray-500"
-            >
+            <button onClick={() => setMobileOpen(true)} className="text-gray-500 lg:hidden">
               <Menu size={22} />
             </button>
             <h1 className="text-lg font-semibold text-gray-800">
@@ -130,19 +109,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </h1>
           </div>
           <div className="flex items-center gap-3">
-            <a href="/" target="_blank" className="text-sm text-gray-500 hover:text-crimson transition-colors">
+            <a href="/" target="_blank" className="text-sm text-gray-500 transition-colors hover:text-crimson">
               View Website →
             </a>
-            <div className="w-8 h-8 rounded-full bg-crimson text-white flex items-center justify-center text-sm font-bold">
-              A
-            </div>
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-crimson text-sm font-bold text-white">A</div>
           </div>
         </header>
 
-        {/* Page Content */}
-        <main className="flex-1 p-4 md:p-6 lg:p-8">
-          {children}
-        </main>
+        <main className="flex-1 p-4 md:p-6 lg:p-8">{children}</main>
       </div>
     </div>
   )
