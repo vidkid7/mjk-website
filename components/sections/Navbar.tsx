@@ -120,7 +120,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25 }}
-            className="glass glass-dark fixed inset-0 z-40 flex flex-col border-0 bg-[#071a35]/[0.96] text-white backdrop-blur-2xl xl:hidden"
+            className="admin-card fixed inset-0 z-40 flex flex-col !bg-[#071a35]/[0.96] text-white backdrop-blur-2xl xl:hidden"
           >
             <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
               <div className="flex items-center gap-2.5">

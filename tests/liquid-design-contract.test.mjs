@@ -37,6 +37,8 @@ test('public homepage framing consumes the shared liquid surfaces', async () => 
   assert.match(home, /relative z-10/)
   assert.match(navbar, /glass-panel/)
   assert.match(navbar, /glass-action/)
+  assert.match(navbar, /className="admin-card fixed inset-0/)
+  assert.doesNotMatch(navbar, /className="glass glass-dark fixed inset-0/)
   assert.match(hero, /glass-panel/)
   assert.match(marquee, /glass-panel/)
   assert.match(footer, /glass-panel/)
