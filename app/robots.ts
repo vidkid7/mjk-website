@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       { userAgent: '*', allow: '/', disallow: '/admin/' },
     ],
-    sitemap: 'https://mukeshjungkhadka.com.np/sitemap.xml',
-    host: 'https://mukeshjungkhadka.com.np',
+    sitemap: 'https://mjk-website-vidkids-projects-93622fab.vercel.app/sitemap.xml',
+    host: 'https://mjk-website-vidkids-projects-93622fab.vercel.app',
   }
 }
