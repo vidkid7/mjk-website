@@ -7,6 +7,7 @@ import {
   Briefcase, GraduationCap, BarChart3, Menu, X, Award, Star
 } from 'lucide-react'
 import { NepalFlagPennant } from '@/components/ui/NepalFlag'
+import { LiquidBackdrop } from '@/components/ui/LiquidBackdrop'
 
 const sidebarLinks = [
   { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
@@ -43,7 +44,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="admin-liquid-shell flex min-h-screen bg-gray-50">
+      <LiquidBackdrop variant="admin" />
       <aside
         className={`admin-sidebar fixed top-0 z-40 flex h-screen flex-col transition-all duration-300 lg:sticky ${
           collapsed ? 'w-16' : 'w-64'

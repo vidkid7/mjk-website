@@ -16,6 +16,7 @@ import Stats from '@/components/sections/Stats'
 import Contact from '@/components/sections/Contact'
 import FAQ from '@/components/sections/FAQ'
 import Footer from '@/components/sections/Footer'
+import { LiquidBackdrop } from '@/components/ui/LiquidBackdrop'
 import { useStoredData } from '@/lib/storage'
 
 const defaultSettings = {
@@ -43,7 +44,8 @@ export default function Home() {
   const show = (section: SectionKey) => settings.visible_sections?.[section] ?? true
 
   return (
-    <main id="main-content" className="relative">
+    <main id="main-content" className="liquid-page relative">
+      <LiquidBackdrop />
       <Navbar />
       {show('hero') && <Hero />}
       <Marquee />
