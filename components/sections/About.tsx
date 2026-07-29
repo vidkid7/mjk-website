@@ -9,7 +9,7 @@ const defaultAbout = {
   paragraphs: aboutData.paragraphs.join('\n\n'),
   community_trust: aboutData.community_trust,
   youth_engagement: aboutData.youth_engagement,
-  photo: '/mukk-removebg-preview.png',
+  photo: '/mukk-removebg-preview.webp',
 }
 
 const legacyAboutTerms = ['community leader', 'youth champion', 'son of nepal', 'public service', 'kathmandu valley', 'people from all walks', 'prosperous nepal']

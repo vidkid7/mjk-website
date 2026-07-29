@@ -44,6 +44,11 @@ test('mobile visitors do not download desktop-only hero decorations', async () =
   assert.match(hero, /matchMedia\('\(min-width: 1024px\)'\)/)
 })
 
+test('the deferred about image uses a compact WebP asset', async () => {
+  const about = await read('components/sections/About.tsx')
+  assert.match(about, /\/mukk-removebg-preview\.webp/)
+})
+
 test('navigation uses the smaller WebP logo asset', async () => {
   const [navbar, footer] = await Promise.all([
     read('components/sections/Navbar.tsx'),
