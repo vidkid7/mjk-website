@@ -291,14 +291,14 @@ const InteractiveBentoGallery: React.FC<InteractiveBentoGalleryProps> = ({
   return (
     <div className="container mx-auto px-0 py-8 max-w-5xl">
       <div className="mb-8 text-center">
-        <motion.h1
+        <motion.h2
           className="text-2xl sm:text-3xl md:text-4xl font-bold font-playfair bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-crimson-dark to-slate-900"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
           {title}
-        </motion.h1>
+        </motion.h2>
         <motion.p
           className="mt-2 text-sm sm:text-base text-slate-500"
           initial={{ opacity: 0, y: 20 }}

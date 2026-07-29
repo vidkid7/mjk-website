@@ -84,3 +84,10 @@ test('the footer gives crawlers descriptive links to public service pages', asyn
   assert.match(footer, /href: '\/services\/custom-software-development-nepal'/)
   assert.match(footer, /href: '\/services\/business-automation-nepal'/)
 })
+
+test('the homepage gallery does not add a second page-level heading', async () => {
+  const gallery = await read('components/ui/interactive-bento-gallery.tsx')
+
+  assert.doesNotMatch(gallery, /<motion\.h1/)
+  assert.match(gallery, /<motion\.h2/)
+})
