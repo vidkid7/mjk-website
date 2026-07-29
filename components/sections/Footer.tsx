@@ -83,7 +83,7 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <div className="mb-4 flex items-center gap-2.5">
               <div className="relative h-11 w-24 shrink-0">
-                <Image src="/janaki-temple-logo.png" alt="Mukesh Khadka" fill sizes="96px" className="object-contain object-center drop-shadow-sm" />
+                <Image src="/janaki-temple-logo.webp" alt="Mukesh Khadka" fill sizes="96px" className="object-contain object-center drop-shadow-sm" />
               </div>
               <div className="flex flex-col whitespace-nowrap">
                 <span className="font-playfair text-base font-semibold leading-none text-white">Mukesh Khadka</span>

@@ -52,7 +52,7 @@ export default function Navbar() {
           <a href="/#home" className="group flex shrink-0 items-center gap-2.5 sm:gap-3">
             <div className="relative h-10 w-20 shrink-0 sm:h-12 sm:w-24">
               <Image
-                src="/janaki-temple-logo.png"
+                src="/janaki-temple-logo.webp"
                 alt="Mukesh Khadka"
                 fill
                 priority
@@ -126,7 +126,7 @@ export default function Navbar() {
               <div className="flex items-center gap-2.5">
                 <div className="relative h-10 w-20 shrink-0">
                   <Image
-                    src="/janaki-temple-logo.png"
+                    src="/janaki-temple-logo.webp"
                     alt="Mukesh Khadka"
                     fill
                     sizes="80px"

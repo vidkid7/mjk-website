@@ -1,4 +1,5 @@
 'use client'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Globe, Play } from 'lucide-react'
 import { heroData } from '@/lib/placeholder-data'
@@ -32,6 +33,12 @@ export default function Hero() {
   const storedContent = useStoredData('hero', defaultHero)
   const content = isLegacyHero(storedContent) ? defaultHero : storedContent
   const headlineParts = content.headline.replace(/\\n/g, '\n').split('\n').filter(Boolean)
+  const [playVideo, setPlayVideo] = useState(false)
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setPlayVideo(true), 2500)
+    return () => window.clearTimeout(timer)
+  }, [])
 
   return (
     <div id="home" className="relative isolate pt-[72px] sm:pt-[80px] lg:pt-[88px]">
@@ -57,13 +64,13 @@ export default function Hero() {
 
         <video
           className="hero-flag-video pointer-events-none absolute -left-[12rem] top-[-1rem] z-[4] h-[72%] w-[58rem] max-w-none object-cover object-left opacity-[0.58] mix-blend-multiply brightness-[1.24] saturate-[1.34] contrast-[1.02] sm:-left-[8rem] sm:h-[76%] sm:w-[70rem] lg:-left-[6rem] lg:top-[-1.2rem] lg:h-[80%] lg:w-[79rem]"
-          src="/nepal-flag-hero-bg-optimized.mp4"
+          src={playVideo ? '/nepal-flag-hero-bg-optimized.mp4' : undefined}
           poster="/nepal-flag-hero-poster.jpg"
           autoPlay
           muted
           loop
           playsInline
-          preload="auto"
+          preload="none"
           disablePictureInPicture
           aria-hidden="true"
           style={{

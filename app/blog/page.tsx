@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion'
 import { ArrowLeft, Calendar, Sparkles } from 'lucide-react'
-import { newsData } from '@/lib/placeholder-data'
 import { blogPosts } from '@/lib/blog-posts'
 import { useStoredData } from '@/lib/storage'
 
@@ -55,7 +54,7 @@ export default function BlogPage() {
       <header className="border-b border-slate-200 bg-white/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5 sm:px-8">
           <a href="/" className="inline-flex items-center gap-2 text-sm font-bold text-slate-600 transition hover:text-emerald-700"><ArrowLeft size={16} /> Home</a>
-          <a href="/admin/news" className="rounded-full bg-slate-950 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-emerald-700">Admin Blog</a>
+          <a href="/#contact" className="rounded-full bg-slate-950 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-emerald-700">Discuss a project</a>
         </div>
       </header>
 
@@ -64,7 +63,7 @@ export default function BlogPage() {
           <div className="mx-auto mb-14 max-w-3xl text-center">
             <motion.span initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-emerald-700"><Sparkles size={14} />Blog Posts</motion.span>
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }} className="font-playfair text-4xl font-extrabold leading-tight tracking-tight text-slate-950 sm:text-6xl">Digital insights, project notes, and software thinking</motion.h1>
-            <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.16 }} className="mt-5 text-base leading-8 text-slate-600 md:text-lg">This page reads the same posts created from the admin panel under Blog Posts. Publish or draft posts from admin and they appear here automatically when published.</motion.p>
+            <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.16 }} className="mt-5 text-base leading-8 text-slate-600 md:text-lg">Practical explanations of software systems, user experience, websites, automation, and the decisions that make digital projects easier to run.</motion.p>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -79,7 +78,7 @@ export default function BlogPage() {
             })}
           </div>
 
-          {!posts.length && <div className="rounded-[2rem] border border-dashed border-slate-300 bg-white p-10 text-center text-slate-500">No published blog posts yet. Create one from the admin panel.</div>}
+          {!posts.length && <div className="rounded-[2rem] border border-dashed border-slate-300 bg-white p-10 text-center text-slate-500">New practical digital insights will be published here soon.</div>}
         </div>
       </section>
     </main>

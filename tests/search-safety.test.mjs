@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict'
+import test from 'node:test'
+import { readFile } from 'node:fs/promises'
+
+const read = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8')
+
+test('admin routes are explicitly excluded from search results', async () => {
+  const [adminHead, config] = await Promise.all([
+    read('app/admin/head.tsx'),
+    read('next.config.js'),
+  ])
+
+  assert.match(adminHead, /noindex,nofollow,noarchive/)
+  assert.match(config, /source:\s*'\/admin\/:path\*'/)
+  assert.match(config, /X-Robots-Tag/)
+})
+
+test('the public blog does not link search visitors to the admin area', async () => {
+  const blogPage = await read('app/blog/page.tsx')
+  assert.doesNotMatch(blogPage, /href="\/admin\/news"/)
+})
+
+test('the hero postpones decorative video loading until after initial render', async () => {
+  const hero = await read('components/sections/Hero.tsx')
+  assert.match(hero, /setPlayVideo\(true\)/)
+  assert.match(hero, /src=\{playVideo \? '\/nepal-flag-hero-bg-optimized\.mp4' : undefined\}/)
+})
+
+test('navigation uses the smaller WebP logo asset', async () => {
+  const [navbar, footer] = await Promise.all([
+    read('components/sections/Navbar.tsx'),
+    read('components/sections/Footer.tsx'),
+  ])
+
+  assert.match(navbar, /\/janaki-temple-logo\.webp/)
+  assert.match(footer, /\/janaki-temple-logo\.webp/)
+})
