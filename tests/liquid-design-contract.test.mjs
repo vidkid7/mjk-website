@@ -121,8 +121,9 @@ test('editorial service and blog routes retain their content contracts inside li
     assert.match(source, /relative z-10/)
   })
 
-  ;[serviceDetail, blog, blogDetail].forEach((source) => {
+  ;[services, serviceDetail, blog, blogDetail].forEach((source) => {
     assert.match(source, /sticky top-0/)
+    assert.doesNotMatch(source, /<main className="[^"]*overflow-hidden/)
   })
 
   assert.match(services, /glass-panel/)

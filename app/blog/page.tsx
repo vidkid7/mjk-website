@@ -50,7 +50,7 @@ export default function BlogPage() {
   }
 
   return (
-    <main className="liquid-page relative min-h-screen overflow-hidden text-slate-900">
+    <main className="liquid-page relative min-h-screen text-slate-900">
       <LiquidBackdrop variant="public" />
       <div className="relative z-10">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogStructuredData) }} />
