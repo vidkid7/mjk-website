@@ -25,7 +25,7 @@ export default function Achievements() {
   const achievements = useStoredData('achievements', achievementsData)
 
   return (
-    <section id="achievements" className="relative bg-slate-50 py-24 md:py-32">
+    <section id="achievements" className="public-section public-section--light relative py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading
           pill="Delivery Process"
@@ -57,7 +57,7 @@ export default function Achievements() {
                   <span className="rounded-md bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-400">{item.year}</span>
                 </div>
 
-                <div className="group rounded-xl border border-slate-100 bg-white p-5 shadow-sm transition-all duration-200 hover:border-slate-200 hover:shadow-md">
+                <div className="glass-panel group rounded-[1.75rem] p-6 md:p-8 transition-all duration-200 hover:border-slate-200 hover:shadow-md">
                   <span className="mb-2 inline-block rounded-md bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-400 md:hidden">{item.year}</span>
                   <div className="flex items-start gap-3.5">
                     <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl ${colors.bg} transition-colors`}>

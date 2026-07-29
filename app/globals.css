@@ -215,6 +215,37 @@ video {
   box-shadow: 0 16px 32px rgba(2, 11, 27, 0.18);
 }
 
+.public-section {
+  position: relative;
+  isolation: isolate;
+}
+
+.public-section--light {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(242, 189, 75, 0.16), transparent 28rem),
+    radial-gradient(circle at 88% 78%, rgba(59, 130, 246, 0.12), transparent 28rem),
+    rgba(255, 255, 255, 0.42);
+}
+
+.public-section--dark {
+  background:
+    radial-gradient(circle at 12% 15%, rgba(220, 38, 38, 0.28), transparent 26rem),
+    radial-gradient(circle at 86% 78%, rgba(242, 189, 75, 0.16), transparent 30rem),
+    linear-gradient(135deg, var(--liquid-navy), var(--liquid-navy-deep));
+}
+
+.public-section--dark .glass-panel {
+  color: white;
+  background: var(--glass-dark);
+  border-color: rgba(242, 189, 75, 0.2);
+}
+
+.public-section--dark .glass-inset {
+  color: white;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
 .admin-card,
 .admin-control {
   color: white;

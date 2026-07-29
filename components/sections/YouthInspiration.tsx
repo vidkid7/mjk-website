@@ -38,10 +38,10 @@ export default function YouthInspiration() {
   const cards = content.testimonials.map((testimonial, index) => ({ ...testimonial, ...cardStyles[index % cardStyles.length] }))
 
   return (
-    <section id="insights" className="relative overflow-hidden bg-white px-4 py-24 md:py-32">
+    <section id="insights" className="public-section public-section--light relative overflow-hidden px-4 py-24 md:py-32">
       <DhakaPattern className="opacity-[0.025]" />
-      <div className="absolute right-0 top-20 h-40 w-1/3 bg-gradient-to-l from-emerald-100/80 to-transparent" />
-      <div className="absolute bottom-20 left-0 h-40 w-1/3 bg-gradient-to-r from-blue-100/80 to-transparent" />
+      <div aria-hidden="true" className="pointer-events-none absolute right-0 top-20 h-40 w-1/3 bg-gradient-to-l from-emerald-100/80 to-transparent" />
+      <div aria-hidden="true" className="pointer-events-none absolute bottom-20 left-0 h-40 w-1/3 bg-gradient-to-r from-blue-100/80 to-transparent" />
 
       <div className="relative mx-auto max-w-6xl">
         <div className="mb-16 text-center">
@@ -54,7 +54,7 @@ export default function YouthInspiration() {
           {cards.map((card, i) => {
             const Icon = card.icon
             return (
-              <motion.article key={card.name} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }} onMouseEnter={() => setActiveCard(i)} onMouseLeave={() => setActiveCard(null)} className="group relative h-full overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-2xl hover:shadow-slate-900/10">
+              <motion.article key={card.name} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }} onMouseEnter={() => setActiveCard(i)} onMouseLeave={() => setActiveCard(null)} className="glass-panel group relative h-full overflow-hidden rounded-[1.75rem] p-6 md:p-8 transition hover:-translate-y-1 hover:shadow-2xl hover:shadow-slate-900/10">
                 <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${card.gradient}`} />
                 <div className={`mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${card.gradient} text-white shadow-lg`}><Icon size={20} /></div>
                 <Quote className="absolute right-6 top-6 h-8 w-8 text-slate-100" />
@@ -69,7 +69,7 @@ export default function YouthInspiration() {
         </div>
 
         <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.25 }} className="text-center">
-          <a href="/blog" className="group inline-flex items-center gap-2.5 rounded-full bg-slate-950 px-8 py-4 text-xs font-black uppercase tracking-[0.14em] text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-emerald-700"><Sparkles size={16} />{content.ctaText}<ArrowRight size={14} className="transition-transform group-hover:translate-x-1" /></a>
+          <a href="/blog" className="glass-action group inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-xs font-black uppercase tracking-[0.14em] text-slate-900"><Sparkles size={16} />{content.ctaText}<ArrowRight size={14} className="transition-transform group-hover:translate-x-1" /></a>
         </motion.div>
       </div>
     </section>

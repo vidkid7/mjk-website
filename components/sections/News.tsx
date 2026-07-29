@@ -30,7 +30,7 @@ export default function News() {
     }))
 
   return (
-    <section id="news" className="relative overflow-hidden bg-white py-24 md:py-32">
+    <section id="news" className="public-section public-section--light relative overflow-hidden py-24 md:py-32">
       <DhakaPattern className="opacity-[0.025]" />
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <div className="mb-8 text-center">
@@ -44,7 +44,7 @@ export default function News() {
         <NewsCards newsCards={newsCards} />
 
         <div className="mt-10 text-center">
-          <a href="/blog" className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-sm font-bold text-white transition hover:bg-emerald-700">View all blog posts <ArrowRight size={16} /></a>
+          <a href="/blog" className="glass-action inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold text-slate-900">View all blog posts <ArrowRight size={16} /></a>
         </div>
       </div>
     </section>

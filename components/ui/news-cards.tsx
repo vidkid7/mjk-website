@@ -88,7 +88,7 @@ export function NewsCards({ newsCards = defaultNewsCards }: NewsCardsProps) {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: index * 0.12 }}
             whileHover={{ y: -4, transition: { type: "spring", stiffness: 400, damping: 25 } }}
-            className="group cursor-pointer overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl hover:shadow-slate-900/10"
+            className="glass-panel group cursor-pointer overflow-hidden rounded-[1.75rem] transition-shadow duration-300 hover:shadow-xl hover:shadow-slate-900/10"
             onClick={() => setSelectedCard(card)}
           >
             <div className="relative h-56 overflow-hidden bg-slate-100">
@@ -141,10 +141,10 @@ export function NewsCards({ newsCards = defaultNewsCards }: NewsCardsProps) {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              className="fixed inset-4 z-50 overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-2xl md:inset-8 lg:inset-16"
+              className="glass-panel fixed inset-4 z-50 overflow-hidden rounded-[1.75rem] shadow-2xl md:inset-8 lg:inset-16"
             >
               <motion.button
-                className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/80 shadow-md hover:bg-white"
+                className="glass-action absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setSelectedCard(null)}

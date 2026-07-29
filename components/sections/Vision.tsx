@@ -38,10 +38,10 @@ export default function Vision() {
   const cards = hasLegacyVision(storedCards) ? visionCards : storedCards
 
   return (
-    <section id="vision" className="relative overflow-hidden bg-white px-4 py-24 md:py-32">
+    <section id="vision" className="public-section public-section--light relative overflow-hidden px-4 py-24 md:py-32">
       <DhakaPattern className="opacity-[0.025]" />
-      <div className="absolute left-0 top-16 h-80 w-80 rounded-full bg-emerald-100/80 blur-3xl" />
-      <div className="absolute right-0 bottom-10 h-96 w-96 rounded-full bg-blue-100/80 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute left-0 top-16 h-80 w-80 rounded-full bg-emerald-100/80 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute right-0 bottom-10 h-96 w-96 rounded-full bg-blue-100/80 blur-3xl" />
 
       <div className="relative mx-auto max-w-6xl">
         <div className="grid items-end gap-8 lg:grid-cols-[0.9fr_1.1fr]">
@@ -86,7 +86,7 @@ export default function Vision() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.45, delay: index * 0.06 }}
-                className="group relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-emerald-200 hover:shadow-2xl hover:shadow-emerald-900/10"
+                className="glass-panel group relative overflow-hidden rounded-[1.75rem] p-6 md:p-8 transition hover:-translate-y-1 hover:border-emerald-200 hover:shadow-2xl hover:shadow-emerald-900/10"
               >
                 <div className="absolute right-0 top-0 h-28 w-28 translate-x-10 -translate-y-10 rounded-full bg-emerald-100 transition group-hover:scale-150" />
                 <div className="relative">

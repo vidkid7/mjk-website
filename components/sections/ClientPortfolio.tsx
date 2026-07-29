@@ -145,10 +145,10 @@ const toneClasses: Record<string, { icon: string; bg: string; badge: string; bor
 
 export default function ClientPortfolio() {
   return (
-    <section id="client-portfolio" className="relative overflow-hidden py-24 md:py-32 bg-white">
+    <section id="client-portfolio" className="public-section public-section--light relative overflow-hidden py-24 md:py-32">
       <DhakaPattern className="opacity-[0.025]" />
-      <div className="absolute left-0 top-20 h-64 w-64 rounded-full bg-crimson/5 blur-3xl" />
-      <div className="absolute right-0 bottom-16 h-72 w-72 rounded-full bg-gold/10 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute left-0 top-20 h-64 w-64 rounded-full bg-crimson/5 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute right-0 bottom-16 h-72 w-72 rounded-full bg-gold/10 blur-3xl" />
 
       <div className="relative max-w-6xl mx-auto px-5 sm:px-8">
         <SectionHeading
@@ -169,7 +169,7 @@ export default function ClientPortfolio() {
             <motion.div
               key={point.label}
               variants={staggerItem}
-              className="bg-[#fbfaf7] border border-slate-100 rounded-2xl px-5 py-6 text-center shadow-sm"
+              className="glass-inset rounded-2xl p-4 text-center"
             >
               <div className="font-playfair text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-1">
                 {point.value}
@@ -195,7 +195,7 @@ export default function ClientPortfolio() {
                 key={item.title}
                 variants={staggerItem}
                 whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                className={`group relative overflow-hidden rounded-3xl bg-white border border-slate-100 p-6 shadow-sm transition-all duration-300 hover:shadow-xl ${tone.border} ${tone.glow}`}
+                className={`glass-panel group relative overflow-hidden rounded-[1.75rem] p-6 md:p-8 transition-all duration-300 hover:shadow-xl ${tone.border} ${tone.glow}`}
               >
                 <a
                   href={aashaTechUrl}
@@ -236,7 +236,7 @@ export default function ClientPortfolio() {
           whileInView={fadeInUp.animate}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ ...fadeInUp.transition, delay: 0.15 }}
-          className="mt-12 rounded-3xl border border-slate-100 bg-[#fbfaf7] p-6 md:p-8"
+          className="glass-panel mt-12 rounded-[1.75rem] p-6 md:p-8"
         >
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-7">
             <div className="max-w-2xl">
@@ -256,7 +256,7 @@ export default function ClientPortfolio() {
               {servicePillars.map((service) => {
                 const Icon = service.icon
                 return (
-                  <div key={service.label} className="flex items-center gap-3 rounded-2xl bg-white border border-slate-100 px-4 py-3">
+                  <div key={service.label} className="glass-inset flex items-center gap-3 rounded-2xl p-4">
                     <span className="w-9 h-9 rounded-xl bg-slate-50 flex items-center justify-center text-crimson">
                       <Icon size={16} />
                     </span>
@@ -271,7 +271,7 @@ export default function ClientPortfolio() {
             <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-3">Selected client exposure</p>
             <div className="flex flex-wrap gap-2.5">
               {trustedBy.map((client) => (
-                <span key={client} className="rounded-full bg-white border border-slate-100 px-3.5 py-2 text-xs font-medium text-slate-500">
+                <span key={client} className="glass-inset rounded-full px-3.5 py-2 text-xs font-medium text-slate-500">
                   {client}
                 </span>
               ))}
