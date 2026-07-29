@@ -25,7 +25,7 @@ export default function Achievements() {
   const achievements = useStoredData('achievements', achievementsData)
 
   return (
-    <section id="achievements" className="public-section public-section--light relative py-24 md:py-32">
+    <section id="achievements" className="public-section public-section--dark relative py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading
           pill="Delivery Process"

@@ -17,7 +17,7 @@ export default function Stats() {
   const stats = useStoredData('stats', statsData)
 
   return (
-    <section className="public-section public-section--dark relative overflow-hidden py-24 md:py-32">
+    <section className="public-section public-section--light relative overflow-hidden py-24 md:py-32">
       <DhakaPattern className="opacity-[0.08]" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-r from-crimson-dark via-crimson to-[#d9233b]" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/25" />

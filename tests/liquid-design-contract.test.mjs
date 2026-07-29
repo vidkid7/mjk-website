@@ -44,3 +44,30 @@ test('public homepage framing consumes the shared liquid surfaces', async () => 
   assert.match(footer, /glass-panel/)
   assert.match(heading, /glass-inset/)
 })
+
+test('homepage section variants alternate in rendered order', async () => {
+  const sectionFiles = [
+    'components/ui/about-us-section.tsx',
+    'components/sections/Achievements.tsx',
+    'components/sections/ClientPortfolio.tsx',
+    'components/sections/Vision.tsx',
+    'components/sections/Initiatives.tsx',
+    'components/sections/Entrepreneurship.tsx',
+    'components/sections/YouthInspiration.tsx',
+    'components/sections/Testimonials.tsx',
+    'components/sections/Gallery.tsx',
+    'components/sections/News.tsx',
+    'components/sections/Stats.tsx',
+    'components/sections/Contact.tsx',
+    'components/sections/FAQ.tsx',
+  ]
+  const expected = ['light', 'dark', 'light', 'dark', 'light', 'dark', 'light', 'dark', 'light', 'dark', 'light', 'dark', 'light']
+  const sources = await Promise.all(sectionFiles.map(read))
+  const variants = sources.map((source, index) => {
+    const match = source.match(/public-section--(light|dark)/)
+    assert.ok(match, `${sectionFiles[index]} has a public-section variant`)
+    return match[1]
+  })
+
+  assert.deepEqual(variants, expected)
+})

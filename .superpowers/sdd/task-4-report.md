@@ -23,3 +23,11 @@
 ## Concern
 
 - The existing homepage gallery uses externally hosted image media. The open/close control and layout were verified locally, but image rendering remains subject to those existing remote hosts being reachable.
+
+## Alternation follow-up
+
+- Corrected the public-section variants in the actual rendered homepage order to alternate `light`, `dark` from About through FAQ. Only the existing root variant tokens changed.
+- Added `homepage section variants alternate in rendered order` to `tests/liquid-design-contract.test.mjs`. It reads the rendered section components in `app/page.tsx` order and asserts the complete alternating sequence, preventing the original initial light/light run from returning.
+- TDD evidence: the focused contract failed before the six variant-token changes, reporting the first repeated `light` run; it passed after the changes.
+- `node --test tests/liquid-design-contract.test.mjs` — 3 passed, 0 failed.
+- `npm.cmd test` — 15 passed, 0 failed.

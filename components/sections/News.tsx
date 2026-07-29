@@ -30,7 +30,7 @@ export default function News() {
     }))
 
   return (
-    <section id="news" className="public-section public-section--light relative overflow-hidden py-24 md:py-32">
+    <section id="news" className="public-section public-section--dark relative overflow-hidden py-24 md:py-32">
       <DhakaPattern className="opacity-[0.025]" />
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <div className="mb-8 text-center">

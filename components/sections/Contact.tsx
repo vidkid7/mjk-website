@@ -48,7 +48,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="public-section public-section--light relative py-24 md:py-32">
+    <section id="contact" className="public-section public-section--dark relative py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading pill="Contact" heading="Let’s discuss your digital project" subheading="Have a website, software system, dashboard, automation idea, or portfolio project in mind? Send a message and we can discuss the best next step." accent="emerald" />
 

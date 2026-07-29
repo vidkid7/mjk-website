@@ -41,7 +41,7 @@ export default function Testimonials() {
   const active = testimonials[current] || testimonials[0]
 
   return (
-    <section className="public-section public-section--light relative py-24 md:py-32">
+    <section className="public-section public-section--dark relative py-24 md:py-32">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <SectionHeading
           pill="Testimonials"

@@ -38,7 +38,7 @@ export default function Vision() {
   const cards = hasLegacyVision(storedCards) ? visionCards : storedCards
 
   return (
-    <section id="vision" className="public-section public-section--light relative overflow-hidden px-4 py-24 md:py-32">
+    <section id="vision" className="public-section public-section--dark relative overflow-hidden px-4 py-24 md:py-32">
       <DhakaPattern className="opacity-[0.025]" />
       <div aria-hidden="true" className="pointer-events-none absolute left-0 top-16 h-80 w-80 rounded-full bg-emerald-100/80 blur-3xl" />
       <div aria-hidden="true" className="pointer-events-none absolute right-0 bottom-10 h-96 w-96 rounded-full bg-blue-100/80 blur-3xl" />
