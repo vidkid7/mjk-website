@@ -85,3 +85,24 @@ test('dark public sections give explicit slate text a readable contrast treatmen
   assert.match(globals, /\.public-section--dark\s+\.placeholder\\:text-slate-400::placeholder/)
   assert.match(globals, /\.public-section--dark\s+\.glass-action\s*\{[^}]*background:/)
 })
+
+test('dark rendered sections use the SectionHeading dark branch', async () => {
+  const home = await read('app/page.tsx')
+  const sectionImports = new Map(
+    [...home.matchAll(/import\s+(\w+)\s+from\s+'(@\/components\/sections\/[^']+)'/g)]
+      .map(([, component, path]) => [component, `${path.replace('@/', '')}.tsx`])
+  )
+  const renderedSections = [...home.matchAll(/<([A-Z]\w*)\s*\/>/g)]
+    .map(([, component]) => component)
+    .filter((component) => sectionImports.has(component))
+    .filter((component) => !['Navbar', 'Hero', 'Marquee', 'Footer'].includes(component))
+  const sectionSources = await Promise.all(renderedSections.map((component) => read(sectionImports.get(component))))
+  const darkHeadingSections = sectionSources
+    .map((source, index) => ({ component: renderedSections[index], source }))
+    .filter(({ source }) => /public-section--dark/.test(source) && /<SectionHeading\b/.test(source))
+
+  assert.deepEqual(darkHeadingSections.map(({ component }) => component), ['Achievements', 'Testimonials', 'Contact'])
+  darkHeadingSections.forEach(({ component, source }) => {
+    assert.match(source, /<SectionHeading\b(?=[\s\S]*?\/>)\s*[\s\S]*?\bdark(?:\s|=)/, `${component} uses the SectionHeading dark branch`)
+  })
+})

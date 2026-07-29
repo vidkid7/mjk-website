@@ -32,6 +32,7 @@ export default function Achievements() {
           heading="How a digital project moves from idea to launch"
           subheading="A simple, practical delivery path for websites, systems, dashboards, automation, and software products."
           accent="gold"
+          dark
         />
 
         <div className="relative mx-auto max-w-3xl">

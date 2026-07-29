@@ -39,3 +39,10 @@
 - TDD evidence: the new contrast assertion failed before the scoped dark-text rules were added; the derived-order assertion passes from the actual page render tree rather than a duplicated source-file sequence.
 - `node --test tests/liquid-design-contract.test.mjs` — 4 passed, 0 failed.
 - `npm.cmd test` — 16 passed, 0 failed.
+
+## Dark SectionHeading follow-up
+
+- Enabled the existing `SectionHeading` `dark` prop for every actual dark rendered section that uses this primitive: Achievements, Testimonials, and Contact. This preserves the primitive's white heading/subheading and dark-pill branch without adding per-section accent CSS.
+- Added an order-aware focused contract that derives dark sections from `app/page.tsx`, reads their sources, and requires the `SectionHeading` dark branch wherever the primitive is rendered. It failed before the three prop additions and now passes.
+- `node --test tests/liquid-design-contract.test.mjs` — 5 passed, 0 failed.
+- `npm.cmd test` — 17 passed, 0 failed.

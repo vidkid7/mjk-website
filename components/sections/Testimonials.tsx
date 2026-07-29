@@ -48,6 +48,7 @@ export default function Testimonials() {
           heading="What People Are Saying"
           subheading="Hear from the communities, entrepreneurs, and young leaders who have experienced the impact firsthand."
           accent="blue"
+          dark
         />
 
         <div className="relative max-w-2xl mx-auto">
