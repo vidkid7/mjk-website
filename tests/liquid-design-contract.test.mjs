@@ -22,6 +22,32 @@ test('shared liquid design system is available to public and admin surfaces', as
   assert.match(globals, /\.admin-liquid-shell\s*\{[^}]*position:\s*relative/)
 })
 
+test('admin workspace keeps its liquid shell and scoped high-contrast controls', async () => {
+  const [layout, login, dashboard, notice, upload, globals] = await Promise.all([
+    read('app/admin/layout.tsx'),
+    read('app/admin/login/page.tsx'),
+    read('app/admin/page.tsx'),
+    read('components/admin/AdminDataNotice.tsx'),
+    read('components/admin/ImageUploadField.tsx'),
+    read('app/globals.css'),
+  ])
+
+  assert.match(layout, /<LiquidBackdrop variant="admin"\s*\/>/)
+  assert.match(layout, /aria-label="Close navigation"/)
+  assert.match(layout, /admin-sidebar/)
+  assert.match(layout, /admin-header/)
+  assert.match(login, /admin-liquid-shell/)
+  assert.match(login, /admin-login-card/)
+  assert.match(dashboard, /admin-dashboard-hero/)
+  assert.match(dashboard, /admin-card/)
+  assert.match(notice, /admin-notice/)
+  assert.match(upload, /admin-control/)
+  assert.match(upload, /admin-upload-preview/)
+  assert.match(globals, /\.admin-liquid-shell\s+\.admin-control/)
+  assert.match(globals, /\.admin-liquid-shell\s+\.admin-control:focus/)
+  assert.match(globals, /\.admin-liquid-shell\s+\.bg-white/)
+})
+
 test('public homepage framing consumes the shared liquid surfaces', async () => {
   const [home, navbar, hero, marquee, footer, heading] = await Promise.all([
     read('app/page.tsx'),

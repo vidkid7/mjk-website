@@ -55,13 +55,13 @@ export default function AdminDashboard() {
   ]
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl bg-gradient-to-r from-crimson to-crimson-dark p-6 text-white md:p-8">
+    <div className="relative z-10 space-y-6">
+      <div className="admin-dashboard-hero admin-card flex flex-wrap items-center justify-between gap-4 rounded-[1.5rem] p-6 md:p-8">
         <div>
           <h2 className="font-playfair text-2xl font-bold md:text-3xl">Dashboard</h2>
-          <p className="mt-2 text-sm text-white/75">Live content and supporter submissions from Supabase.</p>
+          <p className="mt-2 text-sm text-white/70">Live content and supporter submissions from Supabase.</p>
         </div>
-        <button onClick={() => void refresh()} className="inline-flex items-center gap-2 rounded-lg border border-white/25 px-4 py-2 text-sm font-medium hover:bg-white/10">
+        <button onClick={() => void refresh()} className="admin-action inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium">
           <RefreshCw size={16} /> Refresh
         </button>
       </div>
@@ -70,52 +70,52 @@ export default function AdminDashboard() {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {overviewCards.map(card => (
-          <div key={card.label} className="rounded-lg border border-gray-100 bg-white p-5 shadow-sm">
-            <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-lg text-white ${card.color}`}>
+          <div key={card.label} className="admin-card admin-overview-card rounded-2xl p-5">
+            <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-xl text-white ${card.color}`}>
               <card.icon size={20} />
             </div>
-            <div className="text-2xl font-bold text-gray-800">{card.value}</div>
-            <div className="text-sm text-gray-500">{card.label}</div>
+            <div className="text-2xl font-bold text-white">{card.value}</div>
+            <div className="text-sm text-white/60">{card.label}</div>
           </div>
         ))}
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
-        <div className="rounded-lg border border-gray-100 bg-white p-6 shadow-sm">
-          <h3 className="mb-4 font-semibold text-gray-800">Quick Actions</h3>
+        <div className="admin-card rounded-2xl p-6">
+          <h3 className="mb-4 font-semibold text-white">Quick Actions</h3>
           <div className="space-y-2">
             {quickActions.map(action => (
-              <a key={action.href} href={action.href} className="group flex items-center justify-between rounded-lg p-3 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-crimson">
+              <a key={action.href} href={action.href} className="admin-list-action group flex items-center justify-between rounded-xl p-3 text-sm font-medium">
                 {action.label}
-                <ArrowUpRight size={16} className="text-gray-400 group-hover:text-crimson" />
+                <ArrowUpRight size={16} className="text-white/45 transition group-hover:text-gold" />
               </a>
             ))}
           </div>
         </div>
 
-        <div className="rounded-lg border border-gray-100 bg-white p-6 shadow-sm lg:col-span-2">
+        <div className="admin-card rounded-2xl p-6 lg:col-span-2">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="flex items-center gap-2 font-semibold text-gray-800">
-              <MessageSquare size={18} className="text-crimson" /> Recent Messages
+            <h3 className="flex items-center gap-2 font-semibold text-white">
+              <MessageSquare size={18} className="text-gold" /> Recent Messages
             </h3>
-            <span className="rounded-full bg-crimson/10 px-3 py-1 text-xs font-semibold text-crimson">{data.unreadCount} unread</span>
+            <span className="rounded-full border border-crimson/50 bg-crimson/20 px-3 py-1 text-xs font-semibold text-white">{data.unreadCount} unread</span>
           </div>
           {data.recentMessages.length === 0 ? (
-            <p className="rounded-lg bg-gray-50 p-8 text-center text-sm text-gray-500">No contact messages yet.</p>
+            <p className="admin-message-empty rounded-xl p-8 text-center text-sm text-white/60">No contact messages yet.</p>
           ) : (
             <div className="space-y-3">
               {data.recentMessages.map(message => (
-                <div key={message.id} className={`rounded-lg p-3 ${message.is_read ? 'bg-gray-50' : 'bg-crimson/5'}`}>
+                <div key={message.id} className={`admin-message-block rounded-xl p-3 ${message.is_read ? 'admin-message-block--read' : 'admin-message-block--unread'}`}>
                   <div className="flex items-center justify-between gap-3">
-                    <span className="text-sm font-semibold text-gray-800">{message.name}</span>
-                    <span className="text-xs text-gray-400">{relativeTime(message.created_at)}</span>
+                    <span className="text-sm font-semibold text-white">{message.name}</span>
+                    <span className="text-xs text-white/45">{relativeTime(message.created_at)}</span>
                   </div>
-                  <p className="truncate text-sm text-gray-600">{message.subject || 'No subject'}</p>
+                  <p className="truncate text-sm text-white/65">{message.subject || 'No subject'}</p>
                 </div>
               ))}
             </div>
           )}
-          <a href="/admin/messages" className="mt-4 block text-center text-sm font-medium text-crimson hover:underline">View all messages</a>
+          <a href="/admin/messages" className="mt-4 block text-center text-sm font-medium text-gold hover:underline">View all messages</a>
         </div>
       </div>
     </div>

@@ -36,15 +36,15 @@ export default function ImageUploadField({
   }
 
   return (
-    <div>
-      <label className="mb-1 block text-sm font-medium text-gray-700">{label}</label>
+    <div className="admin-upload-field">
+      <label className="mb-1 block text-sm font-medium text-white/85">{label}</label>
       <div className="flex flex-col gap-2 sm:flex-row">
         <input
           type="text"
           value={value || ''}
           onChange={event => onChange(event.target.value)}
           placeholder={placeholder}
-          className="min-w-0 flex-1 rounded-lg border border-gray-300 px-4 py-2.5 focus:border-crimson focus:ring-2 focus:ring-crimson/50"
+          className="admin-control min-w-0 flex-1 px-4 py-2.5"
         />
         <input
           ref={inputRef}
@@ -61,18 +61,18 @@ export default function ImageUploadField({
           type="button"
           disabled={uploading}
           onClick={() => inputRef.current?.click()}
-          className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:border-crimson hover:text-crimson disabled:opacity-60"
+          className="admin-upload-button admin-action inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium disabled:opacity-60"
         >
           {uploading ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
           {uploading ? 'Uploading' : 'Upload'}
         </button>
       </div>
       {value && (
-        <div className="mt-3 flex h-24 w-24 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50">
+        <div className="admin-upload-preview mt-3 flex h-24 w-24 items-center justify-center overflow-hidden rounded-xl">
           <img src={value} alt="" className="h-full w-full object-cover" />
         </div>
       )}
-      {error && <p className="mt-2 flex items-center gap-1 text-xs text-red-600"><ImagePlus size={13} />{error}</p>}
+      {error && <p role="alert" className="admin-upload-error mt-2 flex items-center gap-1 text-xs"><ImagePlus size={13} />{error}</p>}
     </div>
   )
 }
