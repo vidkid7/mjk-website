@@ -16,10 +16,10 @@ const quickLinks = [
 ]
 
 const serviceLinks = [
-  { label: 'Custom Software', href: '#client-portfolio' },
-  { label: 'Web Development', href: '#client-portfolio' },
-  { label: 'UI/UX Design', href: '#vision' },
-  { label: 'Workflow Automation', href: '#capabilities' },
+  { label: 'Custom Software', href: '/services/custom-software-development-nepal' },
+  { label: 'Web Development', href: '/services/web-development-nepal' },
+  { label: 'Business Automation', href: '/services/business-automation-nepal' },
+  { label: 'All Services', href: '/services' },
 ]
 
 const socialUrl = (url: string | undefined, fallback: string, legacyFallback?: string) =>

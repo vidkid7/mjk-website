@@ -58,3 +58,29 @@ test('navigation uses the smaller WebP logo asset', async () => {
   assert.match(navbar, /\/janaki-temple-logo\.webp/)
   assert.match(footer, /\/janaki-temple-logo\.webp/)
 })
+
+test('service landing pages are included in the sitemap for crawling', async () => {
+  const sitemap = await read('app/sitemap.ts')
+
+  assert.match(sitemap, /import \{ servicePages \} from '@\/lib\/service-pages'/)
+  assert.match(sitemap, /url: `\$\{siteUrl\}\/services`/)
+  assert.match(sitemap, /\.\.\.servicePages\.map/)
+})
+
+test('service pages publish canonical service and FAQ structured data', async () => {
+  const page = await read('app/services/[slug]/page.tsx')
+
+  assert.match(page, /generateStaticParams/)
+  assert.match(page, /'@type': 'Service'/)
+  assert.match(page, /'@type': 'FAQPage'/)
+  assert.match(page, /'@type': 'BreadcrumbList'/)
+  assert.match(page, /alternates: \{ canonical: url \}/)
+})
+
+test('the footer gives crawlers descriptive links to public service pages', async () => {
+  const footer = await read('components/sections/Footer.tsx')
+
+  assert.match(footer, /href: '\/services\/web-development-nepal'/)
+  assert.match(footer, /href: '\/services\/custom-software-development-nepal'/)
+  assert.match(footer, /href: '\/services\/business-automation-nepal'/)
+})
