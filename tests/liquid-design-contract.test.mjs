@@ -45,29 +45,43 @@ test('public homepage framing consumes the shared liquid surfaces', async () => 
   assert.match(heading, /glass-inset/)
 })
 
-test('homepage section variants alternate in rendered order', async () => {
-  const sectionFiles = [
-    'components/ui/about-us-section.tsx',
-    'components/sections/Achievements.tsx',
-    'components/sections/ClientPortfolio.tsx',
-    'components/sections/Vision.tsx',
-    'components/sections/Initiatives.tsx',
-    'components/sections/Entrepreneurship.tsx',
-    'components/sections/YouthInspiration.tsx',
-    'components/sections/Testimonials.tsx',
-    'components/sections/Gallery.tsx',
-    'components/sections/News.tsx',
-    'components/sections/Stats.tsx',
-    'components/sections/Contact.tsx',
-    'components/sections/FAQ.tsx',
-  ]
-  const expected = ['light', 'dark', 'light', 'dark', 'light', 'dark', 'light', 'dark', 'light', 'dark', 'light', 'dark', 'light']
-  const sources = await Promise.all(sectionFiles.map(read))
-  const variants = sources.map((source, index) => {
-    const match = source.match(/public-section--(light|dark)/)
-    assert.ok(match, `${sectionFiles[index]} has a public-section variant`)
-    return match[1]
-  })
+test('homepage section variants alternate in the page render order', async () => {
+  const home = await read('app/page.tsx')
+  const sectionImports = new Map(
+    [...home.matchAll(/import\s+(\w+)\s+from\s+'(@\/components\/sections\/[^']+)'/g)]
+      .map(([, component, path]) => [component, `${path.replace('@/', '')}.tsx`])
+  )
+  const renderedSections = [...home.matchAll(/<([A-Z]\w*)\s*\/>/g)]
+    .map(([, component]) => component)
+    .filter((component) => sectionImports.has(component))
+    .filter((component) => !['Navbar', 'Hero', 'Marquee', 'Footer'].includes(component))
 
-  assert.deepEqual(variants, expected)
+  assert.deepEqual(renderedSections, [
+    'About', 'Achievements', 'ClientPortfolio', 'Vision', 'Initiatives', 'Entrepreneurship',
+    'YouthInspiration', 'Testimonials', 'Gallery', 'News', 'Stats', 'Contact', 'FAQ',
+  ])
+
+  const findVariant = async (path, visited = new Set()) => {
+    assert.ok(!visited.has(path), `component import cycle while resolving ${path}`)
+    visited.add(path)
+    const source = await read(path)
+    const directVariant = source.match(/public-section--(light|dark)/)
+    if (directVariant) return directVariant[1]
+    const child = source.match(/import\s+(\w+)\s+from\s+'(@\/components\/ui\/[^']+)'/)
+    assert.ok(child, `${path} resolves to a public-section root`)
+    return findVariant(`${child[2].replace('@/', '')}.tsx`, visited)
+  }
+
+  const variants = await Promise.all(renderedSections.map((component) => findVariant(sectionImports.get(component))))
+  variants.slice(1).forEach((variant, index) => {
+    assert.notEqual(variant, variants[index], `${renderedSections[index]} and ${renderedSections[index + 1]} alternate`)
+  })
+})
+
+test('dark public sections give explicit slate text a readable contrast treatment', async () => {
+  const globals = await read('app/globals.css')
+  const coveredTokens = [...globals.matchAll(/\.public-section--dark\s+\.text-slate-(\d+)/g)].map(([, token]) => token)
+  assert.deepEqual(new Set(coveredTokens), new Set(['950', '900', '700', '600', '500', '400', '300']))
+  assert.match(globals, /\.public-section--dark\s+\.placeholder\\:text-slate-400::placeholder/)
+  assert.match(globals, /\.public-section--dark\s+\.glass-action\s*\{[^}]*background:/)
 })

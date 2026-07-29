@@ -31,3 +31,11 @@
 - TDD evidence: the focused contract failed before the six variant-token changes, reporting the first repeated `light` run; it passed after the changes.
 - `node --test tests/liquid-design-contract.test.mjs` — 3 passed, 0 failed.
 - `npm.cmd test` — 15 passed, 0 failed.
+
+## Contrast and render-order re-review follow-up
+
+- Kept the alternating light/dark root variants and added a narrowly scoped `.public-section--dark` slate-text treatment. It covers the explicit slate tokens used by the dark Achievements, Vision, Entrepreneurship, Testimonials, News, and Contact sections, their cards, and Contact form placeholders. It also gives dark-section action surfaces a readable dark-glass background. Light sections and all admin surfaces are unaffected.
+- Replaced the hand-maintained variant sequence assertion. The contract now reads `app/page.tsx`, derives the imported rendered public-section component order, resolves the About wrapper to its UI section root, asserts the render order, and verifies every adjacent resolved variant differs.
+- TDD evidence: the new contrast assertion failed before the scoped dark-text rules were added; the derived-order assertion passes from the actual page render tree rather than a duplicated source-file sequence.
+- `node --test tests/liquid-design-contract.test.mjs` — 4 passed, 0 failed.
+- `npm.cmd test` — 16 passed, 0 failed.
