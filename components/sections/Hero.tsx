@@ -35,6 +35,7 @@ export default function Hero() {
   const [playVideo, setPlayVideo] = useState(false)
 
   useEffect(() => {
+    if (!window.matchMedia('(min-width: 1024px)').matches) return
     const timer = window.setTimeout(() => setPlayVideo(true), 2500)
     return () => window.clearTimeout(timer)
   }, [])
@@ -53,7 +54,7 @@ export default function Hero() {
           height={1149}
           loading="lazy"
           decoding="async"
-          className="pointer-events-none absolute left-[28%] top-0 z-[1] h-[70%] w-[88rem] max-w-none -translate-x-1/2 object-cover object-[center_46%] opacity-[0.44] mix-blend-multiply sm:left-[45%] sm:h-[75%] sm:w-[105rem] lg:left-[50%] lg:h-[78%] lg:w-[120rem]"
+          className="pointer-events-none absolute left-[28%] top-0 z-[1] hidden h-[70%] w-[88rem] max-w-none -translate-x-1/2 object-cover object-[center_46%] opacity-[0.44] mix-blend-multiply lg:block lg:left-[50%] lg:h-[78%] lg:w-[120rem]"
           style={{
             filter: 'brightness(1.22) contrast(0.94) saturate(0.86)',
             WebkitMaskImage: 'linear-gradient(180deg, black 0%, black 74%, transparent 100%)',
@@ -63,9 +64,9 @@ export default function Hero() {
         />
 
         <video
-          className="hero-flag-video pointer-events-none absolute -left-[12rem] top-[-1rem] z-[4] h-[72%] w-[58rem] max-w-none object-cover object-left opacity-[0.58] mix-blend-multiply brightness-[1.24] saturate-[1.34] contrast-[1.02] sm:-left-[8rem] sm:h-[76%] sm:w-[70rem] lg:-left-[6rem] lg:top-[-1.2rem] lg:h-[80%] lg:w-[79rem]"
+          className="hero-flag-video pointer-events-none absolute -left-[12rem] top-[-1rem] z-[4] hidden h-[72%] w-[58rem] max-w-none object-cover object-left opacity-[0.58] mix-blend-multiply brightness-[1.24] saturate-[1.34] contrast-[1.02] lg:block lg:-left-[6rem] lg:top-[-1.2rem] lg:h-[80%] lg:w-[79rem]"
           src={playVideo ? '/nepal-flag-hero-bg-optimized.mp4' : undefined}
-          poster="/nepal-flag-hero-poster.jpg"
+          poster={playVideo ? '/nepal-flag-hero-poster.jpg' : undefined}
           autoPlay
           muted
           loop
@@ -105,7 +106,7 @@ export default function Hero() {
 
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute right-[-34%] top-[12%] z-[8] h-[44vh] w-[72vw] max-w-[320px] sm:right-[-22%] sm:top-[8%] sm:h-[60vh] sm:max-w-[460px] md:right-[-14%] md:h-[67vh] md:max-w-[540px] lg:right-[-10%] lg:top-[7%] lg:h-[74vh] lg:max-w-[600px]"
+          className="pointer-events-none absolute right-[-34%] top-[12%] z-[8] hidden h-[44vh] w-[72vw] max-w-[320px] lg:block lg:right-[-10%] lg:top-[7%] lg:h-[74vh] lg:max-w-[600px]"
         >
           <img
             src="/buddha-lotus-removebg.webp"

@@ -38,6 +38,12 @@ test('public pages defer non-critical CMS refreshes until the first view settles
   assert.match(storage, /window\.location\.pathname\.startsWith\('\/admin'\)/)
 })
 
+test('mobile visitors do not download desktop-only hero decorations', async () => {
+  const hero = await read('components/sections/Hero.tsx')
+  assert.match(hero, /hidden[^\"]*lg:block/)
+  assert.match(hero, /matchMedia\('\(min-width: 1024px\)'\)/)
+})
+
 test('navigation uses the smaller WebP logo asset', async () => {
   const [navbar, footer] = await Promise.all([
     read('components/sections/Navbar.tsx'),
