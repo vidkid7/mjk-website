@@ -34,5 +34,9 @@ Thumbs.db
 *.tsbuildinfo
 next-env.d.ts
 
+# local agent workspaces and execution ledger
+.worktrees/
+.superpowers/
+
 # large source video (served from public/)
 AQMkakbzWnBPT157wfbeHwVxfBlI-KHqu-ZflJwghvSwHhscmS4tJWKCzJVaXAitTlMIuTIwmNsSHtGMEOx7M4ZM1a8uaGHy2I5EbgTlID1mMg.mp4
