@@ -14,6 +14,7 @@ import Gallery from '@/components/sections/Gallery'
 import News from '@/components/sections/News'
 import Stats from '@/components/sections/Stats'
 import Contact from '@/components/sections/Contact'
+import FAQ from '@/components/sections/FAQ'
 import Footer from '@/components/sections/Footer'
 import { useStoredData } from '@/lib/storage'
 
@@ -58,6 +59,7 @@ export default function Home() {
       {show('news') && <News />}
       {show('stats') && <Stats />}
       {show('contact') && <Contact />}
+      <FAQ />
       <Footer />
     </main>
   )
