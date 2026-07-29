@@ -143,9 +143,9 @@ export default function Hero() {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[13] h-24 bg-[#082d58] [clip-path:ellipse(82%_68%_at_37%_104%)] sm:h-32 lg:h-32" />
 
         <div className="relative z-20 mx-auto flex min-h-[calc(100svh-72px)] max-w-[1680px] items-start px-5 pb-44 pt-8 sm:min-h-[calc(100svh-80px)] sm:items-center sm:px-8 sm:pb-32 md:pt-12 lg:min-h-[calc(100svh-88px)] lg:px-12 lg:pb-36">
-          <div className="relative z-30 mx-auto max-w-[30rem] text-center sm:mx-0 sm:max-w-[35rem] sm:text-left lg:ml-[12%] lg:max-w-[34rem] xl:ml-[14%]">
+          <div className="relative z-30 mx-auto max-w-[30rem] rounded-2xl border border-white/80 bg-white/[0.92] px-4 py-5 text-center shadow-xl shadow-[#071a35]/10 backdrop-blur-md sm:mx-0 sm:max-w-[35rem] sm:px-6 sm:py-7 sm:text-left lg:ml-[12%] lg:max-w-[34rem] lg:bg-white/[0.82] lg:px-8 lg:py-9 xl:ml-[14%] glass-panel">
             <div className="mb-3 inline-flex sm:mb-5">
-              <span className="inline-flex items-center gap-2 rounded-md border border-[#12375f]/18 bg-white/80 px-3 py-1.5 text-[9px] font-extrabold uppercase tracking-[0.24em] text-[#12375f] shadow-sm shadow-slate-900/5 backdrop-blur-sm sm:gap-3 sm:px-4 sm:py-2 sm:text-[11px] sm:tracking-[0.28em]">
+              <span className="glass-inset inline-flex items-center gap-2 rounded-md border border-[#12375f]/18 px-3 py-1.5 text-[9px] font-extrabold uppercase tracking-[0.24em] text-[#12375f] shadow-sm shadow-slate-900/5 sm:gap-3 sm:px-4 sm:py-2 sm:text-[11px] sm:tracking-[0.28em]">
                 <span className="h-2.5 w-2.5 rounded-full bg-crimson sm:h-3 sm:w-3" />
                 {content.label}
               </span>
@@ -174,7 +174,7 @@ export default function Hero() {
               </a>
               <a
                 href="#about"
-                className="inline-flex items-center gap-2 rounded-md border border-[#12375f]/45 bg-white/50 px-5 py-2.5 text-[10px] font-extrabold uppercase tracking-[0.15em] text-[#12375f] backdrop-blur-sm transition-all hover:border-crimson hover:text-crimson sm:gap-3 sm:px-7 sm:py-3.5 sm:text-xs sm:tracking-[0.18em]"
+                className="glass-action inline-flex items-center gap-2 rounded-md border border-[#12375f]/45 px-5 py-2.5 text-[10px] font-extrabold uppercase tracking-[0.15em] text-[#12375f] transition-all hover:border-crimson hover:text-crimson sm:gap-3 sm:px-7 sm:py-3.5 sm:text-xs sm:tracking-[0.18em]"
               >
                 <Play size={15} className="text-crimson" />
                 {content.cta_secondary}

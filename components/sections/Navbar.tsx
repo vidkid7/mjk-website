@@ -44,7 +44,7 @@ export default function Navbar() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed left-0 right-0 top-0 z-50 border-b border-slate-200/60 bg-white/95 text-[#0b2b55] shadow-sm shadow-slate-900/[0.03] backdrop-blur-xl transition-all duration-300 ${
+        className={`glass-panel fixed left-0 right-0 top-0 z-50 border-x-0 border-t-0 border-white/70 bg-white/80 text-[#0b2b55] shadow-sm shadow-slate-900/[0.03] transition-all duration-300 ${
           scrolled ? 'py-2' : 'py-2.5 lg:py-3'
         }`}
       >
@@ -99,7 +99,7 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center gap-3">
-            <a href="#contact" className="hidden rounded-full bg-slate-950 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-emerald-700 md:inline-flex">
+            <a href="#contact" className="glass-action hidden rounded-full border border-crimson/25 px-5 py-2.5 text-sm font-bold text-[#0b2b55] transition hover:border-gold/70 hover:bg-crimson hover:text-white md:inline-flex">
               Start Project
             </a>
             <button
@@ -120,9 +120,9 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 flex flex-col bg-white/[0.98] backdrop-blur-2xl xl:hidden"
+            className="glass glass-dark fixed inset-0 z-40 flex flex-col border-0 bg-[#071a35]/[0.96] text-white backdrop-blur-2xl xl:hidden"
           >
-            <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+            <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
               <div className="flex items-center gap-2.5">
                 <div className="relative h-10 w-20 shrink-0">
                   <Image
@@ -134,11 +134,11 @@ export default function Navbar() {
                   />
                 </div>
                 <div>
-                  <span className="block whitespace-nowrap font-playfair text-base font-bold leading-none text-slate-900">Mukesh Khadka</span>
-                  <span className="text-[9px] font-medium uppercase tracking-[0.28em] text-emerald-700">Digital Systems</span>
+                  <span className="block whitespace-nowrap font-playfair text-base font-bold leading-none text-white">Mukesh Khadka</span>
+                  <span className="text-[9px] font-medium uppercase tracking-[0.28em] text-gold">Digital Systems</span>
                 </div>
               </div>
-              <button onClick={() => setMobileOpen(false)} className="rounded-xl p-2.5 text-slate-500 hover:bg-slate-100">
+              <button onClick={() => setMobileOpen(false)} className="rounded-xl p-2.5 text-white/70 hover:bg-white/10 hover:text-white">
                 <X size={22} />
               </button>
             </div>
@@ -151,9 +151,9 @@ export default function Navbar() {
                   transition={{ delay: i * 0.06, duration: 0.3 }}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="flex w-full items-center gap-3 py-3 text-lg font-semibold text-slate-600 transition-colors hover:text-crimson"
+                  className="flex w-full items-center gap-3 py-3 text-lg font-semibold text-white/80 transition-colors hover:text-gold"
                 >
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-600/40" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-crimson/80" />
                   {link.label}
                 </motion.a>
               ))}

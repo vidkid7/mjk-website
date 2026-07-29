@@ -13,10 +13,10 @@ interface SectionHeadingProps {
 }
 
 const accentColors = {
-  crimson: { pill: 'bg-crimson-50 text-crimson border-crimson-100', line: 'from-crimson to-[#003893]' },
-  blue: { pill: 'bg-blue-50 text-blue-700 border-blue-100', line: 'from-[#003893] to-crimson' },
-  gold: { pill: 'bg-gold-50 text-gold-dark border-amber-200', line: 'from-gold to-crimson' },
-  emerald: { pill: 'bg-emerald-50 text-emerald border-emerald-light/30', line: 'from-emerald to-[#003893]' },
+  crimson: { pill: 'text-crimson border-crimson-100', line: 'from-crimson to-[#003893]' },
+  blue: { pill: 'text-blue-700 border-blue-100', line: 'from-[#003893] to-crimson' },
+  gold: { pill: 'text-gold-dark border-amber-200', line: 'from-gold to-crimson' },
+  emerald: { pill: 'text-emerald border-emerald-light/30', line: 'from-emerald to-[#003893]' },
 }
 
 export function SectionHeading({ pill, heading, subheading, dark = false, centered = true, accent = 'crimson' }: SectionHeadingProps) {
@@ -32,9 +32,9 @@ export function SectionHeading({ pill, heading, subheading, dark = false, center
     >
       {pill && (
         <span className={`inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-bold tracking-[0.2em] uppercase mb-4 ${
-          dark 
-            ? 'bg-white/10 text-white/70 border border-white/10' 
-            : `${colors.pill} border`
+          dark
+            ? 'glass glass-dark text-white/70 border border-white/10'
+            : `glass-inset ${colors.pill} border`
         }`}>
           <Sparkles size={12} className="opacity-60" />
           {pill}
@@ -46,7 +46,7 @@ export function SectionHeading({ pill, heading, subheading, dark = false, center
         {heading}
       </h2>
       {/* Accent line */}
-      <div className={`h-1 w-14 bg-gradient-to-r ${colors.line} ${centered ? 'mx-auto' : ''} mb-5`} />
+      <div className={`h-1 w-14 rounded-full bg-gradient-to-r shadow-sm ${colors.line} ${centered ? 'mx-auto' : ''} mb-5`} />
       {subheading && (
         <p className={`text-sm md:text-base max-w-2xl leading-7 ${centered ? 'mx-auto' : ''} ${
           dark ? 'text-slate-400' : 'text-slate-500'

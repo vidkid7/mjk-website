@@ -21,3 +21,24 @@ test('shared liquid design system is available to public and admin surfaces', as
   assert.match(globals, /prefers-reduced-motion/)
   assert.match(globals, /\.admin-liquid-shell\s*\{[^}]*position:\s*relative/)
 })
+
+test('public homepage framing consumes the shared liquid surfaces', async () => {
+  const [home, navbar, hero, marquee, footer, heading] = await Promise.all([
+    read('app/page.tsx'),
+    read('components/sections/Navbar.tsx'),
+    read('components/sections/Hero.tsx'),
+    read('components/sections/Marquee.tsx'),
+    read('components/sections/Footer.tsx'),
+    read('components/ui/SectionHeading.tsx'),
+  ])
+
+  assert.match(home, /liquid-page public-liquid-page relative overflow-hidden/)
+  assert.match(home, /<LiquidBackdrop variant="public"/)
+  assert.match(home, /relative z-10/)
+  assert.match(navbar, /glass-panel/)
+  assert.match(navbar, /glass-action/)
+  assert.match(hero, /glass-panel/)
+  assert.match(marquee, /glass-panel/)
+  assert.match(footer, /glass-panel/)
+  assert.match(heading, /glass-inset/)
+})
