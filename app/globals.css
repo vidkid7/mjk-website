@@ -110,8 +110,12 @@ video {
 }
 
 /* Prismatic Heritage liquid-glass primitives */
-.liquid-page,
+.liquid-page {
+  isolation: isolate;
+}
+
 .admin-liquid-shell {
+  position: relative;
   isolation: isolate;
 }
 

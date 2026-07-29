@@ -15,8 +15,9 @@ test('shared liquid design system is available to public and admin surfaces', as
 
   assert.match(backdrop, /LiquidBackdrop/)
   assert.match(glassSurface, /glass-panel/)
-  assert.match(home, /LiquidBackdrop/)
+  assert.match(home, /<LiquidBackdrop(?:\s|\/?>)/)
   assert.match(adminLayout, /admin-liquid-shell/)
   assert.match(globals, /--liquid-navy/)
   assert.match(globals, /prefers-reduced-motion/)
+  assert.match(globals, /\.admin-liquid-shell\s*\{[^}]*position:\s*relative/)
 })
