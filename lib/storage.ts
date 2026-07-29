@@ -22,6 +22,7 @@ const KEYS = {
 
 export type StorageKey = keyof typeof KEYS
 const STORAGE_UPDATE_EVENT = 'mjk_storage_update'
+const PUBLIC_REMOTE_DELAY_MS = 6000
 
 function saveLocalData<T>(key: StorageKey, data: T): void {
   localStorage.setItem(KEYS[key], JSON.stringify(data))
@@ -82,7 +83,13 @@ export function useStoredData<T>(key: StorageKey, fallback: T): T {
     }
 
     refresh()
-    void refreshRemote()
+
+    const isAdminPage = window.location.pathname.startsWith('/admin')
+    const remoteTimer = isAdminPage
+      ? undefined
+      : window.setTimeout(() => void refreshRemote(), PUBLIC_REMOTE_DELAY_MS)
+
+    if (isAdminPage) void refreshRemote()
 
     const handleStorage = (event: StorageEvent) => {
       if (event.key === KEYS[key]) refresh()
@@ -97,6 +104,7 @@ export function useStoredData<T>(key: StorageKey, fallback: T): T {
     window.addEventListener(STORAGE_UPDATE_EVENT, handleLocalUpdate)
 
     return () => {
+      if (remoteTimer !== undefined) window.clearTimeout(remoteTimer)
       window.removeEventListener('storage', handleStorage)
       window.removeEventListener(STORAGE_UPDATE_EVENT, handleLocalUpdate)
     }

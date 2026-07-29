@@ -32,6 +32,12 @@ test('the hero headline is visible before JavaScript hydration', async () => {
   assert.doesNotMatch(hero, /initial=\{\{ opacity/)
 })
 
+test('public pages defer non-critical CMS refreshes until the first view settles', async () => {
+  const storage = await read('lib/storage.ts')
+  assert.match(storage, /const PUBLIC_REMOTE_DELAY_MS = 6000/)
+  assert.match(storage, /window\.location\.pathname\.startsWith\('\/admin'\)/)
+})
+
 test('navigation uses the smaller WebP logo asset', async () => {
   const [navbar, footer] = await Promise.all([
     read('components/sections/Navbar.tsx'),
