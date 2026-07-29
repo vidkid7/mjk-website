@@ -1,6 +1,12 @@
 const siteUrl = (process.env.SITE_URL || 'https://khadkamukesh.com.np').replace(/\/$/, '')
 const key = process.env.INDEXNOW_KEY || '9f2d4c8e7a1b6d3f0e5c2a9b8d7f6e1c'
-const urls = [`${siteUrl}/`, `${siteUrl}/blog`]
+const urls = [
+  `${siteUrl}/`,
+  `${siteUrl}/blog`,
+  `${siteUrl}/blog/software-architecture-for-reliable-systems`,
+  `${siteUrl}/blog/user-experience-in-software-design`,
+  `${siteUrl}/blog/creating-a-software-development-roadmap`,
+]
 
 const response = await fetch('https://api.indexnow.org/indexnow', {
   method: 'POST',
