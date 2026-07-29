@@ -26,6 +26,12 @@ test('the hero postpones decorative video loading until after initial render', a
   assert.match(hero, /src=\{playVideo \? '\/nepal-flag-hero-bg-optimized\.mp4' : undefined\}/)
 })
 
+test('the hero headline is visible before JavaScript hydration', async () => {
+  const hero = await read('components/sections/Hero.tsx')
+  assert.doesNotMatch(hero, /<motion\.h1/)
+  assert.doesNotMatch(hero, /initial=\{\{ opacity/)
+})
+
 test('navigation uses the smaller WebP logo asset', async () => {
   const [navbar, footer] = await Promise.all([
     read('components/sections/Navbar.tsx'),

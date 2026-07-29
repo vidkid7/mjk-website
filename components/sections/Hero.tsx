@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
 import { ArrowRight, Globe, Play } from 'lucide-react'
 import { heroData } from '@/lib/placeholder-data'
 import { useStoredData } from '@/lib/storage'
@@ -52,6 +51,7 @@ export default function Hero() {
           aria-hidden="true"
           width={1920}
           height={1149}
+          loading="lazy"
           decoding="async"
           className="pointer-events-none absolute left-[28%] top-0 z-[1] h-[70%] w-[88rem] max-w-none -translate-x-1/2 object-cover object-[center_46%] opacity-[0.44] mix-blend-multiply sm:left-[45%] sm:h-[75%] sm:w-[105rem] lg:left-[50%] lg:h-[78%] lg:w-[120rem]"
           style={{
@@ -112,7 +112,7 @@ export default function Hero() {
             alt=""
             width={377}
             height={661}
-            loading="eager"
+            loading="lazy"
             decoding="async"
             className="relative h-full w-full object-contain object-right-bottom opacity-[0.1] mix-blend-multiply sm:opacity-[0.11] md:opacity-[0.14] lg:opacity-[0.2]"
             style={{
@@ -143,53 +143,28 @@ export default function Hero() {
 
         <div className="relative z-20 mx-auto flex min-h-[calc(100svh-72px)] max-w-[1680px] items-start px-5 pb-44 pt-8 sm:min-h-[calc(100svh-80px)] sm:items-center sm:px-8 sm:pb-32 md:pt-12 lg:min-h-[calc(100svh-88px)] lg:px-12 lg:pb-36">
           <div className="relative z-30 mx-auto max-w-[30rem] text-center sm:mx-0 sm:max-w-[35rem] sm:text-left lg:ml-[12%] lg:max-w-[34rem] xl:ml-[14%]">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="mb-3 inline-flex sm:mb-5"
-            >
+            <div className="mb-3 inline-flex sm:mb-5">
               <span className="inline-flex items-center gap-2 rounded-md border border-[#12375f]/18 bg-white/80 px-3 py-1.5 text-[9px] font-extrabold uppercase tracking-[0.24em] text-[#12375f] shadow-sm shadow-slate-900/5 backdrop-blur-sm sm:gap-3 sm:px-4 sm:py-2 sm:text-[11px] sm:tracking-[0.28em]">
                 <span className="h-2.5 w-2.5 rounded-full bg-crimson sm:h-3 sm:w-3" />
                 {content.label}
               </span>
-            </motion.div>
+            </div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="font-playfair text-[3rem] font-extrabold leading-[0.95] tracking-tight text-[#12375f] min-[420px]:text-[3.5rem] sm:text-6xl md:text-7xl lg:text-[5rem]"
-            >
+            <h1 className="font-playfair text-[3rem] font-extrabold leading-[0.95] tracking-tight text-[#12375f] min-[420px]:text-[3.5rem] sm:text-6xl md:text-7xl lg:text-[5rem]">
               {headlineParts[0] || 'Digital'}
               <span className="block text-crimson">{headlineParts.slice(1).join(' ') || 'Solutions'}</span>
-            </motion.h1>
+            </h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.18 }}
-              className="mt-4 max-w-xl text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#12375f]/78 sm:mt-5 sm:text-[13px] sm:tracking-[0.27em]"
-            >
+            <p className="mt-4 max-w-xl text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#12375f]/78 sm:mt-5 sm:text-[13px] sm:tracking-[0.27em]">
               {content.subheadline}
-            </motion.p>
+            </p>
             <div className="mx-auto mt-2.5 h-0.5 w-14 bg-crimson sm:mx-0" />
 
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.26 }}
-              className="mx-auto mt-3 max-w-[31rem] text-[13px] leading-6 text-[#12375f]/82 sm:mx-0 sm:mt-4 sm:text-sm sm:leading-7 md:text-[15px] md:leading-7"
-            >
+            <p className="mx-auto mt-3 max-w-[31rem] text-[13px] leading-6 text-[#12375f]/82 sm:mx-0 sm:mt-4 sm:text-sm sm:leading-7 md:text-[15px] md:leading-7">
               {content.bio}
-            </motion.p>
+            </p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 0.34 }}
-              className="mt-5 flex flex-wrap justify-center gap-3 sm:mt-6 sm:gap-4 md:justify-start"
-            >
+            <div className="mt-5 flex flex-wrap justify-center gap-3 sm:mt-6 sm:gap-4 md:justify-start">
               <a
                 href="#vision"
                 className="group inline-flex items-center gap-2 rounded-md bg-crimson px-5 py-2.5 text-[10px] font-extrabold uppercase tracking-[0.15em] text-white shadow-xl shadow-crimson/20 transition-all duration-300 hover:bg-crimson-dark sm:gap-3 sm:px-7 sm:py-3.5 sm:text-xs sm:tracking-[0.18em]"
@@ -203,17 +178,12 @@ export default function Hero() {
                 <Play size={15} className="text-crimson" />
                 {content.cta_secondary}
               </a>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 0.44 }}
-              className="mt-6 hidden items-center gap-3 text-left text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#12375f]/78 sm:inline-flex"
-            >
+            <div className="mt-6 hidden items-center gap-3 text-left text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#12375f]/78 sm:inline-flex">
               <Globe size={16} className="text-crimson" />
               Building Digital Solutions for Nepal
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
