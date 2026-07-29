@@ -48,7 +48,7 @@ export default function AdminVolunteers() {
           <p className="text-sm text-gray-500">{allVolunteers.length} total signups</p>
         </div>
         <button disabled={!allVolunteers.length} onClick={exportCsv}
-          className="flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50">
+          className="admin-action flex items-center gap-2 rounded-lg px-4 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-50">
           <Download size={16} /> Export CSV
         </button>
       </div>
@@ -57,31 +57,31 @@ export default function AdminVolunteers() {
       <div className="relative">
         <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
         <input type="text" value={search} onChange={event => setSearch(event.target.value)} placeholder="Search by name, city, or email..."
-          className="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-4 focus:border-crimson focus:ring-2 focus:ring-crimson/50" />
+          className="admin-control w-full py-2.5 pl-10 pr-4" />
       </div>
 
-      <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+      <div className="admin-card overflow-hidden rounded-2xl">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="border-b border-gray-200 bg-gray-50">
+            <thead className="border-b border-white/15 bg-white/10">
               <tr>
                 {['Name', 'Contact', 'City', 'Help Type', 'Date', 'Actions'].map(label => (
                   <th key={label} className="px-4 py-3 text-left text-xs font-semibold uppercase text-gray-500">{label}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-white/10">
               {volunteers.map(volunteer => (
-                <tr key={volunteer.id} className="hover:bg-gray-50">
+                <tr key={volunteer.id} className="hover:bg-white/5">
                   <td className="px-4 py-3 font-medium text-gray-800">{volunteer.name}</td>
                   <td className="px-4 py-3 text-sm text-gray-600"><div>{volunteer.email}</div><div className="text-gray-400">{volunteer.phone}</div></td>
                   <td className="px-4 py-3 text-sm text-gray-600">{volunteer.city}</td>
-                  <td className="px-4 py-3"><span className="rounded-full bg-blue-50 px-2 py-1 text-xs text-blue-700">{volunteer.help}</span></td>
+                  <td className="px-4 py-3"><span className="rounded-full border border-blue-300/35 bg-blue-400/15 px-2 py-1 text-xs text-blue-100">{volunteer.help}</span></td>
                   <td className="px-4 py-3 text-sm text-gray-400">{volunteer.date}</td>
                   <td className="px-4 py-3">
                     <div className="flex gap-1">
-                      <a href={`mailto:${encodeURIComponent(volunteer.email)}`} className="rounded p-2 text-gray-400 hover:bg-blue-50 hover:text-blue-600" title="Email volunteer"><Mail size={16} /></a>
-                      <button disabled={saving} onClick={() => void action('delete', { id: volunteer.id })} className="rounded p-2 text-gray-400 hover:bg-red-50 hover:text-red-600 disabled:opacity-50" title="Delete volunteer"><Trash2 size={16} /></button>
+                      <a href={`mailto:${encodeURIComponent(volunteer.email)}`} className="admin-list-action rounded p-2" title="Email volunteer" aria-label={`Email ${volunteer.name}`}><Mail size={16} /></a>
+                      <button disabled={saving} onClick={() => void action('delete', { id: volunteer.id })} className="admin-list-action rounded p-2 text-rose-200 hover:!border-crimson/60 hover:!bg-crimson/20 disabled:opacity-50" title="Delete volunteer" aria-label={`Delete ${volunteer.name}`}><Trash2 size={16} /></button>
                     </div>
                   </td>
                 </tr>

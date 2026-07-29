@@ -74,7 +74,7 @@ export default function AdminSettings() {
     }
   }
 
-  const inputClass = "w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson transition-all"
+  const inputClass = "admin-control w-full px-4 py-2.5 transition-all"
 
   return (
     <div className="max-w-4xl space-y-6">
@@ -84,14 +84,14 @@ export default function AdminSettings() {
           <p className="text-sm text-gray-500">Manage global portfolio configuration</p>
         </div>
         <button onClick={handleSave} disabled={saving}
-          className="flex items-center gap-2 rounded-lg bg-crimson px-6 py-2 text-sm font-semibold text-white hover:bg-crimson-dark disabled:opacity-50">
+          className="glass-action admin-action admin-action--primary flex items-center gap-2 rounded-lg px-6 py-2 text-sm font-semibold disabled:opacity-50">
           {saving ? <div className="spinner" /> : saved ? '✓ Saved!' : <><Save size={16} /> Save Settings</>}
         </button>
       </div>
 
       <AdminDataNotice loading={loading} error={error} usingStarter={usingStarter} />
 
-      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+      <div className="admin-card rounded-2xl p-5 md:p-7">
         <h3 className="mb-4 flex items-center gap-2 font-semibold text-gray-800">
           <Globe size={18} className="text-crimson" /> SEO & Meta
         </h3>
@@ -103,13 +103,13 @@ export default function AdminSettings() {
           <div>
             <label className="mb-1 block text-sm font-medium text-gray-700">Meta Description</label>
             <textarea value={normalizedForm.meta_description} onChange={e => setForm({ ...normalizedForm, meta_description: e.target.value })} rows={2}
-              className="w-full resize-none rounded-lg border border-gray-300 px-4 py-2.5 focus:border-crimson focus:ring-2 focus:ring-crimson/50" />
+              className="admin-control w-full resize-none px-4 py-2.5" />
             <p className="mt-1 text-xs text-gray-400">{normalizedForm.meta_description.length}/160 characters</p>
           </div>
         </div>
       </div>
 
-      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+      <div className="admin-card rounded-2xl p-5 md:p-7">
         <h3 className="mb-4 flex items-center gap-2 font-semibold text-gray-800">
           <Phone size={18} className="text-crimson" /> Contact Information
         </h3>
@@ -127,12 +127,12 @@ export default function AdminSettings() {
           <div>
             <label className="mb-1 flex items-center gap-1 text-sm font-medium text-gray-700"><MapPin size={14} /> Office Address</label>
             <textarea value={normalizedForm.address} onChange={e => setForm({ ...normalizedForm, address: e.target.value })} rows={2}
-              className="w-full resize-none rounded-lg border border-gray-300 px-4 py-2.5 focus:border-crimson focus:ring-2 focus:ring-crimson/50" />
+              className="admin-control w-full resize-none px-4 py-2.5" />
           </div>
         </div>
       </div>
 
-      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+      <div className="admin-card rounded-2xl p-5 md:p-7">
         <h3 className="mb-4 flex items-center gap-2 font-semibold text-gray-800"><Share2 size={18} className="text-crimson" /> Social Media Links</h3>
         <div className="space-y-3">
           {[
@@ -152,11 +152,11 @@ export default function AdminSettings() {
         </div>
       </div>
 
-      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+      <div className="admin-card rounded-2xl p-5 md:p-7">
         <h3 className="mb-4 font-semibold text-gray-800">Section Visibility</h3>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {sectionVisibilityOptions.map(section => (
-            <label key={section.key} className="flex cursor-pointer items-center gap-3 rounded-lg bg-gray-50 p-3 transition-colors hover:bg-gray-100">
+            <label key={section.key} className="admin-card flex cursor-pointer items-center gap-3 rounded-xl p-3 transition-colors hover:border-gold/50">
               <input
                 type="checkbox"
                 checked={visibleSections[section.key]}

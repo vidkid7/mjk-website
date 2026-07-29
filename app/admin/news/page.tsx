@@ -59,40 +59,40 @@ export default function AdminNews() {
             {editingId ? 'Edit Blog Post' : 'Create New Blog Post'}
           </h2>
           <div className="flex gap-3">
-            <button onClick={() => setShowEditor(false)} className="flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">
+            <button onClick={() => setShowEditor(false)} className="admin-action flex items-center gap-2 rounded-lg px-4 py-2 text-sm">
               <X size={16} /> Cancel
             </button>
-            <button disabled={saving} onClick={() => void handleSave()} className="flex items-center gap-2 rounded-lg bg-crimson px-6 py-2 text-sm font-semibold text-white hover:bg-crimson-dark disabled:opacity-60">
+            <button disabled={saving} onClick={() => void handleSave()} className="glass-action admin-action admin-action--primary flex items-center gap-2 rounded-lg px-6 py-2 text-sm font-semibold disabled:opacity-60">
               <Save size={16} /> {saving ? 'Saving...' : editingId ? 'Save Changes' : 'Save Post'}
             </button>
           </div>
         </div>
 
-        <div className="space-y-5 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="admin-card space-y-5 rounded-2xl p-5 md:p-7">
           <div>
             <label className="mb-1 block text-sm font-medium text-gray-700">Post Title</label>
             <input type="text" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-lg font-semibold focus:border-crimson focus:ring-2 focus:ring-crimson/50" placeholder="Enter blog post title..." />
+              className="admin-control w-full px-4 py-3 text-lg font-semibold" placeholder="Enter blog post title..." />
           </div>
 
           <div className="grid gap-4 sm:grid-cols-3">
             <div>
               <label className="mb-1 block text-sm font-medium text-gray-700">Category</label>
               <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })}
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:border-crimson focus:ring-2 focus:ring-crimson/50">
+                className="admin-control w-full px-4 py-2.5">
                 {categories.map(category => <option key={category}>{category}</option>)}
               </select>
             </div>
             <div>
               <label className="mb-1 block text-sm font-medium text-gray-700">Date</label>
               <input type="date" value={form.date} onChange={e => setForm({ ...form, date: e.target.value })}
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:border-crimson focus:ring-2 focus:ring-crimson/50" />
+                className="admin-control w-full px-4 py-2.5" />
             </div>
             <div>
               <label className="mb-1 block text-sm font-medium text-gray-700">Status</label>
               <select value={form.is_published ? 'published' : 'draft'}
                 onChange={e => setForm({ ...form, is_published: e.target.value === 'published' })}
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:border-crimson focus:ring-2 focus:ring-crimson/50">
+                className="admin-control w-full px-4 py-2.5">
                 <option value="published">Published</option><option value="draft">Draft</option>
               </select>
             </div>
@@ -103,13 +103,13 @@ export default function AdminNews() {
           <div>
             <label className="mb-1 block text-sm font-medium text-gray-700">Excerpt</label>
             <textarea value={form.excerpt} onChange={e => setForm({ ...form, excerpt: e.target.value })} rows={2}
-              className="w-full resize-none rounded-lg border border-gray-300 px-4 py-2.5 focus:border-crimson focus:ring-2 focus:ring-crimson/50" placeholder="Short summary shown on the blog card..." />
+              className="admin-control w-full resize-none px-4 py-2.5" placeholder="Short summary shown on the blog card..." />
           </div>
 
           <div>
             <label className="mb-1 block text-sm font-medium text-gray-700">Full Content</label>
             <textarea value={form.content} onChange={e => setForm({ ...form, content: e.target.value })} rows={12}
-              className="w-full resize-none rounded-lg border border-gray-300 px-4 py-2.5 font-mono text-sm focus:border-crimson focus:ring-2 focus:ring-crimson/50"
+              className="admin-control w-full resize-none px-4 py-2.5 font-mono text-sm"
               placeholder="Write the full blog post here. Use blank lines between paragraphs." />
             <p className="mt-1 text-xs text-gray-400">Tip: Use blank lines to create separate paragraphs. Published posts appear on /blog and the homepage blog preview.</p>
           </div>
@@ -125,7 +125,7 @@ export default function AdminNews() {
           <h2 className="text-xl font-bold text-gray-800">Blog Posts</h2>
           <p className="text-sm text-gray-500">{posts.length} posts total · Published posts appear on /blog</p>
         </div>
-        <button onClick={openCreate} className="flex items-center gap-2 rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-dark">
+        <button onClick={openCreate} className="glass-action admin-action admin-action--primary flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold">
           <Plus size={16} /> New Blog Post
         </button>
       </div>
@@ -134,28 +134,28 @@ export default function AdminNews() {
 
       <div className="space-y-3">
         {posts.map((post) => (
-          <div key={post.id} className="flex items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition-all hover:shadow-md">
+          <div key={post.id} className="admin-card flex items-center gap-4 rounded-xl p-4 transition-all">
             <img src={post.cover} alt={post.title} className="h-16 w-20 flex-shrink-0 rounded-lg object-cover" />
             <div className="min-w-0 flex-1">
               <div className="mb-1 flex items-center gap-2">
                 <h3 className="truncate font-semibold text-gray-800">{post.title}</h3>
-                <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${post.is_published ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+                <span className={`rounded-full border px-2 py-0.5 text-xs font-medium ${post.is_published ? 'border-emerald-300/40 bg-emerald-400/20 text-emerald-100' : 'border-gold/40 bg-gold/20 text-amber-100'}`}>
                   {post.is_published ? 'Published' : 'Draft'}
                 </span>
               </div>
               <div className="flex items-center gap-3 text-xs text-gray-400">
-                <span className="rounded bg-gray-100 px-2 py-0.5 text-gray-600">{post.category}</span>
+                <span className="rounded border border-white/15 bg-white/10 px-2 py-0.5 text-slate-200">{post.category}</span>
                 <span className="flex items-center gap-1"><Calendar size={12} /> {post.date}</span>
               </div>
             </div>
             <div className="flex flex-shrink-0 items-center gap-2">
-              <button disabled={saving} onClick={() => void togglePublish(post.id)} className="rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 disabled:opacity-50" title={post.is_published ? 'Unpublish' : 'Publish'}>
+              <button disabled={saving} onClick={() => void togglePublish(post.id)} className="admin-list-action rounded-lg p-2 disabled:opacity-50" title={post.is_published ? 'Unpublish' : 'Publish'} aria-label={post.is_published ? `Unpublish ${post.title}` : `Publish ${post.title}`}>
                 {post.is_published ? <Eye size={16} /> : <EyeOff size={16} />}
               </button>
-              <button onClick={() => openEdit(post)} className="rounded-lg p-2 text-gray-400 hover:bg-blue-50 hover:text-blue-600">
+              <button onClick={() => openEdit(post)} className="admin-list-action rounded-lg p-2" aria-label={`Edit ${post.title}`}>
                 <Edit2 size={16} />
               </button>
-              <button disabled={saving} onClick={() => void deletePost(post.id)} className="rounded-lg p-2 text-gray-400 hover:bg-red-50 hover:text-red-600 disabled:opacity-50">
+              <button disabled={saving} onClick={() => void deletePost(post.id)} className="admin-list-action rounded-lg p-2 text-rose-200 hover:!border-crimson/60 hover:!bg-crimson/20 disabled:opacity-50" aria-label={`Delete ${post.title}`}>
                 <Trash2 size={16} />
               </button>
             </div>

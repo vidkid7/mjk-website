@@ -51,7 +51,7 @@ export default function AdminGallery() {
         </div>
         <button
           onClick={openCreate}
-          className="px-4 py-2 bg-crimson text-white rounded-lg text-sm font-semibold hover:bg-crimson-dark transition-colors flex items-center gap-2"
+          className="glass-action admin-action admin-action--primary px-4 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2"
         >
           <Plus size={16} /> Add Photo
         </button>
@@ -62,26 +62,26 @@ export default function AdminGallery() {
       {/* Photo Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {photos.map((photo) => (
-          <div key={photo.id} className="group relative bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-all">
+          <div key={photo.id} className="admin-card group relative overflow-hidden rounded-xl transition-all">
             <div className="relative h-40">
               <img src={photo.url} alt={photo.caption} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                 <button
                   onClick={() => openEdit(photo)}
-                  className="w-8 h-8 rounded-full bg-white text-gray-800 flex items-center justify-center hover:bg-gold transition-colors"
+                  className="admin-list-action w-8 h-8 rounded-full flex items-center justify-center transition-colors" aria-label={`Edit ${photo.caption}`}
                 >
                   <Edit2 size={14} />
                 </button>
                 <button
                   onClick={() => setDeleteConfirm(photo.id)}
-                  className="w-8 h-8 rounded-full bg-white text-red-600 flex items-center justify-center hover:bg-red-50 transition-colors"
+                  className="admin-list-action w-8 h-8 rounded-full flex items-center justify-center text-rose-200 hover:!border-crimson/60 hover:!bg-crimson/20 transition-colors" aria-label={`Delete ${photo.caption}`}
                 >
                   <Trash2 size={14} />
                 </button>
               </div>
             </div>
             <div className="p-3">
-              <span className="text-xs font-semibold text-crimson bg-crimson/10 px-2 py-0.5 rounded-full">
+              <span className="border border-crimson/40 bg-crimson/20 px-2 py-0.5 text-xs font-semibold text-rose-100 rounded-full">
                 {photo.category}
               </span>
               <p className="text-sm text-gray-700 mt-1 truncate">{photo.caption}</p>
@@ -92,13 +92,13 @@ export default function AdminGallery() {
 
       {/* Create/Edit Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl w-full max-w-lg p-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/70 p-4 backdrop-blur-sm">
+          <div role="dialog" aria-modal="true" aria-labelledby="gallery-dialog-title" className="admin-card max-h-[calc(100vh-2rem)] w-full max-w-lg overflow-y-auto rounded-2xl p-5 md:p-7">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-bold text-gray-800">
+              <h3 id="gallery-dialog-title" className="text-lg font-bold text-gray-800">
                 {editingId ? 'Edit Photo' : 'Add New Photo'}
               </h3>
-              <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-600">
+              <button onClick={() => setShowModal(false)} className="admin-list-action rounded-lg p-2" aria-label="Close photo editor">
                 <X size={20} />
               </button>
             </div>
@@ -112,7 +112,7 @@ export default function AdminGallery() {
                   type="text"
                   value={form.caption}
                   onChange={e => setForm({ ...form, caption: e.target.value })}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson"
+                  className="admin-control w-full px-4 py-2.5"
                 />
               </div>
 
@@ -121,7 +121,7 @@ export default function AdminGallery() {
                 <select
                   value={form.category}
                   onChange={e => setForm({ ...form, category: e.target.value })}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson"
+                  className="admin-control w-full px-4 py-2.5"
                 >
                   {categories.map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
@@ -129,10 +129,10 @@ export default function AdminGallery() {
             </div>
 
             <div className="flex gap-3 mt-6">
-              <button onClick={() => setShowModal(false)} className="flex-1 py-2.5 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">
+              <button onClick={() => setShowModal(false)} className="admin-action flex-1 py-2.5 rounded-lg">
                 Cancel
               </button>
-              <button disabled={saving} onClick={() => void handleSave()} className="flex-1 py-2.5 bg-crimson text-white rounded-lg font-semibold hover:bg-crimson-dark disabled:opacity-60">
+              <button disabled={saving} onClick={() => void handleSave()} className="glass-action admin-action admin-action--primary flex-1 py-2.5 rounded-lg font-semibold disabled:opacity-60">
                 {saving ? 'Saving...' : editingId ? 'Save Changes' : 'Add Photo'}
               </button>
             </div>
@@ -142,18 +142,18 @@ export default function AdminGallery() {
 
       {/* Delete Confirmation Modal */}
       {deleteConfirm && (
-        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-sm w-full p-6 text-center">
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/70 p-4 backdrop-blur-sm">
+          <div role="dialog" aria-modal="true" aria-labelledby="gallery-delete-dialog-title" className="admin-card max-h-[calc(100vh-2rem)] w-full max-w-sm overflow-y-auto rounded-2xl border-crimson/50 !bg-[#3f0d1b]/95 p-5 text-center md:p-7">
             <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
               <Trash2 className="text-red-600" size={20} />
             </div>
-            <h3 className="text-lg font-bold text-gray-800 mb-2">Delete Photo?</h3>
+            <h3 id="gallery-delete-dialog-title" className="text-lg font-bold text-gray-800 mb-2">Delete Photo?</h3>
             <p className="text-sm text-gray-500 mb-6">This action cannot be undone.</p>
             <div className="flex gap-3">
-              <button onClick={() => setDeleteConfirm(null)} className="flex-1 py-2.5 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">
+              <button onClick={() => setDeleteConfirm(null)} className="admin-action flex-1 py-2.5 rounded-lg">
                 Cancel
               </button>
-              <button disabled={saving} onClick={() => void handleDelete(deleteConfirm)} className="flex-1 py-2.5 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 disabled:opacity-60">
+              <button disabled={saving} onClick={() => void handleDelete(deleteConfirm)} className="flex-1 rounded-lg border border-crimson/70 bg-crimson py-2.5 font-semibold text-white hover:bg-crimson-dark disabled:opacity-60">
                 {saving ? 'Deleting...' : 'Delete'}
               </button>
             </div>

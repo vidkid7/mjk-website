@@ -44,15 +44,15 @@ export default function AdminMessages() {
       <div className="relative">
         <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
         <input type="text" value={search} onChange={event => setSearch(event.target.value)} placeholder="Search messages..."
-          className="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-4 focus:border-crimson focus:ring-2 focus:ring-crimson/50" />
+          className="admin-control w-full py-2.5 pl-10 pr-4" />
       </div>
 
       <div className="grid gap-4 lg:grid-cols-5">
         <div className="space-y-2 lg:col-span-2">
-          {filtered.length === 0 && <div className="rounded-lg border border-gray-200 bg-white p-8 text-center text-sm text-gray-500">No messages found.</div>}
+          {filtered.length === 0 && <div className="admin-card rounded-xl p-8 text-center text-sm text-gray-500">No messages found.</div>}
           {filtered.map(message => (
             <button key={message.id} onClick={() => void openMessage(message)}
-              className={`block w-full rounded-lg border bg-white p-4 text-left shadow-sm transition hover:shadow-md ${selectedId === message.id ? 'border-crimson' : 'border-gray-200'} ${!message.is_read ? 'bg-crimson/5' : ''}`}>
+              className={`admin-card admin-message-block block w-full rounded-xl p-4 text-left transition ${selectedId === message.id ? '!border-crimson/70' : ''} ${!message.is_read ? 'admin-message-block--unread' : ''}`}>
               <div className="mb-1 flex items-center gap-2">
                 {!message.is_read && <span className="h-2 w-2 rounded-full bg-crimson" />}
                 <span className={`text-sm ${message.is_read ? 'font-medium text-gray-600' : 'font-bold text-gray-800'}`}>{message.name}</span>
@@ -65,7 +65,7 @@ export default function AdminMessages() {
 
         <div className="lg:col-span-3">
           {selected ? (
-            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+            <div className="admin-card rounded-2xl p-5 md:p-7">
               <div className="mb-6 flex items-start justify-between gap-4">
                 <div>
                   <h3 className="text-lg font-bold text-gray-800">{selected.subject || 'No subject'}</h3>
@@ -74,25 +74,25 @@ export default function AdminMessages() {
                 </div>
                 <div className="flex gap-2">
                   <button disabled={saving} onClick={() => void action('read', { id: selected.id, is_read: !selected.is_read })}
-                    className="rounded-lg p-2 text-gray-400 hover:bg-blue-50 hover:text-blue-600 disabled:opacity-50" title={selected.is_read ? 'Mark unread' : 'Mark read'}>
+                    className="admin-list-action rounded-lg p-2 disabled:opacity-50" title={selected.is_read ? 'Mark unread' : 'Mark read'} aria-label={selected.is_read ? 'Mark message unread' : 'Mark message read'}>
                     {selected.is_read ? <MailOpen size={16} /> : <Mail size={16} />}
                   </button>
                   <button disabled={saving} onClick={() => void deleteMessage(selected.id)}
-                    className="rounded-lg p-2 text-gray-400 hover:bg-red-50 hover:text-red-600 disabled:opacity-50" title="Delete message">
+                    className="admin-list-action rounded-lg p-2 text-rose-200 hover:!border-crimson/60 hover:!bg-crimson/20 disabled:opacity-50" title="Delete message" aria-label="Delete message">
                     <Trash2 size={16} />
                   </button>
                 </div>
               </div>
-              <div className="rounded-lg bg-gray-50 p-4 leading-relaxed text-gray-700">{selected.message}</div>
+              <div className="admin-message-block rounded-xl p-4 leading-relaxed text-gray-700">{selected.message}</div>
               <a
                 href={`mailto:${encodeURIComponent(selected.email)}?subject=${encodeURIComponent(`Re: ${selected.subject || 'Your message'}`)}`}
-                className="mt-4 inline-flex items-center gap-2 rounded-lg bg-crimson px-4 py-2 text-sm font-semibold text-white hover:bg-crimson-dark"
+                className="glass-action admin-action admin-action--primary mt-4 inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold"
               >
                 <Reply size={16} /> Reply via Email
               </a>
             </div>
           ) : (
-            <div className="rounded-lg border border-gray-200 bg-white p-12 text-center text-gray-400 shadow-sm">
+            <div className="admin-card admin-message-empty rounded-2xl p-12 text-center text-gray-400">
               <Mail size={40} className="mx-auto mb-3 opacity-30" />
               <p>Select a message to view</p>
             </div>

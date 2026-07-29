@@ -27,7 +27,7 @@ export default function AdminTestimonials() {
       <div className="flex items-center justify-between">
         <div><h2 className="text-xl font-bold text-gray-800">Testimonials</h2>
           <p className="text-sm text-gray-500">{items.length} testimonials</p></div>
-        <button onClick={openCreate} className="px-4 py-2 bg-crimson text-white rounded-lg text-sm font-semibold hover:bg-crimson-dark flex items-center gap-2">
+        <button onClick={openCreate} className="glass-action admin-action admin-action--primary px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2">
           <Plus size={16} /> Add Testimonial</button>
       </div>
 
@@ -35,7 +35,7 @@ export default function AdminTestimonials() {
 
       <div className="grid md:grid-cols-2 gap-4">
         {items.map((item) => (
-          <div key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+          <div key={item.id} className="admin-card rounded-2xl p-5">
             <div className="flex items-start justify-between mb-3">
               <div className="flex items-center gap-3">
                 <img src={item.photo} alt={item.name} className="w-12 h-12 rounded-full object-cover" />
@@ -45,8 +45,8 @@ export default function AdminTestimonials() {
                 </div>
               </div>
               <div className="flex gap-1">
-                <button onClick={() => openEdit(item)} className="p-1.5 text-gray-400 hover:text-blue-600 rounded hover:bg-blue-50"><Edit2 size={14} /></button>
-                <button disabled={saving} onClick={() => void save(items.filter(i => i.id !== item.id))} className="p-1.5 text-gray-400 hover:text-red-600 rounded hover:bg-red-50 disabled:opacity-50"><Trash2 size={14} /></button>
+                <button onClick={() => openEdit(item)} className="admin-list-action p-1.5 rounded" aria-label={`Edit ${item.name}`}><Edit2 size={14} /></button>
+                <button disabled={saving} onClick={() => void save(items.filter(i => i.id !== item.id))} className="admin-list-action p-1.5 rounded text-rose-200 hover:!border-crimson/60 hover:!bg-crimson/20 disabled:opacity-50" aria-label={`Delete ${item.name}`}><Trash2 size={14} /></button>
               </div>
             </div>
             <div className="flex gap-0.5 mb-2">
@@ -58,30 +58,30 @@ export default function AdminTestimonials() {
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl w-full max-w-lg p-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/70 p-4 backdrop-blur-sm">
+          <div role="dialog" aria-modal="true" aria-labelledby="testimonial-dialog-title" className="admin-card max-h-[calc(100vh-2rem)] w-full max-w-lg overflow-y-auto rounded-2xl p-5 md:p-7">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-bold">{editingId ? 'Edit Testimonial' : 'New Testimonial'}</h3>
-              <button onClick={() => setShowModal(false)}><X size={20} className="text-gray-400" /></button>
+              <h3 id="testimonial-dialog-title" className="text-lg font-bold">{editingId ? 'Edit Testimonial' : 'New Testimonial'}</h3>
+              <button onClick={() => setShowModal(false)} className="admin-list-action rounded-lg p-2" aria-label="Close testimonial editor"><X size={20} /></button>
             </div>
             <div className="space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div><label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
                   <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50" /></div>
+                    className="admin-control w-full px-4 py-2.5" /></div>
                 <div><label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
                   <input type="text" value={form.role} onChange={e => setForm({ ...form, role: e.target.value })}
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50" /></div>
+                    className="admin-control w-full px-4 py-2.5" /></div>
               </div>
               <ImageUploadField label="Photo" value={form.photo || ''} onChange={value => setForm({ ...form, photo: value })} />
               <div><label className="block text-sm font-medium text-gray-700 mb-1">Quote</label>
                 <textarea value={form.quote} onChange={e => setForm({ ...form, quote: e.target.value })} rows={3}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 resize-none" /></div>
+                  className="admin-control w-full px-4 py-2.5 resize-none" /></div>
               <div><label className="block text-sm font-medium text-gray-700 mb-1">Rating (1-5)</label>
                 <div className="flex gap-2">
                   {[1,2,3,4,5].map(r => (
                     <button key={r} onClick={() => setForm({ ...form, rating: r })}
-                      className={`p-2 rounded-lg transition-colors ${form.rating >= r ? 'text-gold' : 'text-gray-300'}`}>
+                      className={`admin-list-action p-2 rounded-lg transition-colors ${form.rating >= r ? 'text-gold' : 'text-gray-300'}`} aria-label={`Set rating to ${r}`}>
                       <Star size={20} fill={form.rating >= r ? 'currentColor' : 'none'} />
                     </button>
                   ))}
@@ -89,8 +89,8 @@ export default function AdminTestimonials() {
               </div>
             </div>
             <div className="flex gap-3 mt-6">
-              <button onClick={() => setShowModal(false)} className="flex-1 py-2.5 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">Cancel</button>
-              <button disabled={saving} onClick={() => void handleSave()} className="flex-1 py-2.5 bg-crimson text-white rounded-lg font-semibold hover:bg-crimson-dark disabled:opacity-60">{saving ? 'Saving...' : 'Save'}</button>
+              <button onClick={() => setShowModal(false)} className="admin-action flex-1 py-2.5 rounded-lg">Cancel</button>
+              <button disabled={saving} onClick={() => void handleSave()} className="glass-action admin-action admin-action--primary flex-1 py-2.5 rounded-lg font-semibold disabled:opacity-60">{saving ? 'Saving...' : 'Save'}</button>
             </div>
           </div>
         </div>

@@ -48,6 +48,25 @@ test('admin workspace keeps its liquid shell and scoped high-contrast controls',
   assert.match(globals, /\.admin-liquid-shell\s+\.bg-white/)
 })
 
+test('admin management routes consume the shared liquid editor primitives', async () => {
+  const routes = [
+    'about', 'achievements', 'entrepreneurship', 'gallery', 'hero', 'initiatives', 'messages',
+    'news', 'settings', 'stats', 'testimonials', 'vision', 'volunteers', 'youth',
+  ]
+  const sources = await Promise.all(routes.map((route) => read(`app/admin/${route}/page.tsx`)))
+
+  sources.forEach((source, index) => {
+    assert.match(source, /admin-card/, `${routes[index]} uses a dark admin card`)
+    assert.match(source, /admin-control/, `${routes[index]} uses a shared admin control`)
+  })
+
+  ;['achievements', 'gallery', 'testimonials', 'vision'].forEach((route) => {
+    const source = sources[routes.indexOf(route)]
+    assert.match(source, /fixed inset-0[^"']*(?:bg-black\/70|bg-\[#[^\]]+\]\/)/, `${route} dialog has a dark overlay`)
+    assert.match(source, /admin-card[^"']*max-w-/, `${route} dialog uses an admin card`)
+  })
+})
+
 test('public homepage framing consumes the shared liquid surfaces', async () => {
   const [home, navbar, hero, marquee, footer, heading] = await Promise.all([
     read('app/page.tsx'),
