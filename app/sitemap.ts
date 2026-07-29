@@ -3,7 +3,7 @@ import { MetadataRoute } from 'next'
 const routes = ['', 'blog']
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://mjk-website-vidkids-projects-93622fab.vercel.app'
+  const baseUrl = 'https://khadkamukesh.com.np'
   const lastModified = new Date()
 
   return routes.map((route, index) => ({

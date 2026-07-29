@@ -3,7 +3,7 @@ import './globals.css'
 
 const title = 'Mukesh Khadka | Digital Systems & Software Portfolio'
 const description = 'Digital portfolio of Mukesh Khadka — practical software systems, web platforms, automation, UX thinking, and digital transformation work.'
-const siteUrl = 'https://mjk-website-vidkids-projects-93622fab.vercel.app'
+const siteUrl = 'https://khadkamukesh.com.np'
 const sameAs = [
   'https://www.linkedin.com/in/mukesh-khadka-960401324/',
   'https://www.facebook.com/Nepali.man.67',
