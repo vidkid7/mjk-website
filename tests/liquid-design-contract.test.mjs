@@ -106,3 +106,39 @@ test('dark rendered sections use the SectionHeading dark branch', async () => {
     assert.match(source, /<SectionHeading\b(?=[\s\S]*?\/>)\s*[\s\S]*?\bdark(?:\s|=)/, `${component} uses the SectionHeading dark branch`)
   })
 })
+
+test('editorial service and blog routes retain their content contracts inside liquid glass framing', async () => {
+  const [services, serviceDetail, blog, blogDetail] = await Promise.all([
+    read('app/services/page.tsx'),
+    read('app/services/[slug]/page.tsx'),
+    read('app/blog/page.tsx'),
+    read('app/blog/[slug]/page.tsx'),
+  ])
+
+  ;[services, serviceDetail, blog, blogDetail].forEach((source) => {
+    assert.match(source, /liquid-page/)
+    assert.match(source, /<LiquidBackdrop variant="public"/)
+    assert.match(source, /relative z-10/)
+  })
+
+  ;[serviceDetail, blog, blogDetail].forEach((source) => {
+    assert.match(source, /sticky top-0/)
+  })
+
+  assert.match(services, /glass-panel/)
+  assert.match(serviceDetail, /generateStaticParams/)
+  assert.match(serviceDetail, /'@type': 'Service'/)
+  assert.match(serviceDetail, /'@type': 'FAQPage'/)
+  assert.match(serviceDetail, /'@type': 'BreadcrumbList'/)
+  assert.match(serviceDetail, /glass-inset/)
+  assert.match(serviceDetail, /admin-card/)
+  assert.match(blog, /hasLegacyBlog/)
+  assert.match(blog, /loading="lazy"/)
+  assert.match(blog, /glass-panel/)
+  assert.match(blogDetail, /generateStaticParams/)
+  assert.match(blogDetail, /alternates: \{ canonical: url \}/)
+  assert.match(blogDetail, /'@type': 'BlogPosting'/)
+  assert.match(blogDetail, /'@type': 'BreadcrumbList'/)
+  assert.match(blogDetail, /glass-inset/)
+  assert.match(blogDetail, /admin-card/)
+})
