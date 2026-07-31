@@ -9,6 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        liquid: {
+          navy: '#071a35',
+          'navy-deep': '#020b1b',
+          crimson: '#dc2626',
+          gold: '#f2bd4b',
+          text: '#112846',
+        },
         crimson: {
           DEFAULT: '#dc2626',
           dark: '#991b1b',

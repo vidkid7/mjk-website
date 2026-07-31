@@ -41,13 +41,14 @@ export default function Testimonials() {
   const active = testimonials[current] || testimonials[0]
 
   return (
-    <section className="relative py-24 md:py-32 bg-white">
+    <section className="public-section public-section--dark relative py-24 md:py-32">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <SectionHeading
           pill="Testimonials"
           heading="What People Are Saying"
           subheading="Hear from the communities, entrepreneurs, and young leaders who have experienced the impact firsthand."
           accent="blue"
+          dark
         />
 
         <div className="relative max-w-2xl mx-auto">
@@ -62,7 +63,7 @@ export default function Testimonials() {
                 animate="center"
                 exit="exit"
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                className="bg-gradient-to-br from-slate-50 to-white rounded-2xl p-8 md:p-10 border border-slate-100 text-center shadow-sm"
+                className="glass-panel rounded-[1.75rem] p-6 text-center md:p-8"
               >
                 <Quote size={28} className="text-crimson/20 mx-auto mb-4" />
 
@@ -94,7 +95,7 @@ export default function Testimonials() {
 
           {/* Controls */}
           <div className="flex items-center justify-center gap-4 mt-8">
-            <button onClick={prev} className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 hover:text-crimson hover:border-crimson/20 hover:bg-crimson-50 transition-all">
+            <button onClick={prev} className="glass-action flex h-10 w-10 items-center justify-center rounded-xl text-slate-400 hover:text-crimson">
               <ChevronLeft size={18} />
             </button>
             <div className="flex gap-1.5">
@@ -108,7 +109,7 @@ export default function Testimonials() {
                 />
               ))}
             </div>
-            <button onClick={next} className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 hover:text-crimson hover:border-crimson/20 hover:bg-crimson-50 transition-all">
+            <button onClick={next} className="glass-action flex h-10 w-10 items-center justify-center rounded-xl text-slate-400 hover:text-crimson">
               <ChevronRight size={18} />
             </button>
           </div>

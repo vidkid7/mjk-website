@@ -7,6 +7,7 @@ import {
   Briefcase, GraduationCap, BarChart3, Menu, X, Award, Star
 } from 'lucide-react'
 import { NepalFlagPennant } from '@/components/ui/NepalFlag'
+import { LiquidBackdrop } from '@/components/ui/LiquidBackdrop'
 
 const sidebarLinks = [
   { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
@@ -43,9 +44,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="admin-liquid-shell flex min-h-screen text-white">
+      <LiquidBackdrop variant="admin" />
       <aside
-        className={`admin-sidebar fixed top-0 z-40 flex h-screen flex-col transition-all duration-300 lg:sticky ${
+        className={`admin-sidebar admin-card fixed top-0 z-40 flex h-screen flex-col transition-all duration-300 lg:sticky ${
           collapsed ? 'w-16' : 'w-64'
         } ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
       >
@@ -66,8 +68,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <a
                 key={link.href}
                 href={link.href}
-                className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all duration-200 ${
-                  isActive ? 'bg-crimson text-white shadow-lg' : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-all duration-200 ${
+                  isActive ? 'admin-sidebar-link--active bg-crimson text-white shadow-lg' : 'text-white/65 hover:bg-white/10 hover:text-white'
                 } ${collapsed ? 'justify-center' : ''}`}
                 title={collapsed ? link.label : undefined}
               >
@@ -81,7 +83,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="border-t border-white/10 p-4">
           <button
             onClick={() => void logout()}
-            className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-400 transition-all hover:bg-white/5 hover:text-white ${collapsed ? 'justify-center' : ''}`}
+            className={`flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-white/65 transition-all hover:bg-white/10 hover:text-white ${collapsed ? 'justify-center' : ''}`}
           >
             <LogOut size={18} />
             {!collapsed && <span>Logout</span>}
@@ -90,33 +92,41 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="absolute -right-3 top-20 hidden h-6 w-6 items-center justify-center rounded-full bg-crimson text-white shadow-lg transition-colors hover:bg-crimson-dark lg:flex"
+          className="absolute -right-3 top-20 hidden h-7 w-7 items-center justify-center rounded-full border border-gold/40 bg-crimson text-white shadow-lg transition-colors hover:bg-crimson-dark lg:flex"
+          aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'}
         >
           {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
         </button>
       </aside>
 
-      {mobileOpen && <div className="fixed inset-0 z-30 bg-black/50 lg:hidden" onClick={() => setMobileOpen(false)} />}
+      {mobileOpen && (
+        <button
+          type="button"
+          aria-label="Close navigation"
+          className="admin-mobile-overlay fixed inset-0 z-30 bg-black/65 backdrop-blur-sm lg:hidden"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
 
-      <div className="flex min-h-screen flex-1 flex-col">
-        <header className="sticky top-0 z-20 flex items-center justify-between border-b border-gray-200 bg-white px-4 py-3 shadow-sm">
+      <div className="relative z-10 flex min-h-screen flex-1 flex-col">
+        <header className="admin-header admin-card sticky top-0 z-20 m-2 flex items-center justify-between rounded-2xl px-4 py-3 md:mx-4">
           <div className="flex items-center gap-3">
-            <button onClick={() => setMobileOpen(true)} className="text-gray-500 lg:hidden">
+            <button onClick={() => setMobileOpen(true)} className="rounded-lg p-1 text-white/75 transition hover:bg-white/10 hover:text-white lg:hidden" aria-label="Open navigation">
               <Menu size={22} />
             </button>
-            <h1 className="text-lg font-semibold text-gray-800">
+            <h1 className="text-lg font-semibold text-white">
               {sidebarLinks.find(l => l.href === pathname)?.label || 'Admin'}
             </h1>
           </div>
           <div className="flex items-center gap-3">
-            <a href="/" target="_blank" className="text-sm text-gray-500 transition-colors hover:text-crimson">
+            <a href="/" target="_blank" className="hidden text-sm text-white/65 transition-colors hover:text-gold sm:inline">
               View Website →
             </a>
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-crimson text-sm font-bold text-white">A</div>
+            <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gold/50 bg-crimson text-sm font-bold text-white">A</div>
           </div>
         </header>
 
-        <main className="flex-1 p-4 md:p-6 lg:p-8">{children}</main>
+        <main className="flex-1 p-4 pt-2 md:px-6 md:pb-8 lg:px-8">{children}</main>
       </div>
     </div>
   )

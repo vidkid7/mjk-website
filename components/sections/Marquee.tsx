@@ -15,7 +15,7 @@ const items = [
 export default function Marquee() {
   const renderItems = [...items, ...items, ...items, ...items]
   return (
-    <div className="relative z-30 overflow-hidden border-y border-white/10 bg-gradient-to-r from-[#071224] via-[#102642] to-[#071224] py-4 shadow-[0_-2px_12px_rgba(0,0,0,0.25)]">
+    <div className="glass-panel relative z-30 overflow-hidden border-x-0 border-white/15 !bg-[#071a35]/[0.88] py-4 shadow-[0_-2px_12px_rgba(0,0,0,0.25)]">
       <div className="flex animate-marquee whitespace-nowrap">
         {renderItems.map((item, i) => (
           <span key={i} className="mx-6 inline-flex items-center gap-2.5 sm:mx-8">
@@ -23,7 +23,7 @@ export default function Marquee() {
             <span className="text-sm font-bold uppercase tracking-widest text-slate-200">
               {item.text}
             </span>
-            <span className="mx-3 text-emerald-300/70">◆</span>
+            <span className="mx-3 text-gold/80">◆</span>
           </span>
         ))}
       </div>

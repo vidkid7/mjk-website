@@ -143,10 +143,10 @@ const GalleryModal = ({
         animate={{ scale: 1 }}
         exit={{ scale: 0.98 }}
         transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-        className="fixed inset-0 w-full min-h-screen sm:h-[90vh] md:h-[600px] backdrop-blur-lg rounded-none sm:rounded-lg md:rounded-xl overflow-hidden z-10"
+        className="glass-panel fixed inset-0 z-10 min-h-screen w-full overflow-hidden rounded-none backdrop-blur-lg sm:h-[90vh] sm:rounded-[1.75rem] md:h-[600px]"
       >
         <div className="h-full flex flex-col">
-          <div className="flex-1 p-2 sm:p-3 md:p-4 flex items-center justify-center bg-slate-50/50">
+          <div className="glass-inset flex flex-1 items-center justify-center p-2 sm:p-3 md:p-4">
             <AnimatePresence mode="wait">
               <motion.div
                 key={selectedItem.id}
@@ -181,7 +181,7 @@ const GalleryModal = ({
         {/* Close Button */}
         <motion.button
           aria-label="Close gallery"
-          className="absolute top-2 sm:top-2.5 md:top-3 right-2 sm:right-2.5 md:right-3 p-2 rounded-full bg-slate-200/80 text-slate-700 hover:bg-slate-300/80 text-xs sm:text-sm backdrop-blur-sm"
+          className="glass-action absolute right-2 top-2 rounded-full p-2 text-xs text-slate-700 sm:right-2.5 sm:top-2.5 sm:text-sm md:right-3 md:top-3"
           onClick={onClose}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
@@ -205,7 +205,7 @@ const GalleryModal = ({
         }}
         className="fixed z-50 left-1/2 bottom-4 -translate-x-1/2 touch-none"
       >
-        <motion.div className="relative rounded-lg bg-crimson/20 backdrop-blur-xl border border-crimson/30 shadow-lg cursor-grab active:cursor-grabbing">
+        <motion.div className="glass-panel relative cursor-grab rounded-[1.75rem] shadow-lg active:cursor-grabbing">
           <div className="flex items-center -space-x-2 px-3 py-2">
             {mediaItems.map((item, index) => (
               <motion.div
@@ -289,7 +289,7 @@ const InteractiveBentoGallery: React.FC<InteractiveBentoGalleryProps> = ({
   const [isDragging, setIsDragging] = useState(false)
 
   return (
-    <div className="container mx-auto px-0 py-8 max-w-5xl">
+    <div className="public-section public-section--light container mx-auto max-w-5xl px-0 py-8">
       <div className="mb-8 text-center">
         <motion.h2
           className="text-2xl sm:text-3xl md:text-4xl font-bold font-playfair bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-crimson-dark to-slate-900"
@@ -336,7 +336,7 @@ const InteractiveBentoGallery: React.FC<InteractiveBentoGalleryProps> = ({
               <motion.div
                 key={item.id}
                 layoutId={`media-${item.id}`}
-                className={`relative overflow-hidden rounded-lg cursor-move border border-white shadow-sm ${item.span}`}
+                className={`glass-panel relative cursor-move overflow-hidden rounded-[1.75rem] shadow-sm ${item.span}`}
                 onClick={() => !isDragging && setSelectedItem(item)}
                 variants={{
                   hidden: { y: 50, scale: 0.9, opacity: 0 },

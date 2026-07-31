@@ -5,6 +5,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Yatra+One&family=Playfair+Display:wght@600;700;800&display=swap');
 
 :root {
+  --liquid-navy: #071a35;
+  --liquid-navy-deep: #020b1b;
+  --liquid-crimson: #dc2626;
+  --liquid-gold: #f2bd4b;
+  --liquid-text: #112846;
+  --glass-light: rgba(255, 255, 255, 0.68);
+  --glass-dark: rgba(7, 26, 53, 0.76);
+  --glass-shadow: 0 22px 50px rgba(2, 11, 27, 0.16);
   --crimson: #dc2626;
   --deep-crimson: #991b1b;
   --navy: #1e3a5f;
@@ -101,6 +109,361 @@ video {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/* Prismatic Heritage liquid-glass primitives */
+.liquid-page {
+  isolation: isolate;
+}
+
+.admin-liquid-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.liquid-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.liquid-backdrop--public {
+  background:
+    radial-gradient(circle at 85% 8%, rgba(242, 189, 75, 0.18), transparent 30%),
+    linear-gradient(155deg, #fffdfa 0%, #f7f3ec 52%, #eef3fa 100%);
+}
+
+.liquid-backdrop--admin {
+  background:
+    radial-gradient(circle at 82% 4%, rgba(242, 189, 75, 0.13), transparent 28%),
+    linear-gradient(155deg, var(--liquid-navy-deep) 0%, var(--liquid-navy) 100%);
+}
+
+.liquid-blob {
+  position: absolute;
+  width: clamp(20rem, 42vw, 42rem);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  filter: blur(42px);
+  opacity: 0.32;
+  will-change: transform;
+  animation: liquid-blob-drift 24s ease-in-out infinite alternate;
+}
+
+.liquid-blob--crimson {
+  top: -18%;
+  right: -12%;
+  background: var(--liquid-crimson);
+}
+
+.liquid-blob--gold {
+  bottom: -26%;
+  left: -12%;
+  background: var(--liquid-gold);
+  animation-delay: -8s;
+}
+
+.liquid-blob--blue {
+  top: 38%;
+  left: 38%;
+  background: #2563eb;
+  opacity: 0.2;
+  animation-delay: -15s;
+}
+
+.liquid-backdrop--admin .liquid-blob {
+  opacity: 0.18;
+}
+
+.liquid-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.7) 0.7px, transparent 0.7px);
+  background-size: 5px 5px;
+  mix-blend-mode: soft-light;
+}
+
+.glass-panel,
+.glass-inset,
+.glass-action,
+.admin-card {
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(18px) saturate(1.15);
+  -webkit-backdrop-filter: blur(18px) saturate(1.15);
+}
+
+.glass-panel {
+  background: var(--glass-light);
+}
+
+.glass-inset {
+  background: rgba(255, 255, 255, 0.46);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+.glass-action {
+  background: rgba(255, 255, 255, 0.8);
+  transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.glass-action:hover {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(220, 38, 38, 0.28);
+  box-shadow: 0 16px 32px rgba(2, 11, 27, 0.18);
+}
+
+.public-section {
+  position: relative;
+  isolation: isolate;
+}
+
+.public-section--light {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(242, 189, 75, 0.16), transparent 28rem),
+    radial-gradient(circle at 88% 78%, rgba(59, 130, 246, 0.12), transparent 28rem),
+    rgba(255, 255, 255, 0.42);
+}
+
+.public-section--dark {
+  background:
+    radial-gradient(circle at 12% 15%, rgba(220, 38, 38, 0.28), transparent 26rem),
+    radial-gradient(circle at 86% 78%, rgba(242, 189, 75, 0.16), transparent 30rem),
+    linear-gradient(135deg, var(--liquid-navy), var(--liquid-navy-deep));
+}
+
+.public-section--dark .glass-panel {
+  color: white;
+  background: var(--glass-dark);
+  border-color: rgba(242, 189, 75, 0.2);
+}
+
+.public-section--dark .glass-inset {
+  color: white;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+/* Restrict slate-token remapping to dark public sections so stored section copy remains readable. */
+.public-section--dark .text-slate-950,
+.public-section--dark .text-slate-900 {
+  color: #f8fafc;
+}
+
+.public-section--dark .text-slate-700,
+.public-section--dark .text-slate-600 {
+  color: #e2e8f0;
+}
+
+.public-section--dark .text-slate-500,
+.public-section--dark .text-slate-400,
+.public-section--dark .text-slate-300 {
+  color: #cbd5e1;
+}
+
+.public-section--dark .placeholder\:text-slate-400::placeholder {
+  color: rgba(226, 232, 240, 0.72);
+}
+
+.public-section--dark .glass-action {
+  color: white;
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.admin-card {
+  color: white;
+  background: linear-gradient(145deg, rgba(11, 39, 78, 0.86), rgba(2, 14, 35, 0.82));
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.admin-liquid-shell {
+  color: #edf4ff;
+}
+
+.admin-liquid-shell .admin-sidebar {
+  border-radius: 0;
+  border-top: 0;
+  border-bottom: 0;
+  border-left: 0;
+  box-shadow: 18px 0 52px rgba(2, 11, 27, 0.3);
+}
+
+.admin-liquid-shell .admin-header {
+  background: rgba(5, 24, 52, 0.76);
+  box-shadow: 0 14px 34px rgba(2, 11, 27, 0.22);
+}
+
+.admin-liquid-shell .admin-dashboard-hero {
+  background:
+    radial-gradient(circle at 87% 10%, rgba(242, 189, 75, 0.23), transparent 28%),
+    linear-gradient(118deg, rgba(153, 27, 27, 0.95), rgba(89, 16, 24, 0.88) 48%, rgba(7, 26, 53, 0.9));
+  border-color: rgba(242, 189, 75, 0.34);
+}
+
+/* Existing editor routes use neutral Tailwind utilities; translate those only inside the workspace. */
+.admin-liquid-shell .bg-white,
+.admin-liquid-shell .bg-gray-50 {
+  background: linear-gradient(145deg, rgba(11, 39, 78, 0.84), rgba(2, 14, 35, 0.78));
+}
+
+.admin-liquid-shell .border-gray-100,
+.admin-liquid-shell .border-gray-200,
+.admin-liquid-shell .border-gray-300 {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.admin-liquid-shell .text-gray-900,
+.admin-liquid-shell .text-gray-800,
+.admin-liquid-shell .text-gray-700 {
+  color: #f8fafc;
+}
+
+.admin-liquid-shell .text-gray-600,
+.admin-liquid-shell .text-gray-500,
+.admin-liquid-shell .text-gray-400 {
+  color: #cbd5e1;
+}
+
+.admin-liquid-shell .admin-overview-card {
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.admin-liquid-shell .admin-overview-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(242, 189, 75, 0.42);
+  box-shadow: 0 22px 42px rgba(2, 11, 27, 0.32);
+}
+
+.admin-liquid-shell .admin-action {
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.23);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.admin-liquid-shell .admin-action:hover:not(:disabled) {
+  color: white;
+  border-color: rgba(242, 189, 75, 0.68);
+  background: rgba(242, 189, 75, 0.14);
+}
+
+.admin-liquid-shell .admin-action--primary {
+  background: linear-gradient(135deg, var(--liquid-crimson), #991b1b);
+  border-color: rgba(242, 189, 75, 0.36);
+}
+
+.admin-liquid-shell .admin-action--primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ef4444, var(--liquid-crimson));
+}
+
+.admin-liquid-shell .admin-list-action {
+  color: rgba(255, 255, 255, 0.82);
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.035);
+  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+.admin-liquid-shell .admin-list-action:hover {
+  color: white;
+  border-color: rgba(242, 189, 75, 0.3);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.admin-liquid-shell .admin-message-empty,
+.admin-liquid-shell .admin-message-block {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.admin-liquid-shell .admin-message-block--unread {
+  border-color: rgba(220, 38, 38, 0.5);
+  background: rgba(220, 38, 38, 0.13);
+}
+
+.admin-liquid-shell .admin-notice {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.09);
+  color: rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.admin-liquid-shell .admin-notice--loading {
+  border-color: rgba(96, 165, 250, 0.5);
+  background: rgba(30, 64, 175, 0.3);
+}
+
+.admin-liquid-shell .admin-notice--error,
+.admin-liquid-shell .admin-upload-error {
+  color: #fecaca;
+}
+
+.admin-liquid-shell .admin-notice--error {
+  border-color: rgba(248, 113, 113, 0.55);
+  background: rgba(127, 29, 29, 0.42);
+}
+
+.admin-liquid-shell .admin-notice--starter {
+  color: #fef3c7;
+  border-color: rgba(242, 189, 75, 0.48);
+  background: rgba(146, 64, 14, 0.32);
+}
+
+/* Admin-only controls: public contact and newsletter forms keep their original treatment. */
+.admin-liquid-shell .admin-control,
+.admin-liquid-shell input:not([type='checkbox']):not([type='radio']):not([type='file']),
+.admin-liquid-shell select,
+.admin-liquid-shell textarea {
+  color: white;
+  background: rgba(2, 14, 35, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 0.75rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 12px 28px rgba(2, 11, 27, 0.22);
+}
+
+.admin-liquid-shell .admin-control::placeholder,
+.admin-liquid-shell input:not([type='checkbox']):not([type='radio']):not([type='file'])::placeholder,
+.admin-liquid-shell textarea::placeholder {
+  color: rgba(226, 232, 240, 0.68);
+}
+
+.admin-liquid-shell .admin-control:focus,
+.admin-liquid-shell input:not([type='checkbox']):not([type='radio']):not([type='file']):focus,
+.admin-liquid-shell select:focus,
+.admin-liquid-shell textarea:focus {
+  outline: 0;
+  border-color: rgba(242, 189, 75, 0.84);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.admin-liquid-shell select option {
+  color: white;
+  background: var(--liquid-navy-deep);
+}
+
+.admin-liquid-shell .admin-upload-preview {
+  border: 1px solid rgba(242, 189, 75, 0.42);
+  background: rgba(2, 14, 35, 0.7);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-panel,
+  .glass-inset,
+  .glass-action {
+    background: rgba(255, 255, 255, 0.94);
+  }
+
+  .admin-card {
+    background: #0b2346;
+  }
+}
+
+@keyframes liquid-blob-drift {
+  0% { transform: translate3d(-3%, -2%, 0) scale(0.96); }
+  100% { transform: translate3d(5%, 6%, 0) scale(1.08); }
+}
+
 /* Gradient Text */
 .gradient-text {
   background: linear-gradient(135deg, var(--gold), var(--light-gold));
@@ -194,6 +557,17 @@ video {
   filter: drop-shadow(0 26px 44px rgba(2, 6, 23, 0.42));
 }
 
+.hero-name-3d {
+  color: #0b2b55;
+  transform: perspective(900px) rotateX(4deg);
+  text-shadow:
+    1px 1px 0 #f6e4a8,
+    2px 2px 0 #e0bd64,
+    3px 3px 0 #b4862f,
+    4px 4px 0 #7b571d,
+    0 18px 30px rgba(2, 6, 23, 0.3);
+}
+
 .hero-flag-video {
   animation: hero-flag-drift 9s ease-in-out infinite;
   transform-origin: 18% 44%;
@@ -256,6 +630,14 @@ video {
   .proper-nepal-flag-cloth {
     animation: none !important;
   }
+
+  .liquid-blob {
+    animation: none !important;
+  }
+
+  .liquid-grain {
+    display: none;
+  }
 }
 
 /* Colored accents on hover */
@@ -282,8 +664,8 @@ video {
 }
 
 /* Admin Panel Styles */
-.admin-sidebar {
-  background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+.admin-sidebar-link--active {
+  box-shadow: inset 3px 0 0 var(--liquid-gold), 0 10px 24px rgba(127, 29, 29, 0.34);
 }
 
 /* Rich text content */

@@ -152,8 +152,8 @@ export function VisionCarousel({ features }: { features?: VisionFeatureInput[] }
   };
 
   return (
-    <div ref={carouselRef} className="w-full max-w-7xl mx-auto md:p-6">
-      <div className="relative overflow-hidden rounded-lg flex flex-col lg:flex-row min-h-[600px] lg:aspect-video border border-slate-200 bg-white shadow-xl shadow-slate-900/10">
+    <div ref={carouselRef} className="public-section public-section--light mx-auto w-full max-w-7xl md:p-6">
+      <div className="glass-panel relative flex min-h-[600px] flex-col overflow-hidden rounded-[1.75rem] lg:aspect-video lg:flex-row">
         {/* Left side - Feature list */}
         <div className="w-full lg:w-[40%] min-h-[350px] md:min-h-[450px] lg:h-full relative z-30 flex flex-col items-start justify-center overflow-hidden px-8 md:px-16 lg:pl-16 bg-gradient-to-br from-crimson via-crimson-dark to-[#771323]">
           <div className="absolute inset-x-0 top-0 h-12 md:h-20 lg:h-16 bg-gradient-to-b from-crimson via-crimson/80 to-transparent z-40" />
@@ -219,7 +219,7 @@ export function VisionCarousel({ features }: { features?: VisionFeatureInput[] }
         </div>
 
         {/* Right side - Image cards */}
-        <div className="flex-1 min-h-[500px] md:min-h-[600px] lg:h-full relative bg-[#fbfaf7] flex items-center justify-center py-16 md:py-24 lg:py-16 px-6 md:px-12 lg:px-10 overflow-hidden border-t lg:border-t-0 lg:border-l border-slate-200/70">
+        <div className="glass-inset relative flex min-h-[500px] flex-1 items-center justify-center overflow-hidden border-t px-6 py-16 md:min-h-[600px] md:px-12 md:py-24 lg:h-full lg:border-l lg:border-t-0 lg:px-10 lg:py-16">
           <div className="relative w-full max-w-[420px] aspect-[4/5] flex items-center justify-center">
             {carouselFeatures.map((feature, index) => {
               const status = getCardStatus(index);
@@ -245,7 +245,7 @@ export function VisionCarousel({ features }: { features?: VisionFeatureInput[] }
                     damping: 25,
                     mass: 0.8,
                   }}
-                  className="absolute inset-0 rounded-lg overflow-hidden border-4 md:border-8 border-white bg-white origin-center shadow-xl"
+                  className="glass-panel absolute inset-0 origin-center overflow-hidden rounded-[1.75rem] border-4 border-white shadow-xl md:border-8"
                 >
                   <img
                     src={feature.image}
@@ -268,7 +268,7 @@ export function VisionCarousel({ features }: { features?: VisionFeatureInput[] }
                         exit={{ opacity: 0, y: 10 }}
                         className="absolute inset-x-0 bottom-0 p-10 pt-32 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end pointer-events-none"
                       >
-                        <div className="bg-white text-slate-900 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] w-fit shadow-lg mb-3 border border-slate-100">
+                        <div className="glass-inset mb-3 w-fit rounded-2xl p-4 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-900 shadow-lg">
                           {index + 1} • {feature.label}
                         </div>
                         <p className="text-white font-medium text-xl md:text-2xl leading-tight drop-shadow-md tracking-tight">

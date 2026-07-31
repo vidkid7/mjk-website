@@ -17,10 +17,10 @@ export default function Stats() {
   const stats = useStoredData('stats', statsData)
 
   return (
-    <section className="relative py-24 md:py-32 bg-crimson overflow-hidden">
+    <section className="public-section public-section--light relative overflow-hidden py-24 md:py-32">
       <DhakaPattern className="opacity-[0.08]" />
-      <div className="absolute inset-0 bg-gradient-to-r from-crimson-dark via-crimson to-[#d9233b]" />
-      <div className="absolute inset-x-0 top-0 h-px bg-white/25" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-r from-crimson-dark via-crimson to-[#d9233b]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/25" />
       
       <div className="relative max-w-6xl mx-auto px-5 sm:px-8">
         <motion.div
@@ -41,7 +41,7 @@ export default function Stats() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ y: -4, transition: { duration: 0.25 } }}
-                className={`text-center group cursor-default bg-white/[0.08] border border-white/10 p-6 md:p-8 md:border-x-0 md:border-y-0 md:bg-transparent ${
+                className={`glass-panel text-center group cursor-default rounded-[1.75rem] p-6 md:p-8 md:border-x-0 md:border-y-0 md:bg-transparent ${
                   i < statConfig.length - 1 ? 'md:border-r md:border-r-white/10' : ''
                 }`}
               >

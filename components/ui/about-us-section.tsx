@@ -89,10 +89,10 @@ export default function AboutMukeshSection({ content = fallbackContent }: { cont
   }
 
   return (
-    <section id="about" ref={sectionRef} className="relative overflow-hidden bg-[#fbfaf7] px-4 py-24 text-[#202e44] md:py-32">
+    <section id="about" ref={sectionRef} className="public-section public-section--light relative overflow-hidden px-4 py-24 text-[#202e44] md:py-32">
       <DhakaPattern className="opacity-[0.025]" />
-      <div className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-emerald-200/30 blur-3xl" />
-      <div className="absolute -right-24 bottom-20 h-80 w-80 rounded-full bg-blue-200/30 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute -left-24 top-20 h-72 w-72 rounded-full bg-emerald-200/30 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-24 bottom-20 h-80 w-80 rounded-full bg-blue-200/30 blur-3xl" />
 
       <motion.div
         className="container relative z-10 mx-auto max-w-6xl"
@@ -102,8 +102,8 @@ export default function AboutMukeshSection({ content = fallbackContent }: { cont
       >
         <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
           <motion.div variants={itemVariants} className="relative mx-auto w-full max-w-sm lg:mx-0">
-            <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-emerald-500/20 via-blue-500/10 to-amber-400/20 blur-2xl" />
-            <div className="relative overflow-hidden rounded-[2rem] border border-white bg-white p-5 shadow-2xl shadow-slate-900/10">
+            <div aria-hidden="true" className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-emerald-500/20 via-blue-500/10 to-amber-400/20 blur-2xl" />
+            <div className="glass-panel relative overflow-hidden rounded-[1.75rem] p-6 md:p-8">
               <div className="overflow-hidden rounded-[1.5rem] bg-gradient-to-b from-slate-100 via-white to-emerald-50">
                 <img
                   src={content.photo || "/mukk-removebg-preview.png"}
@@ -138,7 +138,7 @@ export default function AboutMukeshSection({ content = fallbackContent }: { cont
               {qualities.map((quality) => {
                 const Icon = quality.icon
                 return (
-                  <div key={quality.title} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/10">
+                  <div key={quality.title} className="glass-panel rounded-[1.75rem] p-6 md:p-8 transition hover:-translate-y-1 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/10">
                     <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">
                       <Icon className="h-5 w-5" />
                     </div>
@@ -151,7 +151,7 @@ export default function AboutMukeshSection({ content = fallbackContent }: { cont
           </div>
         </div>
 
-        <motion.div variants={itemVariants} className="mt-16 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+        <motion.div variants={itemVariants} className="glass-panel mt-16 rounded-[1.75rem] p-6 md:p-8">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-4 py-1.5 text-[11px] font-black uppercase tracking-[0.2em] text-amber-700">
@@ -161,7 +161,7 @@ export default function AboutMukeshSection({ content = fallbackContent }: { cont
               <h3 className="font-playfair text-2xl font-extrabold text-slate-950 md:text-3xl">Focused on systems that people can actually use.</h3>
               <p className="mt-3 text-sm leading-7 text-slate-500">Inspired by AashaTech-style digital delivery: clear services, custom software, mobile-ready platforms, useful products, and project outcomes that support real organizations.</p>
             </div>
-            <a href="#vision" className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-950 px-6 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-emerald-700">
+            <a href="#vision" className="glass-action inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-slate-900">
               View digital vision <ArrowRight className="h-4 w-4" />
             </a>
           </div>
@@ -173,7 +173,7 @@ export default function AboutMukeshSection({ content = fallbackContent }: { cont
 
 function StatCard({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-2xl bg-slate-50 p-4 text-center">
+    <div className="glass-inset rounded-2xl p-4 text-center">
       <div className="font-playfair text-3xl font-black text-emerald-700">{value}%</div>
       <div className="mt-1 text-[10px] font-black uppercase tracking-[0.18em] text-slate-400">{label}</div>
     </div>

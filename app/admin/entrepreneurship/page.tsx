@@ -82,8 +82,7 @@ export default function AdminEntrepreneurship() {
     setStats(stats.map((s, i) => (i === index ? { ...s, [field]: value } : s)))
   }
 
-  const inputClass =
-    'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson transition-all'
+  const inputClass = 'admin-control w-full px-4 py-2.5 transition-all'
 
   return (
     <div className="max-w-4xl space-y-6">
@@ -96,7 +95,7 @@ export default function AdminEntrepreneurship() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="px-6 py-2 bg-crimson text-white rounded-lg text-sm font-semibold hover:bg-crimson-dark flex items-center gap-2 disabled:opacity-50"
+          className="glass-action admin-action admin-action--primary px-6 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 disabled:opacity-50"
         >
           {saving ? (
             <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -113,7 +112,7 @@ export default function AdminEntrepreneurship() {
       <AdminDataNotice loading={live.loading} error={live.error} usingStarter={live.usingStarter} />
 
       {/* Section Title & Subtitle */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div className="admin-card rounded-2xl p-5 md:p-7">
         <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
           <Briefcase size={18} className="text-crimson" /> Section Header
         </h3>
@@ -128,20 +127,20 @@ export default function AdminEntrepreneurship() {
               value={sectionSubtitle}
               onChange={e => setSectionSubtitle(e.target.value)}
               rows={2}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson resize-none"
+              className="admin-control w-full px-4 py-2.5 resize-none"
             />
           </div>
         </div>
       </div>
 
       {/* Business Cards */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div className="admin-card rounded-2xl p-5 md:p-7">
         <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
           <TrendingUp size={18} className="text-crimson" /> Business Cards
         </h3>
         <div className="space-y-6">
           {businesses.map((biz, i) => (
-            <div key={i} className="p-4 border border-gray-200 rounded-lg space-y-4">
+            <div key={i} className="admin-card rounded-xl p-4 space-y-4">
               <h4 className="text-sm font-semibold text-gray-600">Card {i + 1}</h4>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
@@ -170,7 +169,7 @@ export default function AdminEntrepreneurship() {
                   value={biz.description}
                   onChange={e => updateBusiness(i, 'description', e.target.value)}
                   rows={2}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson resize-none"
+                  className="admin-control w-full px-4 py-2.5 resize-none"
                 />
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
@@ -201,13 +200,13 @@ export default function AdminEntrepreneurship() {
       </div>
 
       {/* Stat Counters */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div className="admin-card rounded-2xl p-5 md:p-7">
         <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
           <Briefcase size={18} className="text-crimson" /> Stat Counters
         </h3>
         <div className="grid sm:grid-cols-3 gap-4">
           {stats.map((stat, i) => (
-            <div key={i} className="p-4 border border-gray-200 rounded-lg space-y-3">
+            <div key={i} className="admin-card rounded-xl p-4 space-y-3">
               <h4 className="text-sm font-semibold text-gray-600">Stat {i + 1}</h4>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Value</label>
@@ -233,7 +232,7 @@ export default function AdminEntrepreneurship() {
       </div>
 
       {/* Quote */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div className="admin-card rounded-2xl p-5 md:p-7">
         <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
           <Quote size={18} className="text-crimson" /> Quote Block
         </h3>
@@ -244,7 +243,7 @@ export default function AdminEntrepreneurship() {
               value={quoteText}
               onChange={e => setQuoteText(e.target.value)}
               rows={3}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson/50 focus:border-crimson resize-none"
+              className="admin-control w-full px-4 py-2.5 resize-none"
             />
           </div>
           <div>

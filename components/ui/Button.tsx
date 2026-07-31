@@ -15,7 +15,7 @@ interface ButtonProps {
 }
 
 export function Button({ children, variant = 'primary', size = 'md', className = '', onClick, type = 'button', disabled, icon }: ButtonProps) {
-  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 gap-2'
+  const baseStyles = 'glass-action inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-200'
   
   const variants = {
     primary: 'bg-slate-900 text-white hover:bg-slate-800 shadow-sm hover:shadow-md',

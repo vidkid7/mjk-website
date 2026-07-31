@@ -25,7 +25,7 @@ export default function Gallery() {
   }))
 
   return (
-    <section id="gallery" className="relative overflow-hidden py-24 md:py-32 bg-[#fbfaf7]">
+    <section id="gallery" className="public-section public-section--light relative overflow-hidden py-24 md:py-32">
       <DhakaPattern className="opacity-[0.03]" />
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         {/* Section Header */}

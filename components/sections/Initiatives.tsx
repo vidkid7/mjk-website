@@ -43,10 +43,10 @@ export default function Initiatives() {
   const items = sourceItems.filter(item => item.is_published)
 
   return (
-    <section id="initiatives" className="relative overflow-hidden bg-[#fbfaf7] px-4 py-24 md:py-32">
+    <section id="initiatives" className="public-section public-section--light relative overflow-hidden px-4 py-24 md:py-32">
       <DhakaPattern className="opacity-[0.025]" />
-      <div className="absolute -left-28 top-28 h-80 w-80 rounded-full bg-amber-100/80 blur-3xl" />
-      <div className="absolute -right-28 bottom-16 h-96 w-96 rounded-full bg-emerald-100/80 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute -left-28 top-28 h-80 w-80 rounded-full bg-amber-100/80 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-28 bottom-16 h-96 w-96 rounded-full bg-emerald-100/80 blur-3xl" />
 
       <div className="relative mx-auto max-w-6xl">
         <div className="mb-14 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
@@ -91,7 +91,7 @@ export default function Initiatives() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.45, delay: index * 0.06 }}
-                className="group overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-2xl hover:shadow-slate-900/10"
+                className="glass-panel group overflow-hidden rounded-[1.75rem] transition hover:-translate-y-1 hover:shadow-2xl hover:shadow-slate-900/10"
               >
                 <div className="relative h-56 overflow-hidden bg-slate-100">
                   <img src={item.photo} alt={item.title} loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
@@ -99,10 +99,10 @@ export default function Initiatives() {
                   <div className="absolute left-4 top-4"><span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] ${cat.bg} ${cat.color} ${cat.border}`}><Icon size={13} />{item.category}</span></div>
                   <div className="absolute bottom-4 left-4 right-4"><h3 className="font-playfair text-2xl font-bold leading-tight text-white drop-shadow">{item.title}</h3></div>
                 </div>
-                <div className="p-6">
-                  <div className="mb-4 inline-flex rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700">{item.impact}</div>
+                <div className="p-6 md:p-8">
+                  <div className="glass-inset mb-4 inline-flex rounded-full px-3 py-1 text-xs font-bold text-amber-700">{item.impact}</div>
                   <p className="text-sm leading-7 text-slate-500">{item.description}</p>
-                  <a href="#contact" className="mt-6 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.16em] text-slate-400 transition group-hover:text-crimson">Discuss similar project <ArrowRight size={14} /></a>
+                  <a href="#contact" className="glass-action mt-6 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-slate-600 group-hover:text-crimson">Discuss similar project <ArrowRight size={14} /></a>
                 </div>
               </motion.article>
             )

@@ -75,10 +75,10 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-[#071224]">
-      <div className="h-1 bg-gradient-to-r from-emerald-500 via-blue-500 to-gold" />
+    <footer className="relative">
+      <div className="h-1 bg-gradient-to-r from-crimson via-[#003893] to-gold" />
 
-      <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+      <div className="glass-panel mx-auto max-w-6xl rounded-none border-x-0 border-b-0 !bg-[#071a35]/[0.92] px-5 py-16 sm:px-8">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
           <div className="lg:col-span-1">
             <div className="mb-4 flex items-center gap-2.5">
@@ -99,7 +99,7 @@ export default function Footer() {
             </div>
             <div className="flex gap-2">
               {socialLinks.map((social, i) => (
-                <a key={i} href={social.url} className={`flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-slate-500 transition-all duration-300 hover:text-white ${social.color}`}>
+                <a key={i} href={social.url} className={`glass-inset flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 !bg-white/5 text-slate-300 transition-all duration-300 hover:text-white ${social.color}`}>
                   <social.icon size={14} />
                 </a>
               ))}
@@ -138,17 +138,17 @@ export default function Footer() {
             <h4 className="mb-4 text-sm font-semibold text-white">Stay Updated</h4>
             <p className="mb-4 text-sm leading-relaxed text-slate-500">Subscribe for software, design, automation, and project updates.</p>
             <form onSubmit={handleNewsletter} className="flex gap-2">
-              <input type="email" placeholder="Your email" aria-label="Email for newsletter" value={email} onChange={e => setEmail(e.target.value)} className="flex-1 rounded-lg border border-white/10 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder:text-slate-600 transition-all focus:border-emerald-400/40 focus:outline-none focus:ring-1 focus:ring-emerald-400/40" required />
-              <button type="submit" className="rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-bold text-white transition-all hover:bg-emerald-700">{subscribed ? 'Done ✓' : 'Join'}</button>
+              <input type="email" placeholder="Your email" aria-label="Email for newsletter" value={email} onChange={e => setEmail(e.target.value)} className="glass-inset flex-1 rounded-lg border border-white/10 !bg-white/10 px-3.5 py-2.5 text-sm text-white placeholder:text-slate-300/60 transition-all focus:border-gold/60 focus:outline-none focus:ring-1 focus:ring-gold/50" required />
+              <button type="submit" className="glass-action rounded-lg border border-crimson/30 !bg-crimson px-4 py-2.5 text-sm font-bold text-white transition-all hover:border-gold/70 hover:!bg-crimson-dark">{subscribed ? 'Done ✓' : 'Join'}</button>
             </form>
           </div>
         </div>
       </div>
 
-      <div className="border-t border-white/5 bg-slate-950">
+      <div className="glass-panel rounded-none border-x-0 border-b-0 border-t border-white/10 !bg-[#020b1b]/[0.96]">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-5 py-4 sm:flex-row sm:px-8">
           <p className="text-center text-xs text-white/70 sm:text-left">© 2026 Mukesh Khadka. All Rights Reserved.</p>
-          <p className="inline-flex items-center gap-1 text-xs text-white/70">Built with <Code2 size={10} className="text-emerald-300" /> practical digital thinking</p>
+          <p className="inline-flex items-center gap-1 text-xs text-white/70">Built with <Code2 size={10} className="text-gold" /> practical digital thinking</p>
         </div>
       </div>
     </footer>

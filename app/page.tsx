@@ -16,6 +16,7 @@ import Stats from '@/components/sections/Stats'
 import Contact from '@/components/sections/Contact'
 import FAQ from '@/components/sections/FAQ'
 import Footer from '@/components/sections/Footer'
+import { LiquidBackdrop } from '@/components/ui/LiquidBackdrop'
 import { useStoredData } from '@/lib/storage'
 
 const defaultSettings = {
@@ -43,24 +44,27 @@ export default function Home() {
   const show = (section: SectionKey) => settings.visible_sections?.[section] ?? true
 
   return (
-    <main id="main-content" className="relative">
-      <Navbar />
-      {show('hero') && <Hero />}
-      <Marquee />
-      {show('about') && <About />}
-      {show('achievements') && <Achievements />}
-      {show('portfolio') && <ClientPortfolio />}
-      {show('vision') && <Vision />}
-      {show('initiatives') && <Initiatives />}
-      {show('entrepreneurship') && <Entrepreneurship />}
-      {show('youth') && <YouthInspiration />}
-      {show('testimonials') && <Testimonials />}
-      {show('gallery') && <Gallery />}
-      {show('news') && <News />}
-      {show('stats') && <Stats />}
-      {show('contact') && <Contact />}
-      <FAQ />
-      <Footer />
+    <main id="main-content" className="liquid-page public-liquid-page relative overflow-hidden">
+      <LiquidBackdrop variant="public" />
+      <div className="relative z-10">
+        <Navbar />
+        {show('hero') && <Hero />}
+        <Marquee />
+        {show('about') && <About />}
+        {show('achievements') && <Achievements />}
+        {show('portfolio') && <ClientPortfolio />}
+        {show('vision') && <Vision />}
+        {show('initiatives') && <Initiatives />}
+        {show('entrepreneurship') && <Entrepreneurship />}
+        {show('youth') && <YouthInspiration />}
+        {show('testimonials') && <Testimonials />}
+        {show('gallery') && <Gallery />}
+        {show('news') && <News />}
+        {show('stats') && <Stats />}
+        {show('contact') && <Contact />}
+        <FAQ />
+        <Footer />
+      </div>
     </main>
   )
 }
