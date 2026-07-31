@@ -50,22 +50,19 @@ export default function Navbar() {
       >
         <div className="mx-auto flex items-center justify-between px-4 sm:px-7 lg:px-10 xl:px-12">
           <a href="/#home" className="group flex shrink-0 items-center gap-2.5 sm:gap-3">
-            <div className="relative h-10 w-20 shrink-0 sm:h-12 sm:w-24">
+            <div className="relative h-10 w-24 shrink-0 sm:h-12 sm:w-28">
               <Image
-                src="/janaki-temple-logo.webp"
+                src="/heritage-mark-v2.webp"
                 alt="Mukesh Khadka"
                 fill
                 priority
-                sizes="(min-width: 640px) 96px, 80px"
+                sizes="(min-width: 640px) 112px, 96px"
                 className="object-contain object-center drop-shadow-sm"
               />
             </div>
-            <div className="flex flex-col whitespace-nowrap">
-              <span className="font-playfair text-lg font-extrabold leading-none tracking-tight text-[#12375f] sm:text-xl xl:text-2xl">
+            <div className="whitespace-nowrap">
+              <span className="font-playfair text-xl font-bold leading-none tracking-[-0.035em] text-[#12375f] sm:text-2xl xl:text-[1.7rem]">
                 Mukesh Khadka
-              </span>
-              <span className="mt-1 text-[8px] font-extrabold uppercase tracking-[0.36em] text-[#12375f]/70 sm:text-[9px]">
-                Digital Systems
               </span>
             </div>
           </a>
@@ -124,18 +121,17 @@ export default function Navbar() {
           >
             <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
               <div className="flex items-center gap-2.5">
-                <div className="relative h-10 w-20 shrink-0">
+                <div className="relative h-10 w-24 shrink-0">
                   <Image
-                    src="/janaki-temple-logo.webp"
+                    src="/heritage-mark-v2.webp"
                     alt="Mukesh Khadka"
                     fill
-                    sizes="80px"
+                    sizes="96px"
                     className="object-contain object-center drop-shadow-sm"
                   />
                 </div>
                 <div>
                   <span className="block whitespace-nowrap font-playfair text-base font-bold leading-none text-white">Mukesh Khadka</span>
-                  <span className="text-[9px] font-medium uppercase tracking-[0.28em] text-gold">Digital Systems</span>
                 </div>
               </div>
               <button onClick={() => setMobileOpen(false)} className="rounded-xl p-2.5 text-white/70 hover:bg-white/10 hover:text-white">

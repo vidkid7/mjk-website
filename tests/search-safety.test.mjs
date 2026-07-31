@@ -20,10 +20,11 @@ test('the public blog does not link search visitors to the admin area', async ()
   assert.doesNotMatch(blogPage, /href="\/admin\/news"/)
 })
 
-test('the hero postpones decorative video loading until after initial render', async () => {
+test('the hero uses a lightweight animated Nepal flag instead of a video background', async () => {
   const hero = await read('components/sections/Hero.tsx')
-  assert.match(hero, /setPlayVideo\(true\)/)
-  assert.match(hero, /src=\{playVideo \? '\/nepal-flag-hero-bg-optimized\.mp4' : undefined\}/)
+  assert.match(hero, /WavingNepalFlag/)
+  assert.doesNotMatch(hero, /<video/)
+  assert.doesNotMatch(hero, /nepal-flag-hero-bg-optimized\.mp4/)
 })
 
 test('the hero uses one unified living heritage plate while retaining a custom portrait override', async () => {
@@ -32,6 +33,13 @@ test('the hero uses one unified living heritage plate while retaining a custom p
   assert.match(hero, /const customHeroImage =/)
   assert.doesNotMatch(hero, /src="\/hero-himalayan-peaks\.jpg"/)
   assert.doesNotMatch(hero, /src="\/buddha-lotus-removebg\.webp"/)
+})
+
+test('the hero presents only the 3D Mukesh Khadka name without the copy box', async () => {
+  const hero = await read('components/sections/Hero.tsx')
+  assert.match(hero, /hero-name-3d/)
+  assert.match(hero, /<h1[^>]*>\s*Mukesh Khadka\s*<\/h1>/)
+  assert.doesNotMatch(hero, /glass-panel/)
 })
 
 test('the hero headline is visible before JavaScript hydration', async () => {
@@ -48,8 +56,7 @@ test('public pages defer non-critical CMS refreshes until the first view settles
 
 test('mobile visitors do not download desktop-only hero decorations', async () => {
   const hero = await read('components/sections/Hero.tsx')
-  assert.match(hero, /hidden[^\"]*lg:block/)
-  assert.match(hero, /matchMedia\('\(min-width: 1024px\)'\)/)
+  assert.match(hero, /hidden[^\"]*sm:block/)
 })
 
 test('the deferred about image uses a compact WebP asset', async () => {
@@ -63,7 +70,8 @@ test('navigation uses the smaller WebP logo asset', async () => {
     read('components/sections/Footer.tsx'),
   ])
 
-  assert.match(navbar, /\/janaki-temple-logo\.webp/)
+  assert.match(navbar, /\/heritage-mark-v2\.webp/)
+  assert.doesNotMatch(navbar, /Digital Systems/)
   assert.match(footer, /\/janaki-temple-logo\.webp/)
 })
 
