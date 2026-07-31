@@ -1,7 +1,7 @@
 'use client'
-import { WavingNepalFlag } from '@/components/ui/NepalFlag'
 import { heroData } from '@/lib/placeholder-data'
 import { useStoredData } from '@/lib/storage'
+import { useEffect, useState } from 'react'
 
 const defaultHero = {
   label: heroData.label,
@@ -28,12 +28,20 @@ function isLegacyHero(content: typeof defaultHero) {
 }
 
 export default function Hero() {
+  const [playVideo, setPlayVideo] = useState(false)
   const storedContent = useStoredData('hero', defaultHero)
   const content = isLegacyHero(storedContent) ? defaultHero : storedContent
   const customHeroImage =
     content.hero_image && content.hero_image !== defaultHero.hero_image
       ? content.hero_image
       : null
+
+  useEffect(() => {
+    if (!window.matchMedia('(min-width: 1024px)').matches) return
+
+    const timer = window.setTimeout(() => setPlayVideo(true), 1200)
+    return () => window.clearTimeout(timer)
+  }, [])
 
   return (
     <div id="home" className="relative isolate pt-[72px] sm:pt-[80px] lg:pt-[88px]">
@@ -48,12 +56,22 @@ export default function Hero() {
           height={941}
           loading="eager"
           decoding="async"
-          className="pointer-events-none absolute inset-0 z-[2] h-full w-full scale-[0.88] object-contain object-center sm:scale-[0.92] lg:scale-[0.94]"
+          className="pointer-events-none absolute inset-0 z-[2] h-full w-full object-cover object-center"
           draggable={false}
         />
 
-        <div className="hero-nepal-flag pointer-events-none absolute left-[-8%] top-[9%] z-[5] hidden h-[72%] w-[34%] opacity-[0.22] mix-blend-multiply sm:block lg:left-[-3%] lg:top-[8%] lg:h-[78%] lg:w-[30%] lg:opacity-[0.3]">
-          <WavingNepalFlag className="h-full w-full" />
+        <div className="pointer-events-none absolute -left-[2%] top-[7%] z-[5] hidden h-[72%] w-[34%] overflow-hidden opacity-[0.34] mix-blend-multiply [mask-image:linear-gradient(90deg,black_0%,black_72%,transparent_100%)] lg:block xl:w-[31%]">
+          <video
+            className="hero-flag-video h-full w-full object-cover object-left"
+            src={playVideo ? '/nepal-flag-hero-bg-optimized.mp4' : undefined}
+            poster={playVideo ? '/nepal-flag-hero-poster.jpg' : undefined}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="none"
+            aria-hidden="true"
+          />
         </div>
 
         {customHeroImage && (
@@ -72,9 +90,9 @@ export default function Hero() {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[12] h-24 bg-crimson [clip-path:polygon(68%_68%,100%_42%,100%_100%,0_100%,0_100%)] sm:h-32 lg:h-32" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[13] h-24 bg-[#082d58] [clip-path:ellipse(82%_68%_at_37%_104%)] sm:h-32 lg:h-32" />
 
-        <div className="relative z-20 mx-auto flex min-h-[calc(100svh-72px)] max-w-[1680px] items-center justify-center px-5 pb-36 pt-12 sm:min-h-[calc(100svh-80px)] sm:px-8 sm:pb-32 md:pt-16 lg:min-h-[calc(100svh-88px)] lg:justify-start lg:px-[8%] lg:pb-36">
-          <div className="relative z-30 -mt-[10vh] text-center sm:-mt-[12vh] lg:-mt-[16vh] lg:text-left">
-            <h1 className="hero-name-3d font-playfair text-[3.25rem] font-black leading-[0.9] tracking-[-0.055em] min-[420px]:text-[4rem] sm:text-7xl md:text-8xl lg:text-[5.5rem] xl:text-[6rem]">
+        <div className="relative z-20 mx-auto flex min-h-[calc(100svh-72px)] max-w-[1680px] items-end justify-center px-5 pb-[20vh] sm:min-h-[calc(100svh-80px)] sm:px-8 sm:pb-[18vh] lg:min-h-[calc(100svh-88px)] lg:justify-start lg:px-[7%] lg:pb-[19vh]">
+          <div className="relative z-30 text-center lg:text-left">
+            <h1 className="hero-name-3d font-playfair text-[3.1rem] font-black leading-[0.92] tracking-[-0.05em] min-[420px]:text-[3.65rem] sm:text-[4.4rem] md:text-[5rem] lg:text-[4.9rem] xl:text-[5.5rem]">
               Mukesh Khadka
             </h1>
           </div>

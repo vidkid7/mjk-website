@@ -568,11 +568,6 @@ video {
     0 18px 30px rgba(2, 6, 23, 0.3);
 }
 
-.hero-nepal-flag {
-  transform-origin: 18% 46%;
-  filter: saturate(1.1) contrast(1.05) drop-shadow(0 18px 26px rgba(2, 6, 23, 0.18));
-}
-
 .hero-flag-video {
   animation: hero-flag-drift 9s ease-in-out infinite;
   transform-origin: 18% 44%;
@@ -631,7 +626,6 @@ video {
   .nepal-flag-wave img,
   .flag-light-band,
   .hero-flag-video,
-  .hero-nepal-flag,
   .proper-nepal-flag,
   .proper-nepal-flag-cloth {
     animation: none !important;

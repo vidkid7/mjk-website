@@ -20,16 +20,19 @@ test('the public blog does not link search visitors to the admin area', async ()
   assert.doesNotMatch(blogPage, /href="\/admin\/news"/)
 })
 
-test('the hero uses a lightweight animated Nepal flag instead of a video background', async () => {
+test('the hero uses the real animated Nepal flag video on desktop', async () => {
   const hero = await read('components/sections/Hero.tsx')
-  assert.match(hero, /WavingNepalFlag/)
-  assert.doesNotMatch(hero, /<video/)
-  assert.doesNotMatch(hero, /nepal-flag-hero-bg-optimized\.mp4/)
+  assert.match(hero, /<video/)
+  assert.match(hero, /nepal-flag-hero-bg-optimized\.mp4/)
+  assert.match(hero, /matchMedia\('\(min-width: 1024px\)'\)/)
+  assert.doesNotMatch(hero, /WavingNepalFlag/)
 })
 
 test('the hero uses one unified living heritage plate while retaining a custom portrait override', async () => {
   const hero = await read('components/sections/Hero.tsx')
   assert.match(hero, /\/living-heritage-hero-v2\.webp/)
+  assert.match(hero, /object-cover/)
+  assert.doesNotMatch(hero, /scale-\[0\.88\]/)
   assert.match(hero, /const customHeroImage =/)
   assert.doesNotMatch(hero, /src="\/hero-himalayan-peaks\.jpg"/)
   assert.doesNotMatch(hero, /src="\/buddha-lotus-removebg\.webp"/)
@@ -56,7 +59,8 @@ test('public pages defer non-critical CMS refreshes until the first view settles
 
 test('mobile visitors do not download desktop-only hero decorations', async () => {
   const hero = await read('components/sections/Hero.tsx')
-  assert.match(hero, /hidden[^\"]*sm:block/)
+  assert.match(hero, /hidden[^\"]*lg:block/)
+  assert.match(hero, /src=\{playVideo \?/)
 })
 
 test('the deferred about image uses a compact WebP asset', async () => {
@@ -64,13 +68,14 @@ test('the deferred about image uses a compact WebP asset', async () => {
   assert.match(about, /\/mukk-removebg-preview\.webp/)
 })
 
-test('navigation uses the smaller WebP logo asset', async () => {
+test('navigation uses one combined Mukesh Khadka heritage logo asset', async () => {
   const [navbar, footer] = await Promise.all([
     read('components/sections/Navbar.tsx'),
     read('components/sections/Footer.tsx'),
   ])
 
-  assert.match(navbar, /\/heritage-mark-v2\.webp/)
+  assert.match(navbar, /\/mukesh-heritage-logo-v2\.webp/)
+  assert.doesNotMatch(navbar, /<span[^>]*>\s*Mukesh Khadka\s*<\/span>/)
   assert.doesNotMatch(navbar, /Digital Systems/)
   assert.match(footer, /\/janaki-temple-logo\.webp/)
 })

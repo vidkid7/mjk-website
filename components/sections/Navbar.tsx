@@ -49,21 +49,16 @@ export default function Navbar() {
         }`}
       >
         <div className="mx-auto flex items-center justify-between px-4 sm:px-7 lg:px-10 xl:px-12">
-          <a href="/#home" className="group flex shrink-0 items-center gap-2.5 sm:gap-3">
-            <div className="relative h-10 w-24 shrink-0 sm:h-12 sm:w-28">
+          <a href="/#home" className="group flex shrink-0 items-center">
+            <div className="relative h-11 w-52 shrink-0 sm:h-12 sm:w-60 lg:w-64">
               <Image
-                src="/heritage-mark-v2.webp"
-                alt="Mukesh Khadka"
+                src="/mukesh-heritage-logo-v2.webp"
+                alt="Mukesh Khadka — Nepal heritage portfolio"
                 fill
                 priority
-                sizes="(min-width: 640px) 112px, 96px"
-                className="object-contain object-center drop-shadow-sm"
+                sizes="(min-width: 1024px) 256px, (min-width: 640px) 240px, 208px"
+                className="object-contain object-left drop-shadow-sm"
               />
-            </div>
-            <div className="whitespace-nowrap">
-              <span className="font-playfair text-xl font-bold leading-none tracking-[-0.035em] text-[#12375f] sm:text-2xl xl:text-[1.7rem]">
-                Mukesh Khadka
-              </span>
             </div>
           </a>
 
@@ -120,18 +115,15 @@ export default function Navbar() {
             className="admin-card fixed inset-0 z-40 flex flex-col !bg-[#071a35]/[0.96] text-white backdrop-blur-2xl xl:hidden"
           >
             <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
-              <div className="flex items-center gap-2.5">
-                <div className="relative h-10 w-24 shrink-0">
+              <div className="flex items-center">
+                <div className="relative h-11 w-52 shrink-0">
                   <Image
-                    src="/heritage-mark-v2.webp"
-                    alt="Mukesh Khadka"
+                    src="/mukesh-heritage-logo-v2.webp"
+                    alt="Mukesh Khadka — Nepal heritage portfolio"
                     fill
-                    sizes="96px"
-                    className="object-contain object-center drop-shadow-sm"
+                    sizes="208px"
+                    className="object-contain object-left drop-shadow-sm"
                   />
-                </div>
-                <div>
-                  <span className="block whitespace-nowrap font-playfair text-base font-bold leading-none text-white">Mukesh Khadka</span>
                 </div>
               </div>
               <button onClick={() => setMobileOpen(false)} className="rounded-xl p-2.5 text-white/70 hover:bg-white/10 hover:text-white">
