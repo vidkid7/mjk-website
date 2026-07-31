@@ -26,6 +26,9 @@ test('the hero uses the real animated Nepal flag video on desktop', async () => 
   assert.match(hero, /nepal-flag-user-v1\.webm/)
   assert.match(hero, /matchMedia\('\(min-width: 1024px\)'\)/)
   assert.doesNotMatch(hero, /WavingNepalFlag/)
+  assert.match(hero, /-left-\[8%\]/)
+  assert.match(hero, /h-\[3px\]/)
+  assert.doesNotMatch(hero, /sm:h-32/)
 })
 
 test('the hero uses one unified living heritage plate while retaining a custom portrait override', async () => {
@@ -38,11 +41,17 @@ test('the hero uses one unified living heritage plate while retaining a custom p
   assert.doesNotMatch(hero, /src="\/buddha-lotus-removebg\.webp"/)
 })
 
-test('the hero presents only the 3D Mukesh Khadka name without the copy box', async () => {
+test('the hero presents a balanced personal portfolio introduction', async () => {
   const hero = await read('components/sections/Hero.tsx')
+  assert.match(hero, /TECHNOLOGY • ENTREPRENEURSHIP • NEPAL/)
+  assert.match(hero, /Building digital systems with purpose\./)
+  assert.match(hero, /I create practical software, develop meaningful ventures/)
+  assert.match(hero, /text-white\/\[0\.88\]/)
+  assert.match(hero, /href="#client-portfolio"/)
+  assert.match(hero, /href="#contact"/)
   assert.match(hero, /hero-name-3d/)
   assert.match(hero, /<h1[^>]*>\s*Mukesh Khadka\s*<\/h1>/)
-  assert.doesNotMatch(hero, /glass-panel/)
+  assert.doesNotMatch(hero, /<h2/)
 })
 
 test('the hero headline is visible before JavaScript hydration', async () => {
