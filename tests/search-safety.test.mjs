@@ -23,7 +23,7 @@ test('the public blog does not link search visitors to the admin area', async ()
 test('the hero uses the real animated Nepal flag video on desktop', async () => {
   const hero = await read('components/sections/Hero.tsx')
   assert.match(hero, /<video/)
-  assert.match(hero, /nepal-flag-hero-bg-optimized\.mp4/)
+  assert.match(hero, /nepal-flag-user-v1\.webm/)
   assert.match(hero, /matchMedia\('\(min-width: 1024px\)'\)/)
   assert.doesNotMatch(hero, /WavingNepalFlag/)
 })

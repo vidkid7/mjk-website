@@ -63,8 +63,7 @@ export default function Hero() {
         <div className="pointer-events-none absolute -left-[2%] top-[7%] z-[5] hidden h-[72%] w-[34%] overflow-hidden opacity-[0.34] mix-blend-multiply [mask-image:linear-gradient(90deg,black_0%,black_72%,transparent_100%)] lg:block xl:w-[31%]">
           <video
             className="hero-flag-video h-full w-full object-cover object-left"
-            src={playVideo ? '/nepal-flag-hero-bg-optimized.mp4' : undefined}
-            poster={playVideo ? '/nepal-flag-hero-poster.jpg' : undefined}
+            src={playVideo ? '/nepal-flag-user-v1.webm' : undefined}
             autoPlay
             muted
             loop
