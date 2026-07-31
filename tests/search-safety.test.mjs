@@ -26,6 +26,14 @@ test('the hero postpones decorative video loading until after initial render', a
   assert.match(hero, /src=\{playVideo \? '\/nepal-flag-hero-bg-optimized\.mp4' : undefined\}/)
 })
 
+test('the hero uses one unified living heritage plate while retaining a custom portrait override', async () => {
+  const hero = await read('components/sections/Hero.tsx')
+  assert.match(hero, /\/living-heritage-hero-v2\.webp/)
+  assert.match(hero, /const customHeroImage =/)
+  assert.doesNotMatch(hero, /src="\/hero-himalayan-peaks\.jpg"/)
+  assert.doesNotMatch(hero, /src="\/buddha-lotus-removebg\.webp"/)
+})
+
 test('the hero headline is visible before JavaScript hydration', async () => {
   const hero = await read('components/sections/Hero.tsx')
   assert.doesNotMatch(hero, /<motion\.h1/)
