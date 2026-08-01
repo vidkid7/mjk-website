@@ -66,7 +66,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <main className="liquid-page relative min-h-screen text-slate-900">
+    <main className="liquid-page public-editorial-light relative min-h-screen text-slate-900">
       <LiquidBackdrop variant="public" />
       <div className="relative z-10">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />

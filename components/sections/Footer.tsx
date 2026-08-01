@@ -75,10 +75,10 @@ export default function Footer() {
   }
 
   return (
-    <footer className="relative">
+    <footer className="relative public-section public-section--light">
       <div className="h-1 bg-gradient-to-r from-crimson via-[#003893] to-gold" />
 
-      <div className="glass-panel mx-auto max-w-6xl rounded-none border-x-0 border-b-0 !bg-[#071a35]/[0.92] px-5 py-16 sm:px-8">
+      <div className="glass-panel mx-auto max-w-6xl rounded-none border-x-0 border-b-0 px-5 py-16 sm:px-8">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
           <div className="lg:col-span-1">
             <div className="mb-4 flex items-center gap-2.5">
@@ -86,20 +86,20 @@ export default function Footer() {
                 <Image src="/janaki-temple-logo.webp" alt="Mukesh Khadka" fill sizes="96px" className="object-contain object-center drop-shadow-sm" />
               </div>
               <div className="flex flex-col whitespace-nowrap">
-                <span className="font-playfair text-base font-semibold leading-none text-white">Mukesh Khadka</span>
-                <span className="mt-1 text-[8px] font-semibold uppercase tracking-[0.34em] text-white/60">Digital Systems</span>
+                <span className="font-playfair text-base font-semibold leading-none text-[#071a35]">Mukesh Khadka</span>
+                <span className="mt-1 text-[8px] font-semibold uppercase tracking-[0.34em] text-slate-500">Digital Systems</span>
               </div>
             </div>
-            <p className="mb-5 text-sm leading-relaxed text-slate-500">
+            <p className="mb-5 text-sm leading-relaxed text-slate-600">
               A professional digital portfolio focused on software systems, web platforms, automation, and practical technology solutions.
             </p>
-            <div className="mb-5 space-y-1 text-sm text-slate-500">
+            <div className="mb-5 space-y-1 text-sm text-slate-600">
               <p>{settings.phone}</p>
               <p>{settings.email}</p>
             </div>
             <div className="flex gap-2">
               {socialLinks.map((social, i) => (
-                <a key={i} href={social.url} className={`glass-inset flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 !bg-white/5 text-slate-300 transition-all duration-300 hover:text-white ${social.color}`}>
+                <a key={i} href={social.url} className={`glass-inset flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition-all duration-300 hover:text-[#071a35] ${social.color}`}>
                   <social.icon size={14} />
                 </a>
               ))}
@@ -107,11 +107,11 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 text-sm font-semibold text-white">Quick Links</h4>
+            <h4 className="mb-4 text-sm font-semibold text-[#071a35]">Quick Links</h4>
             <ul className="space-y-2.5">
               {quickLinks.map(link => (
                 <li key={link.label}>
-                  <a href={link.href} className="group inline-flex items-center gap-1 text-sm text-slate-500 transition-all hover:translate-x-1 hover:text-white">
+                  <a href={link.href} className="group inline-flex items-center gap-1 text-sm text-slate-600 transition-all hover:translate-x-1 hover:text-crimson">
                     <ArrowRight size={12} className="opacity-0 transition-opacity group-hover:opacity-100" />
                     {link.label}
                   </a>
@@ -121,11 +121,11 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 text-sm font-semibold text-white">Services</h4>
+            <h4 className="mb-4 text-sm font-semibold text-[#071a35]">Services</h4>
             <ul className="space-y-2.5">
               {serviceLinks.map(link => (
                 <li key={link.label}>
-                  <a href={link.href} className="group inline-flex items-center gap-1 text-sm text-slate-500 transition-all hover:translate-x-1 hover:text-white">
+                  <a href={link.href} className="group inline-flex items-center gap-1 text-sm text-slate-600 transition-all hover:translate-x-1 hover:text-crimson">
                     <ArrowRight size={12} className="opacity-0 transition-opacity group-hover:opacity-100" />
                     {link.label}
                   </a>
@@ -135,20 +135,20 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 text-sm font-semibold text-white">Stay Updated</h4>
-            <p className="mb-4 text-sm leading-relaxed text-slate-500">Subscribe for software, design, automation, and project updates.</p>
+            <h4 className="mb-4 text-sm font-semibold text-[#071a35]">Stay Updated</h4>
+            <p className="mb-4 text-sm leading-relaxed text-slate-600">Subscribe for software, design, automation, and project updates.</p>
             <form onSubmit={handleNewsletter} className="flex gap-2">
-              <input type="email" placeholder="Your email" aria-label="Email for newsletter" value={email} onChange={e => setEmail(e.target.value)} className="glass-inset flex-1 rounded-lg border border-white/10 !bg-white/10 px-3.5 py-2.5 text-sm text-white placeholder:text-slate-300/60 transition-all focus:border-gold/60 focus:outline-none focus:ring-1 focus:ring-gold/50" required />
-              <button type="submit" className="glass-action rounded-lg border border-crimson/30 !bg-crimson px-4 py-2.5 text-sm font-bold text-white transition-all hover:border-gold/70 hover:!bg-crimson-dark">{subscribed ? 'Done ✓' : 'Join'}</button>
+              <input type="email" placeholder="Your email" aria-label="Email for newsletter" value={email} onChange={e => setEmail(e.target.value)} className="glass-inset flex-1 rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-[#071a35] placeholder:text-slate-400 transition-all focus:border-gold/60 focus:outline-none focus:ring-1 focus:ring-gold/50" required />
+              <button type="submit" className="glass-action rounded-lg border border-crimson/30 bg-crimson px-4 py-2.5 text-sm font-bold text-white transition-all hover:border-gold/70 hover:bg-crimson-dark">{subscribed ? 'Done ✓' : 'Join'}</button>
             </form>
           </div>
         </div>
       </div>
 
-      <div className="glass-panel rounded-none border-x-0 border-b-0 border-t border-white/10 !bg-[#020b1b]/[0.96]">
+      <div className="glass-panel rounded-none border-x-0 border-b-0 border-t border-slate-200 bg-white/90">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-5 py-4 sm:flex-row sm:px-8">
-          <p className="text-center text-xs text-white/70 sm:text-left">© 2026 Mukesh Khadka. All Rights Reserved.</p>
-          <p className="inline-flex items-center gap-1 text-xs text-white/70">Built with <Code2 size={10} className="text-gold" /> practical digital thinking</p>
+          <p className="text-center text-xs text-slate-500 sm:text-left">© 2026 Mukesh Khadka. All Rights Reserved.</p>
+          <p className="inline-flex items-center gap-1 text-xs text-slate-500">Built with <Code2 size={10} className="text-gold" /> practical digital thinking</p>
         </div>
       </div>
     </footer>

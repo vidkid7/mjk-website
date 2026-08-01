@@ -26,7 +26,7 @@ export default function Home() {
   const show = (section: SectionKey) => settings.visible_sections?.[section] ?? true
 
   return (
-    <main id="main-content" className="liquid-page public-liquid-page relative overflow-hidden">
+    <main id="main-content" className="liquid-page public-liquid-page public-editorial-light relative overflow-hidden">
       <LiquidBackdrop variant="public" />
       <div className="relative z-10">
         <Navbar />

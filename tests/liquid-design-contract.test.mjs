@@ -77,7 +77,7 @@ test('public homepage framing consumes the shared liquid surfaces', async () => 
     read('components/ui/SectionHeading.tsx'),
   ])
 
-  assert.match(home, /liquid-page public-liquid-page relative overflow-hidden/)
+  assert.match(home, /liquid-page public-liquid-page public-editorial-light relative overflow-hidden/)
   assert.match(home, /<LiquidBackdrop variant="public"/)
   assert.match(home, /relative z-10/)
   assert.match(navbar, /glass-panel/)
@@ -87,6 +87,7 @@ test('public homepage framing consumes the shared liquid surfaces', async () => 
   assert.match(hero, /hero-name-3d/)
   assert.match(marquee, /glass-panel/)
   assert.match(footer, /glass-panel/)
+  assert.match(footer, /public-section--light/)
   assert.match(heading, /glass-inset/)
 })
 
@@ -126,7 +127,7 @@ test('homepage section variants alternate in the page render order', async () =>
 test('dark public sections give explicit slate text a readable contrast treatment', async () => {
   const globals = await read('app/globals.css')
   const coveredTokens = [...globals.matchAll(/\.public-section--dark\s+\.text-slate-(\d+)/g)].map(([, token]) => token)
-  assert.deepEqual(new Set(coveredTokens), new Set(['950', '900', '700', '600', '500', '400', '300']))
+  assert.deepEqual(new Set(coveredTokens), new Set(['950', '900', '800', '700', '600', '500', '400', '300']))
   assert.match(globals, /\.public-section--dark\s+\.placeholder\\:text-slate-400::placeholder/)
   assert.match(globals, /\.public-section--dark\s+\.glass-action\s*\{[^}]*background:/)
 })
@@ -162,6 +163,7 @@ test('editorial service and blog routes retain their content contracts inside li
 
   ;[services, serviceDetail, blog, blogDetail].forEach((source) => {
     assert.match(source, /liquid-page/)
+    assert.match(source, /public-editorial-light/)
     assert.match(source, /<LiquidBackdrop variant="public"/)
     assert.match(source, /relative z-10/)
   })
@@ -187,4 +189,13 @@ test('editorial service and blog routes retain their content contracts inside li
   assert.match(blogDetail, /'@type': 'BreadcrumbList'/)
   assert.match(blogDetail, /glass-inset/)
   assert.match(blogDetail, /admin-card/)
+})
+
+test('public editorial light shell remaps the public dark bands into light paper surfaces', async () => {
+  const globals = await read('app/globals.css')
+
+  assert.match(globals, /\.public-editorial-light\s*\{[^}]*linear-gradient/)
+  assert.match(globals, /\.public-editorial-light\s+\.public-section--dark\s*\{[^}]*linear-gradient/)
+  assert.match(globals, /\.public-editorial-light\s+\.glass-action\s*\{[^}]*background:/)
+  assert.match(globals, /\.public-editorial-light\s+\.admin-card\s*\{[^}]*background:/)
 })
