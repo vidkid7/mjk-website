@@ -99,7 +99,7 @@ test('homepage section variants alternate in the page render order', async () =>
   const renderedSections = [...home.matchAll(/<([A-Z]\w*)\s*\/>/g)]
     .map(([, component]) => component)
     .filter((component) => sectionImports.has(component))
-    .filter((component) => !['Navbar', 'Hero', 'Marquee', 'Footer'].includes(component))
+    .filter((component) => !['Navbar', 'Hero', 'Marquee', 'Footer', 'PortraitStory'].includes(component))
 
   assert.deepEqual(renderedSections, [
     'About', 'Achievements', 'ClientPortfolio', 'Vision', 'Initiatives', 'Entrepreneurship',

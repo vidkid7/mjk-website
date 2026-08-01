@@ -130,3 +130,13 @@ test('the homepage gallery does not add a second page-level heading', async () =
   assert.doesNotMatch(gallery, /<motion\.h1/)
   assert.match(gallery, /<motion\.h2/)
 })
+
+test('the homepage editorial field notes use the four supplied portrait assets', async () => {
+  const page = await read('app/page.tsx')
+  const story = await read('components/sections/PortraitStory.tsx')
+
+  assert.match(page, /PortraitStory/)
+  for (const asset of ['mukesh-temple.jpg', 'mukesh-workspace.jpg', 'mukesh-garden.jpg', 'mukesh-sky.jpg']) {
+    assert.match(story, new RegExp(`/assets/portraits/${asset}`))
+  }
+})
