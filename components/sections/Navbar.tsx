@@ -44,13 +44,13 @@ export default function Navbar() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`glass-panel fixed left-0 right-0 top-0 z-50 border-x-0 border-t-0 border-white/70 bg-white/80 text-[#0b2b55] shadow-sm shadow-slate-900/[0.03] transition-all duration-300 ${
+        className={`glass-panel fixed left-0 right-0 top-0 z-50 border-x-0 border-t-0 border-white/60 bg-white/72 text-[#0b2b55] shadow-sm shadow-slate-900/[0.03] transition-all duration-300 ${
           scrolled ? 'py-2' : 'py-2.5 lg:py-3'
         }`}
       >
         <div className="mx-auto flex items-center justify-between px-4 sm:px-7 lg:px-10 xl:px-12">
           <a href="/#home" className="group flex shrink-0 items-center">
-            <div className="relative h-11 w-52 shrink-0 sm:h-12 sm:w-60 lg:w-64">
+            <div className="relative h-10 w-48 shrink-0 sm:h-11 sm:w-56 lg:w-60">
               <Image
                 src="/mukesh-heritage-logo-v2.webp"
                 alt="Mukesh Khadka — Nepal heritage portfolio"

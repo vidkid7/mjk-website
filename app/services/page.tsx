@@ -35,11 +35,17 @@ export default function ServicesPage() {
           </div>
         </header>
         <div className="mx-auto max-w-5xl px-5 py-14 sm:px-8 sm:py-20">
+          <div className="mb-10 flex items-center gap-4 border-t border-[#12375f]/15 pt-5 text-[11px] font-black uppercase tracking-[0.28em] text-[#12375f]/60">
+            <span className="text-crimson">03</span>
+            <span>Ways to work together</span>
+            <span aria-hidden="true" className="h-px flex-1 bg-[#12375f]/15" />
+            <span className="hidden tracking-[0.18em] sm:inline">Web · Software · Automation</span>
+          </div>
           <p className="text-xs font-black uppercase tracking-[0.18em] text-crimson">Digital services</p>
           <h1 className="mt-4 max-w-3xl font-playfair text-4xl font-extrabold tracking-tight text-[#071a35] sm:text-6xl">Practical digital work, explained clearly.</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">Explore focused pages on web development, custom software systems, and workflow automation. Each explains the questions, process, and outcomes that matter before a project begins.</p>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {servicePages.map((service) => <a key={service.slug} href={`/services/${service.slug}`} className="glass-panel rounded-3xl p-7 transition hover:-translate-y-1 hover:border-gold/70 hover:shadow-xl hover:shadow-[#071a35]/15"><h2 className="font-playfair text-2xl font-bold text-[#071a35]">{service.shortName}</h2><p className="mt-4 text-sm leading-7 text-slate-600">{service.description}</p><span className="mt-6 inline-block text-sm font-bold text-crimson">Explore service →</span></a>)}
+            {servicePages.map((service, index) => <a key={service.slug} href={`/services/${service.slug}`} className="glass-panel rounded-[1.5rem] p-7 transition hover:-translate-y-1 hover:border-gold/70 hover:shadow-xl hover:shadow-[#071a35]/15"><p className="text-xs font-black tracking-[0.18em] text-crimson">0{index + 1}</p><h2 className="mt-4 font-playfair text-2xl font-bold text-[#071a35]">{service.shortName}</h2><p className="mt-4 text-sm leading-7 text-slate-600">{service.description}</p><span className="mt-6 inline-block text-sm font-bold text-crimson">Explore service →</span></a>)}
           </div>
         </div>
       </div>

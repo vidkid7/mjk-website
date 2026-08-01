@@ -44,10 +44,10 @@ export default function Hero() {
   }, [])
 
   return (
-    <div id="home" className="relative isolate pt-[72px] sm:pt-[80px] lg:pt-[88px]">
-      <section className="relative min-h-[calc(100svh-72px)] overflow-hidden bg-[#f7f9fc] text-[#12375f] sm:min-h-[calc(100svh-80px)] lg:min-h-[calc(100svh-88px)]">
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.9),rgba(255,255,255,0.28)_43%,rgba(255,255,255,0.62)_70%,rgba(255,255,255,0.94)),radial-gradient(circle_at_55%_21%,rgba(245,214,173,0.32),transparent_30%),linear-gradient(180deg,#f8fbff_0%,#edf5fb_43%,#f7f9fc_100%)]" />
-        <div className="absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(255,255,255,0.82),rgba(255,255,255,0.18)_48%,rgba(255,255,255,0.46)_76%,rgba(255,255,255,0.88)),linear-gradient(180deg,rgba(255,255,255,0.1),rgba(255,255,255,0.38)_72%,rgba(255,255,255,0.92)_100%)]" />
+    <div id="home" className="relative isolate">
+      <section className="relative min-h-[100svh] overflow-hidden bg-[#f7f9fc] text-[#12375f]">
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.86),rgba(255,255,255,0.24)_42%,rgba(255,255,255,0.54)_68%,rgba(255,255,255,0.92)),radial-gradient(circle_at_55%_21%,rgba(245,214,173,0.3),transparent_30%),linear-gradient(180deg,#f8fbff_0%,#edf5fb_43%,#f7f9fc_100%)]" />
+        <div className="absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(255,255,255,0.72),rgba(255,255,255,0.14)_48%,rgba(255,255,255,0.36)_76%,rgba(255,255,255,0.86)),linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.34)_72%,rgba(255,255,255,0.92)_100%)]" />
         <img
           src="/living-heritage-hero-v2.webp"
           alt=""
@@ -60,7 +60,7 @@ export default function Hero() {
           draggable={false}
         />
 
-        <div className="pointer-events-none absolute -left-[8%] top-[6%] z-[5] hidden h-[78%] w-[36%] overflow-hidden opacity-[0.32] mix-blend-multiply [mask-image:linear-gradient(90deg,black_0%,black_74%,transparent_100%)] lg:block xl:w-[33%]">
+        <div className="pointer-events-none absolute -left-[16%] top-[5%] z-[5] hidden h-[82%] w-[40%] overflow-hidden opacity-[0.3] mix-blend-multiply [mask-image:linear-gradient(90deg,black_0%,black_72%,transparent_100%)] lg:block xl:w-[36%]">
           <video
             className="hero-flag-video h-full w-full object-cover object-left"
             src={playVideo ? '/nepal-flag-user-v1.webm' : undefined}
@@ -91,7 +91,7 @@ export default function Hero() {
 
         <div className="pointer-events-none absolute inset-y-0 left-0 z-[15] w-full bg-[linear-gradient(90deg,rgba(4,25,51,0.68)_0%,rgba(4,25,51,0.28)_43%,transparent_72%)] sm:w-[76%] lg:w-[64%]" />
 
-        <div className="relative z-20 mx-auto flex min-h-[calc(100svh-72px)] max-w-[1680px] items-end justify-center px-5 pb-12 sm:min-h-[calc(100svh-80px)] sm:px-8 sm:pb-16 lg:min-h-[calc(100svh-88px)] lg:justify-start lg:px-[7%] lg:pb-14">
+        <div className="relative z-20 mx-auto flex min-h-[100svh] max-w-[1680px] items-end justify-center px-5 pb-12 pt-24 sm:px-8 sm:pb-16 sm:pt-28 lg:justify-start lg:px-[7%] lg:pb-14 lg:pt-32">
           <div className="relative z-30 max-w-[42rem] text-center lg:text-left">
             <p className="mb-3 text-[0.65rem] font-extrabold uppercase tracking-[0.24em] text-white/90 drop-shadow-md sm:text-xs sm:tracking-[0.3em]">
               TECHNOLOGY • ENTREPRENEURSHIP • NEPAL

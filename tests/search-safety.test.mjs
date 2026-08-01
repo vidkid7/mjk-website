@@ -26,9 +26,18 @@ test('the hero uses the real animated Nepal flag video on desktop', async () => 
   assert.match(hero, /nepal-flag-user-v1\.webm/)
   assert.match(hero, /matchMedia\('\(min-width: 1024px\)'\)/)
   assert.doesNotMatch(hero, /WavingNepalFlag/)
-  assert.match(hero, /-left-\[8%\]/)
+  assert.match(hero, /-left-\[(1[4-9]|2\d)%\]/)
   assert.match(hero, /h-\[3px\]/)
   assert.doesNotMatch(hero, /sm:h-32/)
+})
+
+test('the hero image reaches the top of the viewport behind the navbar', async () => {
+  const hero = await read('components/sections/Hero.tsx')
+
+  assert.match(hero, /min-h-\[100svh\]/)
+  assert.doesNotMatch(hero, /pt-\[72px\]/)
+  assert.doesNotMatch(hero, /pt-\[80px\]/)
+  assert.doesNotMatch(hero, /pt-\[88px\]/)
 })
 
 test('the hero uses one unified living heritage plate while retaining a custom portrait override', async () => {

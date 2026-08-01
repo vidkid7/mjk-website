@@ -89,7 +89,7 @@ export default function AboutMukeshSection({ content = fallbackContent }: { cont
   }
 
   return (
-    <section id="about" ref={sectionRef} className="public-section public-section--light relative overflow-hidden px-4 py-24 text-[#202e44] md:py-32">
+    <section id="about" ref={sectionRef} className="public-section public-section--light relative overflow-hidden px-4 py-20 text-[#202e44] md:py-28">
       <DhakaPattern className="opacity-[0.025]" />
       <div aria-hidden="true" className="pointer-events-none absolute -left-24 top-20 h-72 w-72 rounded-full bg-emerald-200/30 blur-3xl" />
       <div aria-hidden="true" className="pointer-events-none absolute -right-24 bottom-20 h-80 w-80 rounded-full bg-blue-200/30 blur-3xl" />
@@ -100,10 +100,17 @@ export default function AboutMukeshSection({ content = fallbackContent }: { cont
         animate={isInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
+        <div className="mb-10 flex items-center gap-4 border-t border-[#12375f]/15 pt-5 text-[11px] font-black uppercase tracking-[0.28em] text-[#12375f]/60">
+          <span className="text-crimson">01</span>
+          <span>About the practice</span>
+          <span aria-hidden="true" className="h-px flex-1 bg-[#12375f]/15" />
+          <span className="hidden tracking-[0.18em] sm:inline">Kathmandu · Nepal</span>
+        </div>
+
+        <div className="grid items-start gap-12 lg:grid-cols-[0.84fr_1.16fr] lg:gap-16">
           <motion.div variants={itemVariants} className="relative mx-auto w-full max-w-sm lg:mx-0">
             <div aria-hidden="true" className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-emerald-500/20 via-blue-500/10 to-amber-400/20 blur-2xl" />
-            <div className="glass-panel relative overflow-hidden rounded-[1.75rem] p-6 md:p-8">
+            <div className="glass-panel relative overflow-hidden rounded-[1.25rem] p-4 md:p-5">
               <div className="overflow-hidden rounded-[1.5rem] bg-gradient-to-b from-slate-100 via-white to-emerald-50">
                 <img
                   src={content.photo || "/mukk-removebg-preview.png"}
@@ -112,6 +119,10 @@ export default function AboutMukeshSection({ content = fallbackContent }: { cont
                   decoding="async"
                   className="h-auto w-full object-contain"
                 />
+              </div>
+              <div className="flex items-center justify-between gap-3 px-2 pb-1 pt-5 text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">
+                <span>Systems · Stories · Service</span>
+                <span className="text-crimson">Portfolio / 01</span>
               </div>
               <div className="mt-5 grid grid-cols-2 gap-3">
                 <StatCard label="Delivery Focus" value={content.community_trust} />
@@ -125,7 +136,7 @@ export default function AboutMukeshSection({ content = fallbackContent }: { cont
               <Zap className="h-4 w-4" />
               {content.pill}
             </motion.span>
-            <motion.h2 variants={itemVariants} className="font-playfair text-3xl font-extrabold leading-tight tracking-tight text-slate-950 sm:text-5xl">
+            <motion.h2 variants={itemVariants} className="max-w-3xl font-playfair text-3xl font-extrabold leading-[1.08] tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
               {content.heading}
             </motion.h2>
             <motion.div variants={itemVariants} className="mt-6 space-y-5 text-base leading-8 text-slate-600">
@@ -138,7 +149,7 @@ export default function AboutMukeshSection({ content = fallbackContent }: { cont
               {qualities.map((quality) => {
                 const Icon = quality.icon
                 return (
-                  <div key={quality.title} className="glass-panel rounded-[1.75rem] p-6 md:p-8 transition hover:-translate-y-1 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/10">
+                  <div key={quality.title} className="glass-panel rounded-2xl p-5 transition hover:-translate-y-1 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/10 md:p-6">
                     <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">
                       <Icon className="h-5 w-5" />
                     </div>
@@ -151,7 +162,7 @@ export default function AboutMukeshSection({ content = fallbackContent }: { cont
           </div>
         </div>
 
-        <motion.div variants={itemVariants} className="glass-panel mt-16 rounded-[1.75rem] p-6 md:p-8">
+        <motion.div variants={itemVariants} className="glass-panel mt-14 rounded-2xl border-[#12375f]/10 p-6 md:p-8">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-4 py-1.5 text-[11px] font-black uppercase tracking-[0.2em] text-amber-700">
