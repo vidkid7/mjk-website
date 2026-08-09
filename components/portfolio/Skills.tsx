@@ -85,7 +85,7 @@ export default function Skills() {
             />
             <div className="relative flex flex-wrap items-center justify-between gap-3 border-b border-ink/10 px-7 py-4">
               <span className="font-mono text-xs uppercase tracking-[0.2em] text-ember-700">Toolbox</span>
-              <span className="font-mono text-xs text-night-500">14 tools in rotation</span>
+              <span className="font-mono text-xs text-night-500">{pfSkills.toolbox.length} tools in rotation</span>
             </div>
             <Marquee items={pfSkills.toolbox} />
           </div>
