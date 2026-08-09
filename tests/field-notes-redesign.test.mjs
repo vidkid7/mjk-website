@@ -44,11 +44,25 @@ test('project files expose outcomes and keyboard-safe actions', async () => {
 })
 
 test('field-notes styling is scoped and reduced motion is explicit', async () => {
-  const css = await read('app/globals.css')
+  const [css, atmosphere, scrollProgress] = await Promise.all([
+    read('app/globals.css'),
+    read('components/fx/Atmosphere.tsx'),
+    read('components/fx/ScrollProgress.tsx'),
+  ])
 
-  assert.match(css, /\.portfolio-page/)
-  assert.match(css, /prefers-reduced-motion/)
-  assert.match(css, /field-notes|evidence|signal|scanline/i)
+  assert.match(css, /\.portfolio-page\s*\{[\s\S]*--field-ink:\s*#071a35/)
+  assert.match(css, /--field-paper:\s*#faf9f7/)
+  assert.match(css, /--field-gold:\s*#f2bd4b/)
+  assert.match(css, /--field-crimson:\s*#dc2626/)
+  assert.match(css, /\.portfolio-page\s+\.field-(?:grid|scanlines|evidence)/)
+  assert.match(css, /\.portfolio-page\s+:is\(a, button, input, textarea, select\):focus-visible/)
+  assert.match(css, /\.portfolio-page \*,[\s\S]*animation-duration:\s*0\.01ms !important/)
+  assert.match(css, /\.portfolio-page\s+\.portfolio-atmosphere[\s\S]*pointer-events:\s*none/)
+  assert.match(css, /\.portfolio-page\s+\.portfolio-scroll-progress[\s\S]*z-index:\s*40/)
+  assert.match(atmosphere, /portfolio-atmosphere/)
+  assert.match(atmosphere, /aria-hidden="true"/)
+  assert.match(scrollProgress, /portfolio-scroll-progress/)
+  assert.match(scrollProgress, /aria-hidden="true"/)
 })
 
 test('supporting portfolio sections retain their content in a field-notes frame', async () => {

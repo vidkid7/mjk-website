@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Yatra+One&family=Playfair+Display:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Yatra+One&family=Playfair+Display:wght@600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
   --liquid-navy: #071a35;
@@ -785,7 +785,7 @@ section {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  color: var(--pf-crimson, #b03d2f);
+  color: var(--field-crimson);
   font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: 0.72rem;
   font-weight: 600;
@@ -799,11 +799,11 @@ section {
   width: 2rem;
   height: 2rem;
   place-items: center;
-  border: 1px solid rgba(196, 102, 31, 0.3);
+  border: 1px solid var(--field-line);
   border-radius: 0.5rem;
-  background: rgba(196, 102, 31, 0.1);
-  box-shadow: 0 0 18px rgba(196, 102, 31, 0.18);
-  color: var(--pf-ember-500, #c4661f);
+  background: color-mix(in srgb, var(--field-gold) 16%, transparent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--field-gold) 20%, transparent);
+  color: var(--field-ink);
   font-variant-numeric: tabular-nums;
 }
 
@@ -812,13 +812,13 @@ section {
   width: 2.5rem;
   height: 1px;
   margin-right: 0.75rem;
-  background: linear-gradient(to right, var(--pf-ember-500, #c4661f), transparent);
+  background: linear-gradient(to right, var(--field-gold), transparent);
   content: '';
   vertical-align: middle;
 }
 
 .portfolio-page .field-label__detail {
-  color: var(--pf-night-100, #2e241a);
+  color: var(--field-muted);
   font-weight: 500;
 }
 
@@ -845,13 +845,13 @@ section {
 }
 
 .portfolio-page .signal-pill--live { color: #198754; }
-.portfolio-page .signal-pill--warm { color: var(--pf-ember-500, #c4661f); }
-.portfolio-page .signal-pill--quiet { color: var(--pf-night-100, #2e241a); }
+.portfolio-page .signal-pill--warm { color: var(--field-gold); }
+.portfolio-page .signal-pill--quiet { color: var(--field-ink); }
 
-.portfolio-page :is(a, button):focus-visible {
-  outline: 2px solid var(--pf-ember-500, #c4661f);
+.portfolio-page :is(a, button, input, textarea, select):focus-visible {
+  outline: 2px solid var(--field-crimson);
   outline-offset: 3px;
-  box-shadow: 0 0 0 5px rgba(196, 102, 31, 0.22);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--field-gold) 38%, transparent);
 }
 
 /* Loading Spinner */
@@ -865,4 +865,462 @@ section {
   border-radius: 50%;
   width: 24px;
   height: 24px;
+}
+
+/* ============================================================
+   Personal Portfolio — Warm Living Heritage design system
+   ============================================================ */
+.portfolio-page {
+  --pf-night-950: #faf5ed;
+  --pf-night-900: #f7f1e7;
+  --pf-night-800: #efe7d9;
+  --pf-night-100: #2e241a;
+  --pf-ember-400: #d98a2b;
+  --pf-ember-500: #c4661f;
+  --pf-rose: #b03d2f;
+  --pf-paper: #faf5ed;
+  --pf-ink: #1b130b;
+  --pf-crimson: #b03d2f;
+  --field-ink: #071a35;
+  --field-paper: #faf9f7;
+  --field-gold: #f2bd4b;
+  --field-crimson: #dc2626;
+  --field-line: rgba(7, 26, 53, 0.14);
+  --field-muted: #64748b;
+  background-color: var(--field-paper);
+  color: var(--field-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Field-notes details stay contained to the portfolio route. */
+.portfolio-page .field-grid,
+.portfolio-page .grid-backdrop {
+  background-image:
+    linear-gradient(var(--field-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--field-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.portfolio-page .field-scanlines,
+.portfolio-page .field-evidence {
+  position: relative;
+}
+
+.portfolio-page .field-scanlines::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 3px,
+    var(--field-ink) 4px
+  );
+  content: '';
+}
+
+.portfolio-page .field-evidence {
+  border: 1px solid var(--field-line);
+  background: color-mix(in srgb, var(--field-paper) 94%, var(--field-gold));
+  box-shadow: inset 0 3px 0 var(--field-gold);
+}
+
+.portfolio-page .field-evidence::before {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--field-crimson);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--field-crimson) 16%, transparent);
+  pointer-events: none;
+  content: '';
+}
+
+.portfolio-page .portfolio-atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 8% 4%, color-mix(in srgb, var(--field-gold) 10%, transparent), transparent 28%),
+    radial-gradient(circle at 92% 80%, color-mix(in srgb, var(--field-crimson) 6%, transparent), transparent 30%);
+}
+
+.portfolio-page .portfolio-atmosphere::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 4px, var(--field-ink) 5px);
+  content: '';
+}
+
+.portfolio-page .portfolio-atmosphere__bloom {
+  position: absolute;
+  width: clamp(20rem, 42vw, 42rem);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  filter: blur(52px);
+  opacity: 0.13;
+  animation: field-drift 28s ease-in-out infinite alternate;
+}
+
+.portfolio-page .portfolio-atmosphere__bloom--gold {
+  top: -18%;
+  right: -14%;
+  background: var(--field-gold);
+}
+
+.portfolio-page .portfolio-atmosphere__bloom--crimson {
+  bottom: -24%;
+  left: 20%;
+  background: var(--field-crimson);
+  animation-delay: -10s;
+}
+
+.portfolio-page .portfolio-atmosphere__dust,
+.portfolio-page .portfolio-atmosphere__ember {
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.portfolio-page .portfolio-atmosphere__dust {
+  background: var(--field-ink);
+}
+
+.portfolio-page .portfolio-atmosphere__dust--gold {
+  background: var(--field-gold);
+}
+
+.portfolio-page .portfolio-atmosphere__ember {
+  bottom: -12px;
+  background: radial-gradient(circle, var(--field-gold) 0%, var(--field-crimson) 55%, transparent 75%);
+  filter: blur(1px);
+}
+
+.portfolio-page .portfolio-atmosphere__haze {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 60%, color-mix(in srgb, var(--field-ink) 4%, transparent) 100%);
+}
+
+.portfolio-page .portfolio-scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 40;
+  height: 3px;
+  transform-origin: 0 50%;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--field-gold), var(--field-crimson));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--field-gold) 45%, transparent);
+}
+
+@keyframes field-drift {
+  from { transform: translate3d(-3%, 2%, 0) scale(1); }
+  to { transform: translate3d(5%, -5%, 0) scale(1.14); }
+}
+
+.portfolio-page .portfolio-container {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+@media (min-width: 640px) {
+  .portfolio-page .portfolio-container { padding-inline: 2rem; }
+}
+
+/* Mono eyebrow / small-caps section label */
+.portfolio-page .eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--field-crimson);
+}
+
+/* Saffron → crimson heritage gradient text */
+.portfolio-page .text-gradient-ember {
+  background: linear-gradient(120deg, var(--field-gold) 0%, var(--field-crimson) 72%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Warm frosted-glass card */
+.portfolio-page .glass-night {
+  background: color-mix(in srgb, var(--field-paper) 84%, transparent);
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+  border: 1px solid var(--field-line);
+}
+
+/* Fine grid backdrop for heritage sections */
+.portfolio-page .grid-backdrop {
+  background-image:
+    linear-gradient(var(--field-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--field-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Grain overlay for photographic feel */
+.portfolio-page .grain-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Big display numerals */
+.portfolio-page .display-number {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+/* Reveal-on-scroll base (enhanced by framer-motion variants) */
+.portfolio-page .pf-reveal {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-page *,
+  .portfolio-page *::before,
+  .portfolio-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .portfolio-page .animate-aurora,
+  .portfolio-page .animate-float,
+  .portfolio-page .animate-float-slow,
+  .portfolio-page .animate-spin-slower,
+  .portfolio-page .animate-marquee {
+    animation: none !important;
+  }
+}
+
+/* ============================================================
+   Celestial Ember — cosmic FX layer
+   ============================================================ */
+
+/* Register the conic-border angle so it can be animated */
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Animated conic gradient border (place over a card) */
+.portfolio-page .conic-border {
+  position: relative;
+  isolation: isolate;
+}
+.portfolio-page .conic-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--border-angle),
+    rgba(196, 102, 31, 0.0) 0%,
+    rgba(196, 102, 31, 0.8) 18%,
+    rgba(176, 61, 47, 0.8) 34%,
+    rgba(217, 138, 43, 0.3) 50%,
+    rgba(196, 102, 31, 0.0) 66%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: conic-spin 6s linear infinite;
+}
+
+/* Soft bloom behind glowing elements */
+.portfolio-page .bloom {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(56px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Starfield → warm dust motes */
+.portfolio-page .starfield {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.portfolio-page .star {
+  position: absolute;
+  border-radius: 9999px;
+  background: #d98a2b;
+}
+
+/* Rising warm particle */
+.portfolio-page .ember-particle {
+  position: absolute;
+  bottom: -12px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, #e8b46e 0%, #c4661f 55%, transparent 75%);
+  filter: blur(1px);
+  will-change: transform, opacity;
+}
+
+/* Custom cursor glow */
+.portfolio-page .cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: 30rem;
+  height: 30rem;
+  margin-left: -15rem;
+  margin-top: -15rem;
+  border-radius: 9999px;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(196, 102, 31, 0.1) 0%,
+    rgba(176, 61, 47, 0.05) 38%,
+    transparent 68%
+  );
+  mix-blend-mode: multiply;
+}
+
+/* 3D tilt card helpers */
+.portfolio-page .tilt-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.portfolio-page .tilt-card > * {
+  transform: translateZ(0);
+}
+.portfolio-page .tilt-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 400ms ease;
+  background: radial-gradient(
+    420px circle at var(--glare-x, 50%) var(--glare-y, 50%),
+    rgba(255, 255, 255, 0.14),
+    transparent 45%
+  );
+}
+.portfolio-page .tilt-card:hover .tilt-glare {
+  opacity: 1;
+}
+
+/* Kinetic masked line reveal (used by hero) */
+.portfolio-page .kinetic-line {
+  display: block;
+  overflow: hidden;
+}
+.portfolio-page .kinetic-line > span {
+  display: block;
+  will-change: transform;
+}
+
+/* Text shine sweep */
+.portfolio-page .text-shine {
+  background: linear-gradient(
+    110deg,
+    #1b130b 20%,
+    #d98a2b 42%,
+    #b03d2f 50%,
+    #c4661f 58%,
+    #1b130b 80%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 7s linear infinite;
+}
+
+/* Orbit ring for portrait */
+.portfolio-page .orbit-ring {
+  position: absolute;
+  border-radius: 9999px;
+  border: 1px dashed rgba(196, 102, 31, 0.35);
+  pointer-events: none;
+}
+.portfolio-page .orbit-dot {
+  position: absolute;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #c4661f, #b03d2f);
+  box-shadow: 0 0 14px rgba(196, 102, 31, 0.6);
+}
+
+/* Marquee edge fade */
+.portfolio-page .marquee-fade {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+/* Scroll progress bar */
+.portfolio-page .scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 60;
+  height: 3px;
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, #c4661f, #b03d2f, #d98a2b);
+  box-shadow: 0 0 14px rgba(196, 102, 31, 0.4);
+}
+
+/* Heritage hairline divider */
+.portfolio-page .neon-hairline {
+  background: linear-gradient(90deg, transparent, rgba(196, 102, 31, 0.5), rgba(176, 61, 47, 0.35), transparent);
+  height: 1px;
+}
+
+/* Hover sheen sweep on buttons/cards */
+.portfolio-page .sheen {
+  position: relative;
+  overflow: hidden;
+}
+.portfolio-page .sheen::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  height: 100%;
+  width: 55%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-18deg);
+  transition: left 0.7s ease;
+}
+.portfolio-page .sheen:hover::after {
+  left: 130%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-page .conic-border::before,
+  .portfolio-page .star,
+  .portfolio-page .ember-particle,
+  .portfolio-page .text-shine,
+  .portfolio-page .cursor-glow,
+  .portfolio-page .scroll-progress {
+    animation: none !important;
+  }
+  .portfolio-page .ember-particle,
+  .portfolio-page .cursor-glow {
+    display: none;
+  }
 }
