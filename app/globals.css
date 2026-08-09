@@ -780,6 +780,80 @@ section {
   border-radius: 4px;
 }
 
+/* Field-notes primitives remain isolated to the portfolio route family. */
+.portfolio-page .field-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--pf-crimson, #b03d2f);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.portfolio-page .field-label__index {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1px solid rgba(196, 102, 31, 0.3);
+  border-radius: 0.5rem;
+  background: rgba(196, 102, 31, 0.1);
+  box-shadow: 0 0 18px rgba(196, 102, 31, 0.18);
+  color: var(--pf-ember-500, #c4661f);
+  font-variant-numeric: tabular-nums;
+}
+
+.portfolio-page .field-label__name::before {
+  display: inline-block;
+  width: 2.5rem;
+  height: 1px;
+  margin-right: 0.75rem;
+  background: linear-gradient(to right, var(--pf-ember-500, #c4661f), transparent);
+  content: '';
+  vertical-align: middle;
+}
+
+.portfolio-page .field-label__detail {
+  color: var(--pf-night-100, #2e241a);
+  font-weight: 500;
+}
+
+.portfolio-page .signal-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 0.375rem 0.75rem;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.portfolio-page .signal-pill__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.portfolio-page .signal-pill--live { color: #198754; }
+.portfolio-page .signal-pill--warm { color: var(--pf-ember-500, #c4661f); }
+.portfolio-page .signal-pill--quiet { color: var(--pf-night-100, #2e241a); }
+
+.portfolio-page :is(a, button):focus-visible {
+  outline: 2px solid var(--pf-ember-500, #c4661f);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px rgba(196, 102, 31, 0.22);
+}
+
 /* Loading Spinner */
 @keyframes spin {
   to { transform: rotate(360deg); }
