@@ -50,3 +50,34 @@ test('field-notes styling is scoped and reduced motion is explicit', async () =>
   assert.match(css, /prefers-reduced-motion/)
   assert.match(css, /field-notes|evidence|signal|scanline/i)
 })
+
+test('supporting portfolio sections retain their content in a field-notes frame', async () => {
+  const [about, skills, experience, testimonials, culture, contact, footer] = await Promise.all([
+    read('components/portfolio/About.tsx'),
+    read('components/portfolio/Skills.tsx'),
+    read('components/portfolio/Experience.tsx'),
+    read('components/portfolio/Testimonials.tsx'),
+    read('components/portfolio/Culture.tsx'),
+    read('components/portfolio/Contact.tsx'),
+    read('components/portfolio/Footer.tsx'),
+  ])
+
+  assert.match(about, /eyebrow="Operator Profile"/)
+  assert.match(about, /aria-label="Operator metadata"/)
+  assert.match(skills, /eyebrow="System Inventory"/)
+  assert.match(skills, /aria-label="System inventory metadata"/)
+  assert.match(experience, /eyebrow="Operational History"/)
+  assert.match(experience, /<ol[\s\S]*pfExperience\.map[\s\S]*<\/ol>/)
+  assert.match(experience, /checkpoint-marker/)
+  assert.match(testimonials, /eyebrow="Verified Reports"/)
+  assert.match(testimonials, /Report \{String\(i \+ 1\)\.padStart\(2, '0'\)\}/)
+  assert.match(culture, /eyebrow="Origin Coordinates"/)
+  assert.match(culture, /src=\{pfCulture\.flag\.video\}/)
+  assert.match(culture, /poster=\{pfCulture\.flag\.poster\}/)
+  assert.match(contact, /<FieldLabel index=\{pfContact\.index\} label="Project Channel"/)
+  assert.match(contact, /id="contact"/)
+  assert.match(contact, /select-text/)
+  assert.match(footer, /\/blog/)
+  assert.match(footer, /\/services\/custom-software-development-nepal/)
+  assert.match(footer, /pfMeta\.socials\.map/)
+})
