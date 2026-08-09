@@ -4,23 +4,33 @@ import { readFile } from 'node:fs/promises'
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8')
 
-test('the public portfolio exposes field-notes section language', async () => {
-  const [hero, projects, about, skills, experience, contact] = await Promise.all([
+test('the portfolio navigation and hero expose the opening field signal', async () => {
+  const [navbar, hero, marquee, cursorGlow, magnetic] = await Promise.all([
+    read('components/portfolio/Navbar.tsx'),
     read('components/portfolio/Hero.tsx'),
-    read('components/portfolio/Projects.tsx'),
-    read('components/portfolio/About.tsx'),
-    read('components/portfolio/Skills.tsx'),
-    read('components/portfolio/Experience.tsx'),
-    read('components/portfolio/Contact.tsx'),
+    read('components/portfolio/Marquee.tsx'),
+    read('components/fx/CursorGlow.tsx'),
+    read('components/fx/Magnetic.tsx'),
   ])
 
+  assert.match(navbar, /label: 'About', href: '#about'/)
+  assert.match(navbar, /label: 'Field Files', href: '#work'/)
+  assert.match(navbar, /label: 'Skills', href: '#skills'/)
+  assert.match(navbar, /label: 'History', href: '#experience'/)
+  assert.match(navbar, /label: 'Contact', href: '#contact'/)
   assert.match(hero, /SYSTEM ONLINE/)
   assert.match(hero, /KATHMANDU \/ NEPAL/)
-  assert.match(projects, /Field Files|Evidence Archive/)
-  assert.match(about, /Operator Profile/)
-  assert.match(skills, /System Inventory/)
-  assert.match(experience, /Operational History/)
-  assert.match(contact, /Project Channel/)
+  assert.match(hero, /SignalPill/)
+  assert.match(hero, /reduceMotion \? pfHero\.headline : <SplitWords/)
+  assert.match(hero, /reduceMotion \? StaticTiltCard : TiltCard/)
+  assert.match(navbar, /<noscript>/)
+  assert.match(navbar, /md:hidden/)
+  assert.match(marquee, /useReducedMotion/)
+  assert.match(marquee, /motion-reduce:flex/)
+  assert.match(cursorGlow, /useReducedMotion/)
+  assert.match(magnetic, /useReducedMotion/)
+  assert.match(magnetic, /\(pointer: fine\)/)
+  assert.match(magnetic, /hasFinePointer/)
 })
 
 test('project files expose outcomes and keyboard-safe actions', async () => {

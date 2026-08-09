@@ -1,6 +1,6 @@
 'use client'
 import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion'
-import { useRef, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 
 /**
  * Magnetic — children gently follow the cursor while hovered,
@@ -16,14 +16,23 @@ export default function Magnetic({
   className?: string
 }) {
   const reduceMotion = useReducedMotion()
+  const [hasFinePointer, setHasFinePointer] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const springX = useSpring(x, { stiffness: 200, damping: 16, mass: 0.4 })
   const springY = useSpring(y, { stiffness: 200, damping: 16, mass: 0.4 })
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(pointer: fine)')
+    const updatePointer = () => setHasFinePointer(mediaQuery.matches)
+    updatePointer()
+    mediaQuery.addEventListener('change', updatePointer)
+    return () => mediaQuery.removeEventListener('change', updatePointer)
+  }, [])
+
   const onMove = (e: React.MouseEvent) => {
-    if (reduceMotion) return
+    if (reduceMotion || !hasFinePointer) return
     const el = ref.current
     if (!el) return
     const rect = el.getBoundingClientRect()
@@ -34,7 +43,7 @@ export default function Magnetic({
   }
 
   const onLeave = () => {
-    if (reduceMotion) return
+    if (reduceMotion || !hasFinePointer) return
     x.set(0)
     y.set(0)
   }
@@ -44,7 +53,7 @@ export default function Magnetic({
       ref={ref}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      style={reduceMotion ? undefined : { x: springX, y: springY }}
+      style={reduceMotion || !hasFinePointer ? undefined : { x: springX, y: springY }}
       className={className}
     >
       {children}

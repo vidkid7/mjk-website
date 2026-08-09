@@ -107,6 +107,22 @@ export default function PortfolioNavbar() {
         </button>
       </nav>
 
+      <noscript>
+        <div className="border-t border-ink/10 bg-paper px-6 py-4 md:hidden">
+          <div className="flex flex-col">
+            {links.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="border-b border-ink/5 py-4 text-base font-medium text-ink"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </noscript>
+
       <AnimatePresence>
         {open && (
           <motion.div

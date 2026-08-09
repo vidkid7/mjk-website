@@ -1,7 +1,7 @@
 'use client'
 import { animate, motion, useInView, useReducedMotion } from 'framer-motion'
 import { ArrowDown, ArrowUpRight, Sparkles } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import SplitWords from '@/components/fx/SplitWords'
 import TiltCard from '@/components/fx/TiltCard'
 import Magnetic from '@/components/fx/Magnetic'
@@ -46,8 +46,13 @@ const fadeUp = {
   }),
 }
 
+function StaticTiltCard({ children, className }: { children: ReactNode; className?: string; intensity?: number }) {
+  return <div className={className}>{children}</div>
+}
+
 export default function PortfolioHero() {
   const reduceMotion = useReducedMotion()
+  const PortraitCard = reduceMotion ? StaticTiltCard : TiltCard
 
   return (
     <section id="top" className="relative overflow-hidden pt-24 sm:pt-28">
@@ -76,7 +81,7 @@ export default function PortfolioHero() {
             variants={fadeUp}
             className="mt-6 font-fraunces text-[2.75rem] font-semibold leading-[1.02] tracking-[-0.03em] text-night-50 sm:text-6xl lg:text-[4.5rem]"
           >
-            <SplitWords text={pfHero.headline} start={1} highlight={['always', 'belonged.']} />
+            {reduceMotion ? pfHero.headline : <SplitWords text={pfHero.headline} start={1} highlight={['always', 'belonged.']} />}
           </motion.h1>
 
           <motion.p custom={2} variants={fadeUp} className="mt-6 max-w-xl text-lg leading-relaxed text-night-300">
@@ -140,7 +145,7 @@ export default function PortfolioHero() {
               <span className="orbit-dot -bottom-1 -left-1 h-2.5 w-2.5" />
             </div>
 
-            <TiltCard className="relative" intensity={8}>
+            <PortraitCard className="relative" intensity={8}>
               <div
                 aria-hidden="true"
                 className="absolute inset-0 -z-10 scale-[0.97] rounded-t-[999px] rounded-b-[2.5rem] bg-gradient-to-br from-ember-500/40 via-rose-500/30 to-transparent blur-2xl"
@@ -168,14 +173,14 @@ export default function PortfolioHero() {
                   loading="eager"
                 />
               </div>
-            </TiltCard>
+            </PortraitCard>
 
             {/* Floating badge — top */}
             <motion.div
               animate={reduceMotion ? undefined : { y: [0, -10, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
               className="glass-night absolute -left-3 top-10 flex items-center gap-2 rounded-2xl px-4 py-3 shadow-xl shadow-ink/20 sm:-left-8"
-              style={{ transform: 'translateZ(40px)' }}
+              style={reduceMotion ? undefined : { transform: 'translateZ(40px)' }}
             >
               <span className="grid h-8 w-8 place-items-center rounded-xl bg-gradient-to-br from-ember-500 to-rose-500 text-white">
                 <Sparkles className="h-4 w-4" />
@@ -191,7 +196,7 @@ export default function PortfolioHero() {
               animate={reduceMotion ? undefined : { y: [0, 10, 0] }}
               transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
               className="glass-night absolute -bottom-5 -right-3 flex items-center gap-2 rounded-2xl px-4 py-3 shadow-xl shadow-ink/20 sm:-right-6"
-              style={{ transform: 'translateZ(60px)' }}
+              style={reduceMotion ? undefined : { transform: 'translateZ(60px)' }}
             >
               <span className="relative flex h-2.5 w-2.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ember-400 opacity-75" />
