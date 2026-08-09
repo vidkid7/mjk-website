@@ -1105,7 +1105,8 @@ section {
   .portfolio-page .animate-float,
   .portfolio-page .animate-float-slow,
   .portfolio-page .animate-spin-slower,
-  .portfolio-page .animate-marquee {
+  .portfolio-page .animate-marquee,
+  .portfolio-page .portfolio-atmosphere__bloom {
     animation: none !important;
   }
 }
