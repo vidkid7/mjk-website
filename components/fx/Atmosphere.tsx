@@ -1,5 +1,6 @@
 'use client'
 import { useMemo } from 'react'
+import { useReducedMotion } from 'framer-motion'
 
 // Deterministic pseudo-random so SSR and client render identical dust.
 function mulberry32(seed: number) {
@@ -16,6 +17,7 @@ const DUST = 44
 const EMBERS = 12
 
 export default function Atmosphere() {
+  const reduceMotion = useReducedMotion()
   const { dust, embers } = useMemo(() => {
     const rand = mulberry32(20260806)
     const dust = Array.from({ length: DUST }, (_, i) => ({
@@ -53,7 +55,7 @@ export default function Atmosphere() {
               width: mote.size,
               height: mote.size,
               opacity: 0.35,
-              animation: `twinkle ${mote.duration}s ease-in-out ${mote.delay}s infinite`,
+              animation: reduceMotion ? 'none' : `twinkle ${mote.duration}s ease-in-out ${mote.delay}s infinite`,
             }}
           />
         ))}
@@ -67,7 +69,7 @@ export default function Atmosphere() {
             left: `${ember.left}%`,
             width: ember.size,
             height: ember.size,
-            animation: `ember-rise ${ember.duration}s linear ${ember.delay}s infinite`,
+            animation: reduceMotion ? 'none' : `ember-rise ${ember.duration}s linear ${ember.delay}s infinite`,
             opacity: 0.55,
           }}
         />
