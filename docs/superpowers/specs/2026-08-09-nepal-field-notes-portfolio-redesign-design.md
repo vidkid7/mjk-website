@@ -200,4 +200,3 @@ Tune motion, focus states, cursor behavior, project reveal details, and reduced-
 ### Phase 3: Optional immersive mode
 
 Only after the standard site is verified, consider a separate 3D / WebGL experience that does not block the primary portfolio journey.
-
