@@ -77,7 +77,7 @@ export default function PortfolioHero({ content, site }: { content: PublicHero; 
         <motion.div
           className="gateway-hero__heritage-shadow-layer"
           initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-          animate={{ opacity: 0.92, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: reduceMotion ? 0 : 0.9, delay: reduceMotion ? 0 : 0.35, ease: 'easeOut' }}
         >
           <img

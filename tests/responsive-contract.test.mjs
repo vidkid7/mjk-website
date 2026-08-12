@@ -122,6 +122,14 @@ test('hero places a restrained Buddha shadow behind Mukesh across breakpoints', 
   assert.match(css, /prefers-reduced-motion:\s*reduce[\s\S]*?\.gateway-hero__heritage-buddha-shadow[\s\S]*?animation:\s*none/)
 })
 
+test('laptop Buddha shadow keeps its head visible and readable', async () => {
+  const css = await source('app/globals.css')
+  const hero = await source('components/portfolio/Hero.tsx')
+
+  assert.match(hero, /gateway-hero__heritage-shadow-layer[\s\S]*?animate=\{\{ opacity: 1, y: 0 \}\}/)
+  assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?bottom:\s*16%[\s\S]*?opacity:\s*0\.78/)
+})
+
 test('profile availability identifies AashaTech and links to its site', async () => {
   const portfolio = await source('lib/portfolio-content.ts')
   const adminStarter = await source('app/admin/site-content/page.tsx')
