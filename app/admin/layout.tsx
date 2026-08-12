@@ -2,36 +2,41 @@
 import { useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import {
-  LayoutDashboard, Image, Newspaper, MessageSquare, Users, Settings,
+  LayoutDashboard, Newspaper, MessageSquare, Users, Settings,
   LogOut, ChevronLeft, ChevronRight, Home, Info, Target, Rocket,
-  Briefcase, GraduationCap, BarChart3, Menu, X, Award, Star
+  BarChart3, Menu, X, Award, Star, History, FileText, ListChecks
 } from 'lucide-react'
 import { NepalFlagPennant } from '@/components/ui/NepalFlag'
 import { LiquidBackdrop } from '@/components/ui/LiquidBackdrop'
+import LanguageSwitch from '@/components/i18n/LanguageSwitch'
+import { useLanguage } from '@/components/i18n/LanguageProvider'
+import { translateKnown } from '@/lib/i18n-content'
 
 const sidebarLinks = [
   { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
   { label: 'Hero Content', href: '/admin/hero', icon: Home },
   { label: 'About Section', href: '/admin/about', icon: Info },
+  { label: 'Landing Page Copy', href: '/admin/site-content', icon: FileText },
+  { label: 'Services', href: '/admin/services', icon: ListChecks },
   { label: 'Delivery Process', href: '/admin/achievements', icon: Award },
   { label: 'Digital Vision', href: '/admin/vision', icon: Target },
   { label: 'Solutions', href: '/admin/initiatives', icon: Rocket },
-  { label: 'Delivery Capability', href: '/admin/entrepreneurship', icon: Briefcase },
-  { label: 'Insights', href: '/admin/youth', icon: GraduationCap },
   { label: 'Testimonials', href: '/admin/testimonials', icon: Star },
-  { label: 'Gallery', href: '/admin/gallery', icon: Image },
   { label: 'Blog Posts', href: '/admin/news', icon: Newspaper },
   { label: 'Stats / Numbers', href: '/admin/stats', icon: BarChart3 },
   { label: 'Contacts / Leads', href: '/admin/volunteers', icon: Users },
   { label: 'Messages', href: '/admin/messages', icon: MessageSquare },
   { label: 'Site Settings', href: '/admin/settings', icon: Settings },
+  { label: 'Content History', href: '/admin/history', icon: History },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
+  const { locale } = useLanguage()
   const [collapsed, setCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const t = (value: string) => translateKnown(value, locale)
 
   const logout = async () => {
     await fetch('/api/admin/logout', { method: 'POST' })
@@ -44,37 +49,37 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="admin-liquid-shell flex min-h-screen text-white">
+    <div className="admin-liquid-shell admin-field-shell flex min-h-screen">
       <LiquidBackdrop variant="admin" />
       <aside
-        className={`admin-sidebar admin-card fixed top-0 z-40 flex h-screen flex-col transition-all duration-300 lg:sticky ${
+        className={`admin-sidebar admin-field-rail admin-card fixed top-0 z-40 flex h-screen flex-col transition-all duration-300 lg:sticky ${
           collapsed ? 'w-16' : 'w-64'
         } ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
       >
-        <div className="flex items-center gap-3 border-b border-white/10 p-4">
+        <div className="admin-field-rail__brand flex items-center gap-3 border-b border-white/10 p-4">
           <NepalFlagPennant width={24} height={32} />
           {!collapsed && (
             <div>
               <span className="font-yatra text-lg text-gold">MJK</span>
-              <span className="block text-[10px] text-white/50">Portfolio Admin</span>
+              <span className="block text-[10px] text-white/50">{t('Portfolio Admin')}</span>
             </div>
           )}
         </div>
 
-        <nav className="flex-1 space-y-1 overflow-y-auto px-2 py-4">
+        <nav className="admin-field-nav flex-1 space-y-1 overflow-y-auto px-2 py-4" aria-label={t('Admin navigation')}>
           {sidebarLinks.map((link) => {
             const isActive = pathname === link.href
             return (
               <a
                 key={link.href}
                 href={link.href}
-                className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-all duration-200 ${
+                className={`admin-field-nav__link flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-all duration-200 ${
                   isActive ? 'admin-sidebar-link--active bg-crimson text-white shadow-lg' : 'text-white/65 hover:bg-white/10 hover:text-white'
                 } ${collapsed ? 'justify-center' : ''}`}
-                title={collapsed ? link.label : undefined}
+                title={collapsed ? t(link.label) : undefined}
               >
                 <link.icon size={18} className="flex-shrink-0" />
-                {!collapsed && <span>{link.label}</span>}
+                {!collapsed && <span>{t(link.label)}</span>}
               </a>
             )
           })}
@@ -86,14 +91,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             className={`flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-white/65 transition-all hover:bg-white/10 hover:text-white ${collapsed ? 'justify-center' : ''}`}
           >
             <LogOut size={18} />
-            {!collapsed && <span>Logout</span>}
+            {!collapsed && <span>{t('Logout')}</span>}
           </button>
         </div>
 
         <button
           onClick={() => setCollapsed(!collapsed)}
           className="absolute -right-3 top-20 hidden h-7 w-7 items-center justify-center rounded-full border border-gold/40 bg-crimson text-white shadow-lg transition-colors hover:bg-crimson-dark lg:flex"
-          aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'}
+          aria-label={collapsed ? t('Expand navigation') : t('Collapse navigation')}
         >
           {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
         </button>
@@ -109,24 +114,25 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       )}
 
       <div className="relative z-10 flex min-h-screen flex-1 flex-col">
-        <header className="admin-header admin-card sticky top-0 z-20 m-2 flex items-center justify-between rounded-2xl px-4 py-3 md:mx-4">
+        <header className="admin-header admin-field-header admin-card sticky top-0 z-20 m-2 flex items-center justify-between rounded-2xl px-4 py-3 md:mx-4">
           <div className="flex items-center gap-3">
-            <button onClick={() => setMobileOpen(true)} className="rounded-lg p-1 text-white/75 transition hover:bg-white/10 hover:text-white lg:hidden" aria-label="Open navigation">
+            <button onClick={() => setMobileOpen(true)} className="rounded-lg p-1 text-white/75 transition hover:bg-white/10 hover:text-white lg:hidden" aria-label={t('Open navigation')}>
               <Menu size={22} />
             </button>
             <h1 className="text-lg font-semibold text-white">
-              {sidebarLinks.find(l => l.href === pathname)?.label || 'Admin'}
+              {t(sidebarLinks.find(l => l.href === pathname)?.label || 'Admin')}
             </h1>
           </div>
           <div className="flex items-center gap-3">
+            <LanguageSwitch />
             <a href="/" target="_blank" className="hidden text-sm text-white/65 transition-colors hover:text-gold sm:inline">
-              View Website →
+              {t('View Website →')}
             </a>
             <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gold/50 bg-crimson text-sm font-bold text-white">A</div>
           </div>
         </header>
 
-        <main className="flex-1 p-4 pt-2 md:px-6 md:pb-8 lg:px-8">{children}</main>
+        <main className="admin-field-main flex-1 p-4 pt-2 md:px-6 md:pb-8 lg:px-8">{children}</main>
       </div>
     </div>
   )

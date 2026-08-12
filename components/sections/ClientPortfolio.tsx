@@ -284,13 +284,13 @@ export default function ClientPortfolio() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="mt-10 rounded-[2rem] bg-gradient-to-r from-slate-950 via-royal-dark to-crimson p-6 md:p-8 overflow-hidden relative"
+          className="mt-10 overflow-hidden rounded-[2rem] border border-slate-200 bg-[linear-gradient(135deg,#fffdf8_0%,#f4efe4_48%,#fff4ea_100%)] p-6 shadow-sm md:p-8"
         >
-          <div className="absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(circle_at_75%_50%,rgba(217,119,6,0.28),transparent_45%)]" />
-          <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+          <div className="absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(circle_at_75%_50%,rgba(245,158,11,0.14),transparent_45%)]" />
+          <div className="relative flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="text-white/60 text-xs font-bold uppercase tracking-[0.22em] mb-2">Start with strategy</p>
-              <h3 className="font-playfair text-2xl md:text-3xl font-extrabold text-white">
+              <p className="mb-2 text-xs font-bold uppercase tracking-[0.22em] text-slate-500">Start with strategy</p>
+              <h3 className="font-playfair text-2xl font-extrabold text-slate-950 md:text-3xl">
                 Want to build something similar for your business?
               </h3>
             </div>
@@ -298,7 +298,7 @@ export default function ClientPortfolio() {
               href={aashaTechUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-bold text-slate-900 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-50 hover:text-crimson"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-6 py-3 text-sm font-bold text-slate-900 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-200 hover:bg-gold-50 hover:text-crimson"
             >
               Start Your Project <ArrowRight size={16} />
             </a>

@@ -15,6 +15,9 @@ const KEYS = {
   stats: 'mjk_stats',
   achievements: 'mjk_achievements',
   testimonials: 'mjk_testimonials',
+  articles: 'mjk_articles',
+  pages: 'mjk_pages',
+  services: 'mjk_services',
   settings: 'mjk_settings',
   messages: 'mjk_messages',
   volunteers: 'mjk_volunteers',
@@ -30,7 +33,7 @@ function saveLocalData<T>(key: StorageKey, data: T): void {
 }
 
 async function fetchRemoteData<T>(key: StorageKey): Promise<T | null> {
-  const response = await fetch(`/api/content?key=${key}`, { cache: 'no-store' })
+  const response = await fetch(`/api/content?key=${key}`)
   if (!response.ok) return null
 
   const payload = await response.json()
@@ -82,14 +85,16 @@ export function useStoredData<T>(key: StorageKey, fallback: T): T {
       }
     }
 
-    refresh()
-
     const isAdminPage = window.location.pathname.startsWith('/admin')
-    const remoteTimer = isAdminPage
-      ? undefined
-      : window.setTimeout(() => void refreshRemote(), PUBLIC_REMOTE_DELAY_MS)
-
-    if (isAdminPage) void refreshRemote()
+    let remoteTimer: number | undefined
+    if (isAdminPage) {
+      refresh()
+      void refreshRemote()
+    } else {
+      // Public pages use Supabase as the source of truth. Do not rehydrate
+      // stale localStorage content before the CMS response arrives.
+      remoteTimer = window.setTimeout(() => void refreshRemote(), PUBLIC_REMOTE_DELAY_MS)
+    }
 
     const handleStorage = (event: StorageEvent) => {
       if (event.key === KEYS[key]) refresh()
@@ -113,7 +118,7 @@ export function useStoredData<T>(key: StorageKey, fallback: T): T {
   return data
 }
 
-export async function addMessage(message: { name: string; email: string; subject: string; message: string }): Promise<void> {
+export async function addMessage(message: { name: string; email: string; subject: string; message: string; website?: string }): Promise<void> {
   const messages = loadData('messages', [] as any[])
   const createdAt = new Date()
   const entry = {

@@ -38,6 +38,19 @@ CREATE TABLE IF NOT EXISTS about_content (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+-- CMS Content Revision History
+-- Every admin content save creates a JSON snapshot. The public client never
+-- accesses this table; it is exposed only through the authenticated API.
+CREATE TABLE IF NOT EXISTS content_revisions (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  content_key TEXT NOT NULL,
+  data JSONB NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS content_revisions_key_created_at_idx
+  ON content_revisions (content_key, created_at DESC);
+
 
 -- Vision Cards
 CREATE TABLE IF NOT EXISTS vision_cards (
@@ -46,11 +59,12 @@ CREATE TABLE IF NOT EXISTS vision_cards (
   heading TEXT NOT NULL,
   description TEXT,
   order_index INT DEFAULT 0,
+ALTER TABLE content_revisions ENABLE ROW LEVEL SECURITY;
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Solutions / Digital Initiatives
+  testimonials, achievements, site_stats, volunteer_submissions, contact_messages, site_settings, content_revisions
 CREATE TABLE IF NOT EXISTS initiatives (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   photo_url TEXT,
@@ -214,3 +228,28 @@ VALUES (
   'https://www.instagram.com/khadka3546?utm_source=qr',
   'https://x.com/khadkamukesh422?s=11'
 ) ON CONFLICT DO NOTHING;
+
+-- ============================================================
+-- Active public portfolio CMS extensions
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS site_pages (
+  page_key TEXT PRIMARY KEY,
+  data JSONB NOT NULL DEFAULT '{}'::JSONB,
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE initiatives ADD COLUMN IF NOT EXISTS year TEXT;
+ALTER TABLE initiatives ADD COLUMN IF NOT EXISTS tags JSONB NOT NULL DEFAULT '[]'::JSONB;
+ALTER TABLE achievements ADD COLUMN IF NOT EXISTS org TEXT;
+ALTER TABLE achievements ADD COLUMN IF NOT EXISTS points JSONB NOT NULL DEFAULT '[]'::JSONB;
+ALTER TABLE news_posts ADD COLUMN IF NOT EXISTS slug TEXT;
+ALTER TABLE news_posts ADD COLUMN IF NOT EXISTS read_minutes INT NOT NULL DEFAULT 5;
+ALTER TABLE news_posts ADD COLUMN IF NOT EXISTS tags JSONB NOT NULL DEFAULT '[]'::JSONB;
+
+CREATE UNIQUE INDEX IF NOT EXISTS news_posts_slug_unique_idx
+  ON news_posts (slug)
+  WHERE slug IS NOT NULL;
+
+ALTER TABLE site_pages ENABLE ROW LEVEL SECURITY;
+REVOKE ALL ON TABLE site_pages FROM anon, authenticated;

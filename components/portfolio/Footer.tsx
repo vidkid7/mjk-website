@@ -1,92 +1,149 @@
 import { ArrowUp } from 'lucide-react'
-import { pfMeta } from '@/lib/portfolio-content'
+import type { PublicService, PublicSite, PublicUiCopy } from '@/lib/public-content'
 
 const navigationLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'Vision', href: '#vision' },
-  { label: 'Solutions', href: '#initiatives' },
-  { label: 'Portfolio', href: '#client-portfolio' },
-  { label: 'Insights', href: '#insights' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'About', code: '01', href: '#about' },
+  { label: 'Work', code: '02', href: '#work' },
+  { label: 'Skills', code: '03', href: '#skills' },
+  { label: 'Experience', code: '04', href: '#experience' },
+  { label: 'Reports', code: '05', href: '#testimonials' },
+  { label: 'Contact', code: '06', href: '#contact' },
 ]
 
-const serviceLinks = [
-  { label: 'Custom Software', href: '/services/custom-software-development-nepal' },
-  { label: 'Web Development', href: '/services/web-development-nepal' },
-  { label: 'Business Automation', href: '/services/business-automation-nepal' },
-  { label: 'All Services', href: '/services' },
-]
-
-export default function Footer() {
+export default function Footer({ site, services, copy }: { site: PublicSite; services: PublicService[]; copy: PublicUiCopy['footer'] }) {
   const year = new Date().getFullYear()
+  const buildId = `${year}.${String(new Date().getMonth() + 1).padStart(2, '0')}`
+  const serviceLinks = services.map((service, index) => ({ label: service.shortName || service.name, code: `S-${String(index + 1).padStart(2, '0')}`, href: `/services/${service.slug}` }))
+  serviceLinks.push({ label: copy.servicesTitle, code: `S-${String(serviceLinks.length + 1).padStart(2, '0')}`, href: '/services' })
+  const studioNotes = [
+    { label: 'Studio', value: site.availability },
+    { label: 'Standing', value: site.role },
+    { label: 'Region', value: site.location },
+    { label: 'Channel', value: site.email },
+  ]
+
   return (
-    <footer className="relative border-t border-ink/10 bg-paper">
-      <div aria-hidden="true" className="neon-hairline absolute inset-x-0 top-0" />
-      <div className="portfolio-container py-10">
-        <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-          <a href="#top" className="group flex items-center gap-2.5" aria-label="Back to top">
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-ember-500 to-rose-500 font-mono text-sm font-bold text-white shadow-lg shadow-ember-500/25 transition-transform duration-300 group-hover:scale-105">
-            MK
-          </span>
-          <span className="font-fraunces text-lg font-semibold tracking-tight text-night-50">
-            Mukesh<span className="text-ember-500">.</span>
-          </span>
-          </a>
-
-          <nav className="flex flex-wrap items-center justify-center gap-x-7 gap-y-2" aria-label="Social links">
-            {pfMeta.socials.map((social) => (
-            <a
-              key={social.label}
-              href={social.href}
-              target="_blank"
-              rel="noreferrer"
-              className="font-mono text-xs text-night-400 transition-colors hover:text-ember-600"
-            >
-              {social.label}
+    <footer className="imprint relative border-t border-ink/10">
+      <div aria-hidden="true" className="imprint__hairline" />
+      <div className="portfolio-container imprint__container">
+        <header className="imprint__header">
+          <div className="imprint__brand">
+            <a href="#top" className="imprint__mark" aria-label="Back to top">
+              <span className="imprint__mark-mark" aria-hidden="true" />
+              <span className="imprint__mark-text">MK</span>
             </a>
-            ))}
-            <a href="https://www.facebook.com/Nepali.man.67" target="_blank" rel="noreferrer" className="font-mono text-xs text-night-400 transition-colors hover:text-ember-600">
-              Facebook
-            </a>
-          </nav>
-
-          <div className="flex items-center gap-6">
-            <p className="text-sm text-night-400">
-              © {year} {pfMeta.name}. Built with care in {pfMeta.location}.
-            </p>
-            <a
-              href="#top"
-              className="group grid h-9 w-9 place-items-center rounded-full border border-ink/15 text-night-400 transition-all duration-300 hover:border-ember-500/50 hover:text-ember-600"
-              aria-label="Back to top"
-            >
-              <ArrowUp className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5" />
-            </a>
+            <div className="imprint__brand-copy">
+                <span className="imprint__brand-eyebrow">{copy.brandEyebrow}</span>
+              <h2 className="imprint__brand-name">
+                Mukesh<span className="imprint__brand-dot">.</span>
+              </h2>
+                <span className="imprint__brand-tagline">{site.tagline}</span>
+            </div>
           </div>
+          <div className="imprint__status">
+            <span className="imprint__status-pulse" aria-hidden="true" />
+            <span className="imprint__status-text">
+              <strong>{copy.statusValue}</strong>
+              <span>{copy.compilerLabel} · {buildId}</span>
+            </span>
+          </div>
+          <a href="#top" className="imprint__top" aria-label="Back to top">
+            <span className="imprint__top-label">{copy.topLabel}</span>
+            <span className="imprint__top-arrow" aria-hidden="true">
+              <ArrowUp className="h-4 w-4" />
+            </span>
+          </a>
+        </header>
+
+        <div className="imprint__grid">
+          <section className="imprint__column" aria-label="Navigation index">
+            <header className="imprint__column-head">
+              <span className="imprint__column-index">A</span>
+              <span className="imprint__column-title">{copy.navigationTitle}</span>
+              <span className="imprint__column-rule" aria-hidden="true" />
+            </header>
+            <ol className="imprint__list">
+              {navigationLinks.map((link) => (
+                <li key={link.label} className="imprint__list-item">
+                  <a href={link.href} className="imprint__link">
+                    <span className="imprint__link-code">{link.code}</span>
+                    <span className="imprint__link-label">{link.label}</span>
+                    <span className="imprint__link-arrow" aria-hidden="true">→</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          <section className="imprint__column" aria-label="Services index">
+            <header className="imprint__column-head">
+              <span className="imprint__column-index">B</span>
+              <span className="imprint__column-title">{copy.servicesTitle}</span>
+              <span className="imprint__column-rule" aria-hidden="true" />
+            </header>
+            <ol className="imprint__list">
+              {serviceLinks.map((link) => (
+                <li key={link.label} className="imprint__list-item">
+                  <a href={link.href} className="imprint__link">
+                    <span className="imprint__link-code">{link.code}</span>
+                    <span className="imprint__link-label">{link.label}</span>
+                    <span className="imprint__link-arrow" aria-hidden="true">→</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          <section className="imprint__column" aria-label="Studio notes">
+            <header className="imprint__column-head">
+              <span className="imprint__column-index">C</span>
+              <span className="imprint__column-title">{copy.studioTitle}</span>
+              <span className="imprint__column-rule" aria-hidden="true" />
+            </header>
+            <dl className="imprint__notes">
+              {studioNotes.map((note) => (
+                <div key={note.label} className="imprint__note">
+                  <dt>{note.label}</dt>
+                  <dd>{note.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
         </div>
 
-        <div className="mt-8 grid gap-6 border-t border-ink/10 pt-6 sm:grid-cols-2">
-          <nav aria-label="Public navigation">
-            <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-night-400">Navigation</p>
-            <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
-              {navigationLinks.map((link) => (
-                <a key={link.label} href={link.href} className="text-sm text-night-300 transition-colors hover:text-ember-600">
-                  {link.label}
+        <section className="imprint__wires" aria-label="Outbound wires">
+          <span className="imprint__wires-label">{copy.wiresLabel}</span>
+          <span className="imprint__wires-rule" aria-hidden="true" />
+          <ul className="imprint__wires-list">
+            {site.socials.map((social) => (
+              <li key={social.label}>
+                <a
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="imprint__wire"
+                >
+                  <span className="imprint__wire-bullet" aria-hidden="true" />
+                  <span>{social.label}</span>
                 </a>
-              ))}
-            </div>
-          </nav>
-          <nav aria-label="Services">
-            <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-night-400">Services</p>
-            <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
-              {serviceLinks.map((link) => (
-                <a key={link.label} href={link.href} className="text-sm text-night-300 transition-colors hover:text-ember-600">
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </nav>
-        </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <footer className="imprint__footer">
+          <span className="imprint__footer-fact">
+            © {year} {site.name}. Built with care in {site.location}.
+          </span>
+          <span className="imprint__footer-rule" aria-hidden="true" />
+          <span className="imprint__footer-fact">
+            <span className="imprint__footer-mark">SHA ·</span> next studio update · Q4
+          </span>
+          <span className="imprint__footer-rule" aria-hidden="true" />
+          <span className="imprint__footer-fact">
+            <span className="imprint__footer-mark">REV ·</span> {buildId}
+          </span>
+        </footer>
       </div>
     </footer>
   )

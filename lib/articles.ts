@@ -7,6 +7,8 @@ export type Article = {
   readMinutes: number
   date: string
   tags: string[]
+  image: string
+  caption: string
 }
 
 const articles: Article[] = [
@@ -36,6 +38,8 @@ Software should meet people where the work is. If a workflow is worth improving,
     readMinutes: 5,
     date: '2026-08-10',
     tags: ['Nepal', 'Localization', 'Workflow'],
+    image: '/articles/building-software-for-the-way-nepal-works.svg',
+    caption: 'A field visit, drawn on the way out — Janakpur, Nepal.'
   },
   {
     slug: 'the-work-after-the-launch',
@@ -65,6 +69,8 @@ If your system works in a demo but creates questions in daily use, that is a use
     readMinutes: 4,
     date: '2026-08-08',
     tags: ['Operations', 'Reliability', 'Software'],
+    image: '/articles/the-work-after-the-launch.svg',
+    caption: 'The week after launch: backup windows, on-call rotation, owner notes.'
   },
   {
     slug: 'from-janakpur-to-kathmandu',
@@ -92,6 +98,8 @@ If you are building from Nepal and want a system that fits the work your organiz
     readMinutes: 4,
     date: '2026-08-06',
     tags: ['Nepal', 'Practice', 'Origins'],
+    image: '/articles/from-janakpur-to-kathmandu.svg',
+    caption: 'Two places, one path: Janakpur to Kathmandu.'
   },
   {
     slug: 'why-aasha-tech-focuses-on-useful-systems',
@@ -119,6 +127,8 @@ If your organization has a workflow that depends on repeated calls, duplicated r
     readMinutes: 5,
     date: '2026-08-04',
     tags: ['Aasha Tech', 'Systems', 'Organizations'],
+    image: '/articles/why-aasha-tech-focuses-on-useful-systems.svg',
+    caption: 'A workspace where routine records carry the day.'
   },
   {
     slug: 'the-quiet-discipline-behind-a-growing-software-practice',
@@ -146,6 +156,8 @@ The next project usually begins with a problem that sounds ordinary: a record is
     readMinutes: 5,
     date: '2026-08-02',
     tags: ['Craft', 'Learning', 'Delivery'],
+    image: '/articles/design-systems-for-quiet-delivery.svg',
+    caption: 'A field note on shipping without a launch drama.'
   },
   {
     slug: 'software-systems-for-slow-workflow',
@@ -158,6 +170,8 @@ The next project usually begins with a problem that sounds ordinary: a record is
     readMinutes: 5,
     date: '2026-07-12',
     tags: ['Workflow', 'Process', 'Operations'],
+    image: '/articles/designing-software-for-slow-workflow.svg',
+    caption: 'A paper register kept by the team who runs the workflow.'
   },
   {
     slug: 'small-nepal-teams-large-systems',
@@ -170,6 +184,8 @@ The next project usually begins with a problem that sounds ordinary: a record is
     readMinutes: 4,
     date: '2026-06-04',
     tags: ['Teams', 'Operations', 'Nepal'],
+    image: '/articles/small-nepal-teams-large-systems.svg',
+    caption: 'A small team running the system that keeps a school in session.'
   },
   {
     slug: 'why-quiet-interfaces-win',
@@ -182,6 +198,8 @@ The next project usually begins with a problem that sounds ordinary: a record is
     readMinutes: 3,
     date: '2026-05-18',
     tags: ['Design', 'UX', 'Craft'],
+    image: '/articles/why-quiet-interfaces-win.svg',
+    caption: 'A Tuesday afternoon, a quiet form, the work finished on time.'
   },
   {
     slug: 'nepali-context-in-software',
@@ -194,6 +212,8 @@ The next project usually begins with a problem that sounds ordinary: a record is
     readMinutes: 4,
     date: '2026-04-09',
     tags: ['Nepal', 'Localization', 'Craft'],
+    image: '/articles/nepali-context-in-software.svg',
+    caption: 'A Nepali field name, rendered with care — Devanagari and Latin.'
   },
   {
     slug: 'small-software-decisions',
@@ -206,6 +226,8 @@ The next project usually begins with a problem that sounds ordinary: a record is
     readMinutes: 4,
     date: '2026-03-22',
     tags: ['Architecture', 'Practice'],
+    image: '/articles/smallest-decision-system.svg',
+    caption: 'One well-placed decision, repeated consistently across the system.'
   },
   {
     slug: 'working-with-public-institutions',
@@ -218,6 +240,8 @@ The next project usually begins with a problem that sounds ordinary: a record is
     readMinutes: 5,
     date: '2026-02-14',
     tags: ['Public sector', 'Process', 'Nepal'],
+    image: '/articles/public-institutions-patiently.svg',
+    caption: 'A municipality’s office, working through a slow Tuesday.'
   },
 ]
 
@@ -235,4 +259,42 @@ export function getArticleSlugs(): string[] {
 
 export function getArticleCategories(): string[] {
   return Array.from(new Set(articles.map((a) => a.category)))
+}
+
+export type AdjacentArticle = {
+  article: Article | null
+  direction: 'prev' | 'next'
+  index: number | null
+}
+
+export function getAdjacentArticles(slug: string): {
+  previous: AdjacentArticle;
+  next: AdjacentArticle;
+  currentIndex: number;
+} {
+  const sorted = getArticles()
+  const currentIndex = sorted.findIndex((a) => a.slug === slug)
+  if (currentIndex === -1) {
+    return {
+      previous: { article: null, direction: 'prev', index: null },
+      next: { article: null, direction: 'next', index: null },
+      currentIndex: -1,
+    }
+  }
+  // Articles are sorted newest-first, so index+1 = older article = "previous" in time
+  const previousArticle = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null
+  const nextArticle = currentIndex > 0 ? sorted[currentIndex - 1] : null
+  return {
+    previous: {
+      article: previousArticle,
+      direction: 'prev',
+      index: previousArticle ? currentIndex + 2 : null,
+    },
+    next: {
+      article: nextArticle,
+      direction: 'next',
+      index: nextArticle ? currentIndex : null,
+    },
+    currentIndex,
+  }
 }

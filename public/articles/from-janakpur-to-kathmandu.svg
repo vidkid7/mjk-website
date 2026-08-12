@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Two places, one path: Janakpur to Kathmandu">
+  <defs>
+    <linearGradient id="bg3" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#fffaf3"/>
+      <stop offset="60%" stop-color="#f1e7d8"/>
+      <stop offset="100%" stop-color="#c9b89a"/>
+    </linearGradient>
+    <linearGradient id="skyline" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#2a2018" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#2a2018" stop-opacity="0.6"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="600" fill="url(#bg3)"/>
+
+  <!-- Mountain silhouette: Himalaya backdrop -->
+  <g fill="#5a4838" opacity="0.7">
+    <polygon points="0,320 80,200 140,260 220,160 320,240 420,140 520,220 620,180 720,260 820,200 920,140 1020,240 1120,180 1200,260 1200,600 0,600"/>
+  </g>
+  <g fill="#3d2f23" opacity="0.8">
+    <polygon points="220,160 280,220 320,240 360,200 420,140 480,200 520,220 540,180 580,220 620,180 580,260 520,260 460,240 380,260 320,260 280,260 220,260"/>
+  </g>
+
+  <!-- Path/road -->
+  <path d="M 100 540 Q 300 480, 500 510 T 900 460 Q 1050 440, 1150 480" stroke="#a48961" stroke-width="2" stroke-dasharray="6 4" fill="none" opacity="0.7"/>
+
+  <!-- Left marker: Janakpur -->
+  <g transform="translate(80 470)">
+    <circle cx="0" cy="0" r="14" fill="#c9342e"/>
+    <circle cx="0" cy="0" r="8" fill="#fffaf2"/>
+    <text x="0" y="40" fill="#191817" font-family="serif" font-size="14" font-weight="700" text-anchor="middle">Janakpur</text>
+    <text x="0" y="58" fill="#716d67" font-family="monospace" font-size="9" letter-spacing="2" text-anchor="middle">ORIGIN · मिथिला</text>
+  </g>
+
+  <!-- Right marker: Kathmandu -->
+  <g transform="translate(1110 460)">
+    <circle cx="0" cy="0" r="14" fill="#c9342e"/>
+    <circle cx="0" cy="0" r="8" fill="#fffaf2"/>
+    <text x="0" y="40" fill="#191817" font-family="serif" font-size="14" font-weight="700" text-anchor="middle">Kathmandu</text>
+    <text x="0" y="58" fill="#716d67" font-family="monospace" font-size="9" letter-spacing="2" text-anchor="middle">NOW · काठमाडौं</text>
+  </g>
+
+  <!-- Distance annotation in middle -->
+  <g transform="translate(600 380)">
+    <line x1="-180" y1="80" x2="180" y2="80" stroke="#c9342e" stroke-width="0.8" stroke-dasharray="3 3" opacity="0.6"/>
+    <rect x="-60" y="60" width="120" height="40" fill="#fffaf2" stroke="#c9342e" stroke-width="1"/>
+    <text x="0" y="78" fill="#c9342e" font-family="monospace" font-size="9" letter-spacing="2" text-anchor="middle">~225 KM</text>
+    <text x="0" y="92" fill="#191817" font-family="monospace" font-size="8" text-anchor="middle">6 HOURS BY BUS</text>
+  </g>
+
+  <!-- Footsteps on the path -->
+  <g fill="#c9342e" opacity="0.6">
+    <ellipse cx="280" cy="510" rx="6" ry="3" transform="rotate(20 280 510)"/>
+    <ellipse cx="310" cy="500" rx="6" ry="3" transform="rotate(25 310 500)"/>
+    <ellipse cx="440" cy="515" rx="6" ry="3" transform="rotate(-10 440 515)"/>
+    <ellipse cx="475" cy="500" rx="6" ry="3" transform="rotate(-5 475 500)"/>
+    <ellipse cx="700" cy="490" rx="6" ry="3" transform="rotate(-15 700 490)"/>
+    <ellipse cx="740" cy="475" rx="6" ry="3" transform="rotate(-20 740 475)"/>
+    <ellipse cx="900" cy="470" rx="6" ry="3" transform="rotate(0 900 470)"/>
+    <ellipse cx="940" cy="475" rx="6" ry="3" transform="rotate(5 940 475)"/>
+  </g>
+
+  <!-- Title at top -->
+  <g transform="translate(60 60)">
+    <text x="0" y="0" fill="#c9342e" font-family="monospace" font-size="11" letter-spacing="3">ORIGIN STORY · MK</text>
+    <text x="0" y="34" fill="#191817" font-family="serif" font-size="32" font-weight="500" letter-spacing="-1">Two places, one path.</text>
+    <text x="0" y="58" fill="#716d67" font-family="serif" font-size="14" font-style="italic">From the southern plains to the central valley.</text>
+  </g>
+
+  <!-- Compass -->
+  <g transform="translate(1090 110)">
+    <circle cx="0" cy="0" r="32" fill="#fffaf2" stroke="#191817" stroke-width="1"/>
+    <line x1="0" y1="-28" x2="0" y2="28" stroke="#191817" stroke-width="0.8"/>
+    <line x1="-28" y1="0" x2="28" y2="0" stroke="#191817" stroke-width="0.8"/>
+    <polygon points="0,-26 -4,0 4,0" fill="#c9342e"/>
+    <text x="0" y="-36" fill="#191817" font-family="monospace" font-size="9" text-anchor="middle">N</text>
+    <text x="36" y="3" fill="#716d67" font-family="monospace" font-size="9">E</text>
+    <text x="0" y="44" fill="#716d67" font-family="monospace" font-size="9" text-anchor="middle">S</text>
+    <text x="-44" y="3" fill="#716d67" font-family="monospace" font-size="9">W</text>
+  </g>
+
+  <!-- Corner registration -->
+  <g stroke="#c9342e" stroke-width="1" fill="none" opacity="0.5">
+    <path d="M 24 24 L 24 60 M 24 24 L 60 24"/>
+    <path d="M 1176 24 L 1176 60 M 1176 24 L 1140 24"/>
+    <path d="M 24 576 L 24 540 M 24 576 L 60 576"/>
+    <path d="M 1176 576 L 1176 540 M 1176 576 L 1140 576"/>
+  </g>
+</svg>

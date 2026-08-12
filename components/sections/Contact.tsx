@@ -24,7 +24,7 @@ const defaultSettings = {
 }
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', website: '' })
   const [submitted, setSubmitted] = useState(false)
   const storedSettings = useStoredData('settings', defaultSettings)
   const settings = { ...defaultSettings, ...storedSettings, phone: defaultSettings.phone, email: defaultSettings.email }
@@ -38,9 +38,9 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      await addMessage({ name: form.name, email: form.email, subject: form.subject, message: form.message })
+      await addMessage({ name: form.name, email: form.email, subject: form.subject, message: form.message, website: form.website })
       setSubmitted(true)
-      setForm({ name: '', email: '', subject: '', message: '' })
+      setForm({ name: '', email: '', subject: '', message: '', website: '' })
       setTimeout(() => setSubmitted(false), 3000)
     } catch {
       alert('Failed to send message. Please try again.')
@@ -48,9 +48,9 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="public-section public-section--dark relative py-24 md:py-32">
+    <section id="contact" className="public-section public-section--light relative py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <SectionHeading pill="Contact" heading="Let’s discuss your digital project" subheading="Have a website, software system, dashboard, automation idea, or portfolio project in mind? Send a message and we can discuss the best next step." accent="emerald" dark />
+        <SectionHeading pill="Contact" heading="Let’s discuss your digital project" subheading="Have a website, software system, dashboard, automation idea, or portfolio project in mind? Send a message and we can discuss the best next step." accent="emerald" />
 
         <div className="mb-10 grid gap-5 lg:grid-cols-3">
           {[
@@ -74,6 +74,8 @@ export default function Contact() {
             </div>
             <input type="text" placeholder="Subject" aria-label="Subject" value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} className="glass-inset w-full rounded-2xl p-4 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20" />
             <textarea placeholder="Tell us about your project" aria-label="Your message" rows={5} value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} className="glass-inset w-full resize-none rounded-2xl p-4 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20" required />
+            {/* Honeypot: hidden from real users, filled by auto-submission bots. */}
+            <input type="text" name="website" aria-hidden="true" tabIndex={-1} autoComplete="off" value={form.website} onChange={e => setForm({ ...form, website: e.target.value })} className="pointer-events-none absolute -left-[9999px] h-0 w-0 opacity-0" />
             <button type="submit" className="glass-action flex w-full items-center justify-center gap-2 rounded-xl py-4 text-xs font-bold uppercase tracking-[0.12em] text-slate-900 disabled:opacity-60">
               {submitted ? <><Check size={16} /> Message Sent!</> : <><Send size={16} /> Send Message</>}
             </button>

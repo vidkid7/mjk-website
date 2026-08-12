@@ -42,7 +42,7 @@ test('hero title exposes a responsive ember flame treatment with reduced-motion 
   assert.match(hero, /gateway-title__ember-field/)
   assert.match(css, /@keyframes gateway-title-ember-ignite/)
   assert.match(css, /@keyframes gateway-title-ember-drift/)
-  assert.match(css, /gateway-title--ember[\s\S]*?overflow: clip/)
+  assert.match(css, /gateway-title--ember\s*\{[^}]*overflow:\s*visible/)
   assert.match(css, /prefers-reduced-motion:\s*reduce[\s\S]*?gateway-title__ember-field[\s\S]*?animation:\s*none/)
 })
 ```
@@ -98,7 +98,7 @@ Immediately after the existing `.gateway-title > span:last-child` rule, add the 
 
 ```css
 .gateway-title--ember {
-  overflow: clip;
+  overflow: visible;
   isolation: isolate;
 }
 
@@ -110,7 +110,7 @@ Immediately after the existing `.gateway-title > span:last-child` rule, add the 
 
 .gateway-title--ember .gateway-title__ember-aura {
   inset: 16% -7% 5%;
-  z-index: -1;
+  z-index: 0;
   border-radius: 50%;
   background:
     radial-gradient(ellipse at 48% 78%, rgba(231, 53, 46, 0.3), transparent 47%),
@@ -123,11 +123,11 @@ Immediately after the existing `.gateway-title > span:last-child` rule, add the 
 
 .gateway-title--ember .gateway-title__ember-field {
   inset: 45% 4% 0;
-  z-index: -1;
+  z-index: 1;
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
-  opacity: 0;
+  opacity: 1;
 }
 
 .gateway-title--ember .gateway-title__ember-field i {

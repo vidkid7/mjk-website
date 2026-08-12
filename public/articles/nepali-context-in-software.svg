@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A Nepali field name rendered with care — Devanagari and Latin">
+  <defs>
+    <linearGradient id="bg9" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#fffaf3"/>
+      <stop offset="100%" stop-color="#f1e7d8"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="600" fill="url(#bg9)"/>
+
+  <text x="60" y="60" fill="#c9342e" font-family="monospace" font-size="11" letter-spacing="3">NEPALI CONTEXT · TWO SCRIPTS, ONE RECORD</text>
+  <text x="60" y="92" fill="#191817" font-family="serif" font-size="28" font-weight="500" letter-spacing="-0.8">A field name, rendered with care.</text>
+
+  <!-- Center: name field comparison card -->
+  <g transform="translate(180 180)">
+    <rect x="0" y="0" width="840" height="280" fill="#fffdf6" stroke="#a48961" stroke-width="1.4"/>
+
+    <!-- Field header -->
+    <text x="40" y="38" fill="#c9342e" font-family="monospace" font-size="11" letter-spacing="2">FIELD · APPLICANT NAME</text>
+    <line x1="40" y1="52" x2="800" y2="52" stroke="#a48961" stroke-width="0.5"/>
+
+    <!-- Devanagari row -->
+    <g>
+      <text x="40" y="98" fill="#716d67" font-family="monospace" font-size="9" letter-spacing="2">DEVANAGARI · मातृभाषा</text>
+      <text x="40" y="148" fill="#191817" font-family="serif" font-size="32" font-weight="500" letter-spacing="-0.5">हरि प्रसाद कार्की</text>
+      <text x="800" y="148" fill="#a48961" font-family="serif" font-size="14" font-style="italic" text-anchor="end">Hari P. Karki</text>
+    </g>
+
+    <line x1="40" y1="178" x2="800" y2="178" stroke="#a48961" stroke-width="0.4"/>
+
+    <!-- Latin row -->
+    <g>
+      <text x="40" y="208" fill="#716d67" font-family="monospace" font-size="9" letter-spacing="2">LATIN · ROMANISED</text>
+      <text x="40" y="248" fill="#191817" font-family="serif" font-size="22" font-style="italic">Hari Prasad Karki</text>
+      <text x="800" y="248" fill="#a48961" font-family="monospace" font-size="9" letter-spacing="2" text-anchor="end">DOB · 2042·03·14 BS</text>
+    </g>
+  </g>
+
+  <!-- Side annotations -->
+  <g transform="translate(60 200)">
+    <rect x="0" y="0" width="100" height="80" fill="#c9342e" opacity="0.08"/>
+    <text x="50" y="28" fill="#c9342e" font-family="monospace" font-size="9" letter-spacing="1" text-anchor="middle">NAME</text>
+    <text x="50" y="44" fill="#191817" font-family="serif" font-size="11" font-weight="700" text-anchor="middle">देवनागरी</text>
+    <text x="50" y="62" fill="#716d67" font-family="serif" font-size="10" font-style="italic" text-anchor="middle">र ले क</text>
+  </g>
+
+  <g transform="translate(60 290)">
+    <rect x="0" y="0" width="100" height="80" fill="#a48961" opacity="0.15"/>
+    <text x="50" y="28" fill="#716d67" font-family="monospace" font-size="9" letter-spacing="1" text-anchor="middle">CALENDAR</text>
+    <text x="50" y="44" fill="#191817" font-family="serif" font-size="11" font-weight="700" text-anchor="middle">बि.सं.</text>
+    <text x="50" y="62" fill="#716d67" font-family="serif" font-size="10" font-style="italic" text-anchor="middle">2083</text>
+  </g>
+
+  <!-- Right annotation: search -->
+  <g transform="translate(1050 200)">
+    <rect x="0" y="0" width="90" height="170" fill="#fffdf6" stroke="#a48961" stroke-width="1"/>
+    <text x="45" y="28" fill="#c9342e" font-family="monospace" font-size="9" letter-spacing="1" text-anchor="middle">SEARCH</text>
+    <line x1="14" y1="42" x2="76" y2="42" stroke="#a48961" stroke-width="0.4"/>
+
+    <text x="14" y="64" fill="#191817" font-family="serif" font-size="11">hari</text>
+    <text x="14" y="84" fill="#191817" font-family="serif" font-size="11">हरि</text>
+    <text x="14" y="104" fill="#191817" font-family="serif" font-size="11">HAri</text>
+    <text x="14" y="124" fill="#191817" font-family="serif" font-size="11">karki</text>
+
+    <text x="14" y="150" fill="#c9342e" font-family="monospace" font-size="8" text-anchor="start">→ 1 match</text>
+  </g>
+
+  <!-- Footnote -->
+  <text x="60" y="500" fill="#c9342e" font-family="monospace" font-size="11" letter-spacing="2">LABELS FOLLOW THE WORK · NAMES TOO</text>
+  <text x="60" y="528" fill="#191817" font-family="serif" font-size="14" font-style="italic">"If the office uses one set of words, the system should not make staff learn a second set."</text>
+  <text x="60" y="556" fill="#716d67" font-family="monospace" font-size="10" letter-spacing="2">REPORTED · NEPALI SOFTWARE CONTEXT · MAY 2026</text>
+
+  <!-- Corner registration -->
+  <g stroke="#c9342e" stroke-width="1" fill="none" opacity="0.5">
+    <path d="M 24 24 L 24 60 M 24 24 L 60 24"/>
+    <path d="M 1176 24 L 1176 60 M 1176 24 L 1140 24"/>
+    <path d="M 24 576 L 24 540 M 24 576 L 60 576"/>
+    <path d="M 1176 576 L 1176 540 M 1176 576 L 1140 576"/>
+  </g>
+</svg>

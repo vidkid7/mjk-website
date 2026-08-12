@@ -14,7 +14,7 @@ export default function SectionHeader({
   return (
     <div className={className}>
       <FieldLabel index={index} label={eyebrow} />
-      <h2 className="mt-5 max-w-2xl font-fraunces text-3xl font-semibold leading-[1.08] tracking-[-0.02em] text-night-50 sm:text-4xl lg:text-5xl">
+      <h2 className="noir-display noir-section-title mt-5 max-w-2xl text-3xl font-semibold leading-[1.08] tracking-[-0.02em] text-night-50 sm:text-4xl lg:text-5xl">
         {heading}
       </h2>
     </div>

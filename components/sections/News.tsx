@@ -30,15 +30,15 @@ export default function News() {
     }))
 
   return (
-    <section id="news" className="public-section public-section--dark relative overflow-hidden py-24 md:py-32">
+    <section id="news" className="public-section public-section--light relative overflow-hidden py-24 md:py-32">
       <DhakaPattern className="opacity-[0.025]" />
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <div className="mb-8 text-center">
           <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
             <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-[11px] font-black uppercase tracking-[0.2em] text-emerald-700"><Sparkles size={12} />Blog</span>
           </motion.div>
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }} className="mb-4 font-playfair text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">Latest Blog Posts & Digital Insights</motion.h2>
-          <motion.p initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }} className="mx-auto max-w-2xl leading-7 text-slate-500">Articles about software systems, UX, digital planning, websites, automation, and project delivery.</motion.p>
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }} className="mb-4 font-playfair text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl md:text-5xl">Latest Blog Posts & Digital Insights</motion.h2>
+          <motion.p initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }} className="mx-auto max-w-2xl leading-7 text-slate-600">Articles about software systems, UX, digital planning, websites, automation, and project delivery.</motion.p>
         </div>
 
         <NewsCards newsCards={newsCards} />

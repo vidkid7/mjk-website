@@ -1,30 +1,44 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { LiquidBackdrop } from '@/components/ui/LiquidBackdrop'
-import { getServicePage, servicePages } from '@/lib/service-pages'
+import SignalRail from '@/components/portfolio/SignalRail'
+import PublicImprint from '@/components/portfolio/PublicImprint'
+import { loadPublicContent } from '@/lib/public-content-server'
 
+export const dynamic = 'force-dynamic'
 const siteUrl = 'https://khadkamukesh.com.np'
 
-export function generateStaticParams() {
-  return servicePages.map(({ slug }) => ({ slug }))
-}
+type Params = { params: { slug: string } }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const service = getServicePage(params.slug)
-  if (!service) return {}
-
-  const url = `${siteUrl}/services/${service.slug}`
-  return {
-    title: service.title,
-    description: service.description,
-    alternates: { canonical: url },
-    openGraph: { type: 'website', url, title: service.title, description: service.description },
-    twitter: { card: 'summary', title: service.title, description: service.description },
+export async function generateStaticParams() {
+  try {
+    const content = await loadPublicContent()
+    return content.services.map(({ slug }) => ({ slug }))
+  } catch {
+    return []
   }
 }
 
-export default function ServicePage({ params }: { params: { slug: string } }) {
-  const service = getServicePage(params.slug)
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  try {
+    const content = await loadPublicContent()
+    const service = content.services.find((item) => item.slug === params.slug)
+    if (!service) return {}
+    const url = `${siteUrl}/services/${service.slug}`
+    return {
+      title: service.title,
+      description: service.description,
+      alternates: { canonical: url },
+      openGraph: { type: 'website', url, title: service.title, description: service.description },
+      twitter: { card: 'summary', title: service.title, description: service.description },
+    }
+  } catch {
+    return {}
+  }
+}
+
+export default async function ServicePage({ params }: Params) {
+  const content = await loadPublicContent()
+  const service = content.services.find((item) => item.slug === params.slug)
   if (!service) notFound()
 
   const url = `${siteUrl}/services/${service.slug}`
@@ -38,22 +52,20 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <main className="liquid-page public-editorial-light relative min-h-screen text-slate-900">
-      <LiquidBackdrop variant="public" />
-      <div className="relative z-10">
+    <main className="public-route-shell gateway-shell relative min-h-screen">
+      <SignalRail site={content.site} context="SERVICE FILE" detail={`${service.shortName.toUpperCase()} / NEPAL`} />
+      <div className="public-route-content relative z-10">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-        <header className="sticky top-0 z-20 px-5 pt-4 sm:px-8"><div className="glass-panel mx-auto flex max-w-5xl items-center justify-between rounded-2xl px-5 py-4 sm:px-6"><a href="/services" className="text-sm font-bold text-slate-600 transition hover:text-crimson">← All services</a><a href="/#contact" className="text-sm font-bold text-crimson transition hover:text-deep-crimson">Discuss a project</a></div></header>
-        <article className="mx-auto max-w-4xl px-5 py-14 sm:px-8 sm:py-20">
-          <div className="glass-panel rounded-[2rem] p-7 sm:p-10"><nav aria-label="Breadcrumb" className="text-sm text-slate-500"><a href="/" className="hover:text-crimson">Home</a> <span aria-hidden="true">/</span> <a href="/services" className="hover:text-crimson">Services</a> <span aria-hidden="true">/</span> <span>{service.shortName}</span></nav>
-          <p className="mt-12 text-xs font-black uppercase tracking-[0.18em] text-crimson">Digital systems · Nepal</p>
-          <h1 className="mt-4 max-w-3xl font-playfair text-4xl font-extrabold leading-tight tracking-tight text-[#071a35] sm:text-6xl">{service.name}</h1>
-          <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">{service.intro}</p></div>
-          <section className="glass-inset mt-8 rounded-3xl p-7 sm:p-9"><h2 className="font-playfair text-2xl font-bold text-[#071a35]">What this should help achieve</h2><ul className="mt-5 space-y-3 text-slate-700">{service.outcomes.map((outcome) => <li key={outcome} className="flex gap-3"><span className="font-bold text-crimson" aria-hidden="true">✓</span>{outcome}</li>)}</ul></section>
-          <section className="mt-14"><h2 className="font-playfair text-3xl font-bold text-[#071a35]">A practical approach</h2><div className="mt-7 grid gap-5 sm:grid-cols-2">{service.process.map((step, index) => <section key={step.title} className="glass-panel rounded-3xl p-7"><p className="text-xs font-black tracking-[0.16em] text-crimson">0{index + 1}</p><h3 className="mt-3 text-xl font-bold text-[#071a35]">{step.title}</h3><p className="mt-3 leading-7 text-slate-600">{step.body}</p></section>)}</div></section>
-          <section className="mt-14"><h2 className="font-playfair text-3xl font-bold text-[#071a35]">Common questions</h2><div className="mt-7 space-y-5">{service.faqs.map((faq) => <section key={faq.question} className="glass-inset rounded-3xl p-7"><h3 className="text-xl font-bold text-[#071a35]">{faq.question}</h3><p className="mt-3 leading-7 text-slate-600">{faq.answer}</p></section>)}</div></section>
-          <aside className="admin-card mt-14 rounded-3xl p-8 text-white sm:p-10"><h2 className="font-playfair text-2xl font-bold">Start with the real workflow.</h2><p className="mt-3 max-w-2xl leading-7 text-slate-300">Share the goal, the people involved, and the process that needs to work better. That is the best foundation for a useful digital project.</p><a href="/#contact" className="glass-action mt-6 inline-flex rounded-full px-5 py-3 text-sm font-bold text-[#071a35] hover:text-crimson">Discuss your project</a></aside>
+        <article className="public-route-main public-service-page">
+          <nav aria-label="Breadcrumb" className="public-route-breadcrumb"><a href="/">Home</a><span>/</span><a href="/services">Services</a><span>/</span><strong>{service.shortName}</strong></nav>
+          <section className="public-service-hero"><div><span className="public-route-kicker">SERVICE FILE / {service.shortName}</span><h1>{service.name}</h1><p>{service.intro}</p></div><div className="public-service-hero__stamp"><span>MK / 03</span><strong>BUILD<br />USEFUL</strong><small>NEPAL · REMOTE</small></div></section>
+          <section className="public-service-outcomes" aria-labelledby="outcomes-title"><div className="public-route-section-heading"><div><span className="public-route-kicker">THE TARGET</span><h2>What this should make easier.</h2></div></div><ul>{service.outcomes.map((outcome) => <li key={outcome}><span>✓</span>{outcome}</li>)}</ul></section>
+          <section className="public-service-process" aria-labelledby="process-title"><div className="public-route-section-heading"><div><span className="public-route-kicker">THE METHOD</span><h2>A practical approach.</h2></div><p>Clear checkpoints keep the work useful, understandable, and connected to the people who will rely on it.</p></div><div className="public-service-process__grid">{service.process.map((step, index) => <div key={step.title} className="public-route-card public-service-step"><span>0{index + 1}</span><h3>{step.title}</h3><p>{step.body}</p></div>)}</div></section>
+          <section className="public-service-faq" aria-labelledby="faq-title"><div className="public-route-section-heading"><div><span className="public-route-kicker">OPEN QUESTIONS</span><h2>Before we start.</h2></div></div><div className="public-service-faq__list">{service.faqs.map((faq) => <details key={faq.question}><summary>{faq.question}<span>+</span></summary><p>{faq.answer}</p></details>)}</div></section>
+          <aside className="public-route-cta public-service-cta"><div><span className="public-route-kicker">NEXT SIGNAL</span><h2>Start with the real workflow.</h2><p>Share the goal, the people involved, and the process that needs to work better.</p></div><a href={`mailto:${content.site.email}?subject=${encodeURIComponent(service.shortName)}%20project`} className="public-route-cta__button">Discuss your project <span>↗</span></a></aside>
         </article>
       </div>
+      <PublicImprint site={content.site} context="SERVICE FILE" tagline={content.site.tagline} />
     </main>
   )
 }

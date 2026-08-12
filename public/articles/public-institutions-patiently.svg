@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A municipality's office, working through a slow Tuesday">
+  <defs>
+    <linearGradient id="bg11" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#fffaf3"/>
+      <stop offset="100%" stop-color="#f1e7d8"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="600" fill="url(#bg11)"/>
+
+  <text x="60" y="60" fill="#c9342e" font-family="monospace" font-size="11" letter-spacing="3">PUBLIC SECTOR · PATIENCE IS THE WORK</text>
+  <text x="60" y="92" fill="#191817" font-family="serif" font-size="28" font-weight="500" letter-spacing="-0.8">Working through a slow Tuesday.</text>
+
+  <!-- Office floor plan -->
+  <g transform="translate(80 180)">
+    <rect x="0" y="0" width="540" height="340" fill="#fffdf6" stroke="#a48961" stroke-width="1.4"/>
+
+    <!-- Office rooms -->
+    <rect x="20" y="20" width="160" height="120" fill="none" stroke="#a48961" stroke-width="1"/>
+    <rect x="200" y="20" width="160" height="120" fill="none" stroke="#a48961" stroke-width="1"/>
+    <rect x="380" y="20" width="140" height="120" fill="none" stroke="#a48961" stroke-width="1"/>
+
+    <rect x="20" y="160" width="240" height="80" fill="none" stroke="#a48961" stroke-width="1"/>
+    <rect x="280" y="160" width="240" height="80" fill="none" stroke="#a48961" stroke-width="1"/>
+
+    <rect x="20" y="260" width="500" height="60" fill="none" stroke="#a48961" stroke-width="1"/>
+
+    <!-- Room labels -->
+    <g fill="#716d67" font-family="monospace" font-size="9" letter-spacing="1" text-anchor="middle">
+      <text x="100" y="48">RECEPTION</text>
+      <text x="100" y="62">front desk</text>
+
+      <text x="280" y="48">RECORDS</text>
+      <text x="280" y="62">filing &amp; lookup</text>
+
+      <text x="450" y="48">APPROVALS</text>
+      <text x="450" y="62">officer desk</text>
+
+      <text x="140" y="194">CITIZEN QUEUE</text>
+      <text x="140" y="208">waiting area</text>
+
+      <text x="400" y="194">CONSULTATION</text>
+      <text x="400" y="208">window 02</text>
+
+      <text x="270" y="294">CORRIDOR · BETWEEN STATIONS</text>
+    </g>
+
+    <!-- People as small dots in rooms -->
+    <g fill="#c9342e">
+      <circle cx="60" cy="100" r="6"/>
+      <circle cx="160" cy="80" r="6"/>
+      <circle cx="240" cy="100" r="6"/>
+      <circle cx="320" cy="80" r="6"/>
+      <circle cx="430" cy="100" r="6"/>
+      <circle cx="490" cy="80" r="6"/>
+      <circle cx="80" cy="220" r="6"/>
+      <circle cx="180" cy="230" r="6"/>
+      <circle cx="350" cy="230" r="6"/>
+      <circle cx="450" cy="220" r="6"/>
+    </g>
+
+    <!-- Movement path -->
+    <g stroke="#c9342e" stroke-width="1" stroke-dasharray="4 3" fill="none" opacity="0.5">
+      <path d="M 60 100 Q 120 200, 240 100"/>
+      <path d="M 240 100 Q 360 200, 430 100"/>
+      <path d="M 430 100 Q 480 180, 350 230"/>
+    </g>
+
+    <!-- Activity icons on corridor -->
+    <g transform="translate(120 282)">
+      <rect x="0" y="0" width="20" height="14" fill="#c9342e"/>
+      <text x="10" y="10" fill="#fffaf2" font-family="monospace" font-size="8" text-anchor="middle">14:32</text>
+    </g>
+    <g transform="translate(280 282)">
+      <rect x="0" y="0" width="20" height="14" fill="#a48961"/>
+      <text x="10" y="10" fill="#fffaf2" font-family="monospace" font-size="8" text-anchor="middle">14:48</text>
+    </g>
+    <g transform="translate(440 282)">
+      <rect x="0" y="0" width="20" height="14" fill="#c9342e" opacity="0.6"/>
+      <text x="10" y="10" fill="#fffaf2" font-family="monospace" font-size="8" text-anchor="middle">15:11</text>
+    </g>
+  </g>
+
+  <!-- Right column: text panel -->
+  <g transform="translate(680 180)">
+    <rect x="0" y="0" width="440" height="340" fill="#fffdf6" stroke="#a48961" stroke-width="1"/>
+    <text x="20" y="32" fill="#c9342e" font-family="monospace" font-size="11" letter-spacing="2">A PATIENCE PLAYBOOK</text>
+    <line x1="20" y1="44" x2="420" y2="44" stroke="#191817" stroke-width="0.5"/>
+
+    <g fill="#191817" font-family="serif" font-size="12">
+      <text x="20" y="76" font-weight="700">1. Sit in the waiting area</text>
+      <text x="20" y="94" fill="#716d67" font-size="11">→ feel the queue, hear the question</text>
+
+      <text x="20" y="124" font-weight="700">2. Walk the room with the records officer</text>
+      <text x="20" y="142" fill="#716d67" font-size="11">→ see the paper trail they keep</text>
+
+      <text x="20" y="172" font-weight="700">3. Sketch the workflow on paper</text>
+      <text x="20" y="190" fill="#716d67" font-size="11">→ before drawing one screen</text>
+
+      <text x="20" y="220" font-weight="700">4. Ship the smallest dependable piece</text>
+      <text x="20" y="238" fill="#716d67" font-size="11">→ usually a single clear form</text>
+
+      <text x="20" y="268" font-weight="700">5. Return the next Tuesday</text>
+      <text x="20" y="286" fill="#716d67" font-size="11">→ keep the work honest</text>
+    </g>
+
+    <line x1="20" y1="304" x2="420" y2="304" stroke="#a48961" stroke-width="0.5"/>
+    <text x="20" y="324" fill="#c9342e" font-family="serif" font-size="11" font-style="italic">"Mistaking slowness for resistance is the mistake."</text>
+  </g>
+
+  <!-- Footnote -->
+  <text x="60" y="540" fill="#c9342e" font-family="monospace" font-size="11" letter-spacing="2">SHIPPED · MUNICIPAL PILOT · 6 MONTHS</text>
+  <text x="60" y="566" fill="#191817" font-family="serif" font-size="14" font-style="italic">"Public-sector software moves slowly because the work is serious."</text>
+
+  <!-- Corner registration -->
+  <g stroke="#c9342e" stroke-width="1" fill="none" opacity="0.5">
+    <path d="M 24 24 L 24 60 M 24 24 L 60 24"/>
+    <path d="M 1176 24 L 1176 60 M 1176 24 L 1140 24"/>
+    <path d="M 24 576 L 24 540 M 24 576 L 60 576"/>
+    <path d="M 1176 576 L 1176 540 M 1176 576 L 1140 576"/>
+  </g>
+</svg>

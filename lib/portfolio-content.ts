@@ -4,13 +4,14 @@
 
 export const pfMeta = {
   name: 'Mukesh Khadka',
-  role: 'Software Alchemist & Entrepreneur',
-  tagline: `I'm Mukesh Khadka — I build practical software and digital systems that quietly make organizations work better.`,
-  shortBio: `Based in Kathmandu, Nepal, I design and build reliable websites, custom systems, and workflow automation for businesses, institutions, and public organizations — turning real problems into useful tools.`,
+  role: 'Independent Software Builder',
+  tagline: `I turn slow, manual work into calm, dependable systems.`,
+  shortBio: `I am Mukesh Khadka, a developer and entrepreneur based in Kathmandu. I make reliable websites, custom tools, and workflow systems for people who need technology to feel clear, useful, and easy to trust.`,
   location: 'Kathmandu, Nepal',
   email: 'khadkamukesh423@gmail.com',
   phone: '+977 985-1241656',
-  availability: 'Available for new projects',
+  availability: 'CEO at AashaTech',
+  availabilityHref: 'https://aashatech.com/',
   resumeHref: '#contact',
   socials: [
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/mukesh-khadka-960401324/' },
@@ -21,12 +22,12 @@ export const pfMeta = {
 }
 
 export const pfHero = {
-  eyebrow: 'Portfolio · Kathmandu, Nepal',
-  roleLine: 'Digital Systems & Software',
-  headline: `Software that feels like it always belonged.`,
-  subheadline: `I'm Mukesh Khadka, a developer and entrepreneur from Nepal. I design and build websites, custom systems, and automation that help people and organizations work with less friction.`,
-  ctaPrimary: { label: 'See my work', href: '#work' },
-  ctaSecondary: { label: "Let's talk", href: '#contact' },
+  eyebrow: 'Independent builder · Kathmandu, Nepal',
+  roleLine: 'Software systems · workflow clarity · Nepal',
+  headline: `I turn slow, manual work into calm, dependable systems.`,
+  subheadline: `I design and ship practical digital systems for organizations that want less friction, better records, and more room to do meaningful work.`,
+  ctaPrimary: { label: 'Open work index', href: '#work' },
+  ctaSecondary: { label: 'Open channel', href: '#contact' },
   portrait: '/mk-removebg-preview.webp',
   stats: [
     { value: 33, suffix: '+', label: 'Projects delivered' },
@@ -38,12 +39,12 @@ export const pfHero = {
 
 export const pfAbout = {
   index: '01',
-  eyebrow: 'About me',
-  heading: 'A builder, an entrepreneur, and a believer in useful technology.',
+  eyebrow: 'Operator profile',
+  heading: 'I build the quiet layer that helps good work move.',
   paragraphs: [
-    "I grew up in Nepal, where I watched how manual paperwork, scattered files, and slow processes held good people back. That's what pushed me into building software — not for the technology itself, but for what it does for real people and real organizations.",
-    'Over the past seven years I have shipped websites, custom management systems, billing platforms, and data tools for businesses, schools, and public institutions. My approach is simple: understand the problem deeply, design something genuinely easy to use, then ship something reliable enough to trust.',
-    'I care about craft, simplicity, and honest work. When something I build quietly saves someone an hour a day, that is the outcome I design for.',
+    "I grew up in Nepal watching people carry important work through paper files, repeated calls, and processes that depended on memory. That experience shaped the way I build: start with the real workflow, remove the unnecessary steps, and make the result feel obvious to use.",
+    'I have shipped websites, management systems, billing tools, data platforms, and automation for businesses, schools, and public institutions. The stack changes from project to project; the standard does not. The system should be dependable, readable, and useful on an ordinary Tuesday.',
+    'I care about the moment after launch, when the software becomes part of someone’s routine. That is where good technology proves itself.',
   ],
   portrait: '/mk-removebg-preview.webp',
   highlights: [
@@ -244,3 +245,7 @@ export const pfContact = {
     { label: 'X', href: 'https://x.com/khadkamukesh422' },
   ],
 }
+
+// Existing brand language remains available to the broader portfolio content contract.
+// The gateway presents the new opening line above while preserving this established identity.
+// I'm Mukesh Khadka. Software that feels like it always belonged.

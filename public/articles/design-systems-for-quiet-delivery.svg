@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A field note on shipping without a launch drama">
+  <defs>
+    <linearGradient id="bg5" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#fffaf3"/>
+      <stop offset="100%" stop-color="#f1e7d8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="600" fill="url(#bg5)"/>
+
+  <text x="60" y="60" fill="#c9342e" font-family="monospace" font-size="11" letter-spacing="3">QUIET DELIVERY · THE FIRST RELEASE</text>
+  <text x="60" y="92" fill="#191817" font-family="serif" font-size="28" font-weight="500" letter-spacing="-0.8">Ship without a launch drama.</text>
+
+  <!-- Horizontal "release timeline" strip -->
+  <g transform="translate(60 160)">
+    <rect x="0" y="0" width="1080" height="220" fill="#fffdf6" stroke="#a48961" stroke-width="1"/>
+    <line x1="40" y1="80" x2="1040" y2="80" stroke="#c9342e" stroke-width="1.6"/>
+
+    <!-- Release gates as small rectangular markers -->
+    <g fill="#c9342e">
+      <rect x="80" y="68" width="14" height="24"/>
+      <rect x="240" y="68" width="14" height="24"/>
+      <rect x="400" y="68" width="14" height="24"/>
+      <rect x="560" y="68" width="14" height="24"/>
+      <rect x="720" y="68" width="14" height="24"/>
+      <rect x="880" y="68" width="14" height="24"/>
+      <rect x="1000" y="68" width="14" height="24"/>
+    </g>
+
+    <!-- Gate labels -->
+    <g fill="#191817" font-family="monospace" font-size="10" text-anchor="middle" letter-spacing="1">
+      <text x="87" y="50">SCOPE</text>
+      <text x="247" y="50">SPEC</text>
+      <text x="407" y="50">BUILD</text>
+      <text x="567" y="50">TEST</text>
+      <text x="727" y="50">SHADOW</text>
+      <text x="887" y="50">REVIEW</text>
+      <text x="1007" y="50">SHIPPED</text>
+    </g>
+
+    <g fill="#716d67" font-family="monospace" font-size="8" text-anchor="middle">
+      <text x="87" y="118">day 1</text>
+      <text x="247" y="118">day 3</text>
+      <text x="407" y="118">day 7</text>
+      <text x="567" y="118">day 9</text>
+      <text x="727" y="118">day 10</text>
+      <text x="887" y="118">day 11</text>
+      <text x="1007" y="118">day 12</text>
+    </g>
+
+    <!-- Quiet indicators -->
+    <g fill="#a48961" opacity="0.5">
+      <circle cx="320" cy="160" r="3"/>
+      <circle cx="640" cy="160" r="3"/>
+      <circle cx="960" cy="160" r="3"/>
+    </g>
+    <text x="60" y="170" fill="#716d67" font-family="monospace" font-size="8" letter-spacing="1">QUIET BUFFER · TEAM REVIEWS WITHOUT INTERRUPTION</text>
+    <text x="60" y="195" fill="#191817" font-family="serif" font-size="11" font-style="italic">Each gate ships a small piece. The team knows what is next without a big reveal.</text>
+  </g>
+
+  <!-- Footnote -->
+  <text x="60" y="450" fill="#c9342e" font-family="monospace" font-size="11" letter-spacing="2">EVERY RELEASE IS A SERIES OF SMALL CHECKS · NOT A BIG MOMENT</text>
+  <text x="60" y="478" fill="#191817" font-family="serif" font-size="14" font-style="italic" max-width="900">"The team felt less pressure and the system felt more ready."</text>
+
+  <!-- Footnote column -->
+  <g transform="translate(800 440)">
+    <rect x="0" y="0" width="320" height="100" fill="#fffdf6" stroke="#a48961" stroke-width="1"/>
+    <text x="14" y="20" fill="#c9342e" font-family="monospace" font-size="9" letter-spacing="2">CHECKLIST</text>
+    <g fill="#191817" font-family="monospace" font-size="9">
+      <text x="14" y="40">→ Spec agreed in writing</text>
+      <text x="14" y="56">→ One gate owns each step</text>
+      <text x="14" y="72">→ Rollback path is rehearsed</text>
+      <text x="14" y="88">→ Quiet on release day</text>
+    </g>
+  </g>
+
+  <!-- Corner registration -->
+  <g stroke="#c9342e" stroke-width="1" fill="none" opacity="0.5">
+    <path d="M 24 24 L 24 60 M 24 24 L 60 24"/>
+    <path d="M 1176 24 L 1176 60 M 1176 24 L 1140 24"/>
+    <path d="M 24 576 L 24 540 M 24 576 L 60 576"/>
+    <path d="M 1176 576 L 1176 540 M 1176 576 L 1140 576"/>
+  </g>
+</svg>

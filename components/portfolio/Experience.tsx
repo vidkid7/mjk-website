@@ -1,72 +1,134 @@
 'use client'
 import Reveal from '@/components/portfolio/Reveal'
 import SectionHeader from '@/components/portfolio/SectionHeader'
-import { pfExperience } from '@/lib/portfolio-content'
+import type { PublicExperience, PublicUiCopy } from '@/lib/public-content'
 
-export default function Experience() {
+type StatusTone = 'live' | 'closed' | 'open'
+
+function statusFor(index: number, total: number): StatusTone {
+  if (index === 0) return 'live'
+  if (index === total - 1) return 'open'
+  return 'closed'
+}
+
+function periodYear(period: string): string {
+  const match = period.match(/\d{4}/)
+  if (match) return match[0]
+  if (/education/i.test(period)) return 'EDU'
+  return period.slice(0, 3).toUpperCase()
+}
+
+function periodRange(period: string): string {
+  const match = period.match(/(\d{4})\s*[—-]\s*(\d{4}|Present)/)
+  if (!match) return period
+  return `${match[1].slice(2)}–${match[2].slice(0, 2) === 'Pr' ? 'NOW' : match[2].slice(2)}`
+}
+
+export default function Experience({ experience, copy }: { experience: PublicExperience[]; copy: PublicUiCopy['experience'] }) {
   return (
-    <section id="experience" className="relative scroll-mt-16 py-20 sm:py-28">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_15%_30%,rgba(176,61,47,0.05),transparent_40%)]"
-      />
+    <section id="experience" className="experience-dossier relative scroll-mt-16 py-20 sm:py-28">
       <div className="portfolio-container">
         <Reveal>
-          <SectionHeader index="04" eyebrow="Operational History" heading="A timeline of the work that shaped me." />
+          <div className="experience-dossier__masthead">
+            <SectionHeader index={copy.index} eyebrow={copy.eyebrow} heading={copy.heading} />
+            <dl className="experience-dossier__meta" aria-label="Dossier metadata">
+              <div>
+                <dt>{copy.filedLabel}</dt>
+                <dd>{copy.index} / {copy.eyebrow}</dd>
+              </div>
+              <div>
+                <dt>{copy.entriesLabel}</dt>
+                <dd>{String(experience.length).padStart(2, '0')} on record</dd>
+              </div>
+              <div>
+                <dt>{copy.statusLabel}</dt>
+                <dd className="experience-dossier__status">
+                  <span className="experience-dossier__pulse" aria-hidden="true" />
+                  {copy.statusValue}
+                </dd>
+              </div>
+            </dl>
+          </div>
         </Reveal>
 
-        <div className="relative mt-16">
-          {/* Timeline spine */}
-          <div
-            aria-hidden="true"
-            className="absolute bottom-4 left-[11px] top-2 w-px bg-gradient-to-b from-ember-500 via-rose-500/60 to-transparent shadow-[0_0_12px_rgba(196,102,31,0.35)]"
-          />
-
-          <ol className="space-y-12">
-            {pfExperience.map((item, i) => (
-              <li key={item.title}>
-                <Reveal delay={i * 100} blur>
-                  <article className="group relative pl-12">
-                  {/* Node */}
-                    <span className="checkpoint-marker absolute left-0 top-2 grid h-6 w-6 place-items-center" aria-hidden="true">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ember-500/30 opacity-60 motion-reduce:animate-none group-hover:opacity-100" />
-                    <span className="relative inline-flex h-3.5 w-3.5 rounded-full border-2 border-ember-600 bg-ember-500 shadow-[0_0_12px_rgba(196,102,31,0.6)]" />
-                  </span>
-
-                  <div className="rounded-3xl border border-ink/10 bg-white/60 p-7 transition-all duration-500 hover:-translate-y-0.5 hover:border-ember-500/30 hover:bg-white/80 hover:shadow-xl hover:shadow-ember-500/10 sm:p-8">
-                    <dl className="flex flex-wrap items-center gap-x-5 gap-y-2">
-                      <div className="flex items-center gap-2">
-                        <dt className="sr-only">Period</dt>
-                        <dd className="inline-flex items-center gap-1.5 rounded-full border border-ember-500/30 bg-ember-500/10 px-3.5 py-1 font-mono text-xs font-semibold tracking-wide text-ember-700">
-                          <span className="h-1.5 w-1.5 rounded-full bg-ember-500 shadow-[0_0_8px_rgba(196,102,31,0.6)]" />
-                          {item.period}
-                        </dd>
+        <ol className="experience-dossier__list" role="list">
+          {experience.map((item, i) => {
+            const tone = statusFor(i, experience.length)
+            const year = periodYear(item.period)
+            const range = periodRange(item.period)
+            return (
+              <li key={item.title} className="experience-dossier__entry">
+                <Reveal delay={i * 90} blur>
+                  <article className={`experience-entry experience-entry--${tone}`}>
+                    <aside className="experience-entry__gate" aria-hidden="true">
+                      <span className="experience-entry__corner experience-entry__corner--tl" />
+                      <span className="experience-entry__corner experience-entry__corner--tr" />
+                      <span className="experience-entry__corner experience-entry__corner--bl" />
+                      <span className="experience-entry__corner experience-entry__corner--br" />
+                      <div className="experience-entry__year">
+                        <span className="experience-entry__year-mark">YR</span>
+                        <strong>{year}</strong>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <dt className="font-mono text-[11px] uppercase tracking-[0.16em] text-night-400">Organization</dt>
-                        <dd className="font-mono text-xs text-night-400">{item.org}</dd>
-                      </div>
-                    </dl>
+                      <span className="experience-entry__range">{range}</span>
+                      <span className={`experience-entry__status experience-entry__status--${tone}`}>
+                        <span className="experience-entry__status-dot" />
+                        {tone === 'live' && 'Active'}
+                        {tone === 'closed' && 'Closed'}
+                        {tone === 'open' && 'Open'}
+                      </span>
+                    </aside>
 
-                    <h3 className="mt-4 font-fraunces text-2xl font-semibold tracking-tight text-night-50 transition-colors duration-300 group-hover:text-ember-600">
-                      {item.title}
-                    </h3>
+                    <div className="experience-entry__body">
+                      <header className="experience-entry__header">
+                        <span className="experience-entry__counter">
+                          <span className="experience-entry__counter-rule" />
+                          FILE {String(i + 1).padStart(2, '0')} · {String(experience.length).padStart(2, '0')}
+                        </span>
+                        <div className="experience-entry__org">
+                          <span className="experience-entry__org-label">Filed at</span>
+                          <span className="experience-entry__org-value">{item.org}</span>
+                        </div>
+                      </header>
 
-                    <ul className="mt-5 space-y-2.5">
-                      {item.points.map((point) => (
-                        <li key={point} className="flex items-start gap-3 text-night-300">
-                          <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-ember-500" aria-hidden="true" />
-                          <span className="leading-relaxed">{point}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                      <h3 className="experience-entry__title">{item.title}</h3>
+
+                      <span className="experience-entry__period">
+                        <span className="experience-entry__period-bar" aria-hidden="true" />
+                        {item.period}
+                      </span>
+
+                      <ul className="experience-entry__points">
+                        {item.points.map((point, j) => (
+                          <li key={point}>
+                            <span className="experience-entry__point-index">
+                              {String(j + 1).padStart(2, '0')}
+                            </span>
+                            <span className="experience-entry__point-text">{point}</span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      <footer className="experience-entry__footer">
+                        <span>Witnessed</span>
+                        <span className="experience-entry__footer-rule" aria-hidden="true" />
+                        <span>{item.period}</span>
+                      </footer>
+                    </div>
                   </article>
                 </Reveal>
               </li>
-            ))}
-          </ol>
-        </div>
+            )
+          })}
+        </ol>
+
+        <Reveal delay={120}>
+          <div className="experience-dossier__footnote">
+            <span className="experience-dossier__footnote-mark" aria-hidden="true" />
+            <p>
+              {copy.footnote}
+            </p>
+          </div>
+        </Reveal>
       </div>
     </section>
   )

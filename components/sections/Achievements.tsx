@@ -25,18 +25,17 @@ export default function Achievements() {
   const achievements = useStoredData('achievements', achievementsData)
 
   return (
-    <section id="achievements" className="public-section public-section--dark relative py-24 md:py-32">
+    <section id="achievements" className="public-section public-section--light relative py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading
           pill="Delivery Process"
           heading="How a digital project moves from idea to launch"
           subheading="A simple, practical delivery path for websites, systems, dashboards, automation, and software products."
           accent="gold"
-          dark
         />
 
         <div className="relative mx-auto max-w-3xl">
-          <div className="absolute bottom-0 left-5 top-0 w-px bg-gradient-to-b from-emerald-400/30 via-blue-500/30 to-gold/30 md:left-1/2 md:-translate-x-px" />
+          <div className="absolute bottom-0 left-5 top-0 w-px bg-gradient-to-b from-emerald-300 via-blue-300 to-gold/40 md:left-1/2 md:-translate-x-px" />
 
           {achievements.map((item, i) => {
             const Icon = iconMap[item.icon] || Award
@@ -55,18 +54,18 @@ export default function Achievements() {
                 <div className={`absolute left-3.5 top-2 z-10 h-3.5 w-3.5 rounded-full border-2 bg-white md:left-1/2 md:-translate-x-1/2 ${colors.dot}`} />
 
                 <div className={`absolute top-0 hidden md:flex ${isLeft ? 'right-0 md:left-[54%] md:right-auto md:pl-8' : 'left-0 md:right-[54%] md:left-auto md:justify-end md:pr-8'}`}>
-                  <span className="rounded-md bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-400">{item.year}</span>
+                  <span className="rounded-md bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-500">{item.year}</span>
                 </div>
 
                 <div className="glass-panel group rounded-[1.75rem] p-6 md:p-8 transition-all duration-200 hover:border-slate-200 hover:shadow-md">
-                  <span className="mb-2 inline-block rounded-md bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-400 md:hidden">{item.year}</span>
+                  <span className="mb-2 inline-block rounded-md bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-500 md:hidden">{item.year}</span>
                   <div className="flex items-start gap-3.5">
                     <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl ${colors.bg} transition-colors`}>
                       <Icon className={colors.text} size={18} />
                     </div>
                     <div>
                       <h3 className="mb-1 text-[15px] font-bold text-slate-900">{item.title}</h3>
-                      <p className="text-sm leading-relaxed text-slate-500">{item.description}</p>
+                      <p className="text-sm leading-relaxed text-slate-600">{item.description}</p>
                     </div>
                   </div>
                 </div>

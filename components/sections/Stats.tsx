@@ -1,16 +1,16 @@
 'use client'
 import { motion } from 'framer-motion'
-import { Hammer, Heart, MapPin, GraduationCap } from 'lucide-react'
+import { Hammer, Heart, MapPin, GraduationCap, Sparkles } from 'lucide-react'
 import { Counter } from '@/components/ui/Counter'
 import { statsData } from '@/lib/placeholder-data'
 import { DhakaPattern } from '@/components/ui/NepalFlag'
 import { useStoredData } from '@/lib/storage'
 
 const statConfig = [
-  { icon: Hammer, gradient: 'from-crimson to-crimson-dark', hoverShadow: 'hover:shadow-glow-crimson' },
-  { icon: Heart, gradient: 'from-rose-500 to-pink-600', hoverShadow: 'hover:shadow-glow-crimson' },
-  { icon: MapPin, gradient: 'from-blue-500 to-blue-700', hoverShadow: 'hover:shadow-glow-blue' },
-  { icon: GraduationCap, gradient: 'from-gold to-gold-dark', hoverShadow: 'hover:shadow-glow-gold' },
+  { icon: Hammer, tone: 'crimson' },
+  { icon: Heart, tone: 'rose' },
+  { icon: MapPin, tone: 'blue' },
+  { icon: GraduationCap, tone: 'gold' },
 ]
 
 export default function Stats() {
@@ -18,40 +18,56 @@ export default function Stats() {
 
   return (
     <section className="public-section public-section--light relative overflow-hidden py-24 md:py-32">
-      <DhakaPattern className="opacity-[0.08]" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-r from-crimson-dark via-crimson to-[#d9233b]" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/25" />
-      
-      <div className="relative max-w-6xl mx-auto px-5 sm:px-8">
+      <DhakaPattern className="opacity-[0.03]" />
+      <div className="pointer-events-none absolute left-0 top-0 h-64 w-64 rounded-full bg-amber-100/50 blur-3xl" />
+      <div className="pointer-events-none absolute right-0 bottom-0 h-72 w-72 rounded-full bg-cyan-100/50 blur-3xl" />
+
+      <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
+        <div className="mx-auto mb-10 max-w-3xl text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-[11px] font-black uppercase tracking-[0.2em] text-emerald-700">
+            <Sparkles size={12} />
+            Delivery Snapshot
+          </span>
+          <h2 className="mt-5 font-playfair text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl md:text-5xl">
+            Practical outcomes, measured clearly.
+          </h2>
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0"
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
         >
           {stats.map((stat, i) => {
             const config = statConfig[i % statConfig.length]
             const Icon = config.icon
+            const swatch =
+              config.tone === 'crimson'
+                ? 'bg-crimson-50 text-crimson border-crimson-100'
+                : config.tone === 'rose'
+                  ? 'bg-rose-50 text-rose-600 border-rose-100'
+                  : config.tone === 'blue'
+                    ? 'bg-blue-50 text-blue-600 border-blue-100'
+                    : 'bg-amber-50 text-gold-dark border-amber-100'
             return (
               <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: i * 0.08 }}
                 whileHover={{ y: -4, transition: { duration: 0.25 } }}
-                className={`glass-panel text-center group cursor-default rounded-[1.75rem] p-6 md:p-8 md:border-x-0 md:border-y-0 md:bg-transparent ${
-                  i < statConfig.length - 1 ? 'md:border-r md:border-r-white/10' : ''
-                }`}
+                className="glass-panel group cursor-default rounded-[1.5rem] p-6 text-center md:p-8"
               >
-                <div className="w-14 h-14 bg-white/15 border border-white/20 flex items-center justify-center mx-auto mb-4 transition-shadow duration-300">
-                  <Icon size={24} className="text-white" />
+                <div className={`mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border ${swatch}`}>
+                  <Icon size={22} />
                 </div>
-                <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-playfair mb-2 tracking-tight">
+                <div className="font-playfair text-4xl font-extrabold tracking-tight text-slate-950 md:text-5xl">
                   <Counter end={stat.value} suffix={stat.suffix} />
                 </div>
-                <div className="text-slate-400 text-sm font-medium group-hover:text-slate-300 transition-colors duration-300">{stat.label}</div>
+                <div className="mt-2 text-xs font-bold uppercase tracking-[0.18em] text-slate-500">{stat.label}</div>
               </motion.div>
             )
           })}

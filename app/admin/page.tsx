@@ -1,11 +1,10 @@
 'use client'
 
-import { ArrowUpRight, Image, MessageSquare, Newspaper, RefreshCw, Users } from 'lucide-react'
+import { ArrowUpRight, MessageSquare, Newspaper, RefreshCw, Users } from 'lucide-react'
 import { useAdminContent } from '@/lib/admin-data'
 import AdminDataNotice from '@/components/admin/AdminDataNotice'
 
 type DashboardData = {
-  galleryCount: number
   newsCount: number
   messageCount: number
   volunteerCount: number
@@ -21,7 +20,6 @@ type DashboardData = {
 }
 
 const emptyDashboard: DashboardData = {
-  galleryCount: 0,
   newsCount: 0,
   messageCount: 0,
   volunteerCount: 0,
@@ -31,7 +29,6 @@ const emptyDashboard: DashboardData = {
 
 const quickActions = [
   { label: 'Add News Post', href: '/admin/news' },
-  { label: 'Upload Photos', href: '/admin/gallery' },
   { label: 'Edit Hero Section', href: '/admin/hero' },
   { label: 'View Messages', href: '/admin/messages' },
   { label: 'Review Volunteers', href: '/admin/volunteers' },
@@ -48,7 +45,6 @@ function relativeTime(value: string) {
 export default function AdminDashboard() {
   const { data, loading, error, refresh } = useAdminContent('dashboard', emptyDashboard, { starterOnEmpty: false })
   const overviewCards = [
-    { label: 'Gallery Photos', value: data.galleryCount, icon: Image, color: 'bg-blue-500' },
     { label: 'News Posts', value: data.newsCount, icon: Newspaper, color: 'bg-green-600' },
     { label: 'Contact Messages', value: data.messageCount, icon: MessageSquare, color: 'bg-orange-500' },
     { label: 'Volunteer Signups', value: data.volunteerCount, icon: Users, color: 'bg-crimson' },
@@ -68,7 +64,7 @@ export default function AdminDashboard() {
 
       <AdminDataNotice loading={loading} error={error} />
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {overviewCards.map(card => (
           <div key={card.label} className="admin-card admin-overview-card rounded-2xl p-5">
             <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-xl text-white ${card.color}`}>

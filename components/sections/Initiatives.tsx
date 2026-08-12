@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import {
   ArrowRight,
@@ -94,10 +95,10 @@ export default function Initiatives() {
                 className="glass-panel group overflow-hidden rounded-[1.75rem] transition hover:-translate-y-1 hover:shadow-2xl hover:shadow-slate-900/10"
               >
                 <div className="relative h-56 overflow-hidden bg-slate-100">
-                  <img src={item.photo} alt={item.title} loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent" />
+                  <Image src={item.photo} alt={item.title} fill sizes="(min-width: 1280px) 384px, (min-width: 768px) 50vw, 100vw" className="object-cover transition duration-700 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.06)_0%,rgba(255,255,255,0.15)_32%,rgba(255,255,255,0.62)_100%)]" />
                   <div className="absolute left-4 top-4"><span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] ${cat.bg} ${cat.color} ${cat.border}`}><Icon size={13} />{item.category}</span></div>
-                  <div className="absolute bottom-4 left-4 right-4"><h3 className="font-playfair text-2xl font-bold leading-tight text-white drop-shadow">{item.title}</h3></div>
+                  <div className="absolute bottom-4 left-4 right-4"><h3 className="font-playfair text-2xl font-bold leading-tight text-slate-950 drop-shadow-sm">{item.title}</h3></div>
                 </div>
                 <div className="p-6 md:p-8">
                   <div className="glass-inset mb-4 inline-flex rounded-full px-3 py-1 text-xs font-bold text-amber-700">{item.impact}</div>

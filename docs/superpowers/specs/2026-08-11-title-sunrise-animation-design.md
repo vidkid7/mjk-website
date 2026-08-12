@@ -9,6 +9,7 @@ Animate the `MUKESH KHADKA` hero title so it emerges upward from below the mount
 - Animate the title as one visual group so the relationship between both name lines stays intact.
 - Start the title lower than its final position with reduced opacity and a soft blur.
 - Reveal it upward with an ease-out motion and settle at the current layout position.
+- Begin the entrance after the existing 3.2-second loader and 0.55-second exit transition so the animation is visible rather than hidden underneath the loader.
 - Use the existing mountain/environment layer as the visual foreground during the lower part of the entrance, without changing the final title placement or the portrait.
 - Respect `prefers-reduced-motion: reduce` by showing the title immediately at its final position with no animation.
 

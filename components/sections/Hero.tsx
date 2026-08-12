@@ -1,7 +1,6 @@
 'use client'
 import { heroData } from '@/lib/placeholder-data'
 import { useStoredData } from '@/lib/storage'
-import { useEffect, useState } from 'react'
 
 const defaultHero = {
   label: heroData.label,
@@ -28,7 +27,6 @@ function isLegacyHero(content: typeof defaultHero) {
 }
 
 export default function Hero() {
-  const [playVideo, setPlayVideo] = useState(false)
   const storedContent = useStoredData('hero', defaultHero)
   const content = isLegacyHero(storedContent) ? defaultHero : storedContent
   const customHeroImage =
@@ -36,18 +34,11 @@ export default function Hero() {
       ? content.hero_image
       : null
 
-  useEffect(() => {
-    if (!window.matchMedia('(min-width: 1024px)').matches) return
-
-    const timer = window.setTimeout(() => setPlayVideo(true), 1200)
-    return () => window.clearTimeout(timer)
-  }, [])
-
   return (
     <div id="home" className="relative isolate">
-      <section className="relative min-h-[100svh] overflow-hidden bg-[#f7f9fc] text-[#12375f]">
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.86),rgba(255,255,255,0.24)_42%,rgba(255,255,255,0.54)_68%,rgba(255,255,255,0.92)),radial-gradient(circle_at_55%_21%,rgba(245,214,173,0.3),transparent_30%),linear-gradient(180deg,#f8fbff_0%,#edf5fb_43%,#f7f9fc_100%)]" />
-        <div className="absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(255,255,255,0.72),rgba(255,255,255,0.14)_48%,rgba(255,255,255,0.36)_76%,rgba(255,255,255,0.86)),linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.34)_72%,rgba(255,255,255,0.92)_100%)]" />
+      <section className="relative min-h-[100svh] overflow-hidden bg-[#fbf8f2] text-[#12375f]">
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.98),rgba(255,255,255,0.52)_42%,rgba(255,255,255,0.78)_68%,rgba(255,255,255,0.98)),radial-gradient(circle_at_55%_21%,rgba(245,214,173,0.2),transparent_30%),linear-gradient(180deg,#fffdfa_0%,#f4efe7_43%,#fbf8f2_100%)]" />
+        <div className="absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(255,255,255,0.8),rgba(255,255,255,0.12)_48%,rgba(255,255,255,0.28)_76%,rgba(255,255,255,0.88)),linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.1)_72%,rgba(255,255,255,0.82)_100%)]" />
         <img
           src="/living-heritage-hero-v2.webp"
           alt=""
@@ -60,15 +51,15 @@ export default function Hero() {
           draggable={false}
         />
 
-        <div className="pointer-events-none absolute -left-[16%] top-[5%] z-[5] hidden h-[82%] w-[40%] overflow-hidden opacity-[0.3] mix-blend-multiply [mask-image:linear-gradient(90deg,black_0%,black_72%,transparent_100%)] lg:block xl:w-[36%]">
+        <div className="pointer-events-none absolute left-[-12%] top-[4%] z-[5] h-[88%] w-[42%] overflow-hidden opacity-[0.62] mix-blend-multiply [mask-image:linear-gradient(90deg,black_0%,black_78%,transparent_100%)] sm:w-[38%] lg:block xl:w-[34%]">
           <video
             className="hero-flag-video h-full w-full object-cover object-left"
-            src={playVideo ? '/nepal-flag-user-v1.webm' : undefined}
+            src="/nepal-flag-user-v1.webm"
             autoPlay
             muted
             loop
             playsInline
-            preload="none"
+            preload="auto"
             aria-hidden="true"
           />
         </div>
@@ -89,27 +80,24 @@ export default function Hero() {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[12] h-[3px] bg-crimson" />
         <div className="pointer-events-none absolute bottom-[3px] left-0 z-[12] h-[3px] w-[68%] bg-[#082d58]" />
 
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-[15] w-full bg-[linear-gradient(90deg,rgba(4,25,51,0.68)_0%,rgba(4,25,51,0.28)_43%,transparent_72%)] sm:w-[76%] lg:w-[64%]" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-[15] w-full bg-[linear-gradient(90deg,rgba(255,255,255,0.72)_0%,rgba(255,255,255,0.28)_43%,transparent_72%)] sm:w-[76%] lg:w-[64%]" />
 
         <div className="relative z-20 mx-auto flex min-h-[100svh] max-w-[1680px] items-end justify-center px-5 pb-12 pt-24 sm:px-8 sm:pb-16 sm:pt-28 lg:justify-start lg:px-[7%] lg:pb-14 lg:pt-32">
           <div className="relative z-30 max-w-[42rem] text-center lg:text-left">
-            <p className="mb-3 text-[0.65rem] font-extrabold uppercase tracking-[0.24em] text-white/90 drop-shadow-md sm:text-xs sm:tracking-[0.3em]">
-              TECHNOLOGY • ENTREPRENEURSHIP • NEPAL
-            </p>
             <h1 className="hero-name-3d font-playfair text-[3.1rem] font-black leading-[0.92] tracking-[-0.05em] min-[420px]:text-[3.65rem] sm:text-[4.4rem] md:text-[5rem] lg:text-[4.9rem] xl:text-[5.5rem]">
               Mukesh Khadka
             </h1>
-            <p className="mt-3 font-playfair text-xl font-bold text-white drop-shadow-md sm:text-2xl lg:text-3xl">
+            <p className="mt-3 font-playfair text-xl font-bold text-[#12375f] drop-shadow-md sm:text-2xl lg:text-3xl">
               Building digital systems with purpose.
             </p>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/[0.88] drop-shadow-md sm:text-base lg:mx-0">
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-700 drop-shadow-md sm:text-base lg:mx-0">
               I create practical software, develop meaningful ventures, and use technology to deliver lasting value for organizations and communities.
             </p>
             <div className="mt-5 flex flex-wrap justify-center gap-3 lg:justify-start">
               <a href="#client-portfolio" className="rounded-full bg-crimson px-5 py-3 text-sm font-bold text-white shadow-lg shadow-crimson/25 transition hover:-translate-y-0.5 hover:bg-[#b81428]">
                 View Portfolio
               </a>
-              <a href="#contact" className="rounded-full border border-white/60 bg-white/14 px-5 py-3 text-sm font-bold text-white shadow-lg backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/24">
+              <a href="#contact" className="rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800 shadow-lg backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-slate-50">
                 Start a Project
               </a>
             </div>

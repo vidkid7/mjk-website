@@ -15,6 +15,9 @@ type ContentKey =
   | 'stats'
   | 'achievements'
   | 'testimonials'
+  | 'articles'
+  | 'pages'
+  | 'services'
   | 'settings'
   | 'messages'
   | 'volunteers'
@@ -25,12 +28,20 @@ const VISIBILITY_PREFIX = 'visible_sections:'
 const CONTENT_KEYS = new Set<ContentKey>([
   'hero', 'about', 'vision', 'initiatives', 'entrepreneurship', 'youth',
   'gallery', 'news', 'stats', 'achievements', 'testimonials', 'settings',
+  'articles', 'pages', 'services',
   'messages', 'volunteers', 'dashboard',
 ])
 const PRIVATE_KEYS = new Set<ContentKey>(['messages', 'volunteers', 'dashboard'])
 
 function cleanText(value: unknown, maxLength: number) {
   return typeof value === 'string' ? value.trim().slice(0, maxLength) : ''
+}
+
+function cleanSlug(value: unknown) {
+  return cleanText(value, 160)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
 }
 
 function validEmail(value: string) {
@@ -164,6 +175,15 @@ async function saveCmsSection(client: ReturnType<typeof getSupabaseAdmin>, key: 
   if (error) throw error
 }
 
+async function saveContentRevision(key: ContentKey, data: unknown) {
+  const client = getSupabaseAdmin()
+  const { error } = await client.from('content_revisions').insert({
+    content_key: key,
+    data,
+  })
+  if (error) throw error
+}
+
 async function saveSingleton(client: ReturnType<typeof getSupabaseAdmin>, table: string, payload: Record<string, any>) {
   const existing = await readSingleton(client, table)
 
@@ -292,22 +312,6 @@ async function readContent(key: ContentKey, isAdmin = false) {
         caption: row.caption,
         category: row.category,
       }))
-    case 'news': {
-      let query = client.from('news_posts').select('*').order('published_at', { ascending: false, nullsFirst: false })
-      if (!isAdmin) query = query.eq('is_published', true)
-      const { data, error } = await query
-      if (error) throw error
-      return (data || []).map(row => ({
-        id: row.id,
-        cover: row.cover_url,
-        category: row.category,
-        title: row.title,
-        excerpt: row.excerpt,
-        content: row.content,
-        is_published: row.is_published,
-        date: toDateInput(row.published_at || row.created_at),
-      }))
-    }
     case 'stats':
       return (await readOrdered(client, 'site_stats')).map(row => ({
         id: row.id,
@@ -334,6 +338,37 @@ async function readContent(key: ContentKey, isAdmin = false) {
         quote: row.quote,
         rating: row.rating,
       }))
+    case 'articles':
+    case 'news': {
+      let query = client.from('news_posts').select('*').order('published_at', { ascending: false })
+      if (!isAdmin) query = query.eq('is_published', true)
+      const { data, error } = await query
+      if (error) throw error
+      return (data || []).map((row: any) => ({
+        id: row.id,
+        slug: row.slug,
+        cover: row.cover_url,
+        category: row.category,
+        title: row.title,
+        excerpt: row.excerpt,
+        content: row.content,
+        is_published: row.is_published,
+        read_minutes: row.read_minutes,
+        tags: Array.isArray(row.tags) ? row.tags : [],
+        date: toDateInput(row.published_at || row.created_at),
+      }))
+    }
+    case 'pages': {
+      const { data, error } = await client.from('site_pages').select('page_key,data,updated_at').order('page_key')
+      if (error) throw error
+      return Object.fromEntries((data || []).map((row: any) => [row.page_key, row.data]))
+    }
+    case 'services': {
+      const pages = await client.from('site_pages').select('page_key,data').eq('page_key', 'services').maybeSingle()
+      if (pages.error) throw pages.error
+      const items = Array.isArray(pages.data?.data?.items) ? pages.data.data.items : []
+      return isAdmin ? items : items.filter((item: any) => item.isPublished !== false && item.is_published !== false)
+    }
     case 'settings': {
       const row = await readSiteSettings(client)
       return row
@@ -490,17 +525,42 @@ async function saveContent(key: ContentKey, data: any, mode?: 'append') {
         category: item.category,
         order_index: index,
       })))
+    case 'articles':
     case 'news':
       return syncRows(client, 'news_posts', data.map((item: any, index: number) => ({
         ...withUuid(item.id),
+        slug: cleanSlug(item.slug || item.title || `article-${index + 1}`),
         cover_url: item.cover,
         category: item.category,
         title: item.title,
         excerpt: item.excerpt,
         content: item.content || item.excerpt,
         is_published: item.is_published ?? false,
+        read_minutes: Number(item.read_minutes || 5),
+        tags: Array.isArray(item.tags) ? item.tags : [],
         published_at: item.date ? new Date(item.date).toISOString() : null,
       })))
+    case 'pages': {
+      const entries = Object.entries(data || {})
+      for (const [pageKey, pageData] of entries) {
+        const { error } = await client.from('site_pages').upsert({
+          page_key: pageKey,
+          data: pageData,
+          updated_at: new Date().toISOString(),
+        })
+        if (error) throw error
+      }
+      return
+    }
+    case 'services': {
+      const { error } = await client.from('site_pages').upsert({
+        page_key: 'services',
+        data: { items: Array.isArray(data) ? data : [] },
+        updated_at: new Date().toISOString(),
+      })
+      if (error) throw error
+      return
+    }
     case 'stats':
       return syncRows(client, 'site_stats', data.map((item: any, index: number) => ({
         ...withUuid(item.id),
@@ -576,7 +636,8 @@ async function saveContent(key: ContentKey, data: any, mode?: 'append') {
 }
 
 export async function GET(request: Request) {
-  const requestedKey = new URL(request.url).searchParams.get('key')
+  const searchParams = new URL(request.url).searchParams
+  const requestedKey = searchParams.get('key')
   if (!requestedKey || !CONTENT_KEYS.has(requestedKey as ContentKey)) {
     return NextResponse.json({ error: 'Invalid content key' }, { status: 400 })
   }
@@ -586,9 +647,39 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  if (searchParams.get('history') === '1') {
+    if (!admin) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    try {
+      const client = getSupabaseAdmin()
+      const { data, error } = await client
+        .from('content_revisions')
+        .select('id,content_key,data,created_at')
+        .eq('content_key', key)
+        .order('created_at', { ascending: false })
+        .limit(20)
+      if (error) throw error
+      return NextResponse.json({ data: data || [] }, { headers: { 'Cache-Control': 'no-store' } })
+    } catch (error: any) {
+      return NextResponse.json({ error: error.message || 'Failed to read content history' }, { status: 500 })
+    }
+  }
+
   try {
     const data = await readContent(key, admin)
-    return NextResponse.json({ data })
+    const response = NextResponse.json({ data })
+
+    // Cache public content briefly at the edge / browser. Private keys and admin
+    // reads must remain uncached so the admin panel always sees fresh data.
+    if (!admin && !PRIVATE_KEYS.has(key)) {
+      response.headers.set(
+        'Cache-Control',
+        'public, s-maxage=60, stale-while-revalidate=300',
+      )
+    } else {
+      response.headers.set('Cache-Control', 'no-store')
+    }
+
+    return response
   } catch (error: any) {
     return NextResponse.json({ error: error.message || 'Failed to read content' }, { status: 500 })
   }
@@ -603,6 +694,12 @@ export async function POST(request: Request) {
     }
 
     if (key === 'messages' && body.mode === 'append') {
+      // Honeypot: bots auto-fill every visible-looking field. A real browser
+      // user will never see nor fill `website` / `_ts` (timestamp) — reject
+      // those submissions silently (return 200 to not tip off the bot).
+      if (cleanText(body.data?.website, 200)) {
+        return NextResponse.json({ ok: true })
+      }
       const submission = {
         name: cleanText(body.data?.name, 100),
         email: cleanText(body.data?.email, 200),
@@ -617,6 +714,9 @@ export async function POST(request: Request) {
     }
 
     if (key === 'volunteers' && body.mode === 'append') {
+      if (cleanText(body.data?.website, 200)) {
+        return NextResponse.json({ ok: true })
+      }
       const submission = {
         name: cleanText(body.data?.name, 100),
         email: cleanText(body.data?.email, 200),
@@ -635,6 +735,28 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    if (body.action === 'restore' && !PRIVATE_KEYS.has(key)) {
+      const revisionId = cleanText(body.data?.revisionId, 80)
+      if (!isUuid(revisionId)) {
+        return NextResponse.json({ error: 'Invalid revision id' }, { status: 400 })
+      }
+
+      const client = getSupabaseAdmin()
+      const { data: revision, error } = await client
+        .from('content_revisions')
+        .select('data')
+        .eq('id', revisionId)
+        .eq('content_key', key)
+        .maybeSingle()
+      if (error) throw error
+      if (!revision) return NextResponse.json({ error: 'Revision not found' }, { status: 404 })
+
+      await saveContent(key, revision.data)
+      await saveContentRevision(key, revision.data).catch(() => undefined)
+      revalidatePath('/', 'layout')
+      return NextResponse.json({ ok: true, data: await readContent(key, true) })
+    }
+
     if (key === 'messages' && body.action === 'read') {
       const client = getSupabaseAdmin()
       const { error } = await client.from('contact_messages').update({ is_read: Boolean(body.data?.is_read) }).eq('id', body.data?.id)
@@ -651,7 +773,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid submission action' }, { status: 400 })
     } else {
       await saveContent(key, body.data)
-      if (key === 'settings') revalidatePath('/', 'layout')
+      await saveContentRevision(key, body.data).catch(() => undefined)
+      revalidatePath('/', 'layout')
     }
 
     return NextResponse.json({ ok: true, data: await readContent(key, true) })

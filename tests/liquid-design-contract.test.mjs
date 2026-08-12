@@ -15,7 +15,8 @@ test('shared liquid design system is available to public and admin surfaces', as
 
   assert.match(backdrop, /LiquidBackdrop/)
   assert.match(glassSurface, /glass-panel/)
-  assert.match(home, /<LiquidBackdrop(?:\s|\/?>)/)
+  assert.match(home, /portfolio-page/)
+  assert.doesNotMatch(home, /<LiquidBackdrop(?:\s|\/?>)/)
   assert.match(adminLayout, /admin-liquid-shell/)
   assert.match(globals, /--liquid-navy/)
   assert.match(globals, /prefers-reduced-motion/)
@@ -67,7 +68,7 @@ test('admin management routes consume the shared liquid editor primitives', asyn
   })
 })
 
-test('public homepage framing consumes the shared liquid surfaces', async () => {
+test('public homepage framing consumes the personal portfolio surfaces', async () => {
   const [home, navbar, hero, marquee, footer, heading] = await Promise.all([
     read('app/page.tsx'),
     read('components/sections/Navbar.tsx'),
@@ -77,51 +78,30 @@ test('public homepage framing consumes the shared liquid surfaces', async () => 
     read('components/ui/SectionHeading.tsx'),
   ])
 
-  assert.match(home, /liquid-page public-liquid-page public-editorial-light relative overflow-hidden/)
-  assert.match(home, /<LiquidBackdrop variant="public"/)
-  assert.match(home, /relative z-10/)
+  assert.match(home, /className="portfolio-page/)
+  assert.match(home, /components\/portfolio/)
+  assert.doesNotMatch(home, /LiquidBackdrop/)
+  assert.doesNotMatch(home, /components\/sections/)
   assert.match(navbar, /glass-panel/)
   assert.match(navbar, /glass-action/)
   assert.match(navbar, /className="admin-card fixed inset-0/)
   assert.doesNotMatch(navbar, /className="glass glass-dark fixed inset-0/)
   assert.match(hero, /hero-name-3d/)
-  assert.match(marquee, /glass-panel/)
+  assert.match(marquee, /bg-\[#f7f3eb\]/)
   assert.match(footer, /glass-panel/)
   assert.match(footer, /public-section--light/)
   assert.match(heading, /glass-inset/)
 })
 
-test('homepage section variants alternate in the page render order', async () => {
+test('homepage composes the personal portfolio sections in order', async () => {
   const home = await read('app/page.tsx')
-  const sectionImports = new Map(
-    [...home.matchAll(/import\s+(\w+)\s+from\s+'(@\/components\/sections\/[^']+)'/g)]
-      .map(([, component, path]) => [component, `${path.replace('@/', '')}.tsx`])
-  )
-  const renderedSections = [...home.matchAll(/<([A-Z]\w*)\s*\/>/g)]
-    .map(([, component]) => component)
-    .filter((component) => sectionImports.has(component))
-    .filter((component) => !['Navbar', 'Hero', 'Marquee', 'Footer', 'PortraitStory'].includes(component))
-
-  assert.deepEqual(renderedSections, [
-    'About', 'Achievements', 'ClientPortfolio', 'Vision', 'Initiatives', 'Entrepreneurship',
-    'YouthInspiration', 'Testimonials', 'Gallery', 'News', 'Stats', 'Contact', 'FAQ',
-  ])
-
-  const findVariant = async (path, visited = new Set()) => {
-    assert.ok(!visited.has(path), `component import cycle while resolving ${path}`)
-    visited.add(path)
-    const source = await read(path)
-    const directVariant = source.match(/public-section--(light|dark)/)
-    if (directVariant) return directVariant[1]
-    const child = source.match(/import\s+(\w+)\s+from\s+'(@\/components\/ui\/[^']+)'/)
-    assert.ok(child, `${path} resolves to a public-section root`)
-    return findVariant(`${child[2].replace('@/', '')}.tsx`, visited)
-  }
-
-  const variants = await Promise.all(renderedSections.map((component) => findVariant(sectionImports.get(component))))
-  variants.slice(1).forEach((variant, index) => {
-    assert.notEqual(variant, variants[index], `${renderedSections[index]} and ${renderedSections[index + 1]} alternate`)
-  })
+  const renderedSections = [
+    'LoadingScreen', 'PortfolioNavbar', 'PortfolioHero', 'About', 'Projects', 'Skills', 'Experience',
+    'Testimonials', 'Contact', 'Footer',
+  ]
+  const positions = renderedSections.map((component) => home.indexOf(`<${component}`))
+  assert.ok(positions.every((position) => position >= 0), 'all portfolio sections must remain rendered')
+  assert.deepEqual([...positions].sort((a, b) => a - b), positions)
 })
 
 test('dark public sections give explicit slate text a readable contrast treatment', async () => {
@@ -132,7 +112,7 @@ test('dark public sections give explicit slate text a readable contrast treatmen
   assert.match(globals, /\.public-section--dark\s+\.glass-action\s*\{[^}]*background:/)
 })
 
-test('dark rendered sections use the SectionHeading dark branch', async () => {
+test('public rendered sections do not depend on the dark SectionHeading branch', async () => {
   const home = await read('app/page.tsx')
   const sectionImports = new Map(
     [...home.matchAll(/import\s+(\w+)\s+from\s+'(@\/components\/sections\/[^']+)'/g)]
@@ -147,48 +127,33 @@ test('dark rendered sections use the SectionHeading dark branch', async () => {
     .map((source, index) => ({ component: renderedSections[index], source }))
     .filter(({ source }) => /public-section--dark/.test(source) && /<SectionHeading\b/.test(source))
 
-  assert.deepEqual(darkHeadingSections.map(({ component }) => component), ['Achievements', 'Testimonials', 'Contact'])
-  darkHeadingSections.forEach(({ component, source }) => {
-    assert.match(source, /<SectionHeading\b(?=[\s\S]*?\/>)\s*[\s\S]*?\bdark(?:\s|=)/, `${component} uses the SectionHeading dark branch`)
-  })
+  assert.deepEqual(darkHeadingSections, [])
 })
 
-test('editorial service and blog routes retain their content contracts inside liquid glass framing', async () => {
-  const [services, serviceDetail, blog, blogDetail] = await Promise.all([
+test('editorial service and blog routes retain their content contracts inside the heritage route shell', async () => {
+  const [services, serviceDetail] = await Promise.all([
     read('app/services/page.tsx'),
     read('app/services/[slug]/page.tsx'),
-    read('app/blog/page.tsx'),
-    read('app/blog/[slug]/page.tsx'),
   ])
 
-  ;[services, serviceDetail, blog, blogDetail].forEach((source) => {
-    assert.match(source, /liquid-page/)
-    assert.match(source, /public-editorial-light/)
-    assert.match(source, /<LiquidBackdrop variant="public"/)
+  ;[services, serviceDetail].forEach((source) => {
+    assert.match(source, /public-route-shell/)
+    assert.match(source, /SignalRail/)
     assert.match(source, /relative z-10/)
   })
 
-  ;[services, serviceDetail, blog, blogDetail].forEach((source) => {
-    assert.match(source, /sticky top-0/)
+  ;[services, serviceDetail].forEach((source) => {
+    assert.match(source, /signal-header|SignalRail/)
     assert.doesNotMatch(source, /<main className="[^"]*overflow-hidden/)
   })
 
-  assert.match(services, /glass-panel/)
+  assert.match(services, /public-route-service-grid/)
   assert.match(serviceDetail, /generateStaticParams/)
   assert.match(serviceDetail, /'@type': 'Service'/)
   assert.match(serviceDetail, /'@type': 'FAQPage'/)
   assert.match(serviceDetail, /'@type': 'BreadcrumbList'/)
-  assert.match(serviceDetail, /glass-inset/)
-  assert.match(serviceDetail, /admin-card/)
-  assert.match(blog, /hasLegacyBlog/)
-  assert.match(blog, /loading="lazy"/)
-  assert.match(blog, /glass-panel/)
-  assert.match(blogDetail, /generateStaticParams/)
-  assert.match(blogDetail, /alternates: \{ canonical: url \}/)
-  assert.match(blogDetail, /'@type': 'BlogPosting'/)
-  assert.match(blogDetail, /'@type': 'BreadcrumbList'/)
-  assert.match(blogDetail, /glass-inset/)
-  assert.match(blogDetail, /admin-card/)
+  assert.match(serviceDetail, /public-service-faq/)
+  assert.match(serviceDetail, /public-route-cta/)
 })
 
 test('public editorial light shell remaps the public dark bands into light paper surfaces', async () => {

@@ -1,115 +1,123 @@
 'use client'
-import { ArrowUpRight, BadgeCheck } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import Reveal from '@/components/portfolio/Reveal'
 import SectionHeader from '@/components/portfolio/SectionHeader'
 import TiltCard from '@/components/fx/TiltCard'
-import { pfAbout, pfMeta } from '@/lib/portfolio-content'
+import { MapPin, Clock, Building2 } from 'lucide-react'
+import type { PublicAbout, PublicSite } from '@/lib/public-content'
 
-export default function About() {
+export default function About({ content, site }: { content: PublicAbout; site: PublicSite }) {
+  const icons = [MapPin, Clock, Building2]
   return (
-    <section id="about" className="relative scroll-mt-16 py-20 sm:py-28">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-ember-500/40 to-transparent"
-      />
-      <div className="portfolio-container grid items-start gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-        {/* Portrait */}
-        <Reveal className="relative mx-auto w-full max-w-sm lg:mx-0 lg:sticky lg:top-24">
-          <div className="relative">
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 -z-10 rounded-t-[12rem] rounded-b-[2.5rem] bg-gradient-to-b from-ember-500/30 via-rose-500/15 to-transparent blur-2xl"
-            />
-            <TiltCard className="relative" intensity={7}>
-              <div className="relative overflow-hidden rounded-t-[12rem] rounded-b-[2.5rem] border border-ink/10 bg-night-900/60 shadow-2xl shadow-ink/25">
-                <div className="grain-overlay absolute inset-0" />
-                <img
-                  src={pfAbout.portrait}
-                  alt="Portrait of Mukesh Khadka"
-                  className="h-[24rem] w-full object-cover object-top sm:h-[28rem]"
-                />
-                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-night-950/70 to-transparent" />
-              </div>
-            </TiltCard>
-
-            <div className="glass-night absolute -bottom-5 left-1/2 flex w-max -translate-x-1/2 items-center gap-3 rounded-2xl px-5 py-3.5 shadow-xl shadow-ink/20">
-              <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-ember-500 to-rose-500 text-white">
-                <BadgeCheck className="h-5 w-5" />
-              </span>
-              <div>
-                <div className="display-number font-fraunces text-lg font-semibold leading-none text-night-50">7+ yrs</div>
-                <div className="mt-1 text-xs text-night-300">building real products</div>
-              </div>
-            </div>
-
-            <div
-              aria-hidden="true"
-              className="absolute -left-6 -top-6 -z-10 h-20 w-20 rounded-2xl border border-ember-500/30"
-            />
+    <section id="about" className="about-dossier relative scroll-mt-16 py-20 sm:py-28">
+      <div className="portfolio-container">
+        <Reveal>
+          <div className="about-dossier__masthead">
+            <SectionHeader index={content.index} eyebrow={content.eyebrow} heading={content.heading} />
+            <dl className="about-dossier__meta" aria-label="Operator metadata at a glance">
+              {content.meta.map((row, index) => {
+                const Icon = icons[index % icons.length]
+                return (
+                <div key={row.label} className="about-dossier__meta-item">
+                  <dt>
+                    <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                    {row.label}
+                  </dt>
+                  <dd>{row.value}</dd>
+                </div>
+                )
+              })}
+            </dl>
           </div>
         </Reveal>
 
-        {/* Content */}
-        <div>
-          <Reveal delay={80}>
-            <SectionHeader index={pfAbout.index} eyebrow="Operator Profile" heading={pfAbout.heading} />
-          </Reveal>
-
-          <Reveal delay={140}>
-            <div className="mt-7 space-y-5">
-              {pfAbout.paragraphs.map((paragraph, i) => (
-                <p key={i} className="leading-relaxed text-night-300">
-                  {i === 0 ? (
-                    <span className="float-left mr-3 mt-1 font-fraunces text-6xl font-semibold leading-[0.8] text-ember-600">
-                      “
-                    </span>
-                  ) : null}
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </Reveal>
-
-          <Reveal delay={200}>
-            <dl aria-label="Operator metadata" className="mt-9 grid gap-3 border-y border-ink/10 py-4 sm:grid-cols-3">
-              {[
-                ['Location', 'Kathmandu, Nepal'],
-                ['Experience', '7+ years'],
-                ['Organizations served', '26+'],
-              ].map(([label, value]) => (
-                <div key={label} className="flex items-baseline justify-between gap-3 sm:block">
-                  <dt className="font-mono text-[11px] uppercase tracking-[0.16em] text-night-400">{label}</dt>
-                  <dd className="mt-1 text-sm font-semibold text-night-100">{value}</dd>
+        <div className="about-dossier__layout">
+          <Reveal className="about-dossier__portrait-col" delay={80}>
+            <article className="about-portrait">
+              <header className="about-portrait__header">
+                <span className="about-portrait__corner about-portrait__corner--tl" aria-hidden="true" />
+                <span className="about-portrait__corner about-portrait__corner--tr" aria-hidden="true" />
+                <span className="about-portrait__corner about-portrait__corner--bl" aria-hidden="true" />
+                <span className="about-portrait__corner about-portrait__corner--br" aria-hidden="true" />
+                <div className="about-portrait__badge">
+                  <span className="about-portrait__badge-mark" aria-hidden="true" />
+                  <span className="about-portrait__badge-text">DOSSIER {content.index}</span>
                 </div>
-              ))}
-            </dl>
-          </Reveal>
+                <span className="about-portrait__code">SUBJECT · MK</span>
+              </header>
 
-          <Reveal delay={220}>
-            <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              {pfAbout.highlights.map((point) => (
+              <div className="about-portrait__stage">
                 <div
-                  key={point}
-                  className="group flex items-start gap-3 rounded-2xl border border-ink/10 bg-white/60 p-4 transition-colors duration-300 hover:border-ember-500/40 hover:bg-ember-500/10"
-                >
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ember-500 shadow-[0_0_8px_rgba(196,102,31,0.5)]" />
-                  <span className="text-sm font-medium text-night-100">{point}</span>
-                </div>
-              ))}
-            </div>
+                  aria-hidden="true"
+                  className="noir-profile-glow absolute inset-0 -z-10 blur-2xl"
+                />
+                <TiltCard className="relative h-full" intensity={7}>
+                  <div className="about-profile-stage relative">
+                    <img
+                      src={content.portrait}
+                      alt={`Portrait of ${site.name}`}
+                      className="about-cutout-portrait relative z-10 h-[26rem] w-full object-contain object-bottom sm:h-[31rem]"
+                    />
+                  </div>
+                </TiltCard>
+                <span className="about-portrait__reticle about-portrait__reticle--tl" aria-hidden="true" />
+                <span className="about-portrait__reticle about-portrait__reticle--br" aria-hidden="true" />
+              </div>
+
+              <footer className="about-portrait__footer">
+                <span className="about-portrait__footer-label">Verified</span>
+                <span className="about-portrait__footer-rule" aria-hidden="true" />
+                <span className="about-portrait__footer-value">{site.location}</span>
+              </footer>
+            </article>
           </Reveal>
 
-          <Reveal delay={260}>
-            <a
-              href={pfAbout.resumeHref}
-              className="group mt-9 inline-flex items-center gap-2 text-sm font-semibold text-ember-700 transition-colors hover:text-ember-600"
-            >
-              Contact {pfMeta.name}
-              <span className="grid h-8 w-8 place-items-center rounded-full border border-ember-500/40 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
-                <ArrowUpRight className="h-4 w-4" />
-              </span>
-            </a>
-          </Reveal>
+          <div className="about-dossier__content-col">
+            <Reveal delay={140}>
+              <div className="about-portrait-note">
+                <span className="about-portrait-note__rule" aria-hidden="true" />
+                <blockquote className="about-portrait-note__quote">
+                  <span className="about-portrait-note__quote-tag" aria-hidden="true">“</span>
+                  {content.paragraphs[0]}
+                </blockquote>
+              </div>
+            </Reveal>
+
+            <Reveal delay={200}>
+              <ol className="about-portrait-note__list" aria-label="Operator narrative">
+                {content.paragraphs.slice(1).map((paragraph, i) => (
+                  <li key={i} className="about-portrait-note__item">
+                    <span className="about-portrait-note__item-index">
+                      {String(i + 2).padStart(2, '0')}
+                    </span>
+                    <span className="about-portrait-note__item-text">{paragraph}</span>
+                  </li>
+                ))}
+              </ol>
+            </Reveal>
+
+            <Reveal delay={240}>
+              <ol className="about-highlights" aria-label="Operator highlights">
+                {content.highlights.map((point, i) => (
+                  <li key={point} className="about-highlights__item">
+                    <span className="about-highlights__bar" aria-hidden="true" />
+                    <span className="about-highlights__index">HL · {String(i + 1).padStart(2, '0')}</span>
+                    <span className="about-highlights__text">{point}</span>
+                  </li>
+                ))}
+              </ol>
+            </Reveal>
+
+            <Reveal delay={280}>
+              <a href={content.resumeHref} className="about-cta">
+                <span className="about-cta__index">CH-00</span>
+                <span className="about-cta__label">Contact {site.name}</span>
+                <span className="about-cta__arrow" aria-hidden="true">
+                  <ArrowUpRight className="h-4 w-4" />
+                </span>
+              </a>
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>

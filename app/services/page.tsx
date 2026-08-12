@@ -1,54 +1,88 @@
 import type { Metadata } from 'next'
-import { LiquidBackdrop } from '@/components/ui/LiquidBackdrop'
-import { servicePages } from '@/lib/service-pages'
+import SignalRail from '@/components/portfolio/SignalRail'
+import PublicImprint from '@/components/portfolio/PublicImprint'
+import CmsUnavailable from '@/components/portfolio/CmsUnavailable'
+import { loadPublicContent, PublicContentError } from '@/lib/public-content-server'
+
+export const dynamic = 'force-dynamic'
 
 const siteUrl = 'https://khadkamukesh.com.np'
 
-export const metadata: Metadata = {
-  title: 'Digital Services | Web, Software, and Automation',
-  description: 'Explore practical web development, custom software development, and business automation services from Mukesh Khadka.',
-  alternates: { canonical: `${siteUrl}/services` },
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const content = await loadPublicContent()
+    return {
+      title: content.site.siteTitle || 'Digital Services',
+      description: content.site.metaDescription,
+      alternates: { canonical: `${siteUrl}/services` },
+    }
+  } catch {
+    return { title: 'Digital Services', alternates: { canonical: `${siteUrl}/services` } }
+  }
 }
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  let content
+  try {
+    content = await loadPublicContent()
+  } catch (error) {
+    if (error instanceof PublicContentError) return <CmsUnavailable message={error.message} />
+    throw error
+  }
+
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Digital Services',
+    name: content.site.siteTitle,
     url: `${siteUrl}/services`,
     mainEntity: {
       '@type': 'ItemList',
-      itemListElement: servicePages.map((service, index) => ({
+      itemListElement: content.services.map((service, index) => ({
         '@type': 'ListItem', position: index + 1, name: service.name, url: `${siteUrl}/services/${service.slug}`,
       })),
     },
   }
 
   return (
-    <main className="liquid-page public-editorial-light relative min-h-screen text-slate-900">
-      <LiquidBackdrop variant="public" />
-      <div className="relative z-10">
+    <main className="public-route-shell gateway-shell relative min-h-screen">
+      <SignalRail site={content.site} context="SERVICE INDEX" detail="WEB / SOFTWARE / AUTOMATION" />
+      <div className="public-route-content relative z-10">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-        <header className="sticky top-0 z-20 px-5 pt-4 sm:px-8">
-          <div className="glass-panel mx-auto flex max-w-5xl items-center rounded-2xl px-5 py-4 sm:px-6">
-            <a href="/" className="text-sm font-bold text-[#0b2b55] transition hover:text-crimson">← Mukesh Khadka</a>
+        <section className="public-route-main public-route-hero">
+          <div className="public-route-hero__copy">
+            <div className="public-route-index"><span>03</span><span>Ways to work together</span><i /></div>
+            <p className="public-route-kicker">Digital systems · Nepal</p>
+            <h1>Practical digital work, explained clearly.</h1>
+            <p className="public-route-lede">Websites, internal tools, and automation designed around the real work people need to finish. Start with the friction, then build the smallest dependable system that removes it.</p>
+            <div className="public-route-hero__links"><a href="/#work">See selected systems <span>↗</span></a><a href="/#contact">Open a project channel <span>↓</span></a></div>
           </div>
-        </header>
-        <div className="mx-auto max-w-5xl px-5 py-14 sm:px-8 sm:py-20">
-          <div className="mb-10 flex items-center gap-4 border-t border-[#12375f]/15 pt-5 text-[11px] font-black uppercase tracking-[0.28em] text-[#12375f]/60">
-            <span className="text-crimson">03</span>
-            <span>Ways to work together</span>
-            <span aria-hidden="true" className="h-px flex-1 bg-[#12375f]/15" />
-            <span className="hidden tracking-[0.18em] sm:inline">Web · Software · Automation</span>
+          <aside className="public-route-hero__signal" aria-label="Service index summary">
+            <span className="public-route-signal-label">FIELD NOTES / 03</span>
+            <strong>Clearer operations<br />through useful software.</strong>
+            <div className="public-route-signal-grid"><span>{String(content.services.length).padStart(2, '0')} <small>service tracks</small></span><span>NP <small>primary base</small></span><span>∞ <small>practical scope</small></span></div>
+          </aside>
+        </section>
+
+        <section className="public-route-main public-route-section" aria-labelledby="service-list-title">
+          <div className="public-route-section-heading"><div><span className="public-route-kicker">THE WORK / SERVICE FILES</span><h2 id="service-list-title">Choose the part of the workflow that needs to move.</h2></div><p>Every engagement can begin with a conversation, a rough process map, or the thing that currently takes too long.</p></div>
+          <div className="public-route-service-grid">
+            {content.services.map((service, index) => (
+              <a key={service.slug} href={`/services/${service.slug}`} className="public-route-card public-route-service-card">
+                <div className="public-route-card__top"><span>0{index + 1}</span><span>OPEN FILE ↗</span></div>
+                <h3>{service.shortName}</h3>
+                <p>{service.description}</p>
+                <span className="public-route-card__footer">Explore service <b>→</b></span>
+              </a>
+            ))}
           </div>
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-crimson">Digital services</p>
-          <h1 className="mt-4 max-w-3xl font-playfair text-4xl font-extrabold tracking-tight text-[#071a35] sm:text-6xl">Practical digital work, explained clearly.</h1>
-          <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">Explore focused pages on web development, custom software systems, and workflow automation. Each explains the questions, process, and outcomes that matter before a project begins.</p>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {servicePages.map((service, index) => <a key={service.slug} href={`/services/${service.slug}`} className="glass-panel rounded-[1.5rem] p-7 transition hover:-translate-y-1 hover:border-gold/70 hover:shadow-xl hover:shadow-[#071a35]/15"><p className="text-xs font-black tracking-[0.18em] text-crimson">0{index + 1}</p><h2 className="mt-4 font-playfair text-2xl font-bold text-[#071a35]">{service.shortName}</h2><p className="mt-4 text-sm leading-7 text-slate-600">{service.description}</p><span className="mt-6 inline-block text-sm font-bold text-crimson">Explore service →</span></a>)}
-          </div>
-        </div>
+        </section>
+
+        <section className="public-route-main public-route-cta" aria-labelledby="service-cta-title">
+          <div><span className="public-route-kicker">GOOD WORK STARTS WITH A BETTER QUESTION</span><h2>Bring the messy version first.</h2><p>You do not need a perfect brief. Share what is slow, repeated, unclear, or expensive to maintain, and we can shape the next useful step.</p></div>
+          <a href={`mailto:${content.site.email}?subject=Digital%20systems%20project`} className="public-route-cta__button">Start an email <span>↗</span></a>
+        </section>
       </div>
+      <PublicImprint site={content.site} context="SERVICES INDEX" tagline={content.site.tagline} />
     </main>
   )
 }

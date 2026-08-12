@@ -15,20 +15,11 @@ test('admin routes are explicitly excluded from search results', async () => {
   assert.match(config, /X-Robots-Tag/)
 })
 
-test('the public blog does not link search visitors to the admin area', async () => {
-  const blogPage = await read('app/blog/page.tsx')
-  assert.doesNotMatch(blogPage, /href="\/admin\/news"/)
-})
-
-test('the hero uses the real animated Nepal flag video on desktop', async () => {
-  const hero = await read('components/sections/Hero.tsx')
-  assert.match(hero, /<video/)
-  assert.match(hero, /nepal-flag-user-v1\.webm/)
-  assert.match(hero, /matchMedia\('\(min-width: 1024px\)'\)/)
+test('the hero uses the unified cultural plate without a second animated flag layer', async () => {
+  const hero = await read('components/portfolio/Hero.tsx')
+  assert.doesNotMatch(hero, /<video|nepal-flag-hero-bg-optimized\.mp4|nepal-flag-user-v1\.webm/)
+  assert.match(hero, /janaki-everest-water-environment\.png/)
   assert.doesNotMatch(hero, /WavingNepalFlag/)
-  assert.match(hero, /-left-\[(1[4-9]|2\d)%\]/)
-  assert.match(hero, /h-\[3px\]/)
-  assert.doesNotMatch(hero, /sm:h-32/)
 })
 
 test('the hero image reaches the top of the viewport behind the navbar', async () => {
@@ -51,15 +42,15 @@ test('the hero uses one unified living heritage plate while retaining a custom p
 })
 
 test('the hero presents a balanced personal portfolio introduction', async () => {
-  const hero = await read('components/sections/Hero.tsx')
-  assert.match(hero, /TECHNOLOGY • ENTREPRENEURSHIP • NEPAL/)
-  assert.match(hero, /Building digital systems with purpose\./)
-  assert.match(hero, /I create practical software, develop meaningful ventures/)
-  assert.match(hero, /text-white\/\[0\.88\]/)
-  assert.match(hero, /href="#client-portfolio"/)
-  assert.match(hero, /href="#contact"/)
-  assert.match(hero, /hero-name-3d/)
-  assert.match(hero, /<h1[^>]*>\s*Mukesh Khadka\s*<\/h1>/)
+  const [hero, content] = await Promise.all([
+    read('components/portfolio/Hero.tsx'),
+    read('lib/portfolio-content.ts'),
+  ])
+  assert.match(content, /I'm Mukesh Khadka/)
+  assert.match(content, /Software that feels like it always belonged\./)
+  assert.match(content, /href: '#work'/)
+  assert.match(content, /href: '#contact'/)
+  assert.match(hero, /<motion\.h1/)
   assert.doesNotMatch(hero, /<h2/)
 })
 
@@ -75,10 +66,10 @@ test('public pages defer non-critical CMS refreshes until the first view settles
   assert.match(storage, /window\.location\.pathname\.startsWith\('\/admin'\)/)
 })
 
-test('mobile visitors do not download desktop-only hero decorations', async () => {
-  const hero = await read('components/sections/Hero.tsx')
-  assert.match(hero, /hidden[^\"]*lg:block/)
-  assert.match(hero, /src=\{playVideo \?/)
+test('the hero keeps the original portrait and unified cultural environment', async () => {
+  const hero = await read('components/portfolio/Hero.tsx')
+  assert.match(hero, /janaki-everest-water-environment\.png/)
+  assert.match(hero, /buddha-profile-left\.png/)
 })
 
 test('the deferred about image uses a compact WebP asset', async () => {
@@ -131,11 +122,9 @@ test('the homepage gallery does not add a second page-level heading', async () =
   assert.match(gallery, /<motion\.h2/)
 })
 
-test('the homepage editorial field notes use the four supplied portrait assets', async () => {
-  const page = await read('app/page.tsx')
+test('the editorial field notes use the four supplied portrait assets', async () => {
   const story = await read('components/sections/PortraitStory.tsx')
 
-  assert.match(page, /PortraitStory/)
   for (const asset of ['mukesh-temple.jpg', 'mukesh-workspace.jpg', 'mukesh-garden.jpg', 'mukesh-sky.jpg']) {
     assert.match(story, new RegExp(`/assets/portraits/${asset}`))
   }

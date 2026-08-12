@@ -36,6 +36,16 @@ CREATE TABLE about_content (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+CREATE TABLE content_revisions (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  content_key TEXT NOT NULL,
+  data JSONB NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX content_revisions_key_created_at_idx
+  ON content_revisions (content_key, created_at DESC);
+
 -- ===== VISION CARDS =====
 CREATE TABLE vision_cards (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -44,9 +54,10 @@ CREATE TABLE vision_cards (
   description TEXT NOT NULL,
   order_index INT DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW(),
+ALTER TABLE content_revisions ENABLE ROW LEVEL SECURITY;
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
-
+  testimonials, achievements, site_stats, volunteer_submissions, contact_messages, site_settings, content_revisions
 -- ===== SOLUTIONS =====
 CREATE TABLE initiatives (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),

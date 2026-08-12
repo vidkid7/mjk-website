@@ -1,92 +1,83 @@
 'use client'
-import { ArrowUpRight } from 'lucide-react'
+
+import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useState } from 'react'
+import CaseVisual from '@/components/portfolio/CaseVisual'
 import Reveal from '@/components/portfolio/Reveal'
 import SectionHeader from '@/components/portfolio/SectionHeader'
-import TiltCard from '@/components/fx/TiltCard'
-import { pfProjects } from '@/lib/portfolio-content'
+import type { PublicProject, PublicUiCopy } from '@/lib/public-content'
 
-export default function Projects() {
+type ProjectView = 'grid' | 'focus'
+
+export default function Projects({ projects, copy }: { projects: PublicProject[]; copy: PublicUiCopy['projects'] }) {
+  const [view, setView] = useState<ProjectView>('grid')
+  const [selected, setSelected] = useState(0)
+  const project = projects[selected]
+
   return (
-    <section id="work" className="relative scroll-mt-16 py-20 sm:py-28">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_85%_15%,rgba(196,102,31,0.07),transparent_40%),radial-gradient(circle_at_10%_85%,rgba(176,61,47,0.05),transparent_40%)]"
-      />
+    <section id="work" className="case-registry relative scroll-mt-16 py-20 sm:py-28">
       <div className="portfolio-container">
-        <div className="flex flex-wrap items-end justify-between gap-6">
+        <div className="case-registry__header">
           <Reveal>
-            <SectionHeader index="02" eyebrow="Field Files" heading="Evidence from projects designed and shipped." />
+            <SectionHeader index={copy.index} eyebrow={copy.eyebrow} heading={copy.heading} />
           </Reveal>
-          <Reveal delay={100}>
-            <p className="mb-2 font-mono text-xs uppercase tracking-[0.2em] text-night-400">
-              2022 — 2025 · GovTech to Fintech
-            </p>
+          <Reveal delay={80}>
+            <div className="case-registry__controls case-switcher" aria-label="Project view">
+              <span>{copy.viewLabel}</span>
+              <button type="button" aria-pressed={view === 'grid'} onClick={() => setView('grid')} className={view === 'grid' ? 'is-active' : ''}>{copy.gridLabel}</button>
+              <button type="button" aria-pressed={view === 'focus'} onClick={() => setView('focus')} className={view === 'focus' ? 'is-active' : ''}>{copy.focusLabel}</button>
+            </div>
           </Reveal>
         </div>
 
-        <div className="mt-14 grid gap-5 lg:grid-cols-3">
-          {pfProjects.map((project, i) => {
-            const featured = i === 0
-            const titleId = `project-${i}-title`
+        {view === 'focus' ? (
+          <div className="case-focus">
+            <div className={`case-focus__visual case-visual--${selected}`}>
+              <CaseVisual index={selected} />
+            </div>
+            <div className="case-focus__copy">
+              <span className="case-index">FILE {String(selected + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}</span>
+              <h3 className="noir-display">{project?.title}</h3>
+              <p>{project?.description}</p>
+              <p className="case-outcome"><span>RESULT / </span>{project?.outcome}</p>
+              <ul>{project?.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
+              <a href="#contact" className="case-open-link focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-500">
+                {copy.discussLabel} <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                <span className="sr-only">VIEW PROJECT</span>
+              </a>
+              <div className="case-focus__pager">
+                <button type="button" aria-label="Previous project" disabled={!projects.length} onClick={() => setSelected((selected - 1 + projects.length) % projects.length)}><ChevronLeft /></button>
+                <span>{String(selected + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}</span>
+                <button type="button" aria-label="Next project" disabled={!projects.length} onClick={() => setSelected((selected + 1) % projects.length)}><ChevronRight /></button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="case-grid">
+            {projects.map((item, i) => (
+              <Reveal key={item.title} delay={(i % 3) * 70} y={18}>
+                <article className={`case-card ${selected === i ? 'is-selected' : ''}`}>
+                  <button type="button" className={`case-card__visual case-visual--${i}`} onClick={() => { setSelected(i); setView('focus') }} aria-label={`Open ${item.title}`}>
+                    <CaseVisual index={i} />
+                  </button>
+                  <div className="case-card__body">
+                    <span className="case-index">0{i + 1} / {item.category}</span>
+                    <h3 className="noir-display">{item.title}</h3>
+                    <p>{item.outcome}</p>
+                    <button type="button" onClick={() => { setSelected(i); setView('focus') }} className="case-card__open">
+                      {copy.openLabel} <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                      <span className="sr-only">VIEW FILE</span>
+                    </button>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        )}
 
-            return (
-              <article
-                key={project.title}
-                aria-labelledby={titleId}
-                className={featured ? 'h-full lg:col-span-2 lg:row-span-2' : 'h-full'}
-              >
-                <Reveal delay={(i % 3) * 90} blur className="h-full">
-                  <TiltCard className="h-full" intensity={featured ? 5 : 9}>
-                    <div
-                      className={`group relative flex h-full flex-col rounded-3xl border border-ink/10 bg-white/60 p-7 transition-[border-color,box-shadow,transform] duration-500 hover:-translate-y-1 hover:border-ember-500/40 hover:shadow-2xl hover:shadow-ember-500/15 sm:p-8 ${
-                        featured ? 'conic-border min-h-[26rem] bg-night-900/40' : ''
-                      }`}
-                    >
-                      <div className="relative">
-                        <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-ember-700">
-                          File {String(i + 1).padStart(2, '0')} · {project.category} · {project.year}
-                        </p>
-                        <h3
-                          id={titleId}
-                          className="mt-5 font-fraunces text-2xl font-semibold leading-tight tracking-tight text-night-50 transition-colors duration-300 group-hover:text-ember-600 sm:text-[1.7rem]"
-                        >
-                          {project.title}
-                        </h3>
-                        <p className="mt-3 leading-relaxed text-night-300">{project.description}</p>
-                        <p className="mt-4 rounded-2xl border border-ember-500/20 bg-ember-500/[0.07] px-4 py-3 text-sm leading-relaxed text-ember-800">
-                          <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-ember-700">
-                            Outcome ·{' '}
-                          </span>
-                          {project.outcome}
-                        </p>
-                      </div>
-
-                      <div className="relative mt-6 flex flex-wrap items-end justify-between gap-5">
-                        <ul aria-label="Technologies and capabilities" className="flex flex-wrap gap-2">
-                          {project.tags.map((tag) => (
-                            <li
-                              key={tag}
-                              className="rounded-full border border-ink/10 bg-night-900/60 px-3 py-1 text-xs font-medium text-night-300 transition-colors duration-300 group-hover:border-ember-500/30"
-                            >
-                              {tag}
-                            </li>
-                          ))}
-                        </ul>
-                        <a
-                          href="#contact"
-                          aria-label={`Discuss ${project.title}`}
-                          className="inline-flex items-center gap-2 rounded-full border border-ember-500/45 bg-white/80 px-4 py-2 font-mono text-xs font-semibold uppercase tracking-[0.12em] text-ember-700 transition-colors hover:border-ember-500 hover:bg-ember-500 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ember-500"
-                        >
-                          VIEW FILE
-                          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                        </a>
-                      </div>
-                    </div>
-                  </TiltCard>
-                </Reveal>
-              </article>
-            )
-          })}
+        <div className="case-registry__footer">
+          <span>{projects.length} {copy.footerPrimary}</span>
+          <span>{copy.footerSecondary}</span>
         </div>
       </div>
     </section>

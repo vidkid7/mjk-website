@@ -1,8 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['images.unsplash.com', 'via.placeholder.com', 'picsum.photos', 'randomuser.me'],
-    unoptimized: true,
+    remotePatterns: [
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'via.placeholder.com' },
+      { protocol: 'https', hostname: 'picsum.photos' },
+      { protocol: 'https', hostname: 'randomuser.me' },
+      // Supabase-hosted assets (storage, etc.)
+      { protocol: 'https', hostname: '**.supabase.co' },
+    ],
   },
   compress: true,
   poweredByHeader: false,

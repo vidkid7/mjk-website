@@ -5,6 +5,9 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import type { PublicSite, PublicUiCopy } from '@/lib/public-content'
+import LanguageSwitch from '@/components/i18n/LanguageSwitch'
+import { useLanguage } from '@/components/i18n/LanguageProvider'
+import { translateKnown } from '@/lib/i18n-content'
 
 const THEME_STORAGE_KEY = 'mukesh-portfolio-theme'
 const COLOR_STORAGE_KEY = 'mukesh-portfolio-color'
@@ -73,6 +76,7 @@ export type SignalRailProps = {
 
 export default function SignalRail({ context, desktopLinks, site, navigation }: SignalRailProps) {
   const pathname = usePathname()
+  const { locale } = useLanguage()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState('')
@@ -157,13 +161,16 @@ export default function SignalRail({ context, desktopLinks, site, navigation }: 
   const sections = navigation?.sectionLinks?.length ? navigation.sectionLinks : sectionLinks
   const pages = navigation?.pageLinks?.length ? navigation.pageLinks : pageLinks
   const primaryLinks = desktopLinks ?? sections.slice(0, 4)
+  const localizedName = translateKnown('Mukesh Khadka', locale)
+  const localizedFirstName = translateKnown('MUKESH', locale)
+  const localizedLastName = translateKnown('KHADKA', locale)
 
   return (
     <header className={`signal-rail fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? 'signal-rail--scrolled' : ''}`}>
       <nav className="signal-rail__nav portfolio-container">
-        <a href="/" className="signal-rail__brand" aria-label="Mukesh Khadka — home">
+        <a href="/" className="signal-rail__brand" aria-label={`${localizedName} — home`}>
           <span className="signal-rail__mark"><img src="/heritage-mark-generated-v2.png" alt="" /></span>
-          <span className="signal-rail__name">MUKESH<span>.</span></span>
+          <span className="signal-rail__name">{localizedFirstName}<span>.</span></span>
         </a>
 
         <div className="signal-rail__desktop-links hidden lg:flex" aria-label="Primary navigation">
@@ -188,6 +195,7 @@ export default function SignalRail({ context, desktopLinks, site, navigation }: 
         </div>
 
         <div className="signal-rail__tools">
+          <LanguageSwitch />
           <div className="signal-rail__color-picker" role="group" aria-label="Theme color">
             {COLOR_THEMES.map((t) => (
               <button
@@ -224,7 +232,7 @@ export default function SignalRail({ context, desktopLinks, site, navigation }: 
         </div>
       </nav>
 
-      <div className="signal-rail__side-label" aria-hidden="true">MK / KHADKA</div>
+      <div className="signal-rail__side-label" aria-hidden="true">MK / {localizedLastName}</div>
 
       <AnimatePresence>
         {open && (

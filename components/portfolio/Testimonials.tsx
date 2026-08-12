@@ -1,61 +1,130 @@
 'use client'
-import { Quote } from 'lucide-react'
 import Reveal from '@/components/portfolio/Reveal'
 import SectionHeader from '@/components/portfolio/SectionHeader'
-import TiltCard from '@/components/fx/TiltCard'
-import { pfTestimonials } from '@/lib/portfolio-content'
+import type { PublicTestimonial, PublicUiCopy } from '@/lib/public-content'
 
-export default function Testimonials() {
+function initials(name: string): string {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? '')
+    .join('')
+}
+
+function reportCode(index: number): string {
+  // Mimics a telegraphic report number: TR-018 / TR-024 / TR-031
+  return `TR-${String(18 + index * 6).padStart(3, '0')}`
+}
+
+function reportStatus(index: number): string {
+  const tones = ['Verified', 'On record', 'On record'] as const
+  return tones[index % tones.length]
+}
+
+export default function Testimonials({ testimonials, copy }: { testimonials: PublicTestimonial[]; copy: PublicUiCopy['testimonials'] }) {
   return (
-    <section id="testimonials" className="relative scroll-mt-16 border-y border-ink/10 bg-ink/[0.02] py-20 sm:py-28">
+    <section id="testimonials" className="testimonials-feed relative scroll-mt-16 py-20 sm:py-28">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_85%_20%,rgba(196,102,31,0.05),transparent_40%)]"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_85%_18%,rgba(231,53,46,0.045),transparent_42%)]"
       />
       <div className="portfolio-container">
         <Reveal>
-          <SectionHeader index="05" eyebrow="Verified Reports" heading="What people say about working with me." />
+          <div className="testimonials-feed__masthead">
+            <SectionHeader index={copy.index} eyebrow={copy.eyebrow} heading={copy.heading} />
+            <dl className="testimonials-feed__meta" aria-label="Field transmission metadata">
+              <div>
+                <dt>{copy.filedLabel}</dt>
+                <dd>{copy.index} / {copy.eyebrow}</dd>
+              </div>
+              <div>
+                <dt>{copy.transmissionsLabel}</dt>
+                <dd>{String(testimonials.length).padStart(2, '0')} on record</dd>
+              </div>
+              <div>
+                <dt>{copy.channelLabel}</dt>
+                <dd className="testimonials-feed__channel">
+                  <span className="testimonials-feed__pulse" aria-hidden="true" />
+                  {copy.channelValue}
+                </dd>
+              </div>
+            </dl>
+          </div>
         </Reveal>
 
-        <div className="mt-14 grid gap-5 md:grid-cols-3">
-          {pfTestimonials.map((item, i) => (
-            <Reveal key={item.name} as="article" delay={i * 90} blur className="h-full">
-              <TiltCard className="h-full" intensity={7}>
-                <figure className="group relative flex h-full flex-col rounded-3xl border border-ink/10 bg-white/60 p-8 transition-all duration-500 hover:-translate-y-1 hover:border-ember-500/40 hover:shadow-xl hover:shadow-ember-500/15">
-                  <span
-                    aria-hidden="true"
-                    className="absolute right-6 top-6 font-fraunces text-7xl font-bold leading-none text-ember-500/15 transition-all duration-500 group-hover:text-ember-500/30 group-hover:drop-shadow-[0_0_14px_rgba(196,102,31,0.4)]"
-                  >
-                    ”
-                  </span>
-
-                <div className="flex items-center justify-between gap-4">
-                  <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ember-500/25 to-rose-500/25 text-ember-700">
-                    <Quote className="h-5 w-5" />
-                  </span>
-                  <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-night-400">
-                    Report {String(i + 1).padStart(2, '0')}
-                  </span>
-                </div>
-
-                <blockquote className="mt-6 flex-1 leading-relaxed text-night-200">
-                  “{item.quote}”
-                </blockquote>
-
-                <figcaption className="mt-7 flex items-center gap-3 border-t border-ink/10 pt-5">
-                  <span className="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-ember-500 to-rose-500 font-fraunces text-base font-semibold text-white shadow-[0_0_16px_rgba(196,102,31,0.3)]">
-                    {item.name.charAt(0)}
-                  </span>
-                  <div>
-                    <div className="font-fraunces font-semibold text-night-50">{item.name}</div>
-                    <div className="mt-0.5 font-mono text-xs text-night-400">{item.role}</div>
-                  </div>
-                </figcaption>
-                </figure>
-              </TiltCard>
-            </Reveal>
-          ))}
+        <div className="testimonials-feed__rail" aria-hidden="true">
+          <span className="testimonials-feed__rail-line" />
+          <span className="testimonials-feed__rail-cap" />
         </div>
+
+        <ol className="testimonials-feed__list" role="list">
+          {testimonials.map((item, i) => (
+            <li key={item.name} className="testimonials-feed__entry">
+              <Reveal delay={i * 110} blur>
+                <article className="testimonial-card">
+                  <header className="testimonial-card__header">
+                    <span className="testimonial-card__corner testimonial-card__corner--tl" aria-hidden="true" />
+                    <span className="testimonial-card__corner testimonial-card__corner--tr" aria-hidden="true" />
+                    <span className="testimonial-card__corner testimonial-card__corner--bl" aria-hidden="true" />
+                    <span className="testimonial-card__corner testimonial-card__corner--br" aria-hidden="true" />
+                    <div className="testimonial-card__code">
+                      <span className="testimonial-card__code-label">REPORT</span>
+                      <strong>{reportCode(i)}</strong>
+                    </div>
+                    <div className="testimonial-card__trace" aria-hidden="true">
+                      <span className="testimonial-card__trace-dot" />
+                      <span className="testimonial-card__trace-dot" />
+                      <span className="testimonial-card__trace-dot" />
+                      <span className="testimonial-card__trace-segment" />
+                    </div>
+                    <div className="testimonial-card__status">
+                      <span className="testimonial-card__status-dot" />
+                      {reportStatus(i)}
+                    </div>
+                  </header>
+
+                  <div className="testimonial-card__body">
+                    <span className="testimonial-card__quote-tag" aria-hidden="true">“</span>
+                    <blockquote className="testimonial-card__quote">{item.quote}”</blockquote>
+
+                    <div className="testimonial-card__reading" aria-hidden="true">
+                      <span className="testimonial-card__reading-bar" />
+                      <span className="testimonial-card__reading-bar" />
+                      <span className="testimonial-card__reading-bar" />
+                      <span className="testimonial-card__reading-bar" />
+                    </div>
+                  </div>
+
+                  <footer className="testimonial-card__footer">
+                    <div className="testimonial-card__signature">
+                      <span className="testimonial-card__avatar" aria-hidden="true">
+                        {initials(item.name)}
+                      </span>
+                      <div>
+                        <div className="testimonial-card__name">{item.name}</div>
+                        <div className="testimonial-card__role">— {item.role}</div>
+                      </div>
+                    </div>
+                    <div className="testimonial-card__signoff">
+                      <span aria-hidden="true">FILED</span>
+                      <strong>{reportCode(i)}</strong>
+                    </div>
+                  </footer>
+                </article>
+              </Reveal>
+            </li>
+          ))}
+        </ol>
+
+        <Reveal delay={140}>
+          <div className="testimonials-feed__footnote">
+            <span className="testimonials-feed__footnote-mark" aria-hidden="true" />
+            <p>
+              {copy.footnote}
+            </p>
+          </div>
+        </Reveal>
       </div>
     </section>
   )

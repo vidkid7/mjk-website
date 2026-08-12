@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A small team running the system that keeps a school in session">
+  <defs>
+    <linearGradient id="bg7" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#fffaf3"/>
+      <stop offset="100%" stop-color="#f1e7d8"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="600" fill="url(#bg7)"/>
+
+  <text x="60" y="60" fill="#c9342e" font-family="monospace" font-size="11" letter-spacing="3">SMALL TEAMS · LARGE SYSTEMS</text>
+  <text x="60" y="92" fill="#191817" font-family="serif" font-size="28" font-weight="500" letter-spacing="-0.8">Tight, careful, deeply accountable.</text>
+
+  <!-- Six person icons in a circle - showing small team -->
+  <g transform="translate(360 280)">
+    <circle cx="0" cy="0" r="160" fill="none" stroke="#a48961" stroke-width="1" stroke-dasharray="4 4"/>
+    <circle cx="0" cy="0" r="120" fill="none" stroke="#a48961" stroke-width="0.6" opacity="0.6"/>
+
+    <!-- Center -->
+    <circle cx="0" cy="0" r="32" fill="#c9342e"/>
+    <text x="0" y="6" fill="#fffaf2" font-family="serif" font-size="22" font-weight="700" text-anchor="middle">6</text>
+    <text x="0" y="56" fill="#716d67" font-family="monospace" font-size="9" text-anchor="middle">PEOPLE · NEPAL TEAM</text>
+
+    <!-- 6 satellites -->
+    <g fill="#191817">
+      <!-- top -->
+      <g transform="translate(0 -160)">
+        <circle cx="0" cy="0" r="22" fill="#fffaf2" stroke="#c9342e" stroke-width="1.4"/>
+        <text x="0" y="4" fill="#c9342e" font-family="serif" font-size="14" font-weight="700" text-anchor="middle">L</text>
+        <text x="0" y="44" fill="#716d67" font-family="monospace" font-size="8" text-anchor="middle">LEAD</text>
+      </g>
+      <!-- top-right -->
+      <g transform="translate(138 -80)">
+        <circle cx="0" cy="0" r="22" fill="#fffdf6" stroke="#a48961" stroke-width="1.4"/>
+        <text x="0" y="4" fill="#191817" font-family="serif" font-size="14" font-weight="700" text-anchor="middle">E</text>
+        <text x="0" y="44" fill="#716d67" font-family="monospace" font-size="8" text-anchor="middle">ENGINEER</text>
+      </g>
+      <!-- bottom-right -->
+      <g transform="translate(138 80)">
+        <circle cx="0" cy="0" r="22" fill="#fffdf6" stroke="#a48961" stroke-width="1.4"/>
+        <text x="0" y="4" fill="#191817" font-family="serif" font-size="14" font-weight="700" text-anchor="middle">D</text>
+        <text x="0" y="44" fill="#716d67" font-family="monospace" font-size="8" text-anchor="middle">DESIGNER</text>
+      </g>
+      <!-- bottom -->
+      <g transform="translate(0 160)">
+        <circle cx="0" cy="0" r="22" fill="#fffdf6" stroke="#a48961" stroke-width="1.4"/>
+        <text x="0" y="4" fill="#191817" font-family="serif" font-size="14" font-weight="700" text-anchor="middle">F</text>
+        <text x="0" y="44" fill="#716d67" font-family="monospace" font-size="8" text-anchor="middle">FIELD OPS</text>
+      </g>
+      <!-- bottom-left -->
+      <g transform="translate(-138 80)">
+        <circle cx="0" cy="0" r="22" fill="#fffdf6" stroke="#a48961" stroke-width="1.4"/>
+        <text x="0" y="4" fill="#191817" font-family="serif" font-size="14" font-weight="700" text-anchor="middle">S</text>
+        <text x="0" y="44" fill="#716d67" font-family="monospace" font-size="8" text-anchor="middle">SUPPORT</text>
+      </g>
+      <!-- top-left -->
+      <g transform="translate(-138 -80)">
+        <circle cx="0" cy="0" r="22" fill="#fffdf6" stroke="#a48961" stroke-width="1.4"/>
+        <text x="0" y="4" fill="#191817" font-family="serif" font-size="14" font-weight="700" text-anchor="middle">A</text>
+        <text x="0" y="44" fill="#716d67" font-family="monospace" font-size="8" text-anchor="middle">ADMIN</text>
+      </g>
+    </g>
+
+    <!-- Connection lines from satellites to center -->
+    <g stroke="#c9342e" stroke-width="0.6" opacity="0.4">
+      <line x1="0" y1="-138" x2="0" y2="-32"/>
+      <line x1="119" y1="-69" x2="22" y2="-22"/>
+      <line x1="119" y1="69" x2="22" y2="22"/>
+      <line x1="0" y1="138" x2="0" y2="32"/>
+      <line x1="-119" y1="69" x2="-22" y2="22"/>
+      <line x1="-119" y1="-69" x2="-22" y2="-22"/>
+    </g>
+  </g>
+
+  <!-- Right column: real systems they ship -->
+  <g transform="translate(700 160)">
+    <rect x="0" y="0" width="440" height="320" fill="#fffdf6" stroke="#a48961" stroke-width="1"/>
+    <text x="20" y="32" fill="#c9342e" font-family="monospace" font-size="11" letter-spacing="2">SYSTEMS IN ACTIVE USE</text>
+    <line x1="20" y1="44" x2="420" y2="44" stroke="#191817" stroke-width="0.5"/>
+
+    <g fill="#191817" font-family="serif" font-size="13">
+      <text x="20" y="76" font-weight="700">School attendance · 412 students</text>
+      <text x="20" y="94" fill="#716d67" font-size="11">Daily register → monthly report</text>
+
+      <text x="20" y="130" font-weight="700">Municipal records · 18 offices</text>
+      <text x="20" y="148" fill="#716d67" font-size="11">Citizenship workflow, Nepali + English</text>
+
+      <text x="20" y="184" font-weight="700">Hospital billing · 6 departments</text>
+      <text x="20" y="202" fill="#716d67" font-size="11">Receipts, audit trail, monthly close</text>
+
+      <text x="20" y="238" font-weight="700">Inventory · 11 branches</text>
+      <text x="20" y="256" fill="#716d67" font-size="11">Receiving, transfer, reconciliation</text>
+    </g>
+
+    <!-- Status bar at bottom -->
+    <rect x="20" y="280" width="400" height="24" fill="#c9342e" opacity="0.08"/>
+    <text x="40" y="296" fill="#c9342e" font-family="monospace" font-size="9" font-weight="700">96.4% UPTIME · 11 SITES LIVE</text>
+  </g>
+
+  <!-- Footnote -->
+  <text x="60" y="540" fill="#191817" font-family="serif" font-size="14" font-style="italic">"Two to six people. Everyone carries real responsibility."</text>
+  <text x="60" y="566" fill="#716d67" font-family="monospace" font-size="10" letter-spacing="2">DOCUMENTED · TEAM PROFILE · NEPAL</text>
+
+  <!-- Corner registration -->
+  <g stroke="#c9342e" stroke-width="1" fill="none" opacity="0.5">
+    <path d="M 24 24 L 24 60 M 24 24 L 60 24"/>
+    <path d="M 1176 24 L 1176 60 M 1176 24 L 1140 24"/>
+    <path d="M 24 576 L 24 540 M 24 576 L 60 576"/>
+    <path d="M 1176 576 L 1176 540 M 1176 576 L 1140 576"/>
+  </g>
+</svg>

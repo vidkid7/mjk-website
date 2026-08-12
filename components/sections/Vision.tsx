@@ -38,7 +38,7 @@ export default function Vision() {
   const cards = hasLegacyVision(storedCards) ? visionCards : storedCards
 
   return (
-    <section id="vision" className="public-section public-section--dark relative overflow-hidden px-4 py-24 md:py-32">
+    <section id="vision" className="public-section public-section--light relative overflow-hidden px-4 py-24 md:py-32">
       <DhakaPattern className="opacity-[0.025]" />
       <div aria-hidden="true" className="pointer-events-none absolute left-0 top-16 h-80 w-80 rounded-full bg-emerald-100/80 blur-3xl" />
       <div aria-hidden="true" className="pointer-events-none absolute right-0 bottom-10 h-96 w-96 rounded-full bg-blue-100/80 blur-3xl" />
@@ -72,7 +72,7 @@ export default function Vision() {
             transition={{ duration: 0.5, delay: 0.16 }}
             className="text-base leading-8 text-slate-600 md:text-lg"
           >
-            Inspired by AashaTech's digital-systems approach, this vision focuses on professional websites, custom software, mobile-ready platforms, organized records, automation, and measurable outcomes for organizations in Nepal.
+            Inspired by AashaTech&apos;s digital-systems approach, this vision focuses on professional websites, custom software, mobile-ready platforms, organized records, automation, and measurable outcomes for organizations in Nepal.
           </motion.p>
         </div>
 
@@ -91,13 +91,13 @@ export default function Vision() {
                 <div className="absolute right-0 top-0 h-28 w-28 translate-x-10 -translate-y-10 rounded-full bg-emerald-100 transition group-hover:scale-150" />
                 <div className="relative">
                   <div className="mb-8 flex items-center justify-between gap-4">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-950 text-white shadow-lg shadow-slate-950/10">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-slate-900 shadow-lg shadow-slate-950/10 ring-1 ring-slate-200">
                       <Icon className="h-7 w-7" />
                     </div>
-                    <span className="text-xs font-black uppercase tracking-[0.22em] text-slate-300">0{index + 1}</span>
+                    <span className="text-xs font-black uppercase tracking-[0.22em] text-slate-500">0{index + 1}</span>
                   </div>
                   <h3 className="text-xl font-black text-slate-950">{card.heading}</h3>
-                  <p className="mt-3 text-sm leading-7 text-slate-500">{card.description}</p>
+                  <p className="mt-3 text-sm leading-7 text-slate-600">{card.description}</p>
                 </div>
               </motion.article>
             )

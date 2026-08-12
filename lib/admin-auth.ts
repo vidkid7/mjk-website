@@ -2,6 +2,40 @@ const ADMIN_COOKIE = 'mjk_admin_session'
 const SESSION_SECONDS = 60 * 60 * 12
 const PBKDF2_ITERATIONS = 210000
 
+// Sliding-window login rate limiting (in-memory, per Node process).
+// Brute-force protection for /api/admin/login.
+const LOGIN_WINDOW_MS = 10 * 60 * 1000 // 10 min
+const LOGIN_MAX_ATTEMPTS = 5
+const loginAttempts = new Map<string, { count: number; resetAt: number }>()
+
+function keyForRequest(request: Request) {
+  const forwarded = request.headers.get('x-forwarded-for')
+  const ip = forwarded?.split(',')[0]?.trim() || 'unknown'
+  return ip
+}
+
+export function checkLoginRateLimit(request: Request): { allowed: boolean; retryAfterSeconds: number } {
+  const now = Date.now()
+  const key = keyForRequest(request)
+  const entry = loginAttempts.get(key)
+
+  if (!entry || entry.resetAt <= now) {
+    loginAttempts.set(key, { count: 1, resetAt: now + LOGIN_WINDOW_MS })
+    return { allowed: true, retryAfterSeconds: 0 }
+  }
+
+  if (entry.count >= LOGIN_MAX_ATTEMPTS) {
+    return { allowed: false, retryAfterSeconds: Math.ceil((entry.resetAt - now) / 1000) }
+  }
+
+  entry.count += 1
+  return { allowed: true, retryAfterSeconds: 0 }
+}
+
+export function resetLoginRateLimit(request: Request) {
+  loginAttempts.delete(keyForRequest(request))
+}
+
 type AdminSession = {
   email: string
   exp: number

@@ -3,7 +3,7 @@
 
 export const heroData = {
   label: 'Digital Systems & Software Portfolio',
-  headline: 'Mukesh Khadka\nDigital Systems',
+  headline: 'Mukesh Khadka',
   subheadline: 'Software Systems • Web Platforms • Digital Transformation',
   bio: 'Mukesh Khadka works on technology-driven solutions for organizations that need reliable websites, software systems, workflow automation, and clear digital presentation. The focus is simple: understand the real problem, design a useful system, and deliver technology that makes daily work easier.',
   cta_primary: 'Explore The Work',

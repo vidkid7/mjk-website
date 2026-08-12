@@ -4,6 +4,7 @@ import { Save, Globe, Phone, Mail, MapPin, Share2 } from 'lucide-react'
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa'
 import { useAdminContent } from '@/lib/admin-data'
 import AdminDataNotice from '@/components/admin/AdminDataNotice'
+import { DEFAULT_SETTINGS } from '@/lib/settings'
 
 const socialUrl = (url: string | undefined, fallback: string, legacyFallback?: string) =>
   !url || url === legacyFallback ? fallback : url
@@ -20,21 +21,7 @@ const defaultForm = {
   youtube_url: '',
   twitter_url: 'https://x.com/khadkamukesh422?s=11',
   tiktok_url: '',
-  visible_sections: {
-    hero: true,
-    about: true,
-    achievements: true,
-    portfolio: true,
-    vision: true,
-    initiatives: true,
-    entrepreneurship: true,
-    youth: true,
-    testimonials: true,
-    gallery: true,
-    news: true,
-    stats: true,
-    contact: true,
-  },
+  visible_sections: DEFAULT_SETTINGS.visible_sections,
 }
 
 const sectionVisibilityOptions = [
@@ -44,10 +31,7 @@ const sectionVisibilityOptions = [
   { key: 'portfolio', label: 'Portfolio' },
   { key: 'vision', label: 'Digital Vision' },
   { key: 'initiatives', label: 'Solutions' },
-  { key: 'entrepreneurship', label: 'Delivery Capability' },
-  { key: 'youth', label: 'Insights' },
   { key: 'testimonials', label: 'Testimonials' },
-  { key: 'gallery', label: 'Gallery' },
   { key: 'news', label: 'Blog Preview' },
   { key: 'stats', label: 'Stats' },
   { key: 'contact', label: 'Contact' },

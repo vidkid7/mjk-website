@@ -1,52 +1,47 @@
-'use client'
-import Navbar from '@/components/sections/Navbar'
-import Hero from '@/components/sections/Hero'
-import Marquee from '@/components/sections/Marquee'
-import About from '@/components/sections/About'
-import PortraitStory from '@/components/sections/PortraitStory'
-import Achievements from '@/components/sections/Achievements'
-import ClientPortfolio from '@/components/sections/ClientPortfolio'
-import Vision from '@/components/sections/Vision'
-import Initiatives from '@/components/sections/Initiatives'
-import Entrepreneurship from '@/components/sections/Entrepreneurship'
-import YouthInspiration from '@/components/sections/YouthInspiration'
-import Testimonials from '@/components/sections/Testimonials'
-import Gallery from '@/components/sections/Gallery'
-import News from '@/components/sections/News'
-import Stats from '@/components/sections/Stats'
-import Contact from '@/components/sections/Contact'
-import FAQ from '@/components/sections/FAQ'
-import Footer from '@/components/sections/Footer'
-import { LiquidBackdrop } from '@/components/ui/LiquidBackdrop'
-import { useStoredData } from '@/lib/storage'
-import { DEFAULT_SETTINGS, type SectionKey } from '@/lib/settings'
+import PortfolioNavbar from '@/components/portfolio/Navbar'
+import PortfolioHero from '@/components/portfolio/Hero'
+import Marquee from '@/components/portfolio/Marquee'
+import About from '@/components/portfolio/About'
+import Projects from '@/components/portfolio/Projects'
+import Skills from '@/components/portfolio/Skills'
+import Experience from '@/components/portfolio/Experience'
+import Testimonials from '@/components/portfolio/Testimonials'
+import Contact from '@/components/portfolio/Contact'
+import Footer from '@/components/portfolio/Footer'
+import LoadingScreen from '@/components/portfolio/LoadingScreen'
+import Atmosphere from '@/components/fx/Atmosphere'
+import CursorGlow from '@/components/fx/CursorGlow'
+import CmsUnavailable from '@/components/portfolio/CmsUnavailable'
+import { loadPublicContent, PublicContentError } from '@/lib/public-content-server'
 
-export default function Home() {
-  const settings = useStoredData('settings', DEFAULT_SETTINGS)
-  const show = (section: SectionKey) => settings.visible_sections?.[section] ?? true
+export const dynamic = 'force-dynamic'
 
+export default async function Home() {
+  let content
+  try {
+    content = await loadPublicContent()
+  } catch (error) {
+    if (error instanceof PublicContentError) return <CmsUnavailable message={error.message} />
+    throw error
+  }
+
+  const visible = content.site.visibleSections
   return (
-    <main id="main-content" className="liquid-page public-liquid-page public-editorial-light relative overflow-hidden">
-      <LiquidBackdrop variant="public" />
+    <main id="main-content" className="portfolio-page tech-noir-shell gateway-shell relative min-h-screen">
+      <LoadingScreen />
+      <Atmosphere />
+      <CursorGlow />
       <div className="relative z-10">
-        <Navbar />
-        {show('hero') && <Hero />}
-        <Marquee />
-        {show('about') && <About />}
-        <PortraitStory />
-        {show('achievements') && <Achievements />}
-        {show('portfolio') && <ClientPortfolio />}
-        {show('vision') && <Vision />}
-        {show('initiatives') && <Initiatives />}
-        {show('entrepreneurship') && <Entrepreneurship />}
-        {show('youth') && <YouthInspiration />}
-        {show('testimonials') && <Testimonials />}
-        {show('gallery') && <Gallery />}
-        {show('news') && <News />}
-        {show('stats') && <Stats />}
-        {show('contact') && <Contact />}
-        <FAQ />
-        <Footer />
+        <PortfolioNavbar site={content.site} navigation={content.ui.navigation} />
+        {visible.hero !== false && <PortfolioHero content={content.hero} site={content.site} />}
+        {visible.skills !== false && <div className="gateway-toolbox-marquee border-y border-ink/10 bg-ink/[0.02]"><Marquee items={content.skills.toolbox} /></div>}
+        {visible.about !== false && <About content={content.about} site={content.site} />}
+        {visible.portfolio !== false && <Projects projects={content.projects} copy={content.ui.projects} />}
+        {visible.skills !== false && <Skills content={content.skills} copy={content.ui.skills} />}
+        {visible.achievements !== false && <Experience experience={content.experience} copy={content.ui.experience} />}
+        {visible.testimonials !== false && <Testimonials testimonials={content.testimonials} copy={content.ui.testimonials} />}
+        {visible.contact !== false && <Contact content={content.contact} copy={content.ui.contact} />}
+        <Footer site={content.site} services={content.services} copy={content.ui.footer} />
       </div>
     </main>
   )
