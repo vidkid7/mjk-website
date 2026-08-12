@@ -6579,7 +6579,7 @@ section {
   position: absolute;
   inset: 8rem 0 0;
   z-index: 5;
-  overflow: hidden;
+  overflow: visible;
   pointer-events: none;
 }
 
@@ -6635,7 +6635,7 @@ section {
 .gateway-shell .gateway-hero__heritage-buddha-shadow {
   position: absolute;
   right: clamp(1rem, 3vw, 2.25rem);
-  bottom: 21%;
+  bottom: 14%;
   z-index: 2;
   width: clamp(16rem, 28vw, 27rem);
   height: auto;

@@ -127,6 +127,8 @@ test('laptop Buddha shadow keeps its head visible and readable', async () => {
   const hero = await source('components/portfolio/Hero.tsx')
 
   assert.match(hero, /gateway-hero__heritage-shadow-layer[\s\S]*?animate=\{\{ opacity: 1, y: 0 \}\}/)
+  assert.match(css, /\.gateway-hero__heritage\s*\{[\s\S]*?overflow:\s*visible/)
+  assert.match(css, /\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?bottom:\s*14%/)
   assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?bottom:\s*16%[\s\S]*?opacity:\s*0\.78/)
 })
 
