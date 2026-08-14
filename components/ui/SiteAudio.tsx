@@ -41,6 +41,13 @@ export default function SiteAudio() {
     }
 
     const playMusic = async () => {
+      if (!audio.paused) {
+        setIsPlaying(true)
+        setNeedsInteraction(audio.muted)
+        setIsMutedAutoplay(audio.muted)
+        return
+      }
+
       audio.muted = false
 
       try {
@@ -64,11 +71,13 @@ export default function SiteAudio() {
       }
     }
 
+    audio.addEventListener('canplay', playMusic)
     playMusic()
     window.addEventListener('pointerdown', resumeWithSound, { passive: true })
     window.addEventListener('keydown', resumeWithSound)
 
     return () => {
+      audio.removeEventListener('canplay', playMusic)
       removeInteractionListeners()
     }
   }, [])
