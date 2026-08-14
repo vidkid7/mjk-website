@@ -89,7 +89,7 @@ function localizedStrings(values: string[], translations: unknown, field: string
 
 function normalizeAvailability(value: string) {
   const normalized = value.trim().toLowerCase().replace(/\s+/g, ' ')
-  return normalized.includes('ceo at aashatech') ? 'Founder/CEO' : value
+  return normalized.includes('ceo at aashatech') ? 'Founder/CEO at Aashatech' : value
 }
 
 function normalizeServices(value: unknown, locale: Locale): PublicService[] {

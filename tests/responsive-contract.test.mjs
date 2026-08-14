@@ -132,11 +132,11 @@ test('laptop Buddha shadow keeps its head visible and readable', async () => {
   assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?bottom:\s*16%[\s\S]*?opacity:\s*0\.78/)
 })
 
-test('profile availability identifies Founder/CEO and links to AashaTech', async () => {
+test('profile availability identifies Founder/CEO at Aashatech and links to AashaTech', async () => {
   const portfolio = await source('lib/portfolio-content.ts')
   const adminStarter = await source('app/admin/site-content/page.tsx')
-  assert.match(portfolio, /availability:\s*'Founder\/CEO'/)
+  assert.match(portfolio, /availability:\s*'Founder\/CEO at Aashatech'/)
   assert.match(portfolio, /availabilityHref:\s*'https:\/\/aashatech\.com\/'/)
-  assert.match(adminStarter, /availability:\s*'Founder\/CEO'/)
+  assert.match(adminStarter, /availability:\s*'Founder\/CEO at Aashatech'/)
   assert.match(adminStarter, /availabilityHref:\s*'https:\/\/aashatech\.com\/'/)
 })
