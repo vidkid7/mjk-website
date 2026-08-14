@@ -148,10 +148,7 @@ export default function Footer() {
       <div className="border-t border-white/5 bg-slate-950">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-5 py-4 sm:flex-row sm:px-8">
           <p className="text-center text-xs text-white/70 sm:text-left">© 2026 Mukesh Khadka. All Rights Reserved.</p>
-          <div className="flex flex-col items-center gap-1 text-center sm:items-end sm:text-right">
-            <p className="inline-flex items-center gap-1 text-xs text-white/70">Built with <Code2 size={10} className="text-emerald-300" /> practical digital thinking</p>
-            <p className="text-[11px] text-white/45">Theme music “Mukesh Khadka” written by Madhav Prasad Ghimire</p>
-          </div>
+          <p className="inline-flex items-center gap-1 text-xs text-white/70">Built with <Code2 size={10} className="text-emerald-300" /> practical digital thinking</p>
         </div>
       </div>
     </footer>
