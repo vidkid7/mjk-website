@@ -12480,7 +12480,7 @@ textarea {
 }
 
 .gateway-shell .gateway-hero__heritage-flag {
-  left: clamp(-1.5rem, 2vw, 3rem) !important;
+  left: calc(clamp(-1.5rem, 2vw, 3rem) - 1rem) !important;
   top: clamp(0.5rem, 3vh, 2.5rem) !important;
   bottom: auto !important;
   z-index: 8 !important;
@@ -12494,7 +12494,7 @@ textarea {
 
 @media (max-width: 767px) {
   .gateway-shell .gateway-hero__heritage-flag {
-    left: -2.75rem !important;
+    left: calc(-2.75rem - 1rem) !important;
     top: 0.5rem !important;
     width: 118% !important;
   }
