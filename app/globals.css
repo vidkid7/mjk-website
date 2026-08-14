@@ -12465,6 +12465,41 @@ textarea {
   }
 }
 
+/* Keep the Nepal flag as the foreground origin marker, rising above the
+   mountain plate while leaving the portrait and copy readable. */
+.gateway-shell .gateway-hero__heritage {
+  z-index: 3;
+}
+
+.gateway-shell .gateway-stage {
+  z-index: 6;
+}
+
+.gateway-shell .gateway-hero-ctas {
+  z-index: 7;
+}
+
+.gateway-shell .gateway-hero__heritage-flag {
+  left: clamp(-1.5rem, 2vw, 3rem) !important;
+  top: clamp(0.5rem, 3vh, 2.5rem) !important;
+  bottom: auto !important;
+  z-index: 8 !important;
+  width: clamp(34rem, 54vw, 58rem) !important;
+  max-width: none !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: left top !important;
+  filter: drop-shadow(0 0.8rem 1rem rgba(4, 18, 33, 0.2));
+}
+
+@media (max-width: 767px) {
+  .gateway-shell .gateway-hero__heritage-flag {
+    left: -2.75rem !important;
+    top: 0.5rem !important;
+    width: 118% !important;
+  }
+}
+
 @media (max-width: 767px) {
   .admin-header {
     min-height: 3.5rem;

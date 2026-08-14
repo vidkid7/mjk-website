@@ -10,6 +10,7 @@ export default function SiteAudio() {
   const [mounted, setMounted] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [needsInteraction, setNeedsInteraction] = useState(false)
+  const [isMutedAutoplay, setIsMutedAutoplay] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -18,30 +19,75 @@ export default function SiteAudio() {
 
     audio.volume = 0.5
 
-    const playMusic = () => {
+    const removeInteractionListeners = () => {
+      window.removeEventListener('pointerdown', resumeWithSound)
+      window.removeEventListener('keydown', resumeWithSound)
+    }
+
+    const resumeWithSound = (event?: Event) => {
+      if (event?.target instanceof Element && event.target.closest('[data-site-audio-control]')) return
+      audio.muted = false
       void audio.play()
         .then(() => {
           setIsPlaying(true)
           setNeedsInteraction(false)
-          window.removeEventListener('pointerdown', playMusic)
-          window.removeEventListener('keydown', playMusic)
+          setIsMutedAutoplay(false)
+          removeInteractionListeners()
         })
-        .catch(() => setNeedsInteraction(true))
+        .catch(() => {
+          audio.muted = true
+          setNeedsInteraction(true)
+        })
+    }
+
+    const playMusic = async () => {
+      audio.muted = false
+
+      try {
+        await audio.play()
+        setIsPlaying(true)
+        setNeedsInteraction(false)
+        setIsMutedAutoplay(false)
+        removeInteractionListeners()
+      } catch {
+        // Browsers commonly block unmuted autoplay. Start silently when possible,
+        // then turn sound on at the first real interaction.
+        try {
+          audio.muted = true
+          await audio.play()
+          setIsPlaying(true)
+          setNeedsInteraction(true)
+          setIsMutedAutoplay(true)
+        } catch {
+          setNeedsInteraction(true)
+        }
+      }
     }
 
     playMusic()
-    window.addEventListener('pointerdown', playMusic, { passive: true })
-    window.addEventListener('keydown', playMusic)
+    window.addEventListener('pointerdown', resumeWithSound, { passive: true })
+    window.addEventListener('keydown', resumeWithSound)
 
     return () => {
-      window.removeEventListener('pointerdown', playMusic)
-      window.removeEventListener('keydown', playMusic)
+      removeInteractionListeners()
     }
   }, [])
 
   const toggleMusic = () => {
     const audio = audioRef.current
     if (!audio) return
+
+    if (audio.muted || isMutedAutoplay) {
+      audio.muted = false
+      void audio.play()
+        .then(() => {
+          setIsPlaying(true)
+          setNeedsInteraction(false)
+          setIsMutedAutoplay(false)
+        })
+        .catch(() => setNeedsInteraction(true))
+      return
+    }
 
     if (audio.paused) {
       void audio.play()
@@ -60,15 +106,23 @@ export default function SiteAudio() {
     <>
       <audio ref={audioRef} src={MUSIC_SRC} autoPlay loop preload="auto" aria-label="Mukesh Khadka theme music" />
       {mounted && (
-        <button
-          type="button"
-          onClick={toggleMusic}
-          aria-label={isPlaying ? 'Pause theme music' : 'Play theme music'}
-          title={needsInteraction ? 'Click to start the theme music' : isPlaying ? 'Pause theme music' : 'Play theme music'}
-          className="fixed bottom-5 right-5 z-[60] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-slate-950/85 text-white shadow-xl shadow-slate-950/20 backdrop-blur-md transition hover:scale-105 hover:bg-crimson focus-visible:outline-white"
-        >
-          {isPlaying ? <Volume2 size={18} /> : needsInteraction ? <Music2 size={18} /> : <VolumeX size={18} />}
-        </button>
+        <div className="fixed bottom-5 right-5 z-[60] flex items-center gap-2">
+          {needsInteraction && (
+            <span className="rounded-full border border-white/15 bg-slate-950/85 px-3 py-2 text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-white shadow-xl shadow-slate-950/20 backdrop-blur-md">
+              Click to enable music
+            </span>
+          )}
+          <button
+            type="button"
+            data-site-audio-control
+            onClick={toggleMusic}
+            aria-label={needsInteraction ? 'Enable theme music' : isPlaying ? 'Pause theme music' : 'Play theme music'}
+            title={needsInteraction ? 'Click to enable the theme music' : isPlaying ? 'Pause theme music' : 'Play theme music'}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-slate-950/85 text-white shadow-xl shadow-slate-950/20 backdrop-blur-md transition hover:scale-105 hover:bg-crimson focus-visible:outline-white"
+          >
+            {isPlaying && !isMutedAutoplay ? <Volume2 size={18} /> : needsInteraction ? <Music2 size={18} /> : <VolumeX size={18} />}
+          </button>
+        </div>
       )}
     </>
   )
