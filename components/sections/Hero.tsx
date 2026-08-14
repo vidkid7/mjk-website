@@ -28,9 +28,15 @@ function isLegacyHero(content: typeof defaultHero) {
   return legacyHeroTerms.some(term => haystack.includes(term))
 }
 
+function normalizeHeroLabel(label: string) {
+  const normalized = label.trim().toLowerCase().replace(/\s+/g, ' ')
+  return normalized.includes('ceo at aashatech') ? 'Founder/CEO' : label
+}
+
 export default function Hero() {
   const storedContent = useStoredData('hero', defaultHero)
   const content = isLegacyHero(storedContent) ? defaultHero : storedContent
+  const displayLabel = normalizeHeroLabel(content.label)
   const headlineParts = content.headline.replace(/\\n/g, '\n').split('\n').filter(Boolean)
   const [playVideo, setPlayVideo] = useState(false)
 
@@ -147,7 +153,7 @@ export default function Hero() {
             <div className="mb-3 inline-flex sm:mb-5">
               <span className="inline-flex items-center gap-2 rounded-md border border-[#12375f]/18 bg-white/80 px-3 py-1.5 text-[9px] font-extrabold uppercase tracking-[0.24em] text-[#12375f] shadow-sm shadow-slate-900/5 backdrop-blur-sm sm:gap-3 sm:px-4 sm:py-2 sm:text-[11px] sm:tracking-[0.28em]">
                 <span className="h-2.5 w-2.5 rounded-full bg-crimson sm:h-3 sm:w-3" />
-                {content.label}
+                {displayLabel}
               </span>
             </div>
 
