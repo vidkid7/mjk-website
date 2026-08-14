@@ -52,6 +52,9 @@ test('fixed interface copy has English and Nepali entries', async () => {
   assert.match(source, /ne:/)
   assert.match(source, /Gauchha Geet Nepali/)
   assert.match(source, /गाउँछ गीत नेपाली/)
+
+  const footer = await read('components/portfolio/Footer.tsx')
+  assert.match(footer, /All Rights Reserved\./)
 })
 
 test('admin landing-page editor exposes paired English and Nepali values', async () => {

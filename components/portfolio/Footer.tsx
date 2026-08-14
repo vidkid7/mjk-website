@@ -133,7 +133,7 @@ export default function Footer({ site, services, copy }: { site: PublicSite; ser
 
         <footer className="imprint__footer">
           <span className="imprint__footer-fact">
-            © {year} {site.name}. Built with care in {site.location}.
+            © {year} {site.name}. <span>All Rights Reserved.</span> Built with care in {site.location}.
           </span>
           <span className="imprint__footer-rule" aria-hidden="true" />
           <span className="imprint__footer-fact">
