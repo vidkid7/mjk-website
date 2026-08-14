@@ -2257,6 +2257,7 @@ section {
 .gateway-shell .gateway-hero__heritage-figures { right: -1.5%; }
 .gateway-shell .gateway-hero__heritage-person {
   filter: grayscale(0) saturate(1.06) contrast(1.04) drop-shadow(0 1rem 1rem rgba(4, 18, 33, 0.22));
+  transform: scaleX(-1);
 }
 .gateway-shell .gateway-hero__heritage-buddha-profile { margin-right: -1.1rem; }
 
