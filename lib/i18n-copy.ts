@@ -20,7 +20,7 @@ export const fixedCopy: Record<Locale, PublicUiCopy> = {
     navigation: {
       menuKicker: 'नेभिगेसन / खुला च्यानल',
       menuDescription: 'प्रणालीको काम, उपकरण र सोचबीच अगाडि बढ्नुहोस्।',
-      sectionLinks: [{ label: 'परिचय', href: '/#about' }, { label: 'कामका फाइल', href: '/#work' }, { label: 'सीप', href: '/#skills' }, { label: 'इतिहास', href: '/#experience' }, { label: 'सम्पर्क', href: '/#contact' }],
+      sectionLinks: [{ label: 'परिचय', href: '/#about' }, { label: 'कामका फाइलहरू', href: '/#work' }, { label: 'सीप', href: '/#skills' }, { label: 'इतिहास', href: '/#experience' }, { label: 'सम्पर्क', href: '/#contact' }],
       pageLinks: [{ label: 'लेखहरू', href: '/articles' }, { label: 'सम्पर्क', href: '/contact' }],
     },
     projects: { index: '02', eyebrow: 'कामको सूची', heading: 'कामलाई अघि बढाउने प्रणालीहरू।', viewLabel: 'दृश्य', gridLabel: 'ग्रिड', focusLabel: 'केन्द्रित', discussLabel: 'यस प्रणालीबारे कुरा गर्नुहोस्', openLabel: 'फाइल खोल्नुहोस्', footerPrimary: 'प्रणाली / एउटै कार्यविधि', footerSecondary: 'सार्वजनिक अभिलेखदेखि दैनिक कामसम्म →' },

@@ -45,7 +45,8 @@ const nepali: Record<string, string> = {
   'Contact': 'सम्पर्क',
   'Let’s make the next workflow clearer.': 'अबको कार्यप्रवाहलाई अझ स्पष्ट बनाऔं।',
   'Share the problem, the people involved, and the outcome you need. We can shape the right digital solution from there.': 'समस्या, संलग्न मानिसहरू र आवश्यक परिणामबारे बताउनुहोस्। त्यसैबाट सही डिजिटल समाधान बनाऔं।',
-  'CEO at AashaTech': 'AashaTech का CEO',
+  'Founder/CEO at Aashatech': 'आशाटेकका संस्थापक/प्रमुख कार्यकारी अधिकृत',
+  'CEO at AashaTech': 'आशाटेकका प्रमुख कार्यकारी अधिकृत',
 
   // Public route chrome
   'Writing index': 'लेखन सूची',
@@ -165,7 +166,7 @@ const nepali: Record<string, string> = {
   'Share the goal, the people involved, and the process that needs to work better.': 'लक्ष्य, संलग्न मानिसहरू र अझ राम्रो चल्नुपर्ने प्रक्रिया साझा गर्नुहोस्।',
   'Discuss your project': 'तपाईंको परियोजनाबारे कुरा गर्नुहोस्',
   'Breadcrumb': 'स्थानक्रम',
-  'Field Files': 'फिल्ड फाइलहरू',
+  'Field Files': 'कामका फाइलहरू',
   'History': 'इतिहास',
   'Articles': 'लेखहरू',
   'Short, careful writing about software, workflow, and the small decisions that make systems quietly keep working. Updated when there is something worth saying.': 'सफ्टवेयर, कार्यप्रवाह र प्रणालीलाई शान्त रूपमा चलाइराख्ने साना निर्णयबारे छोटो, सावधानीपूर्वक लेखन। भन्न लायक कुरा हुँदा अद्यावधिक गरिन्छ।',
@@ -556,7 +557,7 @@ const nepali: Record<string, string> = {
 }
 
 const nepaliWords: Record<string, string> = {
-  DARK: 'डार्क', DOSSIER: 'विवरण', FIELD: 'फिल्ड', ROUTE: 'मार्ग', STEP: 'चरण', SEALED: 'बन्द', PLOTS: 'प्लट', RECORDS: 'अभिलेख',
+  DARK: 'गाढा', DOSSIER: 'विवरण', FIELD: 'फिल्ड', ROUTE: 'मार्ग', STEP: 'चरण', SEALED: 'बन्द', PLOTS: 'प्लट', RECORDS: 'अभिलेख',
   KNOWLEDGE: 'ज्ञान', CONSTELLATION: 'समूह', SYNCED: 'समक्रमित', BUSINESS: 'व्यवसाय', SYSTEM: 'प्रणाली', LEDGER: 'लेजर', HORIZON: 'क्षितिज',
   RECONCILED: 'मिलान भयो', SCAN: 'स्क्यान', SETTLED: 'समाधान भयो', ROOT: 'जरा', MEMORY: 'स्मृति', RETAIL: 'खुद्रा', DISCIPLINES: 'विषयहरू',
   SKILL: 'सीप', CHANNELS: 'च्यानलहरू', CHANNEL: 'च्यानल', SIGNAL: 'संकेत', STREAM: 'प्रवाह', UPTIME: 'उपलब्धता', EDGES: 'किनारा',

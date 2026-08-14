@@ -94,6 +94,18 @@ test('Nepali mode transliterates the portfolio name and handles case-insensitive
   assert.match(source, /toLocaleLowerCase|toLowerCase/)
 })
 
+test('Nepali mode uses exact interface translations for visible identity labels', async () => {
+  const [copy, hero] = await Promise.all([
+    read('lib/i18n-content.ts'),
+    read('components/portfolio/Hero.tsx'),
+  ])
+
+  assert.match(copy, /Founder\/CEO at Aashatech['\"]:\s*'आशाटेकका संस्थापक\/प्रमुख कार्यकारी अधिकृत'/)
+  assert.match(copy, /Field Files['\"]:\s*'कामका फाइलहरू'/)
+  assert.match(copy, /DARK:\s*'गाढा'/)
+  assert.match(hero, /translateKnown\(content\.headline, locale\)/)
+})
+
 test('admin chrome uses the shared heritage field structure', async () => {
   const [layout, styles] = await Promise.all([
     read('app/admin/layout.tsx'),
