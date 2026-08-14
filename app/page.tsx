@@ -16,6 +16,7 @@ import Stats from '@/components/sections/Stats'
 import Contact from '@/components/sections/Contact'
 import FAQ from '@/components/sections/FAQ'
 import Footer from '@/components/sections/Footer'
+import SiteAudio from '@/components/ui/SiteAudio'
 import { useStoredData } from '@/lib/storage'
 
 const defaultSettings = {
@@ -44,6 +45,7 @@ export default function Home() {
 
   return (
     <main id="main-content" className="relative">
+      <SiteAudio />
       <Navbar />
       {show('hero') && <Hero />}
       <Marquee />
