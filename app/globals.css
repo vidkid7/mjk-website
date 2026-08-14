@@ -9108,6 +9108,13 @@ section {
   background: linear-gradient(90deg, var(--imprint-line) 0%, transparent 100%);
 }
 
+.gateway-shell .imprint__footer-credit {
+  grid-column: 1 / -1;
+  min-width: 0;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
 
 /* ---- Articles route ---- */
 .public-route-shell {
@@ -12424,6 +12431,7 @@ textarea {
   .gateway-shell .imprint__link { grid-template-columns: 2.4rem minmax(0, 1fr) auto; padding-inline: 0.9rem; }
   .gateway-shell .imprint__wires-list { flex-wrap: wrap; }
   .gateway-shell .imprint__footer { grid-template-columns: minmax(0, 1fr); gap: 0.65rem; }
+  .gateway-shell .imprint__footer-credit { grid-column: 1 / -1; }
 }
 
 /* Admin surfaces use the same narrow-screen rules as the public routes. */

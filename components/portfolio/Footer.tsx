@@ -144,7 +144,7 @@ export default function Footer({ site, services, copy }: { site: PublicSite; ser
             <span className="imprint__footer-mark">REV ·</span> {buildId}
           </span>
           <span className="imprint__footer-rule" aria-hidden="true" />
-          <span className="imprint__footer-fact">{copy.musicCredit}</span>
+          <span className="imprint__footer-fact imprint__footer-credit">{copy.musicCredit}</span>
         </footer>
       </div>
     </footer>
