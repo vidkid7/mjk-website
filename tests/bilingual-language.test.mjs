@@ -52,6 +52,8 @@ test('fixed interface copy has English and Nepali entries', async () => {
   assert.match(source, /ne:/)
   assert.match(source, /Gauchha Geet Nepali/)
   assert.match(source, /गाउँछ गीत नेपाली/)
+  assert.match(source, /National Poet Madhav Prasad Ghimire/)
+  assert.match(source, /राष्ट्रिय कवि माधवप्रसाद घिमिरे/)
 
   const footer = await read('components/portfolio/Footer.tsx')
   assert.match(footer, /All Rights Reserved\./)
