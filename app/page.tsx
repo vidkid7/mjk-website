@@ -12,6 +12,7 @@ import LoadingScreen from '@/components/portfolio/LoadingScreen'
 import Atmosphere from '@/components/fx/Atmosphere'
 import CursorGlow from '@/components/fx/CursorGlow'
 import CmsUnavailable from '@/components/portfolio/CmsUnavailable'
+import SiteAudio from '@/components/ui/SiteAudio'
 import { loadPublicContent, PublicContentError } from '@/lib/public-content-server'
 
 export const dynamic = 'force-dynamic'
@@ -28,6 +29,7 @@ export default async function Home() {
   const visible = content.site.visibleSections
   return (
     <main id="main-content" className="portfolio-page tech-noir-shell gateway-shell relative min-h-screen">
+      <SiteAudio />
       <LoadingScreen />
       <Atmosphere />
       <CursorGlow />

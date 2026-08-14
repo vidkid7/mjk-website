@@ -87,6 +87,11 @@ function localizedStrings(values: string[], translations: unknown, field: string
   return locale === 'ne' && resolved === values ? translateKnownArray(resolved, locale) : resolved
 }
 
+function normalizeAvailability(value: string) {
+  const normalized = value.trim().toLowerCase().replace(/\s+/g, ' ')
+  return normalized.includes('ceo at aashatech') ? 'Founder/CEO' : value
+}
+
 function normalizeServices(value: unknown, locale: Locale): PublicService[] {
   if (!Array.isArray(value)) return []
   type ServiceStep = { title: string; body: string }
@@ -177,7 +182,7 @@ export async function loadPublicContent(requestedLocale?: Locale): Promise<Publi
     location: String(localized(settings, 'address', locale, profile.location || '')),
     email: String(settings.email || profile.email || ''),
     phone: String(settings.phone || profile.phone || ''),
-    availability: String(localized(profile, 'availability', locale, '')),
+    availability: normalizeAvailability(String(localized(profile, 'availability', locale, ''))),
     availabilityHref: String(profile.availabilityHref || ''),
     siteTitle: String(localized(settings, 'site_title', locale, '')),
     metaDescription: String(localized(settings, 'meta_description', locale, '')),

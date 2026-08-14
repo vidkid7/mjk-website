@@ -10,7 +10,7 @@ export const pfMeta = {
   location: 'Kathmandu, Nepal',
   email: 'khadkamukesh423@gmail.com',
   phone: '+977 985-1241656',
-  availability: 'CEO at AashaTech',
+  availability: 'Founder/CEO',
   availabilityHref: 'https://aashatech.com/',
   resumeHref: '#contact',
   socials: [

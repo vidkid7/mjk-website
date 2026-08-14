@@ -7,7 +7,7 @@ import AdminDataNotice from '@/components/admin/AdminDataNotice'
 
 const starter = {
   profile: {
-    name: 'Mukesh Khadka', role: 'Digital Systems & Software Portfolio', tagline: 'Software Systems • Web Platforms • Digital Transformation', availability: 'CEO at AashaTech', availabilityHref: 'https://aashatech.com/',
+    name: 'Mukesh Khadka', role: 'Digital Systems & Software Portfolio', tagline: 'Software Systems • Web Platforms • Digital Transformation', availability: 'Founder/CEO', availabilityHref: 'https://aashatech.com/',
   },
   heroCopy: { eyebrow: 'Digital Systems & Software Portfolio', roleLine: 'Software Systems • Web Platforms • Digital Transformation', ctaPrimaryHref: '#work', ctaSecondaryHref: '#contact' },
   aboutCopy: { index: '01', eyebrow: 'About Mukesh', highlights: ['Practical software delivery', 'Clear digital presentation', 'Systems that support daily work'], resumeHref: '#contact', meta: [] },
