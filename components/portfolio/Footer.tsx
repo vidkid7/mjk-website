@@ -144,7 +144,7 @@ export default function Footer({ site, services, copy }: { site: PublicSite; ser
             <span className="imprint__footer-mark">REV ·</span> {buildId}
           </span>
           <span className="imprint__footer-rule" aria-hidden="true" />
-          <span className="imprint__footer-fact">Theme music “Mukesh Khadka” written by Late Madhav Prasad Ghimire.</span>
+          <span className="imprint__footer-fact">{copy.musicCredit}</span>
         </footer>
       </div>
     </footer>

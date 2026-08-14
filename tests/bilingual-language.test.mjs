@@ -50,6 +50,8 @@ test('fixed interface copy has English and Nepali entries', async () => {
   }
   assert.match(source, /en:/)
   assert.match(source, /ne:/)
+  assert.match(source, /Gauchha Geet Nepali/)
+  assert.match(source, /गाउँछ गीत नेपाली/)
 })
 
 test('admin landing-page editor exposes paired English and Nepali values', async () => {

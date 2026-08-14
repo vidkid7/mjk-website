@@ -105,7 +105,7 @@ export type PublicUiCopy = {
   experience: { index: string; eyebrow: string; heading: string; filedLabel: string; entriesLabel: string; statusLabel: string; statusValue: string; footnote: string }
   testimonials: { index: string; eyebrow: string; heading: string; filedLabel: string; transmissionsLabel: string; channelLabel: string; channelValue: string; footnote: string }
   contact: { terminalLabel: string; statusValue: string; body: string; bodyMeta: string; emailAction: string; phoneAction: string; footerLabel: string; wiresLabel: string }
-  footer: { brandEyebrow: string; statusValue: string; compilerLabel: string; navigationTitle: string; servicesTitle: string; studioTitle: string; wiresLabel: string; topLabel: string }
+  footer: { brandEyebrow: string; statusValue: string; compilerLabel: string; navigationTitle: string; servicesTitle: string; studioTitle: string; wiresLabel: string; topLabel: string; musicCredit: string }
 }
 
 export type PublicArticle = {
@@ -144,7 +144,7 @@ export const EMPTY_PUBLIC_UI_COPY: PublicUiCopy = {
   experience: { index: '', eyebrow: '', heading: '', filedLabel: '', entriesLabel: '', statusLabel: '', statusValue: '', footnote: '' },
   testimonials: { index: '', eyebrow: '', heading: '', filedLabel: '', transmissionsLabel: '', channelLabel: '', channelValue: '', footnote: '' },
   contact: { terminalLabel: '', statusValue: '', body: '', bodyMeta: '', emailAction: '', phoneAction: '', footerLabel: '', wiresLabel: '' },
-  footer: { brandEyebrow: '', statusValue: '', compilerLabel: '', navigationTitle: '', servicesTitle: '', studioTitle: '', wiresLabel: '', topLabel: '' },
+  footer: { brandEyebrow: '', statusValue: '', compilerLabel: '', navigationTitle: '', servicesTitle: '', studioTitle: '', wiresLabel: '', topLabel: '', musicCredit: '' },
 }
 
 export const EMPTY_PUBLIC_CONTENT: PublicContent = {

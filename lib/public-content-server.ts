@@ -122,11 +122,13 @@ function mergeUiCopy(value: unknown, locale: Locale) {
   const localeDefaults = copyFor(locale)
   const localizedGroups = Object.fromEntries(groups.map((group) => {
     const source = raw[group] && typeof raw[group] === 'object' ? raw[group] : {}
-    const fields = Object.fromEntries(Object.entries(source).map(([key, field]) => [
+    const defaults = localeDefaults[group as keyof typeof localeDefaults] as Record<string, unknown>
+    const keys = Array.from(new Set([...Object.keys(defaults), ...Object.keys(source)]))
+    const fields = Object.fromEntries(keys.map((key) => [
       key,
       locale === 'ne'
-        ? resolveLocalizedValue(localeDefaults[group as keyof typeof localeDefaults][key as never], raw.translations, `${group}.${key}`, locale)
-        : resolveLocalizedValue(field, raw.translations, `${group}.${key}`, locale),
+        ? resolveLocalizedValue(defaults[key], raw.translations, `${group}.${key}`, locale)
+        : resolveLocalizedValue(source[key] ?? defaults[key], raw.translations, `${group}.${key}`, locale),
     ]))
     return [group, fields]
   }))
