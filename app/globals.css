@@ -12264,6 +12264,7 @@ textarea {
   }
 
   .gateway-copy {
+    width: 100%;
     padding-inline: 0;
     margin-top: 0;
   }
@@ -12273,12 +12274,21 @@ textarea {
   }
 
   .gateway-title {
-    max-width: 92vw;
-    margin-left: 0.25rem;
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
     font-size: clamp(2.9rem, 16vw, 6.8rem);
-    line-height: 0.8;
+    font-size: clamp(2.35rem, 14vw, 5.5rem);
+    line-height: 0.82;
     top: 0.9rem;
-    transform: translateX(0.35rem);
+    transform: none;
+  }
+
+  .gateway-title__front,
+  .gateway-title__back {
+    display: block;
+    white-space: nowrap;
   }
 
   .gateway-title > span:last-child { margin-left: 0.55em; }
