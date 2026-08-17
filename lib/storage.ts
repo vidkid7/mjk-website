@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { adminFetch } from '@/lib/admin-client'
 
 // Storage keys
 const KEYS = {
@@ -33,7 +34,7 @@ function saveLocalData<T>(key: StorageKey, data: T): void {
 }
 
 async function fetchRemoteData<T>(key: StorageKey): Promise<T | null> {
-  const response = await fetch(`/api/content?key=${key}`)
+  const response = await adminFetch(`/api/content?key=${key}`)
   if (!response.ok) return null
 
   const payload = await response.json()
@@ -41,7 +42,7 @@ async function fetchRemoteData<T>(key: StorageKey): Promise<T | null> {
 }
 
 async function persistRemoteData<T>(key: StorageKey, data: T, mode?: 'append'): Promise<void> {
-  const response = await fetch('/api/content', {
+  const response = await adminFetch('/api/content', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ key, data, mode }),

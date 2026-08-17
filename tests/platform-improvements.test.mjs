@@ -53,6 +53,32 @@ test('admin login protects against repeated password attempts', async () => {
   assert.match(login, /Retry-After/)
 })
 
+test('admin authentication uses short-lived access tokens and rotating refresh tokens', async () => {
+  const [token, auth, refresh, migration, client] = await Promise.all([
+    read('lib/admin-token.ts'),
+    read('lib/admin-auth.ts'),
+    read('app/api/admin/refresh/route.ts'),
+    read('supabase/migrations/20260817_admin_refresh_tokens.sql'),
+    read('lib/admin-client.ts'),
+  ])
+
+  assert.match(token, /ADMIN_ACCESS_SECONDS = 15 \* 60/)
+  assert.match(token, /typ: 'access'/)
+  assert.match(token, /iss: 'mjk-admin'/)
+  assert.match(token, /verifyAdminAccessToken/)
+  assert.match(auth, /REFRESH_SECONDS = 30 \* 24 \* 60 \* 60/)
+  assert.match(auth, /token_hash/)
+  assert.match(auth, /replaced_by_hash/)
+  assert.match(auth, /revokeRefreshFamily/)
+  assert.match(auth, /rotateAdminSession/)
+  assert.match(refresh, /export async function POST/)
+  assert.match(refresh, /rotateAdminSession/)
+  assert.match(migration, /CREATE TABLE IF NOT EXISTS admin_refresh_tokens/)
+  assert.match(migration, /ENABLE ROW LEVEL SECURITY/)
+  assert.match(client, /refreshInFlight/)
+  assert.match(client, /\/api\/admin\/refresh/)
+})
+
 test('CMS saves are backed by revision history and a restore control', async () => {
   const [schema, contentRoute, historyPage] = await Promise.all([
     read('supabase-schema.sql'),

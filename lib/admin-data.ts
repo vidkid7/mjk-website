@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import type { StorageKey } from '@/lib/storage'
+import { adminFetch } from '@/lib/admin-client'
 
 export type AdminDataKey = StorageKey | 'dashboard'
 
@@ -21,7 +22,7 @@ export function useAdminContent<T>(key: AdminDataKey, starter: T, options: Optio
     setLoading(true)
     setError('')
     try {
-      const response = await fetch(`/api/content?key=${key}`, { cache: 'no-store' })
+      const response = await adminFetch(`/api/content?key=${key}`, { cache: 'no-store' })
       if (response.status === 401) {
         window.location.href = '/admin/login'
         return
@@ -52,7 +53,7 @@ export function useAdminContent<T>(key: AdminDataKey, starter: T, options: Optio
     setSaving(true)
     setError('')
     try {
-      const response = await fetch('/api/content', {
+      const response = await adminFetch('/api/content', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ key, data: next }),
@@ -79,7 +80,7 @@ export function useAdminContent<T>(key: AdminDataKey, starter: T, options: Optio
     setSaving(true)
     setError('')
     try {
-      const response = await fetch('/api/content', {
+      const response = await adminFetch('/api/content', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ key, action: actionName, data: payloadData }),

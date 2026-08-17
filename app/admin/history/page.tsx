@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { History, RotateCcw } from 'lucide-react'
+import { adminFetch } from '@/lib/admin-client'
 
 const contentTypes = [
   { key: 'hero', label: 'Hero' },
@@ -42,7 +43,7 @@ export default function AdminHistory() {
     setLoading(true)
     setError('')
     try {
-      const response = await fetch(`/api/content?key=${key}&history=1`, { cache: 'no-store' })
+      const response = await adminFetch(`/api/content?key=${key}&history=1`, { cache: 'no-store' })
       const payload = await response.json()
       if (!response.ok) throw new Error(payload.error || 'Unable to load content history.')
       setRevisions(payload.data || [])
@@ -64,7 +65,7 @@ export default function AdminHistory() {
     setRestoring(revision.id)
     setError('')
     try {
-      const response = await fetch('/api/content', {
+      const response = await adminFetch('/api/content', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ key, action: 'restore', data: { revisionId: revision.id } }),
