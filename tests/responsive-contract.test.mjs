@@ -203,6 +203,7 @@ test('laptop-sized 1024px hero applies the same left-title, raised-flag, and rig
   assert.match(css, /@media \(min-width: 901px\) and \(max-width: 1100px\) and \(min-height: 600px\)[\s\S]*?\.gateway-shell \.gateway-title__back\s*\{[\s\S]*?translateX\(-8vw\)\s+translateY\(-0\.08em\)/)
   assert.match(css, /@media \(min-width: 901px\) and \(max-width: 1100px\) and \(min-height: 600px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-person\s*\{[\s\S]*?translateX\(0\.5vw\)\s+scaleX\(-1\)/)
   assert.match(css, /@media \(min-width: 901px\) and \(max-width: 1100px\) and \(min-height: 600px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?top:\s*clamp\(-0\.75rem, 3vh, 1\.5rem\)\s*!important/)
+  assert.match(css, /@media \(min-width: 901px\) and \(max-width: 1100px\) and \(min-height: 600px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?clip-path:\s*none\s*!important/)
 })
 
 test('browser branding exposes a dedicated square icon', async () => {

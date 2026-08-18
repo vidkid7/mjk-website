@@ -12952,5 +12952,6 @@ textarea {
 
   .gateway-shell .gateway-hero__heritage-flag {
     top: clamp(-0.75rem, 3vh, 1.5rem) !important;
+    clip-path: none !important;
   }
 }
