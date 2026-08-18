@@ -196,6 +196,15 @@ test('large laptop hero separates title behind Buddha and rebalances cultural an
   assert.match(css, /@media \(min-width: 1101px\) and \(max-height: 1000px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?top:\s*clamp\(0\.75rem, 3vh, 2rem\)\s*!important/)
 })
 
+test('laptop-sized 1024px hero applies the same left-title, raised-flag, and right-portrait treatment', async () => {
+  const css = await source('app/globals.css')
+
+  assert.match(css, /@media \(min-width: 901px\) and \(max-width: 1100px\) and \(min-height: 600px\)[\s\S]*?\.gateway-shell \.gateway-title__front\s*\{[\s\S]*?translateX\(-4vw\)/)
+  assert.match(css, /@media \(min-width: 901px\) and \(max-width: 1100px\) and \(min-height: 600px\)[\s\S]*?\.gateway-shell \.gateway-title__back\s*\{[\s\S]*?translateX\(-8vw\)\s+translateY\(-0\.08em\)/)
+  assert.match(css, /@media \(min-width: 901px\) and \(max-width: 1100px\) and \(min-height: 600px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-person\s*\{[\s\S]*?translateX\(0\.5vw\)\s+scaleX\(-1\)/)
+  assert.match(css, /@media \(min-width: 901px\) and \(max-width: 1100px\) and \(min-height: 600px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?top:\s*clamp\(-0\.75rem, 3vh, 1\.5rem\)\s*!important/)
+})
+
 test('browser branding exposes a dedicated square icon', async () => {
   const layout = await source('app/layout.tsx')
   const icon = await source('app/icon.svg')

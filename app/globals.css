@@ -12934,3 +12934,23 @@ textarea {
     top: clamp(0rem, 8vh, 5rem) !important;
   }
 }
+
+/* Laptop-sized 1024px calibration: apply the large-screen composition to
+   landscape laptop previews without changing the narrower tablet layout. */
+@media (min-width: 901px) and (max-width: 1100px) and (min-height: 600px) {
+  .gateway-shell .gateway-title__front {
+    transform: translateX(-4vw);
+  }
+
+  .gateway-shell .gateway-title__back {
+    transform: translateX(-8vw) translateY(-0.08em);
+  }
+
+  .gateway-shell .gateway-hero__heritage-person {
+    transform: translateX(0.5vw) scaleX(-1);
+  }
+
+  .gateway-shell .gateway-hero__heritage-flag {
+    top: clamp(-0.75rem, 3vh, 1.5rem) !important;
+  }
+}
