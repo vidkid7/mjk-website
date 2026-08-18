@@ -160,7 +160,9 @@ test('hero anchors the flag ridge cut, high Buddha head, and mirrored portrait a
   const css = await source('app/globals.css')
 
   assert.match(css, /\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?clip-path:\s*inset\(0 0 [^)]*\)/)
-  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?top:\s*7rem\s*!important/)
+  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?left:\s*-5rem\s*!important[\s\S]*?top:\s*9\.5rem\s*!important[\s\S]*?clip-path:\s*none\s*!important/)
+  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-hero__heritage-environment\s*\{[\s\S]*?height:\s*78%[\s\S]*?mask-image:\s*linear-gradient/)
+  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?top:\s*2\.5rem[\s\S]*?right:\s*-4%[\s\S]*?transform:\s*translate\(0, 1\.25rem\)/)
   assert.match(css, /\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?top:\s*clamp\(-2\.5rem/)
   assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?top:/)
   assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?top:/)

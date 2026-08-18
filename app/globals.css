@@ -12856,17 +12856,25 @@ textarea {
 }
 
 @media (max-width: 767px) {
+  .gateway-shell .gateway-hero__heritage-environment {
+    height: 78%;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 100%);
+  }
+
   .gateway-shell .gateway-hero__heritage-flag {
-    top: 7rem !important;
+    left: -5rem !important;
+    top: 9.5rem !important;
     bottom: auto !important;
+    clip-path: none !important;
   }
 
   .gateway-shell .gateway-hero__heritage-buddha-shadow {
-    top: 0.75rem;
-    right: 2%;
+    top: 2.5rem;
+    right: -4%;
     bottom: auto;
     width: clamp(13rem, 52vw, 19rem);
-    transform: translate(0, 0.25rem) scale(1.02);
+    transform: translate(0, 1.25rem) scale(1.02);
   }
 }
 
