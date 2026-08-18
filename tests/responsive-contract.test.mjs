@@ -55,6 +55,18 @@ test('mobile homepage fills the viewport, hides the toolbox marquee, and enlarge
   assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-flag[\s\S]*?top:\s*10rem\s*!important[\s\S]*?width:\s*124%\s*!important/)
 })
 
+test('mobile hero scales the bilingual name down and places KHADKA behind Buddha', async () => {
+  const css = await source('app/globals.css')
+  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-title\s*\{[\s\S]*?font-size:\s*clamp\(2\.35rem, 13vw, 5\.2rem\)/)
+  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-title--ember\s*\{[^}]*z-index:\s*1/)
+})
+
+test('hero CTA text follows the active color picker palette', async () => {
+  const css = await source('app/globals.css')
+  assert.match(css, /\.gateway-hero-cta\s*\{[\s\S]*?color:\s*var\(--gateway-red\)/)
+  assert.match(css, /\.gateway-shell\[data-portfolio-color='orange'\][\s\S]*?--gateway-red:\s*#d96a14/)
+})
+
 test('responsive hero headline exposes a dust gather and restrained air-wave animation', async () => {
   const css = await source('app/globals.css')
   const hero = await source('components/portfolio/Hero.tsx')
@@ -232,8 +244,14 @@ test('narrow phone atmosphere cannot expand the document width', async () => {
 test('profile availability identifies AashaTech and links to its site', async () => {
   const portfolio = await source('lib/portfolio-content.ts')
   const adminStarter = await source('app/admin/site-content/page.tsx')
-  assert.match(portfolio, /availability:\s*'CEO at AashaTech'/)
+  const seed = await source('scripts/seed-original-cms.cjs')
+  const i18n = await source('lib/i18n-content.ts')
+  const server = await source('lib/public-content-server.ts')
+  assert.match(portfolio, /availability:\s*'Co-founder & CEO at AashaTech'/)
   assert.match(portfolio, /availabilityHref:\s*'https:\/\/aashatech\.com\/'/)
-  assert.match(adminStarter, /availability:\s*'CEO at AashaTech'/)
+  assert.match(adminStarter, /availability:\s*'Co-founder & CEO at AashaTech'/)
   assert.match(adminStarter, /availabilityHref:\s*'https:\/\/aashatech\.com\/'/)
+  assert.match(seed, /availability:\s*'Co-founder & CEO at AashaTech'/)
+  assert.match(i18n, /'Co-founder & CEO at AashaTech':\s*'AashaTech का सह-संस्थापक तथा प्रमुख कार्यकारी अधिकृत'/)
+  assert.match(server, /availability:\s*translateAvailability\(/)
 })

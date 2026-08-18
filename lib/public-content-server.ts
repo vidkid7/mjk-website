@@ -5,7 +5,7 @@ import { resolveLocalizedArray, resolveLocalizedValue } from '@/lib/localized-co
 import { getRequestLocale } from '@/lib/i18n-server'
 import type { Locale } from '@/lib/i18n'
 import { copyFor } from '@/lib/i18n-copy'
-import { translateKnown, translateKnownArray } from '@/lib/i18n-content'
+import { translateAvailability, translateKnown, translateKnownArray } from '@/lib/i18n-content'
 import { getSupabaseServerClient } from '@/lib/supabase-server-client'
 
 export class PublicContentError extends Error {
@@ -174,7 +174,7 @@ export async function loadPublicContent(requestedLocale?: Locale): Promise<Publi
     location: String(localized(settings, 'address', locale, profile.location || '')),
     email: String(settings.email || profile.email || ''),
     phone: String(settings.phone || profile.phone || ''),
-    availability: String(localized(profile, 'availability', locale, '')),
+    availability: translateAvailability(String(localized(profile, 'availability', locale, '')), locale),
     availabilityHref: String(profile.availabilityHref || ''),
     siteTitle: String(localized(settings, 'site_title', locale, '')),
     metaDescription: String(localized(settings, 'meta_description', locale, '')),

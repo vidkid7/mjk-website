@@ -120,7 +120,7 @@ const pages = {
       location: 'Kathmandu, Bagmati Province, Nepal',
       email: 'khadkamukesh423@gmail.com',
       phone: '+977 985-1241656',
-      availability: 'CEO at AashaTech',
+      availability: 'Co-founder & CEO at AashaTech',
       availabilityHref: 'https://aashatech.com/',
       socials: [
         { label: 'Facebook', href: 'https://www.facebook.com/Nepali.man.67' },
@@ -154,7 +154,7 @@ const pages = {
     name: 'Mukesh Khadka',
     role: 'Digital Systems & Software Portfolio',
     tagline: 'Software Systems • Web Platforms • Digital Transformation',
-    availability: 'CEO at AashaTech',
+    availability: 'Co-founder & CEO at AashaTech',
     availabilityHref: 'https://aashatech.com/',
   },
   heroCopy: {

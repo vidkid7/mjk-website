@@ -2159,7 +2159,7 @@ section {
     inset 0 0 0 1px color-mix(in srgb, var(--gateway-text) 5%, transparent),
     0 0.4rem 1.2rem color-mix(in srgb, var(--gateway-text) 18%, transparent),
     0 0.15rem 0.35rem color-mix(in srgb, var(--gateway-text) 12%, transparent);
-  color: var(--gateway-text);
+  color: var(--gateway-red);
   font-family: var(--gateway-mono);
   font-size: 0.58rem;
   font-weight: 600;
@@ -12856,6 +12856,14 @@ textarea {
 }
 
 @media (max-width: 767px) {
+  .gateway-shell .gateway-title {
+    font-size: clamp(2.35rem, 13vw, 5.2rem);
+  }
+
+  .gateway-shell .gateway-title--ember {
+    z-index: 1;
+  }
+
   .gateway-shell .gateway-hero__heritage-environment {
     height: 78%;
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 100%);

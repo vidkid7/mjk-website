@@ -45,7 +45,8 @@ const nepali: Record<string, string> = {
   'Contact': 'सम्पर्क',
   'Let’s make the next workflow clearer.': 'अबको कार्यप्रवाहलाई अझ स्पष्ट बनाऔं।',
   'Share the problem, the people involved, and the outcome you need. We can shape the right digital solution from there.': 'समस्या, संलग्न मानिसहरू र आवश्यक परिणामबारे बताउनुहोस्। त्यसैबाट सही डिजिटल समाधान बनाऔं।',
-  'CEO at AashaTech': 'AashaTech का CEO',
+  'CEO at AashaTech': 'AashaTech का सह-संस्थापक तथा प्रमुख कार्यकारी अधिकृत',
+  'Co-founder & CEO at AashaTech': 'AashaTech का सह-संस्थापक तथा प्रमुख कार्यकारी अधिकृत',
 
   // Public route chrome
   'Writing index': 'लेखन सूची',
@@ -604,6 +605,16 @@ export function translateKnown(value: string, locale: Locale): string {
   if (folded) return value.replace(value.trim(), folded)
   if (value.includes('\n\n')) return value.split('\n\n').map((paragraph) => translateKnown(paragraph, locale)).join('\n\n')
   return value.replace(/[A-Za-z][A-Za-z-]*/g, (word) => nepaliWords[word.toUpperCase()] || word)
+}
+
+const availabilityAliases = new Map([
+  ['ceo at aashatech', 'Co-founder & CEO at AashaTech'],
+  ['aashatech का ceo', 'Co-founder & CEO at AashaTech'],
+])
+
+export function translateAvailability(value: string, locale: Locale): string {
+  const canonical = availabilityAliases.get(value.trim().toLocaleLowerCase()) || value
+  return translateKnown(canonical, locale)
 }
 
 export function translateKnownArray(values: string[], locale: Locale): string[] {
