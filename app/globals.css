@@ -12882,8 +12882,12 @@ textarea {
     z-index: 1;
   }
 
+  .gateway-shell .gateway-title__front {
+    transform: translateX(-3vw);
+  }
+
   .gateway-shell .gateway-title__back {
-    transform: translateX(-4vw) translateY(-0.08em);
+    transform: translateX(-7vw) translateY(-0.08em);
   }
 
   .gateway-shell .gateway-status-row,
@@ -12892,7 +12896,7 @@ textarea {
   }
 
   .gateway-shell .gateway-hero__heritage-person {
-    transform: translateX(-2vw) scaleX(-1);
+    transform: translateX(0.5vw) scaleX(-1);
   }
 
   .gateway-shell .gateway-hero__heritage-buddha-shadow {
@@ -12901,7 +12905,7 @@ textarea {
   }
 
   .gateway-shell .gateway-hero__heritage-flag {
-    top: clamp(2rem, 6vh, 4rem) !important;
+    top: clamp(0.75rem, 3vh, 2rem) !important;
     bottom: auto !important;
   }
 }
