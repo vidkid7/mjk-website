@@ -150,12 +150,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const bingVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
 
   return (
-    <html lang={getRequestLocale()} className="scroll-smooth">
+    <html lang={getRequestLocale()} className="scroll-smooth" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <meta name="theme-color" content="#FAF5ED" />
-        <link rel="icon" type="image/png" href="/heritage-mark-generated-v2.png" />
+        <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+        <link rel="alternate icon" type="image/png" href="/heritage-mark-generated-v2.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/heritage-mark-generated-v2.png" />
         <link rel="alternate" type="application/rss+xml" title="Mukesh Khadka Field Notes" href="/feed.xml" />
         <script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }} />

@@ -131,8 +131,8 @@ export default function PortfolioHero({ content, site }: { content: PublicHero; 
                 <i />
                 <i />
               </span>
-              <DustWord text={headlineFront} className="gateway-title__front" lane="front" />
-              <DustWord text={headlineBack.join(' ')} className="gateway-title__back" lane="back" />
+              <DustWord text={headlineFront} className="gateway-title__front gateway-title__typewriter" lane="front" />
+              <DustWord text={headlineBack.join(' ')} className="gateway-title__back gateway-title__typewriter" lane="back" />
             </motion.h1>
           </motion.div>
 

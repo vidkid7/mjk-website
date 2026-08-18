@@ -889,6 +889,7 @@ section {
   --field-muted: #64748b;
   background-color: var(--field-paper);
   color: var(--field-ink);
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -944,6 +945,7 @@ section {
   inset: 0;
   z-index: 1;
   overflow: hidden;
+  contain: paint;
   pointer-events: none;
   background:
     radial-gradient(circle at 8% 4%, color-mix(in srgb, var(--field-gold) 10%, transparent), transparent 28%),
@@ -2281,7 +2283,7 @@ section {
   position: absolute;
   left: clamp(0.75rem, 5vw, 6rem);
   bottom: 0;
-  z-index: 2;
+  z-index: 4 !important;
   display: block;
   width: clamp(13rem, 25vw, 22rem);
   height: auto;
@@ -6580,6 +6582,7 @@ section {
   inset: 8rem 0 0;
   z-index: 5;
   overflow: visible;
+  contain: layout;
   pointer-events: none;
 }
 
@@ -6656,8 +6659,8 @@ section {
 
 @media (max-width: 1100px) {
   .gateway-shell .gateway-hero__heritage-buddha-shadow {
-    right: clamp(0.75rem, 3vw, 2rem);
-    bottom: 16%;
+    right: 20%;
+    bottom: 26%;
     width: clamp(14rem, 31vw, 20rem);
     opacity: 0.78;
   }
@@ -6665,12 +6668,12 @@ section {
 
 @media (max-width: 767px) {
   .gateway-shell .gateway-hero__heritage-shadow-layer {
-    z-index: 4;
+    z-index: 2;
   }
 
   .gateway-shell .gateway-hero__heritage-buddha-shadow {
-    right: 34%;
-    bottom: 32%;
+    right: 8%;
+    bottom: 42%;
     width: clamp(11rem, 35vw, 15rem);
     opacity: 1;
     transform: translate(0, 1rem) scale(1.02);
@@ -6820,6 +6823,14 @@ section {
 .gateway-title__back { z-index: 0; transform: translateY(-0.08em); }
 .gateway-title > span:last-child { margin-left: 1.5em; color: var(--gateway-red); }
 
+.gateway-title__typewriter {
+  display: inline-block;
+  overflow: hidden;
+  clip-path: inset(0 100% 0 0);
+  animation: gateway-title-typewriter 9.5s steps(18, end) 5.6s infinite;
+  will-change: clip-path, opacity;
+}
+
 @media (min-width: 768px) {
   .gateway-title__front,
   .gateway-title__back {
@@ -6953,6 +6964,21 @@ section {
   78% { transform: translate3d(0.025em, 0.012em, 0) rotate(0.32deg) skewX(0.16deg); }
 }
 
+@keyframes gateway-title-typewriter {
+  0%, 8% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0.16;
+  }
+  36%, 68% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+  92%, 100% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0.16;
+  }
+}
+
 .gateway-title__dust {
   display: inline-block;
   opacity: 0;
@@ -6978,6 +7004,13 @@ section {
   .gateway-title__dust-wave {
     transform: none;
     animation: none;
+  }
+
+  .gateway-title__typewriter {
+    clip-path: none;
+    opacity: 1;
+    animation: none;
+    will-change: auto;
   }
 }
 .gateway-role { margin-top: 2.15rem; color: var(--gateway-muted); font-size: 0.62rem; }
@@ -7951,6 +7984,7 @@ section {
   z-index: 1;
   display: grid;
   gap: 1.6rem;
+  min-width: 0;
   margin: 2rem 0 0;
   padding: 0;
   list-style: none;
@@ -7958,11 +7992,14 @@ section {
 
 .gateway-shell .testimonials-feed__entry {
   position: relative;
+  min-width: 0;
 }
 
 .gateway-shell .testimonial-card {
   position: relative;
   display: grid;
+  width: 100%;
+  min-width: 0;
   grid-template-rows: auto 1fr auto;
   border: 1px solid var(--feed-line);
   background: var(--feed-panel);
@@ -12401,6 +12438,19 @@ textarea {
 
   .gateway-shell .testimonial-card__footer { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
   .gateway-shell .testimonial-card__signoff { justify-self: start; }
+
+  .gateway-shell .testimonial-card__header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'code status'
+      'trace trace';
+    gap: 0.65rem;
+    padding: 0.85rem 1rem;
+  }
+
+  .gateway-shell .testimonial-card__code { grid-area: code; min-width: 0; }
+  .gateway-shell .testimonial-card__trace { grid-area: trace; }
+  .gateway-shell .testimonial-card__status { grid-area: status; justify-self: end; }
 
   .gateway-shell .contact-panel__header {
     grid-template-columns: minmax(0, 1fr) auto;

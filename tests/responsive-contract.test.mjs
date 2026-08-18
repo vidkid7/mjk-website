@@ -116,9 +116,9 @@ test('hero places a restrained Buddha shadow behind Mukesh across breakpoints', 
   assert.doesNotMatch(hero, /gateway-hero__heritage-buddha-profile/)
   assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-hero__heritage-buddha-shadow[\s\S]*?opacity:/)
   assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-hero__heritage-buddha-shadow\s*\{[^}]*opacity:\s*1/)
-  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-hero__heritage-buddha-shadow\s*\{[^}]*right:\s*34%/)
+  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-hero__heritage-buddha-shadow\s*\{[^}]*right:\s*8%/)
   assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-hero__heritage-buddha-shadow[\s\S]*?transform:/)
-  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-hero__heritage-shadow-layer\s*\{[^}]*z-index:\s*4/)
+  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-hero__heritage-shadow-layer\s*\{[^}]*z-index:\s*2/)
   assert.match(css, /prefers-reduced-motion:\s*reduce[\s\S]*?\.gateway-hero__heritage-buddha-shadow[\s\S]*?animation:\s*none/)
 })
 
@@ -129,7 +129,50 @@ test('laptop Buddha shadow keeps its head visible and readable', async () => {
   assert.match(hero, /gateway-hero__heritage-shadow-layer[\s\S]*?animate=\{\{ opacity: 1, y: 0 \}\}/)
   assert.match(css, /\.gateway-hero__heritage\s*\{[\s\S]*?overflow:\s*visible/)
   assert.match(css, /\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?bottom:\s*14%/)
-  assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?bottom:\s*16%[\s\S]*?opacity:\s*0\.78/)
+  assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?bottom:\s*26%[\s\S]*?opacity:\s*0\.78/)
+})
+
+test('hero title repeats a typewriter reveal for both name layers', async () => {
+  const css = await source('app/globals.css')
+  const hero = await source('components/portfolio/Hero.tsx')
+
+  assert.match(hero, /gateway-title__front gateway-title__typewriter/)
+  assert.match(hero, /gateway-title__back gateway-title__typewriter/)
+  assert.match(css, /@keyframes gateway-title-typewriter/)
+  assert.match(css, /\.gateway-title__typewriter\s*\{[\s\S]*?animation:[^;]*gateway-title-typewriter[^;]*infinite/)
+  assert.match(css, /prefers-reduced-motion:\s*reduce[\s\S]*?gateway-title__typewriter[\s\S]*?animation:\s*none/)
+})
+
+test('hero keeps the flag above mountains and Buddha behind mountains on mobile', async () => {
+  const css = await source('app/globals.css')
+
+  assert.match(css, /\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?z-index:\s*4\s*!important/)
+  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-shadow-layer\s*\{[^}]*z-index:\s*2/)
+  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[^}]*right:\s*8%/)
+  assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[^}]*bottom:\s*26%/)
+  assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[^}]*right:\s*20%/)
+  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[^}]*bottom:\s*42%/)
+})
+
+test('browser branding exposes a dedicated square icon', async () => {
+  const layout = await source('app/layout.tsx')
+  const icon = await source('app/icon.svg')
+
+  assert.match(layout, /href="\/icon\.svg"/)
+  assert.match(icon, /viewBox="0 0 64 64"/)
+  assert.match(icon, /<title>Mukesh Khadka<\/title>/)
+  assert.match(layout, /suppressHydrationWarning/)
+})
+
+test('narrow phone atmosphere cannot expand the document width', async () => {
+  const css = await source('app/globals.css')
+
+  assert.match(css, /\.portfolio-page \.portfolio-atmosphere\s*\{[\s\S]*?contain:\s*paint/)
+  assert.match(css, /\.portfolio-page\s*\{[^}]*overflow-x:\s*clip/)
+  assert.match(css, /\.gateway-hero__heritage\s*\{[\s\S]*?contain:\s*layout/)
+  assert.match(css, /\.gateway-shell \.testimonials-feed__list\s*\{[^}]*?min-width:\s*0/)
+  assert.match(css, /\.gateway-shell \.testimonial-card\s*\{[^}]*?width:\s*100%[^}]*?min-width:\s*0/)
+  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.testimonial-card__header\s*\{[\s\S]*?grid-template-areas:/)
 })
 
 test('profile availability identifies AashaTech and links to its site', async () => {
