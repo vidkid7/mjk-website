@@ -12817,6 +12817,7 @@ textarea {
 }
 
 .gateway-shell .gateway-hero__heritage-flag {
+  z-index: 2 !important;
   clip-path: inset(0 0 clamp(0.75rem, 2.5vh, 1.5rem) 0) !important;
 }
 
@@ -12833,12 +12834,23 @@ textarea {
   transform-origin: center bottom;
 }
 
+@media (min-width: 768px) and (max-width: 1100px) {
+  .gateway-shell .gateway-hero__heritage-flag {
+    top: clamp(0rem, 14vh, 9rem) !important;
+    bottom: auto !important;
+  }
+
+  .gateway-shell .gateway-hero__heritage-buddha-shadow {
+    width: clamp(19rem, 54vw, 28rem);
+  }
+}
+
 @media (max-width: 1100px) {
   .gateway-shell .gateway-hero__heritage-buddha-shadow {
     top: clamp(-1rem, -1vh, 0rem);
     right: 14%;
     bottom: auto;
-    width: clamp(18rem, 39vw, 25rem);
+    width: clamp(19rem, 54vw, 28rem);
     opacity: 0.92;
   }
 }

@@ -52,9 +52,21 @@ test('public CMS validates legacy Supabase JWT time claims before querying', asy
     source('lib/public-content-server.ts'),
     source('lib/supabase-server-key.ts'),
   ])
-  assert.match(loader, /validateSupabaseServerKey\(key\)/)
+  assert.match(loader, /getSupabaseServerClient\(\)/)
   for (const claim of ['iat', 'nbf', 'exp']) assert.match(validator, new RegExp(claim))
   assert.match(validator, /issued in the future/)
+})
+
+test('all Supabase server clients share the JWT validator', async () => {
+  const [loader, api, client] = await Promise.all([
+    source('lib/public-content-server.ts'),
+    source('app/api/content/route.ts'),
+    source('lib/supabase-server-client.ts'),
+  ])
+  assert.match(loader, /getSupabaseServerClient/)
+  assert.match(api, /getSupabaseServerClient/)
+  assert.match(client, /validateSupabaseServerKey\(key\)/)
+  assert.match(client, /auth:\s*\{ persistSession: false \}/)
 })
 
 test('public footers credit the official instrumental source', async () => {

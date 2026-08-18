@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
-import { createClient } from '@supabase/supabase-js'
 import { isAdminRequest } from '@/lib/admin-auth'
+import { getSupabaseServerClient } from '@/lib/supabase-server-client'
 
 type ContentKey =
   | 'hero'
@@ -49,16 +49,7 @@ function validEmail(value: string) {
 }
 
 function getSupabaseAdmin() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-
-  if (!url || !serviceRoleKey) {
-    throw new Error('Missing Supabase server configuration')
-  }
-
-  return createClient(url, serviceRoleKey, {
-    auth: { persistSession: false },
-  })
+  return getSupabaseServerClient()
 }
 
 function isUuid(value: unknown): value is string {

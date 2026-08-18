@@ -128,8 +128,8 @@ test('laptop Buddha shadow keeps its head visible and readable', async () => {
 
   assert.match(hero, /gateway-hero__heritage-shadow-layer[\s\S]*?animate=\{\{ opacity: 1, y: 0 \}\}/)
   assert.match(css, /\.gateway-hero__heritage\s*\{[\s\S]*?overflow:\s*visible/)
-  assert.match(css, /\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?bottom:\s*14%/)
-  assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?bottom:\s*26%[\s\S]*?opacity:\s*0\.78/)
+  assert.match(css, /\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?top:\s*clamp\(-2\.5rem/)
+  assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?top:\s*clamp\(-1rem[\s\S]*?opacity:\s*0\.92/)
 })
 
 test('hero title repeats a typewriter reveal for both name layers', async () => {
@@ -148,12 +148,12 @@ test('hero title repeats a typewriter reveal for both name layers', async () => 
 test('hero keeps the flag above mountains and Buddha behind mountains on mobile', async () => {
   const css = await source('app/globals.css')
 
-  assert.match(css, /\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?z-index:\s*4\s*!important/)
+  assert.match(css, /\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?z-index:\s*2\s*!important/)
+  assert.match(css, /\.gateway-hero__heritage-environment\s*\{[\s\S]*?z-index:\s*3/)
   assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-shadow-layer\s*\{[^}]*z-index:\s*2/)
   assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[^}]*right:\s*8%/)
-  assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[^}]*bottom:\s*26%/)
-  assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[^}]*right:\s*20%/)
-  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[^}]*bottom:\s*42%/)
+  assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[^}]*top:/)
+  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[^}]*top:/)
 })
 
 test('hero anchors the flag ridge cut, high Buddha head, and mirrored portrait across responsive views', async () => {
@@ -166,6 +166,13 @@ test('hero anchors the flag ridge cut, high Buddha head, and mirrored portrait a
   assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?top:/)
   assert.match(css, /\.gateway-shell \.gateway-hero__heritage-person\s*\{[\s\S]*?transform:\s*scaleX\(-1\)/)
   assert.match(css, /\.gateway-shell \.gateway-stage\s*\{[^}]*z-index:\s*6/)
+})
+
+test('tablet hero keeps the flag and Buddha visibly tucked into the ridge', async () => {
+  const css = await source('app/globals.css')
+
+  assert.match(css, /@media \(min-width: 768px\) and \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?top:\s*clamp\(0rem, 14vh, 9rem\)\s*!important[\s\S]*?bottom:\s*auto\s*!important/)
+  assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?width:\s*clamp\(19rem, 54vw, 28rem\)/)
 })
 
 test('browser branding exposes a dedicated square icon', async () => {
