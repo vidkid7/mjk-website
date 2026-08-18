@@ -6825,10 +6825,7 @@ section {
 
 .gateway-title__typewriter {
   display: inline-block;
-  overflow: hidden;
-  clip-path: inset(0 100% 0 0);
-  animation: gateway-title-typewriter 9.5s steps(18, end) 5.6s infinite;
-  will-change: clip-path, opacity;
+  position: relative;
 }
 
 @media (min-width: 768px) {
@@ -6964,21 +6961,6 @@ section {
   78% { transform: translate3d(0.025em, 0.012em, 0) rotate(0.32deg) skewX(0.16deg); }
 }
 
-@keyframes gateway-title-typewriter {
-  0%, 8% {
-    clip-path: inset(0 100% 0 0);
-    opacity: 0.16;
-  }
-  36%, 68% {
-    clip-path: inset(0 0 0 0);
-    opacity: 1;
-  }
-  92%, 100% {
-    clip-path: inset(0 100% 0 0);
-    opacity: 0.16;
-  }
-}
-
 .gateway-title__dust {
   display: inline-block;
   opacity: 0;
@@ -6991,6 +6973,30 @@ section {
   animation: gateway-title-air-wave 4.8s ease-in-out calc(5.55s + var(--wave-delay)) infinite;
   transform-origin: 50% 78%;
   will-change: transform;
+}
+
+.gateway-title__typewriter-letter {
+  clip-path: inset(0 100% 0 0);
+  animation: gateway-title-letter-typewriter 10.2s steps(1, end) calc(5.15s + var(--type-delay)) infinite;
+  will-change: clip-path, opacity, transform;
+}
+
+@keyframes gateway-title-letter-typewriter {
+  0%, 8% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+    transform: translateY(0.12em);
+  }
+  14%, 76% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+    transform: translateY(0);
+  }
+  86%, 100% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+    transform: translateY(-0.08em);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -7006,10 +7012,11 @@ section {
     animation: none;
   }
 
-  .gateway-title__typewriter {
+  .gateway-title__typewriter-letter {
     clip-path: none;
     opacity: 1;
     animation: none;
+    transform: none;
     will-change: auto;
   }
 }
@@ -12799,5 +12806,54 @@ textarea {
 
   .admin-field-shell .admin-field-header {
     margin-top: max(0.5rem, var(--viewport-safe-top));
+  }
+}
+
+/* Final hero calibration: the flag clears the ridge, Buddha rises beneath the
+   navbar, and the supplied portrait faces into the composition. */
+.gateway-shell .gateway-stage {
+  position: relative;
+  z-index: 6;
+}
+
+.gateway-shell .gateway-hero__heritage-flag {
+  clip-path: inset(0 0 clamp(0.75rem, 2.5vh, 1.5rem) 0) !important;
+}
+
+.gateway-shell .gateway-hero__heritage-buddha-shadow {
+  top: clamp(-2.5rem, -2vh, -0.75rem);
+  right: clamp(8rem, 16vw, 14rem);
+  bottom: auto;
+  clip-path: inset(0 0 4% 0);
+  transform: translate(0, 0) scale(1.02);
+}
+
+.gateway-shell .gateway-hero__heritage-person {
+  transform: scaleX(-1);
+  transform-origin: center bottom;
+}
+
+@media (max-width: 1100px) {
+  .gateway-shell .gateway-hero__heritage-buddha-shadow {
+    top: clamp(-1rem, -1vh, 0rem);
+    right: 14%;
+    bottom: auto;
+    width: clamp(18rem, 39vw, 25rem);
+    opacity: 0.92;
+  }
+}
+
+@media (max-width: 767px) {
+  .gateway-shell .gateway-hero__heritage-flag {
+    top: 7rem !important;
+    bottom: auto !important;
+  }
+
+  .gateway-shell .gateway-hero__heritage-buddha-shadow {
+    top: 0.75rem;
+    right: 2%;
+    bottom: auto;
+    width: clamp(13rem, 52vw, 19rem);
+    transform: translate(0, 0.25rem) scale(1.02);
   }
 }

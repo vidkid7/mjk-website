@@ -138,8 +138,10 @@ test('hero title repeats a typewriter reveal for both name layers', async () => 
 
   assert.match(hero, /gateway-title__front gateway-title__typewriter/)
   assert.match(hero, /gateway-title__back gateway-title__typewriter/)
-  assert.match(css, /@keyframes gateway-title-typewriter/)
-  assert.match(css, /\.gateway-title__typewriter\s*\{[\s\S]*?animation:[^;]*gateway-title-typewriter[^;]*infinite/)
+  assert.match(hero, /gateway-title__typewriter-letter/)
+  assert.match(hero, /--type-delay/)
+  assert.match(css, /@keyframes gateway-title-letter-typewriter/)
+  assert.match(css, /\.gateway-title__typewriter-letter\s*\{[\s\S]*?animation:[^;]*gateway-title-letter-typewriter/)
   assert.match(css, /prefers-reduced-motion:\s*reduce[\s\S]*?gateway-title__typewriter[\s\S]*?animation:\s*none/)
 })
 
@@ -152,6 +154,18 @@ test('hero keeps the flag above mountains and Buddha behind mountains on mobile'
   assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[^}]*bottom:\s*26%/)
   assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[^}]*right:\s*20%/)
   assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[^}]*bottom:\s*42%/)
+})
+
+test('hero anchors the flag ridge cut, high Buddha head, and mirrored portrait across responsive views', async () => {
+  const css = await source('app/globals.css')
+
+  assert.match(css, /\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?clip-path:\s*inset\(0 0 [^)]*\)/)
+  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?top:\s*7rem\s*!important/)
+  assert.match(css, /\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?top:\s*clamp\(-2\.5rem/)
+  assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?top:/)
+  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?top:/)
+  assert.match(css, /\.gateway-shell \.gateway-hero__heritage-person\s*\{[\s\S]*?transform:\s*scaleX\(-1\)/)
+  assert.match(css, /\.gateway-shell \.gateway-stage\s*\{[^}]*z-index:\s*6/)
 })
 
 test('browser branding exposes a dedicated square icon', async () => {

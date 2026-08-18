@@ -20,7 +20,17 @@ const DUST_PATHS = [
 const segmentGraphemes = (text: string) =>
   Array.from(new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text), ({ segment }) => segment)
 
-function DustWord({ text, className, lane }: { text: string; className: string; lane: 'front' | 'back' }) {
+function DustWord({
+  text,
+  className,
+  lane,
+  typeOffset = 0,
+}: {
+  text: string
+  className: string
+  lane: 'front' | 'back'
+  typeOffset?: number
+}) {
   return (
     <span className={className} aria-hidden="true">
       {segmentGraphemes(text).map((char, index) => {
@@ -33,11 +43,14 @@ function DustWord({ text, className, lane }: { text: string; className: string; 
           '--dust-scale': path.scale,
           '--dust-delay': `${(index * 0.045 + (lane === 'back' ? 0.08 : 0)).toFixed(2)}s`,
           '--wave-delay': `${((index % 6) * 0.08).toFixed(2)}s`,
+          '--type-delay': `${(typeOffset + index * 0.12).toFixed(2)}s`,
         } as CSSProperties
 
         return (
           <span className="gateway-title__dust" key={`${lane}-${index}`} style={style}>
-            <span className="gateway-title__dust-wave">{char === ' ' ? '\u00a0' : char}</span>
+            <span className="gateway-title__dust-wave gateway-title__typewriter-letter">
+              {char === ' ' ? '\u00a0' : char}
+            </span>
           </span>
         )
       })}
@@ -131,8 +144,17 @@ export default function PortfolioHero({ content, site }: { content: PublicHero; 
                 <i />
                 <i />
               </span>
-              <DustWord text={headlineFront} className="gateway-title__front gateway-title__typewriter" lane="front" />
-              <DustWord text={headlineBack.join(' ')} className="gateway-title__back gateway-title__typewriter" lane="back" />
+              <DustWord
+                text={headlineFront}
+                className="gateway-title__front gateway-title__typewriter"
+                lane="front"
+              />
+              <DustWord
+                text={headlineBack.join(' ')}
+                className="gateway-title__back gateway-title__typewriter"
+                lane="back"
+                typeOffset={segmentGraphemes(headlineFront).length * 0.12 + 0.22}
+              />
             </motion.h1>
           </motion.div>
 
