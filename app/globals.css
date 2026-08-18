@@ -12901,3 +12901,28 @@ textarea {
     bottom: auto !important;
   }
 }
+
+/* Tablet calibration: keep the title behind Buddha while reclaiming left
+   space for the portrait and lifting the flag toward the upper ridge. */
+@media (min-width: 768px) and (max-width: 1100px) {
+  .gateway-shell .gateway-stage {
+    z-index: auto;
+  }
+
+  .gateway-shell .gateway-title--ember {
+    z-index: 1;
+  }
+
+  .gateway-shell .gateway-status-row,
+  .gateway-shell .gateway-hero-ctas {
+    z-index: 7;
+  }
+
+  .gateway-shell .gateway-hero__heritage-person {
+    transform: translateX(-6vw) scaleX(-1);
+  }
+
+  .gateway-shell .gateway-hero__heritage-flag {
+    top: clamp(0rem, 8vh, 5rem) !important;
+  }
+}

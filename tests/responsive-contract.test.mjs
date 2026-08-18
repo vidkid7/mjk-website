@@ -175,6 +175,15 @@ test('tablet hero keeps the flag and Buddha visibly tucked into the ridge', asyn
   assert.match(css, /@media \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?width:\s*clamp\(19rem, 54vw, 28rem\)/)
 })
 
+test('tablet hero puts title behind Buddha, shifts portrait left, and raises the flag', async () => {
+  const css = await source('app/globals.css')
+
+  assert.match(css, /@media \(min-width: 768px\) and \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-stage\s*\{[^}]*z-index:\s*auto/)
+  assert.match(css, /@media \(min-width: 768px\) and \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-title--ember\s*\{[^}]*z-index:\s*1/)
+  assert.match(css, /@media \(min-width: 768px\) and \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-person\s*\{[\s\S]*?translateX\(-6vw\)\s+scaleX\(-1\)/)
+  assert.match(css, /@media \(min-width: 768px\) and \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?top:\s*clamp\(0rem, 8vh, 5rem\)\s*!important/)
+})
+
 test('large laptop hero separates title behind Buddha and rebalances cultural anchors', async () => {
   const css = await source('app/globals.css')
 
