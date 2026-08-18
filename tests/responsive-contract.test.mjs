@@ -193,7 +193,7 @@ test('large laptop hero separates title behind Buddha and rebalances cultural an
   assert.match(css, /@media \(min-width: 1101px\) and \(max-height: 1000px\)[\s\S]*?\.gateway-shell \.gateway-title__back\s*\{[\s\S]*?translateX\(-7vw\)\s+translateY\(-0\.08em\)/)
   assert.match(css, /@media \(min-width: 1101px\) and \(max-height: 1000px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-person\s*\{[\s\S]*?translateX\(0\.5vw\)\s+scaleX\(-1\)/)
   assert.match(css, /@media \(min-width: 1101px\) and \(max-height: 1000px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?top:\s*clamp\(0\.5rem, 2vh, 1\.25rem\)[\s\S]*?right:\s*clamp\(8rem, 16vw, 14rem\)[\s\S]*?width:\s*clamp\(20rem, 24vw, 24rem\)/)
-  assert.match(css, /@media \(min-width: 1101px\) and \(max-height: 1000px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?top:\s*clamp\(0\.75rem, 3vh, 2rem\)\s*!important[\s\S]*?width:\s*clamp\(30rem, 48vw, 46rem\)\s*!important[\s\S]*?clip-path:\s*none\s*!important/)
+  assert.match(css, /@media \(min-width: 1101px\) and \(max-height: 1000px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?top:\s*clamp\(-0\.5rem, 1vh, 0\.75rem\)\s*!important[\s\S]*?width:\s*clamp\(30rem, 48vw, 46rem\)\s*!important[\s\S]*?clip-path:\s*none\s*!important/)
 })
 
 test('laptop-sized 1024px hero applies the same left-title, raised-flag, and right-portrait treatment', async () => {
