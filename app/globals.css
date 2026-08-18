@@ -12901,12 +12901,15 @@ textarea {
 
   .gateway-shell .gateway-hero__heritage-buddha-shadow {
     top: clamp(0.5rem, 2vh, 1.25rem);
-    right: clamp(11rem, 20vw, 19rem);
+    right: clamp(8rem, 16vw, 14rem);
+    width: clamp(20rem, 24vw, 24rem);
   }
 
   .gateway-shell .gateway-hero__heritage-flag {
     top: clamp(0.75rem, 3vh, 2rem) !important;
     bottom: auto !important;
+    width: clamp(30rem, 48vw, 46rem) !important;
+    clip-path: none !important;
   }
 }
 
