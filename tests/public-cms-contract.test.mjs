@@ -46,3 +46,25 @@ test('database schema and API expose route-specific pages and service records', 
   assert.match(adminLayout, /\/admin\/hero/)
   assert.match(adminLayout, /\/admin\/initiatives/)
 })
+
+test('public CMS validates legacy Supabase JWT time claims before querying', async () => {
+  const [loader, validator] = await Promise.all([
+    source('lib/public-content-server.ts'),
+    source('lib/supabase-server-key.ts'),
+  ])
+  assert.match(loader, /validateSupabaseServerKey\(key\)/)
+  for (const claim of ['iat', 'nbf', 'exp']) assert.match(validator, new RegExp(claim))
+  assert.match(validator, /issued in the future/)
+})
+
+test('public footers credit the official instrumental source', async () => {
+  const [footer, imprint] = await Promise.all([
+    source('components/portfolio/Footer.tsx'),
+    source('components/portfolio/PublicImprint.tsx'),
+  ])
+  for (const content of [footer, imprint]) {
+    assert.match(content, /Gauchha Geet Nepali/)
+    assert.match(content, /Music Nepal/)
+    assert.match(content, /youtube\.com\/watch\?v=3MFZT_vReQQ/)
+  }
+})

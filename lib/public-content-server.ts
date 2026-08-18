@@ -6,6 +6,7 @@ import { getRequestLocale } from '@/lib/i18n-server'
 import type { Locale } from '@/lib/i18n'
 import { copyFor } from '@/lib/i18n-copy'
 import { translateKnown, translateKnownArray } from '@/lib/i18n-content'
+import { validateSupabaseServerKey } from '@/lib/supabase-server-key'
 
 export class PublicContentError extends Error {
   constructor(message: string) {
@@ -21,6 +22,11 @@ function getClient(): SupabaseClient {
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY
   if (!url || !key) {
     throw new PublicContentError('The public CMS is not configured. Add Supabase server credentials before publishing the site.')
+  }
+  try {
+    validateSupabaseServerKey(key)
+  } catch (error) {
+    throw new PublicContentError(error instanceof Error ? error.message : 'The Supabase server key is invalid.')
   }
   return createClient(url, key, {
     auth: { persistSession: false },

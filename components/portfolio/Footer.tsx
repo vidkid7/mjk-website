@@ -143,6 +143,14 @@ export default function Footer({ site, services, copy }: { site: PublicSite; ser
           <span className="imprint__footer-fact">
             <span className="imprint__footer-mark">REV ·</span> {buildId}
           </span>
+          <a
+            className="imprint__footer-fact imprint__footer-credit"
+            href="https://www.youtube.com/watch?v=3MFZT_vReQQ"
+            target="_blank"
+            rel="noreferrer"
+          >
+            🎵 Music Credit: Gauchha Geet Nepali — Lyrics by 🙏 National Poet Madhav Prasad Ghimire | Music by Ustad Gobinda Lal | © Music Nepal. All rights belong to the respective creators and copyright holders.
+          </a>
         </footer>
       </div>
     </footer>

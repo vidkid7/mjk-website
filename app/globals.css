@@ -9108,6 +9108,23 @@ section {
   background: linear-gradient(90deg, var(--imprint-line) 0%, transparent 100%);
 }
 
+.gateway-shell .imprint__footer-credit {
+  grid-column: 1 / -1;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--imprint-line);
+  color: var(--imprint-muted);
+  line-height: 1.6;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.gateway-shell .imprint__footer-credit:hover {
+  color: var(--imprint-ink);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 
 /* ---- Articles route ---- */
 .public-route-shell {
