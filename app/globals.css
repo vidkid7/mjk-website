@@ -12882,13 +12882,17 @@ textarea {
     z-index: 1;
   }
 
+  .gateway-shell .gateway-title__back {
+    transform: translateX(-4vw) translateY(-0.08em);
+  }
+
   .gateway-shell .gateway-status-row,
   .gateway-shell .gateway-hero-ctas {
     z-index: 7;
   }
 
   .gateway-shell .gateway-hero__heritage-person {
-    transform: translateX(-5vw) scaleX(-1);
+    transform: translateX(-2vw) scaleX(-1);
   }
 
   .gateway-shell .gateway-hero__heritage-buddha-shadow {
