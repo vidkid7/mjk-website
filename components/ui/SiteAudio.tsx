@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Music2, Volume2, VolumeX } from 'lucide-react'
 
 const MUSIC_SRC = '/mukesh-khadka-by-madhav-prasad-ghimire.mp3'
+const MUSIC_CLIP_DURATION_SECONDS = 12
 
 export default function SiteAudio() {
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -80,7 +81,17 @@ export default function SiteAudio() {
       hasCompletedRef.current = true
       setIsPlaying(false)
     }
+    const handleTimeUpdate = () => {
+      if (audio.currentTime >= MUSIC_CLIP_DURATION_SECONDS) {
+        audio.pause()
+        audio.currentTime = 0
+        hasCompletedRef.current = true
+        setIsPlaying(false)
+        setIsMutedAutoplay(false)
+      }
+    }
     audio.addEventListener('ended', handleEnded)
+    audio.addEventListener('timeupdate', handleTimeUpdate)
     playMusic()
     window.addEventListener('pointerdown', resumeWithSound, { passive: true })
     window.addEventListener('keydown', resumeWithSound)
@@ -88,6 +99,7 @@ export default function SiteAudio() {
     return () => {
       audio.removeEventListener('canplay', playMusic)
       audio.removeEventListener('ended', handleEnded)
+      audio.removeEventListener('timeupdate', handleTimeUpdate)
       removeInteractionListeners()
     }
   }, [])
