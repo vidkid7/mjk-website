@@ -106,7 +106,7 @@ test('homepage exposes the authorized instrumental player and visible sound cont
   assert.match(player, /aria-label/)
 })
 
-test('theme music stops after twelve seconds and interface sounds do not add a second visible control', async () => {
+test('theme music stops after seventeen seconds and interface sounds do not add a second visible control', async () => {
   const [page, player, interfaceSounds] = await Promise.all([
     read('app/page.tsx'),
     read('components/ui/SiteAudio.tsx'),
@@ -115,7 +115,7 @@ test('theme music stops after twelve seconds and interface sounds do not add a s
 
   assert.match(page, /InterfaceSounds/)
   assert.doesNotMatch(player, /<audio[^>]*\sloop(?:=|\s|>)/)
-  assert.match(player, /MUSIC_CLIP_DURATION_SECONDS\s*=\s*12/)
+  assert.match(player, /MUSIC_CLIP_DURATION_SECONDS\s*=\s*17/)
   assert.match(player, /timeupdate/)
   assert.match(player, /currentTime\s*>=\s*MUSIC_CLIP_DURATION_SECONDS/)
   assert.match(interfaceSounds, /AudioContext/)

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Music2, Volume2, VolumeX } from 'lucide-react'
 
 const MUSIC_SRC = '/mukesh-khadka-by-madhav-prasad-ghimire.mp3'
-const MUSIC_CLIP_DURATION_SECONDS = 12
+const MUSIC_CLIP_DURATION_SECONDS = 17
 
 export default function SiteAudio() {
   const audioRef = useRef<HTMLAudioElement>(null)
