@@ -1,7 +1,23 @@
 import type { Metadata } from 'next'
+import { Noto_Sans_Devanagari, Noto_Serif_Devanagari } from 'next/font/google'
 import './globals.css'
 import { LanguageProvider } from '@/components/i18n/LanguageProvider'
+import PwaInstallPrompt from '@/components/ui/PwaInstallPrompt'
 import { getRequestLocale } from '@/lib/i18n-server'
+
+const nepaliSans = Noto_Sans_Devanagari({
+  subsets: ['devanagari'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-nepali-sans',
+})
+
+const nepaliSerif = Noto_Serif_Devanagari({
+  subsets: ['devanagari'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-nepali-serif',
+})
 
 const title = 'Mukesh Khadka — Software Developer & Entrepreneur in Nepal'
 const description = 'Personal portfolio of Mukesh Khadka — software developer and entrepreneur from Kathmandu, Nepal, building practical websites, custom systems, and workflow automation.'
@@ -158,10 +174,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const requestLocale = getRequestLocale()
 
   return (
-    <html lang={requestLocale} className="scroll-smooth" suppressHydrationWarning>
+    <html lang={requestLocale} className={`scroll-smooth ${nepaliSans.variable} ${nepaliSerif.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <meta name="theme-color" content="#FAF5ED" />
         <link rel="icon" type="image/svg+xml" href="/icon.svg" />
         <link rel="alternate icon" type="image/png" href="/heritage-mark-generated-v2.png" />
@@ -176,7 +190,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-emerald-600 focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-white">
           Skip to main content
         </a>
-        <LanguageProvider initialLocale={requestLocale}>{children}</LanguageProvider>
+        <LanguageProvider initialLocale={requestLocale}>
+          <PwaInstallPrompt />
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   )

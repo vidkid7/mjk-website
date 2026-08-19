@@ -131,9 +131,9 @@ export default function SiteAudio() {
     <>
       <audio ref={audioRef} src={MUSIC_SRC} autoPlay preload="auto" aria-label="Mukesh Khadka theme music" data-site-audio-mode="full-track" />
       {mounted && (
-        <div className="fixed bottom-5 right-5 z-[60] flex items-center gap-2">
+        <div className="gateway-ambient-music-control">
           {needsInteraction && (
-            <span className="rounded-full border border-white/15 bg-slate-950/85 px-3 py-2 text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-white shadow-xl shadow-slate-950/20 backdrop-blur-md">
+            <span className="gateway-ambient-music__prompt">
               Click to enable music
             </span>
           )}
@@ -143,7 +143,7 @@ export default function SiteAudio() {
             onClick={toggleMusic}
             aria-label={needsInteraction ? 'Enable theme music' : isPlaying ? 'Pause theme music' : 'Play theme music'}
             title={needsInteraction ? 'Click to enable the theme music' : isPlaying ? 'Pause theme music' : 'Play theme music'}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-slate-950/85 text-white shadow-xl shadow-slate-950/20 backdrop-blur-md transition hover:scale-105 hover:bg-crimson focus-visible:outline-white"
+            className="gateway-ambient-music__toggle"
           >
             {isPlaying && !isMutedAutoplay ? <Volume2 size={18} /> : needsInteraction ? <Music2 size={18} /> : <VolumeX size={18} />}
           </button>

@@ -51,9 +51,11 @@ test('Nepali loading and homepage typography loads and applies Devanagari-specif
     read('app/globals.css'),
   ])
 
-  assert.match(styles, /Noto\+Sans\+Devanagari/)
-  assert.match(styles, /Noto\+Serif\+Devanagari/)
-  assert.ok(styles.indexOf('@import url') < styles.indexOf('@tailwind base'), 'the webfont import must be a valid first CSS statement')
+  assert.match(layout, /Noto_Sans_Devanagari/)
+  assert.match(layout, /Noto_Serif_Devanagari/)
+  assert.match(styles, /var\(--font-nepali-sans\)/)
+  assert.match(styles, /var\(--font-nepali-serif\)/)
+  assert.doesNotMatch(styles, /fonts\.googleapis\.com\/css2\?family=.*Devanagari/)
   assert.match(styles, /html\[lang=['"]ne['"]\][\s\S]*?\.gateway-loader/)
   assert.match(styles, /html\[lang=['"]ne['"]\][\s\S]*?\.gateway-title/)
   assert.match(styles, /html\[lang=['"]ne['"]\][\s\S]*?\.gateway-shell \.signal-rail[\s\S]*?font-family:\s*var\(--gateway-nepali-sans\)/)
@@ -63,11 +65,9 @@ test('Nepali loading and homepage typography loads and applies Devanagari-specif
 
 test('English typography keeps the previous fallback stacks while only Nepali fonts are loaded', async () => {
   const styles = await read('app/globals.css')
-  const fontImport = styles.match(/^@import url\('([^']+)'\)/m)?.[1] || ''
-
-  assert.match(fontImport, /Noto\+Sans\+Devanagari/)
-  assert.match(fontImport, /Noto\+Serif\+Devanagari/)
-  assert.doesNotMatch(fontImport, /Bodoni\+Moda|Inter:wght|Space\+Grotesk|JetBrains\+Mono/)
+  assert.match(styles, /--gateway-nepali-sans:\s*var\(--font-nepali-sans\)/)
+  assert.match(styles, /--gateway-nepali-serif:\s*var\(--font-nepali-serif\)/)
+  assert.doesNotMatch(styles, /@import url\([^)]*Bodoni\+Moda|@import url\([^)]*Inter:wght|@import url\([^)]*Space\+Grotesk|@import url\([^)]*JetBrains\+Mono/)
   assert.match(styles, /font-family:\s*'Bodoni Moda',\s*'Times New Roman',\s*serif/)
 })
 

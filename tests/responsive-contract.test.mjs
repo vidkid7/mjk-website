@@ -260,3 +260,41 @@ test('profile availability identifies Co-founder & CEO at AashaTech and links to
   assert.match(i18n, /'Co-founder & CEO at AashaTech':\s*'AashaTech का सह-संस्थापक तथा प्रमुख कार्यकारी अधिकृत'/)
   assert.match(server, /availability:\s*translateAvailability\(/)
 })
+
+test('hero keeps cultural anchors proportionally visible as the viewport shrinks', async () => {
+  const css = await source('app/globals.css')
+
+  assert.match(css, /\/\* Responsive hero geometry: keep the cultural anchors visible across viewport classes\. \*\//)
+  assert.match(css, /@media \(min-width: 1101px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?left:\s*clamp\(-5rem, -5vw, -1\.5rem\)[\s\S]*?width:\s*clamp\(28rem, 48vw, 44rem\)/)
+  assert.match(css, /@media \(min-width: 768px\) and \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?right:\s*clamp\(1\.5rem, 4vw, 3\.5rem\)[\s\S]*?width:\s*clamp\(16rem, 42vw, 23rem\)/)
+  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?left:\s*clamp\(-2rem, -5vw, -0\.75rem\)[\s\S]*?width:\s*clamp\(18rem, 112vw, 30rem\)/)
+  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?right:\s*clamp\(0\.5rem, 1\.5vw, 1rem\)[\s\S]*?width:\s*clamp\(9\.5rem, 48vw, 16rem\)/)
+})
+
+test('flag keeps its transparent edge and portrait tablets scale the mountain plate by height', async () => {
+  const css = await source('app/globals.css')
+
+  assert.match(css, /\/\* Final responsive cultural plate cleanup: preserve the flag edge and scale the plate by viewport class\. \*\//)
+  assert.match(css, /\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?clip-path:\s*none\s*!important/)
+  assert.match(css, /@media \(min-width: 768px\) and \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-environment\s*\{[\s\S]*?left:\s*50%[\s\S]*?width:\s*auto[\s\S]*?height:\s*clamp\(30rem, 72%, 48rem\)[\s\S]*?translate:\s*-50%\s+0/)
+})
+
+test('laptop and mobile cultural anchors use the requested final calibration', async () => {
+  const css = await source('app/globals.css')
+
+  assert.match(css, /@media \(min-width: 768px\) and \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?top:\s*clamp\(1\.25rem, 5vh, 3rem\)\s*!important[\s\S]*?width:\s*clamp\(24rem, 57vw, 40rem\)\s*!important/)
+  assert.match(css, /@media \(min-width: 768px\) and \(max-width: 1100px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?right:\s*clamp\(3rem, 7vw, 5rem\)/)
+  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-flag\s*\{[\s\S]*?left:\s*clamp\(-4rem, -10vw, -1\.25rem\)\s*!important[\s\S]*?top:\s*clamp\(6\.5rem, 17vh, 9rem\)\s*!important/)
+  assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.gateway-hero__heritage-buddha-shadow\s*\{[\s\S]*?top:\s*clamp\(2\.5rem, 10vh, 5\.5rem\)[\s\S]*?right:\s*clamp\(-0\.5rem, 0vw, 0\.25rem\)[\s\S]*?translate\(0, 2rem\)\s+scale\(1\.02\)/)
+})
+
+test('music control floats above hero actions with a liquid-glass surface', async () => {
+  const css = await source('app/globals.css')
+  const audio = await source('components/ui/SiteAudio.tsx')
+
+  assert.match(audio, /className="gateway-ambient-music-control"/)
+  assert.match(audio, /className="gateway-ambient-music__prompt"/)
+  assert.match(audio, /className="gateway-ambient-music__toggle"/)
+  assert.match(css, /\.gateway-ambient-music-control\s*\{[\s\S]*?bottom:\s*clamp\(4\.25rem, 9vh, 6\.5rem\)[\s\S]*?backdrop-filter:\s*blur\(1rem\)/)
+  assert.match(css, /\.gateway-ambient-music__toggle\s*\{[\s\S]*?position:\s*relative[\s\S]*?background:\s*rgba\(7, 26, 53, 0\.72\)/)
+})
