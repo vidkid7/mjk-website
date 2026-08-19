@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react'
 import { ImagePlus, Loader2, Upload } from 'lucide-react'
+import { adminFetch } from '@/lib/admin-client'
 
 export default function ImageUploadField({
   label,
@@ -24,7 +25,7 @@ export default function ImageUploadField({
     const body = new FormData()
     body.append('file', file)
     try {
-      const response = await fetch('/api/admin/upload', { method: 'POST', body })
+      const response = await adminFetch('/api/admin/upload', { method: 'POST', body })
       const payload = await response.json()
       if (!response.ok) throw new Error(payload.error || 'Image upload failed.')
       onChange(payload.url)

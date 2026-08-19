@@ -2259,6 +2259,7 @@ section {
 .gateway-shell .gateway-hero__heritage-figures { right: -1.5%; }
 .gateway-shell .gateway-hero__heritage-person {
   filter: grayscale(0) saturate(1.06) contrast(1.04) drop-shadow(0 1rem 1rem rgba(4, 18, 33, 0.22));
+  transform: scaleX(-1);
 }
 .gateway-shell .gateway-hero__heritage-buddha-profile { margin-right: -1.1rem; }
 
@@ -9158,10 +9159,12 @@ section {
 
 .gateway-shell .imprint__footer-credit {
   grid-column: 1 / -1;
+  min-width: 0;
   padding-top: 0.75rem;
   border-top: 1px solid var(--imprint-line);
   color: var(--imprint-muted);
   line-height: 1.6;
+  overflow-wrap: anywhere;
   letter-spacing: 0.08em;
   text-transform: none;
   text-decoration: none;
@@ -12321,6 +12324,7 @@ textarea {
   }
 
   .gateway-copy {
+    width: 100%;
     padding-inline: 0;
     margin-top: 0;
   }
@@ -12330,12 +12334,21 @@ textarea {
   }
 
   .gateway-title {
-    max-width: 92vw;
-    margin-left: 0.25rem;
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
     font-size: clamp(2.9rem, 16vw, 6.8rem);
-    line-height: 0.8;
+    font-size: clamp(2.35rem, 14vw, 5.5rem);
+    line-height: 0.82;
     top: 0.9rem;
-    transform: translateX(0.35rem);
+    transform: none;
+  }
+
+  .gateway-title__front,
+  .gateway-title__back {
+    display: block;
+    white-space: nowrap;
   }
 
   .gateway-title > span:last-child { margin-left: 0.55em; }
@@ -12502,6 +12515,7 @@ textarea {
   .gateway-shell .imprint__link { grid-template-columns: 2.4rem minmax(0, 1fr) auto; padding-inline: 0.9rem; }
   .gateway-shell .imprint__wires-list { flex-wrap: wrap; }
   .gateway-shell .imprint__footer { grid-template-columns: minmax(0, 1fr); gap: 0.65rem; }
+  .gateway-shell .imprint__footer-credit { grid-column: 1 / -1; }
 }
 
 /* Admin surfaces use the same narrow-screen rules as the public routes. */
@@ -12540,6 +12554,41 @@ textarea {
 
   .admin-liquid-shell main .flex.items-center.justify-between {
     flex-wrap: wrap;
+  }
+}
+
+/* Keep the Nepal flag as the foreground origin marker, rising above the
+   mountain plate while leaving the portrait and copy readable. */
+.gateway-shell .gateway-hero__heritage {
+  z-index: 3;
+}
+
+.gateway-shell .gateway-stage {
+  z-index: 6;
+}
+
+.gateway-shell .gateway-hero-ctas {
+  z-index: 7;
+}
+
+.gateway-shell .gateway-hero__heritage-flag {
+  left: clamp(-10rem, -10vw, -5rem) !important;
+  top: clamp(0.5rem, 3vh, 2.5rem) !important;
+  bottom: auto !important;
+  z-index: 8 !important;
+  width: clamp(34rem, 54vw, 58rem) !important;
+  max-width: none !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: left top !important;
+  filter: drop-shadow(0 0.8rem 1rem rgba(4, 18, 33, 0.2));
+}
+
+@media (max-width: 767px) {
+  .gateway-shell .gateway-hero__heritage-flag {
+    left: -5rem !important;
+    top: 0.5rem !important;
+    width: 118% !important;
   }
 }
 

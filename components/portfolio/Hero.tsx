@@ -5,6 +5,8 @@ import { motion, useReducedMotion } from 'framer-motion'
 import type { CSSProperties } from 'react'
 import Magnetic from '@/components/fx/Magnetic'
 import SignalPill from '@/components/portfolio/SignalPill'
+import { useLanguage } from '@/components/i18n/LanguageProvider'
+import { translateKnown } from '@/lib/i18n-content'
 import type { PublicHero, PublicSite } from '@/lib/public-content'
 
 const DUST_PATHS = [
@@ -60,7 +62,9 @@ function DustWord({
 
 export default function PortfolioHero({ content, site }: { content: PublicHero; site: PublicSite }) {
   const reduceMotion = useReducedMotion() ?? false
-  const [headlineFront, ...headlineBack] = content.headline.split(' ')
+  const { locale } = useLanguage()
+  const headline = locale === 'ne' ? translateKnown(content.headline, locale) : content.headline
+  const [headlineFront, ...headlineBack] = headline.split(' ')
 
   return (
     <section id="top" className="gateway-hero relative overflow-hidden">
@@ -130,7 +134,7 @@ export default function PortfolioHero({ content, site }: { content: PublicHero; 
           >
             <motion.h1
               className="gateway-title gateway-title--ember noir-display"
-              aria-label={content.headline}
+              aria-label={headline}
               initial={reduceMotion ? false : { opacity: 0, y: '110%', filter: 'blur(0.5rem)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0rem)' }}
               transition={{ duration: reduceMotion ? 0 : 2.1, delay: reduceMotion ? 0 : 3.8, ease: [0.22, 1, 0.36, 1] }}

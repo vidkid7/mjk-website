@@ -14,6 +14,11 @@ const nepali: Record<string, string> = {
   'I design and ship practical digital systems for organizations that want less friction, better records, and more room to do meaningful work.': 'कम झन्झट, राम्रो अभिलेख र अर्थपूर्ण कामका लागि थप ठाउँ चाहने संस्थाका लागि म व्यावहारिक डिजिटल प्रणाली डिजाइन र निर्माण गर्छु।',
   'Open work index': 'कामको सूची खोल्नुहोस्',
   'Open channel': 'सम्पर्क च्यानल खोल्नुहोस्',
+  'Click to enable music': 'संगीत सुरु गर्न क्लिक गर्नुहोस्',
+  'Enable theme music': 'थिम संगीत सुरु गर्नुहोस्',
+  'Click to enable the theme music': 'थिम संगीत सुरु गर्न क्लिक गर्नुहोस्',
+  'Pause theme music': 'थिम संगीत रोक्नुहोस्',
+  'Play theme music': 'थिम संगीत बजाउनुहोस्',
   'Projects delivered': 'सम्पन्न परियोजना',
   'Organizations served': 'सेवा पाएका संस्था',
   'Years of experience': 'अनुभवका वर्ष',
@@ -45,6 +50,7 @@ const nepali: Record<string, string> = {
   'Contact': 'सम्पर्क',
   'Let’s make the next workflow clearer.': 'अबको कार्यप्रवाहलाई अझ स्पष्ट बनाऔं।',
   'Share the problem, the people involved, and the outcome you need. We can shape the right digital solution from there.': 'समस्या, संलग्न मानिसहरू र आवश्यक परिणामबारे बताउनुहोस्। त्यसैबाट सही डिजिटल समाधान बनाऔं।',
+  'Founder/CEO at Aashatech': 'AashaTech का सह-संस्थापक तथा प्रमुख कार्यकारी अधिकृत',
   'CEO at AashaTech': 'AashaTech का सह-संस्थापक तथा प्रमुख कार्यकारी अधिकृत',
   'Co-founder & CEO at AashaTech': 'AashaTech का सह-संस्थापक तथा प्रमुख कार्यकारी अधिकृत',
 
@@ -166,7 +172,7 @@ const nepali: Record<string, string> = {
   'Share the goal, the people involved, and the process that needs to work better.': 'लक्ष्य, संलग्न मानिसहरू र अझ राम्रो चल्नुपर्ने प्रक्रिया साझा गर्नुहोस्।',
   'Discuss your project': 'तपाईंको परियोजनाबारे कुरा गर्नुहोस्',
   'Breadcrumb': 'स्थानक्रम',
-  'Field Files': 'फिल्ड फाइलहरू',
+  'Field Files': 'कामका फाइलहरू',
   'History': 'इतिहास',
   'Articles': 'लेखहरू',
   'Short, careful writing about software, workflow, and the small decisions that make systems quietly keep working. Updated when there is something worth saying.': 'सफ्टवेयर, कार्यप्रवाह र प्रणालीलाई शान्त रूपमा चलाइराख्ने साना निर्णयबारे छोटो, सावधानीपूर्वक लेखन। भन्न लायक कुरा हुँदा अद्यावधिक गरिन्छ।',
@@ -376,7 +382,7 @@ const nepali: Record<string, string> = {
   'EVIDENCE': 'प्रमाण',
   'YIELD TREND · 30 D': 'उत्पादन प्रवृत्ति · ३० दिन',
   '─── RECEIPT ───': '─── रसिद ───',
-  'DARK': 'डार्क',
+  'DARK': 'गाढा',
   'DOSSIER': 'विवरण',
   'KATHMANDU, BAGMATI PROVINCE, NEPAL': 'काठमाडौं, बागमती प्रदेश, नेपाल',
   'Centralized school operations': 'केन्द्रीकृत विद्यालय सञ्चालन',
@@ -557,7 +563,7 @@ const nepali: Record<string, string> = {
 }
 
 const nepaliWords: Record<string, string> = {
-  DARK: 'डार्क', DOSSIER: 'विवरण', FIELD: 'फिल्ड', ROUTE: 'मार्ग', STEP: 'चरण', SEALED: 'बन्द', PLOTS: 'प्लट', RECORDS: 'अभिलेख',
+  DARK: 'गाढा', DOSSIER: 'विवरण', FIELD: 'फिल्ड', ROUTE: 'मार्ग', STEP: 'चरण', SEALED: 'बन्द', PLOTS: 'प्लट', RECORDS: 'अभिलेख',
   KNOWLEDGE: 'ज्ञान', CONSTELLATION: 'समूह', SYNCED: 'समक्रमित', BUSINESS: 'व्यवसाय', SYSTEM: 'प्रणाली', LEDGER: 'लेजर', HORIZON: 'क्षितिज',
   RECONCILED: 'मिलान भयो', SCAN: 'स्क्यान', SETTLED: 'समाधान भयो', ROOT: 'जरा', MEMORY: 'स्मृति', RETAIL: 'खुद्रा', DISCIPLINES: 'विषयहरू',
   SKILL: 'सीप', CHANNELS: 'च्यानलहरू', CHANNEL: 'च्यानल', SIGNAL: 'संकेत', STREAM: 'प्रवाह', UPTIME: 'उपलब्धता', EDGES: 'किनारा',
@@ -609,6 +615,7 @@ export function translateKnown(value: string, locale: Locale): string {
 
 const availabilityAliases = new Map([
   ['ceo at aashatech', 'Co-founder & CEO at AashaTech'],
+  ['founder/ceo at aashatech', 'Co-founder & CEO at AashaTech'],
   ['aashatech का ceo', 'Co-founder & CEO at AashaTech'],
 ])
 

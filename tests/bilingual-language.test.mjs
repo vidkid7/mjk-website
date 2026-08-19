@@ -50,6 +50,13 @@ test('fixed interface copy has English and Nepali entries', async () => {
   }
   assert.match(source, /en:/)
   assert.match(source, /ne:/)
+  assert.match(source, /Gauchha Geet Nepali/)
+  assert.match(source, /गाउँछ गीत नेपाली/)
+  assert.match(source, /National Poet Madhav Prasad Ghimire/)
+  assert.match(source, /राष्ट्रिय कवि माधवप्रसाद घिमिरे/)
+
+  const footer = await read('components/portfolio/Footer.tsx')
+  assert.match(footer, /All Rights Reserved\./)
 })
 
 test('admin landing-page editor exposes paired English and Nepali values', async () => {
@@ -85,6 +92,18 @@ test('Nepali mode transliterates the portfolio name and handles case-insensitive
   assert.match(source, /Mukesh Khadka/)
   assert.match(source, /मुकेश खड्का/)
   assert.match(source, /toLocaleLowerCase|toLowerCase/)
+})
+
+test('Nepali mode uses exact interface translations for visible identity labels', async () => {
+  const [copy, hero] = await Promise.all([
+    read('lib/i18n-content.ts'),
+    read('components/portfolio/Hero.tsx'),
+  ])
+
+  assert.match(copy, /Founder\/CEO at Aashatech['\"]:\s*'AashaTech का सह-संस्थापक तथा प्रमुख कार्यकारी अधिकृत'/)
+  assert.match(copy, /Field Files['\"]:\s*'कामका फाइलहरू'/)
+  assert.match(copy, /DARK:\s*'गाढा'/)
+  assert.match(hero, /translateKnown\(content\.headline, locale\)/)
 })
 
 test('admin chrome uses the shared heritage field structure', async () => {

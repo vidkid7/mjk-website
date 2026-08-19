@@ -133,7 +133,7 @@ export default function Footer({ site, services, copy }: { site: PublicSite; ser
 
         <footer className="imprint__footer">
           <span className="imprint__footer-fact">
-            © {year} {site.name}. Built with care in {site.location}.
+            © {year} {site.name}. <span>All Rights Reserved.</span> Built with care in {site.location}.
           </span>
           <span className="imprint__footer-rule" aria-hidden="true" />
           <span className="imprint__footer-fact">
@@ -143,13 +143,14 @@ export default function Footer({ site, services, copy }: { site: PublicSite; ser
           <span className="imprint__footer-fact">
             <span className="imprint__footer-mark">REV ·</span> {buildId}
           </span>
+          <span className="imprint__footer-rule" aria-hidden="true" />
           <a
             className="imprint__footer-fact imprint__footer-credit"
             href="https://www.youtube.com/watch?v=YritHjh4Isc"
             target="_blank"
             rel="noreferrer"
           >
-            🎵 Music Credit: Gauchha Geet Nepali — Lyrics by 🙏 National Poet Madhav Prasad Ghimire | Music by Ustad Gobinda Lal | © Music Nepal. All rights belong to the respective creators and copyright holders.
+            {copy.musicCredit}
           </a>
         </footer>
       </div>

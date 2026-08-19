@@ -241,7 +241,7 @@ test('narrow phone atmosphere cannot expand the document width', async () => {
   assert.match(css, /@media \(max-width: 767px\)[\s\S]*?\.gateway-shell \.testimonial-card__header\s*\{[\s\S]*?grid-template-areas:/)
 })
 
-test('profile availability identifies AashaTech and links to its site', async () => {
+test('profile availability identifies Co-founder & CEO at AashaTech and links to AashaTech', async () => {
   const portfolio = await source('lib/portfolio-content.ts')
   const adminStarter = await source('app/admin/site-content/page.tsx')
   const seed = await source('scripts/seed-original-cms.cjs')

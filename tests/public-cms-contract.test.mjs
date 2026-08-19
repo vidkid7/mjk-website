@@ -70,13 +70,18 @@ test('all Supabase server clients share the JWT validator', async () => {
 })
 
 test('public footers credit the official instrumental source', async () => {
-  const [footer, imprint] = await Promise.all([
+  const [footer, imprint, copy] = await Promise.all([
     source('components/portfolio/Footer.tsx'),
     source('components/portfolio/PublicImprint.tsx'),
+    source('lib/i18n-copy.ts'),
   ])
+  for (const content of [footer, imprint, copy]) {
+    if (content === copy) {
+      assert.match(content, /Gauchha Geet Nepali/)
+      assert.match(content, /Music Nepal/)
+    }
+  }
   for (const content of [footer, imprint]) {
-    assert.match(content, /Gauchha Geet Nepali/)
-    assert.match(content, /Music Nepal/)
     assert.match(content, /youtube\.com\/watch\?v=YritHjh4Isc/)
   }
 })

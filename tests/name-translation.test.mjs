@@ -83,12 +83,12 @@ test('repeating hero typewriter keeps every Nepali grapheme intact on mobile', a
 test('homepage exposes the authorized instrumental player and visible sound control', async () => {
   const [page, player] = await Promise.all([
     read('app/page.tsx'),
-    read('components/portfolio/AmbientMusic.tsx'),
+    read('components/ui/SiteAudio.tsx'),
   ])
 
-  assert.match(page, /AmbientMusic/)
-  assert.match(player, /YritHjh4Isc/)
-  assert.match(player, /autoplay=1/)
-  assert.match(player, /aria-pressed/)
-  assert.match(player, /unMute/)
+  assert.match(page, /SiteAudio/)
+  assert.match(player, /mukesh-khadka-by-madhav-prasad-ghimire\.mp3/)
+  assert.match(player, /autoPlay/)
+  assert.match(player, /data-site-audio-control/)
+  assert.match(player, /aria-label/)
 })
