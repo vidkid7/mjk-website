@@ -13,6 +13,7 @@ import Atmosphere from '@/components/fx/Atmosphere'
 import CursorGlow from '@/components/fx/CursorGlow'
 import CmsUnavailable from '@/components/portfolio/CmsUnavailable'
 import SiteAudio from '@/components/ui/SiteAudio'
+import InterfaceSounds from '@/components/ui/InterfaceSounds'
 import { loadPublicContent, PublicContentError } from '@/lib/public-content-server'
 
 export const dynamic = 'force-dynamic'
@@ -30,6 +31,7 @@ export default async function Home() {
   return (
     <main id="main-content" className="portfolio-page tech-noir-shell gateway-shell relative min-h-screen">
       <SiteAudio />
+      <InterfaceSounds />
       <LoadingScreen />
       <Atmosphere />
       <CursorGlow />

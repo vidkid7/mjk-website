@@ -223,10 +223,15 @@ test('laptop-sized 1024px hero applies the same left-title, raised-flag, and rig
 test('browser branding exposes a dedicated square icon', async () => {
   const layout = await source('app/layout.tsx')
   const icon = await source('app/icon.svg')
+  const manifest = await source('app/manifest.ts')
 
   assert.match(layout, /href="\/icon\.svg"/)
+  assert.match(layout, /icons:/)
   assert.match(icon, /viewBox="0 0 64 64"/)
   assert.match(icon, /<title>Mukesh Khadka<\/title>/)
+  assert.match(manifest, /heritage-mark-generated-v2\.png/)
+  assert.match(manifest, /sizes:\s*'192x192'/)
+  assert.match(manifest, /sizes:\s*'512x512'/)
   assert.match(layout, /suppressHydrationWarning/)
 })
 

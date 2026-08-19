@@ -124,6 +124,13 @@ export const metadata: Metadata = {
   creator: 'Mukesh Khadka',
   publisher: 'Mukesh Khadka',
   category: 'technology',
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/heritage-mark-generated-v2.png', type: 'image/png', sizes: '512x512' },
+    ],
+    apple: [{ url: '/heritage-mark-generated-v2.png', type: 'image/png', sizes: '180x180' }],
+  },
   openGraph: {
     title,
     description,

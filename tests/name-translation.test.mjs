@@ -92,3 +92,21 @@ test('homepage exposes the authorized instrumental player and visible sound cont
   assert.match(player, /data-site-audio-control/)
   assert.match(player, /aria-label/)
 })
+
+test('theme music is a finite twelve-second cue and interface sounds are wired', async () => {
+  const [page, player, interfaceSounds] = await Promise.all([
+    read('app/page.tsx'),
+    read('components/ui/SiteAudio.tsx'),
+    read('components/ui/InterfaceSounds.tsx'),
+  ])
+
+  assert.match(page, /InterfaceSounds/)
+  assert.match(player, /MUSIC_DURATION_SECONDS\s*=\s*12/)
+  assert.doesNotMatch(player, /<audio[^>]*\sloop(?:=|\s|>)/)
+  assert.match(player, /timeupdate/)
+  assert.match(player, /currentTime\s*>=\s*MUSIC_DURATION_SECONDS/)
+  assert.match(interfaceSounds, /AudioContext/)
+  assert.match(interfaceSounds, /data-interface-sound-control/)
+  assert.match(interfaceSounds, /pointerover/)
+  assert.match(interfaceSounds, /click/)
+})
