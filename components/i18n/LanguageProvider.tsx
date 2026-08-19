@@ -54,8 +54,8 @@ function translateDom(root: ParentNode, locale: Locale) {
   }
 }
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE)
+export function LanguageProvider({ children, initialLocale = DEFAULT_LOCALE }: { children: React.ReactNode; initialLocale?: Locale }) {
+  const [locale, setLocaleState] = useState<Locale>(initialLocale)
 
   useEffect(() => {
     const stored = normalizeLocale(window.localStorage.getItem(LANGUAGE_STORAGE_KEY))

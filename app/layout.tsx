@@ -148,9 +148,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
   const bingVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+  const requestLocale = getRequestLocale()
 
   return (
-    <html lang={getRequestLocale()} className="scroll-smooth" suppressHydrationWarning>
+    <html lang={requestLocale} className="scroll-smooth" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -168,7 +169,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-emerald-600 focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-white">
           Skip to main content
         </a>
-        <LanguageProvider>{children}</LanguageProvider>
+        <LanguageProvider initialLocale={requestLocale}>{children}</LanguageProvider>
       </body>
     </html>
   )

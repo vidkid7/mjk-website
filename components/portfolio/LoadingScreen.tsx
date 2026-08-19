@@ -13,6 +13,9 @@ const STATUS_SEQUENCE = [
   'READY',
 ]
 
+const segmentGraphemes = (text: string) =>
+  Array.from(new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text), ({ segment }) => segment)
+
 export default function PortfolioLoadingScreen() {
   const { locale } = useLanguage()
   const reduceMotion = useReducedMotion() ?? false
@@ -33,8 +36,8 @@ export default function PortfolioLoadingScreen() {
   }, [reduceMotion])
 
   const [titleFirstName, ...titleSecondNames] = translateKnown('Mukesh Khadka', locale).split(/\s+/)
-  const titleFirst = titleFirstName.split('')
-  const titleSecond = titleSecondNames.join(' ').split('')
+  const titleFirst = segmentGraphemes(titleFirstName)
+  const titleSecond = segmentGraphemes(titleSecondNames.join(' '))
 
   return (
     <AnimatePresence>

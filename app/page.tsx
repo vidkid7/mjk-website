@@ -12,6 +12,7 @@ import LoadingScreen from '@/components/portfolio/LoadingScreen'
 import Atmosphere from '@/components/fx/Atmosphere'
 import CursorGlow from '@/components/fx/CursorGlow'
 import CmsUnavailable from '@/components/portfolio/CmsUnavailable'
+import AmbientMusic from '@/components/portfolio/AmbientMusic'
 import { loadPublicContent, PublicContentError } from '@/lib/public-content-server'
 
 export const dynamic = 'force-dynamic'
@@ -29,6 +30,7 @@ export default async function Home() {
   return (
     <main id="main-content" className="portfolio-page tech-noir-shell gateway-shell relative min-h-screen">
       <LoadingScreen />
+      <AmbientMusic />
       <Atmosphere />
       <CursorGlow />
       <div className="relative z-10">

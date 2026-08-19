@@ -77,6 +77,6 @@ test('public footers credit the official instrumental source', async () => {
   for (const content of [footer, imprint]) {
     assert.match(content, /Gauchha Geet Nepali/)
     assert.match(content, /Music Nepal/)
-    assert.match(content, /youtube\.com\/watch\?v=3MFZT_vReQQ/)
+    assert.match(content, /youtube\.com\/watch\?v=YritHjh4Isc/)
   }
 })

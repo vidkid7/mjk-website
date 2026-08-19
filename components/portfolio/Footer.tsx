@@ -145,7 +145,7 @@ export default function Footer({ site, services, copy }: { site: PublicSite; ser
           </span>
           <a
             className="imprint__footer-fact imprint__footer-credit"
-            href="https://www.youtube.com/watch?v=3MFZT_vReQQ"
+            href="https://www.youtube.com/watch?v=YritHjh4Isc"
             target="_blank"
             rel="noreferrer"
           >
