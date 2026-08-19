@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { AudioLines, Volume2, VolumeX } from 'lucide-react'
+import { useEffect, useRef } from 'react'
 
 type SoundKind = 'hover' | 'click'
 
@@ -33,16 +32,10 @@ function playInterfaceTone(context: AudioContext, kind: SoundKind) {
 
 export default function InterfaceSounds() {
   const contextRef = useRef<AudioContext | null>(null)
-  const enabledRef = useRef(true)
   const lastHoverAtRef = useRef(0)
-  const [mounted, setMounted] = useState(false)
-  const [enabled, setEnabled] = useState(true)
 
   useEffect(() => {
-    setMounted(true)
-
     const play = (kind: SoundKind) => {
-      if (!enabledRef.current) return
       const context = contextRef.current || (contextRef.current = getAudioContext())
       if (!context) return
       if (context.state === 'suspended') void context.resume()
@@ -85,31 +78,5 @@ export default function InterfaceSounds() {
     }
   }, [])
 
-  const toggle = () => {
-    const next = !enabledRef.current
-    enabledRef.current = next
-    setEnabled(next)
-    if (next) {
-      const context = contextRef.current || (contextRef.current = getAudioContext())
-      if (context?.state === 'suspended') void context.resume()
-    }
-  }
-
-  if (!mounted) return null
-
-  return (
-    <button
-      type="button"
-      data-interface-sound-control
-      onClick={toggle}
-      aria-pressed={enabled}
-      aria-label={enabled ? 'Mute interface sounds' : 'Enable interface sounds'}
-      title={enabled ? 'Mute interface sounds' : 'Enable interface sounds'}
-      className="fixed bottom-5 right-[4.75rem] z-[60] inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-slate-950/85 text-white shadow-xl shadow-slate-950/20 backdrop-blur-md transition hover:scale-105 hover:bg-crimson focus-visible:outline-white"
-    >
-      {enabled ? <Volume2 size={17} /> : <VolumeX size={17} />}
-      <span className="sr-only">{enabled ? 'Interface sounds on' : 'Interface sounds off'}</span>
-      <AudioLines className="sr-only" aria-hidden="true" />
-    </button>
-  )
+  return null
 }

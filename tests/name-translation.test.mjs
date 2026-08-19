@@ -45,7 +45,7 @@ test('loading animation keeps Nepali grapheme clusters together', async () => {
   assert.doesNotMatch(source, /\.split\(['"]['"]\)/)
 })
 
-test('Nepali loading and homepage typography has Devanagari-specific font rules', async () => {
+test('Nepali loading and homepage typography loads and applies Devanagari-specific font rules', async () => {
   const [layout, styles] = await Promise.all([
     read('app/layout.tsx'),
     read('app/globals.css'),
@@ -53,8 +53,11 @@ test('Nepali loading and homepage typography has Devanagari-specific font rules'
 
   assert.match(styles, /Noto\+Sans\+Devanagari/)
   assert.match(styles, /Noto\+Serif\+Devanagari/)
+  assert.ok(styles.indexOf('@import url') < styles.indexOf('@tailwind base'), 'the webfont import must be a valid first CSS statement')
   assert.match(styles, /html\[lang=['"]ne['"]\][\s\S]*?\.gateway-loader/)
   assert.match(styles, /html\[lang=['"]ne['"]\][\s\S]*?\.gateway-title/)
+  assert.match(styles, /html\[lang=['"]ne['"]\][\s\S]*?\.gateway-shell \.signal-rail[\s\S]*?font-family:\s*var\(--gateway-nepali-sans\)/)
+  assert.match(styles, /html\[lang=['"]ne['"]\][\s\S]*?\.gateway-shell \.signal-rail[\s\S]*?letter-spacing:\s*0/)
   assert.match(styles, /text-transform:\s*none/)
 })
 
@@ -93,7 +96,7 @@ test('homepage exposes the authorized instrumental player and visible sound cont
   assert.match(player, /aria-label/)
 })
 
-test('theme music is a finite twelve-second cue and interface sounds are wired', async () => {
+test('theme music plays the full instrumental and interface sounds do not add a second visible control', async () => {
   const [page, player, interfaceSounds] = await Promise.all([
     read('app/page.tsx'),
     read('components/ui/SiteAudio.tsx'),
@@ -101,12 +104,10 @@ test('theme music is a finite twelve-second cue and interface sounds are wired',
   ])
 
   assert.match(page, /InterfaceSounds/)
-  assert.match(player, /MUSIC_DURATION_SECONDS\s*=\s*12/)
   assert.doesNotMatch(player, /<audio[^>]*\sloop(?:=|\s|>)/)
-  assert.match(player, /timeupdate/)
-  assert.match(player, /currentTime\s*>=\s*MUSIC_DURATION_SECONDS/)
+  assert.doesNotMatch(player, /MUSIC_DURATION_SECONDS|timeupdate|stopTimerRef/)
   assert.match(interfaceSounds, /AudioContext/)
-  assert.match(interfaceSounds, /data-interface-sound-control/)
   assert.match(interfaceSounds, /pointerover/)
   assert.match(interfaceSounds, /click/)
+  assert.doesNotMatch(interfaceSounds, /<button/)
 })

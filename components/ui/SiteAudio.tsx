@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react'
 import { Music2, Volume2, VolumeX } from 'lucide-react'
 
 const MUSIC_SRC = '/mukesh-khadka-by-madhav-prasad-ghimire.mp3'
-const MUSIC_DURATION_SECONDS = 12
 
 export default function SiteAudio() {
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -12,7 +11,6 @@ export default function SiteAudio() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [needsInteraction, setNeedsInteraction] = useState(false)
   const [isMutedAutoplay, setIsMutedAutoplay] = useState(false)
-  const stopTimerRef = useRef<number | null>(null)
   const hasCompletedRef = useRef(false)
 
   useEffect(() => {
@@ -21,25 +19,6 @@ export default function SiteAudio() {
     if (!audio) return
 
     audio.volume = 0.5
-
-    const stopAtLimit = () => {
-      if (stopTimerRef.current) window.clearTimeout(stopTimerRef.current)
-      stopTimerRef.current = null
-      hasCompletedRef.current = true
-      audio.pause()
-      audio.currentTime = 0
-      setIsPlaying(false)
-    }
-
-    const enforceDuration = () => {
-      if (audio.currentTime >= MUSIC_DURATION_SECONDS) stopAtLimit()
-    }
-
-    const scheduleStop = () => {
-      if (stopTimerRef.current) window.clearTimeout(stopTimerRef.current)
-      const remaining = Math.max(0, MUSIC_DURATION_SECONDS - audio.currentTime)
-      stopTimerRef.current = window.setTimeout(stopAtLimit, remaining * 1000)
-    }
 
     const removeInteractionListeners = () => {
       window.removeEventListener('pointerdown', resumeWithSound)
@@ -55,7 +34,6 @@ export default function SiteAudio() {
           setIsPlaying(true)
           setNeedsInteraction(false)
           setIsMutedAutoplay(false)
-          scheduleStop()
           removeInteractionListeners()
         })
         .catch(() => {
@@ -70,11 +48,10 @@ export default function SiteAudio() {
         setIsPlaying(true)
         setNeedsInteraction(audio.muted)
         setIsMutedAutoplay(audio.muted)
-        scheduleStop()
         return
       }
 
-      if (audio.currentTime >= MUSIC_DURATION_SECONDS) audio.currentTime = 0
+      if (audio.ended) audio.currentTime = 0
       audio.muted = false
 
       try {
@@ -82,7 +59,6 @@ export default function SiteAudio() {
         setIsPlaying(true)
         setNeedsInteraction(false)
         setIsMutedAutoplay(false)
-        scheduleStop()
         removeInteractionListeners()
       } catch {
         // Browsers commonly block unmuted autoplay. Start silently when possible,
@@ -93,7 +69,6 @@ export default function SiteAudio() {
           setIsPlaying(true)
           setNeedsInteraction(true)
           setIsMutedAutoplay(true)
-          scheduleStop()
         } catch {
           setNeedsInteraction(true)
         }
@@ -101,17 +76,18 @@ export default function SiteAudio() {
     }
 
     audio.addEventListener('canplay', playMusic)
-    audio.addEventListener('timeupdate', enforceDuration)
-    audio.addEventListener('ended', stopAtLimit)
+    const handleEnded = () => {
+      hasCompletedRef.current = true
+      setIsPlaying(false)
+    }
+    audio.addEventListener('ended', handleEnded)
     playMusic()
     window.addEventListener('pointerdown', resumeWithSound, { passive: true })
     window.addEventListener('keydown', resumeWithSound)
 
     return () => {
       audio.removeEventListener('canplay', playMusic)
-      audio.removeEventListener('timeupdate', enforceDuration)
-      audio.removeEventListener('ended', stopAtLimit)
-      if (stopTimerRef.current) window.clearTimeout(stopTimerRef.current)
+      audio.removeEventListener('ended', handleEnded)
       removeInteractionListeners()
     }
   }, [])
@@ -121,6 +97,7 @@ export default function SiteAudio() {
     if (!audio) return
 
     if (audio.muted || isMutedAutoplay) {
+      if (audio.ended) audio.currentTime = 0
       hasCompletedRef.current = false
       audio.muted = false
       void audio.play()
@@ -128,12 +105,6 @@ export default function SiteAudio() {
           setIsPlaying(true)
           setNeedsInteraction(false)
           setIsMutedAutoplay(false)
-          const remaining = Math.max(0, MUSIC_DURATION_SECONDS - audio.currentTime)
-          stopTimerRef.current = window.setTimeout(() => {
-            audio.pause()
-            audio.currentTime = 0
-            setIsPlaying(false)
-          }, remaining * 1000)
         })
         .catch(() => setNeedsInteraction(true))
       return
@@ -148,17 +119,9 @@ export default function SiteAudio() {
         .then(() => {
           setIsPlaying(true)
           setNeedsInteraction(false)
-          const remaining = Math.max(0, MUSIC_DURATION_SECONDS - audio.currentTime)
-          stopTimerRef.current = window.setTimeout(() => {
-            audio.pause()
-            audio.currentTime = 0
-            setIsPlaying(false)
-          }, remaining * 1000)
         })
         .catch(() => setNeedsInteraction(true))
     } else {
-      if (stopTimerRef.current) window.clearTimeout(stopTimerRef.current)
-      stopTimerRef.current = null
       audio.pause()
       setIsPlaying(false)
     }
@@ -166,7 +129,7 @@ export default function SiteAudio() {
 
   return (
     <>
-      <audio ref={audioRef} src={MUSIC_SRC} autoPlay preload="auto" aria-label="Mukesh Khadka theme music" data-site-audio-duration="12" />
+      <audio ref={audioRef} src={MUSIC_SRC} autoPlay preload="auto" aria-label="Mukesh Khadka theme music" data-site-audio-mode="full-track" />
       {mounted && (
         <div className="fixed bottom-5 right-5 z-[60] flex items-center gap-2">
           {needsInteraction && (
