@@ -61,6 +61,16 @@ test('Nepali loading and homepage typography loads and applies Devanagari-specif
   assert.match(styles, /text-transform:\s*none/)
 })
 
+test('English typography keeps the previous fallback stacks while only Nepali fonts are loaded', async () => {
+  const styles = await read('app/globals.css')
+  const fontImport = styles.match(/^@import url\('([^']+)'\)/m)?.[1] || ''
+
+  assert.match(fontImport, /Noto\+Sans\+Devanagari/)
+  assert.match(fontImport, /Noto\+Serif\+Devanagari/)
+  assert.doesNotMatch(fontImport, /Bodoni\+Moda|Inter:wght|Space\+Grotesk|JetBrains\+Mono/)
+  assert.match(styles, /font-family:\s*'Bodoni Moda',\s*'Times New Roman',\s*serif/)
+})
+
 test('Nepali server requests initialize the client provider before the loading screen paints', async () => {
   const [layout, provider] = await Promise.all([
     read('app/layout.tsx'),
