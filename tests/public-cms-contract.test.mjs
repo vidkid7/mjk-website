@@ -57,6 +57,15 @@ test('public CMS validates legacy Supabase JWT time claims before querying', asy
   assert.match(validator, /issued in the future/)
 })
 
+test('public CMS failures do not expose Supabase diagnostics to visitors', async () => {
+  const unavailable = await source('components/portfolio/CmsUnavailable.tsx')
+
+  assert.match(unavailable, /isInfrastructureError/)
+  assert.match(unavailable, /Content is temporarily unavailable\./)
+  assert.match(unavailable, /The content service is reconnecting\./)
+  assert.match(unavailable, /href="\/"/)
+})
+
 test('all Supabase server clients share the JWT validator', async () => {
   const [loader, api, client] = await Promise.all([
     source('lib/public-content-server.ts'),

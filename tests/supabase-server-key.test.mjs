@@ -27,8 +27,13 @@ test('legacy JWT time claims are evaluated against server time', async () => {
     nbf: 950,
     exp: 2_000,
   })
-  assert.throws(() => validate(token({ iat: 1_001, exp: 2_000 }), 1_000), /issued in the future/)
-  assert.throws(() => validate(token({ iat: 900, nbf: 1_001, exp: 2_000 }), 1_000), /not active yet/)
+  assert.deepEqual(validate(token({ iat: 1_060, nbf: 1_060, exp: 2_000 }), 1_000), {
+    iat: 1_060,
+    nbf: 1_060,
+    exp: 2_000,
+  })
+  assert.throws(() => validate(token({ iat: 1_061, exp: 2_000 }), 1_000), /issued in the future/)
+  assert.throws(() => validate(token({ iat: 900, nbf: 1_061, exp: 2_000 }), 1_000), /not active yet/)
   assert.throws(() => validate(token({ iat: 900, exp: 1_000 }), 1_000), /has expired/)
 })
 

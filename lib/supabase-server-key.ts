@@ -4,6 +4,11 @@ export type SupabaseJwtClaims = {
   exp?: number
 }
 
+// Legacy Supabase service-role JWTs can be generated a few seconds ahead of
+// the clock on a serverless runtime. Keep a small tolerance for iat/nbf while
+// still rejecting keys that are materially from the future.
+export const SUPABASE_JWT_CLOCK_SKEW_SECONDS = 60
+
 function decodeClaims(token: string): SupabaseJwtClaims {
   const segment = token.split('.')[1]
   if (!segment) throw new Error('Supabase server key is not a valid JWT or Supabase API key.')
@@ -28,10 +33,11 @@ export function validateSupabaseServerKey(key: string, nowSeconds = Math.floor(D
   if (!trimmed.startsWith('eyJ')) return null
 
   const claims = decodeClaims(trimmed)
-  if (claims.iat !== undefined && claims.iat > nowSeconds) {
+  const futureCutoff = nowSeconds + SUPABASE_JWT_CLOCK_SKEW_SECONDS
+  if (claims.iat !== undefined && claims.iat > futureCutoff) {
     throw new Error(`Supabase server JWT was issued in the future (iat ${claims.iat}, server time ${nowSeconds}). Rotate the server key in Supabase and Vercel.`)
   }
-  if (claims.nbf !== undefined && claims.nbf > nowSeconds) {
+  if (claims.nbf !== undefined && claims.nbf > futureCutoff) {
     throw new Error(`Supabase server JWT is not active yet (nbf ${claims.nbf}, server time ${nowSeconds}). Rotate the server key in Supabase and Vercel.`)
   }
   if (claims.exp !== undefined && claims.exp <= nowSeconds) {
