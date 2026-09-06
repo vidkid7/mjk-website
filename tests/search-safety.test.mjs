@@ -60,6 +60,13 @@ test('the hero headline is visible before JavaScript hydration', async () => {
   assert.doesNotMatch(hero, /initial=\{\{ opacity/)
 })
 
+test('the animated hero heading keeps its accessible label from rendering twice', async () => {
+  const hero = await read('components/portfolio/Hero.tsx')
+
+  assert.match(hero, /aria-label=\{headline\}/)
+  assert.doesNotMatch(hero, /className="sr-only">\{headline\}<\/span>/)
+})
+
 test('public pages defer non-critical CMS refreshes until the first view settles', async () => {
   const storage = await read('lib/storage.ts')
   assert.match(storage, /const PUBLIC_REMOTE_DELAY_MS = 6000/)

@@ -141,7 +141,6 @@ export default function PortfolioHero({ content, site }: { content: PublicHero; 
               animate={{ opacity: 1, y: 0, filter: 'blur(0rem)' }}
               transition={{ duration: reduceMotion ? 0 : 2.1, delay: reduceMotion ? 0 : 3.8, ease: [0.22, 1, 0.36, 1] }}
             >
-              <span className="sr-only">{headline}</span>
               <span aria-hidden="true" className="gateway-title__ember-aura" />
               <span aria-hidden="true" className="gateway-title__ember-field">
                 <i />
