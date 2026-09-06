@@ -92,7 +92,6 @@ export default function SiteAudio() {
     }
     audio.addEventListener('ended', handleEnded)
     audio.addEventListener('timeupdate', handleTimeUpdate)
-    playMusic()
     window.addEventListener('pointerdown', resumeWithSound, { passive: true })
     window.addEventListener('keydown', resumeWithSound)
 
@@ -141,7 +140,7 @@ export default function SiteAudio() {
 
   return (
     <>
-      <audio ref={audioRef} src={MUSIC_SRC} autoPlay preload="auto" aria-label="Mukesh Khadka theme music" data-site-audio-mode="full-track" />
+      <audio ref={audioRef} src={MUSIC_SRC} preload="none" aria-label="Mukesh Khadka theme music" data-site-audio-mode="on-interaction" />
       {mounted && (
         <div className="gateway-ambient-music-control">
           {needsInteraction && (

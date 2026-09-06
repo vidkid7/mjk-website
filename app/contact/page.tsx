@@ -13,6 +13,14 @@ export const metadata: Metadata = {
   description:
     'Open a project channel with Mukesh Khadka. Available for freelance projects, product partnerships, and technical consulting from Kathmandu, Nepal.',
   alternates: { canonical: `${siteUrl}/contact` },
+  openGraph: {
+    type: 'website',
+    url: `${siteUrl}/contact`,
+    title: 'Contact Mukesh Khadka — Open a Project Channel',
+    description: 'Open a project channel with Mukesh Khadka for freelance projects, product partnerships, and technical consulting from Kathmandu, Nepal.',
+    images: [{ url: '/hero-himalayan-peaks.jpg', width: 1920, height: 1149, alt: 'Himalayan landscape used on the Mukesh Khadka portfolio' }],
+  },
+  twitter: { card: 'summary_large_image', title: 'Contact Mukesh Khadka — Open a Project Channel', description: 'Open a project channel with Mukesh Khadka for freelance projects, product partnerships, and technical consulting from Kathmandu, Nepal.', images: ['/hero-himalayan-peaks.jpg'] },
 }
 
 type Channel = {

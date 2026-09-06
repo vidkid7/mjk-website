@@ -37,7 +37,8 @@ test('the blog provides an auto-discoverable RSS feed', async () => {
   ])
 
   assert.match(feed, /application\/rss\+xml/)
-  assert.match(feed, /blogPosts/)
+  assert.match(feed, /getArticles\(\)/)
+  assert.match(feed, /atom:link/)
   assert.match(layout, /href="\/feed\.xml"/)
 })
 

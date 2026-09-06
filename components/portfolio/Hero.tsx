@@ -101,6 +101,8 @@ export default function PortfolioHero({ content, site }: { content: PublicHero; 
             className="gateway-hero__heritage-buddha-shadow"
             src="/cultural/buddha-profile-left.png"
             alt=""
+            width={1200}
+            height={1200}
             aria-hidden="true"
           />
         </motion.div>
@@ -110,7 +112,7 @@ export default function PortfolioHero({ content, site }: { content: PublicHero; 
           animate={{ opacity: 0.92, y: 0 }}
           transition={{ duration: reduceMotion ? 0 : 0.9, delay: reduceMotion ? 0 : 0.35, ease: 'easeOut' }}
         >
-          <img className="gateway-hero__heritage-person" src={content.portrait} alt="" />
+          <img className="gateway-hero__heritage-person" src={content.portrait} alt="" width={900} height={1200} />
         </motion.div>
       </div>
 
@@ -139,6 +141,7 @@ export default function PortfolioHero({ content, site }: { content: PublicHero; 
               animate={{ opacity: 1, y: 0, filter: 'blur(0rem)' }}
               transition={{ duration: reduceMotion ? 0 : 2.1, delay: reduceMotion ? 0 : 3.8, ease: [0.22, 1, 0.36, 1] }}
             >
+              <span className="sr-only">{headline}</span>
               <span aria-hidden="true" className="gateway-title__ember-aura" />
               <span aria-hidden="true" className="gateway-title__ember-field">
                 <i />

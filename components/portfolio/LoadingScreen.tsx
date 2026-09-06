@@ -153,7 +153,7 @@ export default function PortfolioLoadingScreen() {
               <span className="gateway-loader__mark-corner gateway-loader__mark-corner--tr" aria-hidden="true" />
               <span className="gateway-loader__mark-corner gateway-loader__mark-corner--bl" aria-hidden="true" />
               <span className="gateway-loader__mark-corner gateway-loader__mark-corner--br" aria-hidden="true" />
-              <img src="/heritage-mark-generated-v2.png" alt="" />
+              <img src="/heritage-mark-v2.webp" alt="" width={256} height={256} />
             </motion.div>
 
             {/* Kinetic headline */}

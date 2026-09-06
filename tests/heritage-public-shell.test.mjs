@@ -12,7 +12,7 @@ test('generated heritage mark is wired into the shared public identity', async (
   ])
 
   assert.ok(mark.size > 1000)
-  assert.match(navbar, /heritage-mark-generated-v2\.png/)
+  assert.match(navbar, /heritage-mark-(?:generated-v2\.png|v2\.webp)/)
   assert.match(layout, /heritage-mark-generated-v2\.png/)
 })
 

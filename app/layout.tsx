@@ -79,6 +79,16 @@ const structuredData = {
       inLanguage: 'en',
     },
     {
+      '@type': 'ProfilePage',
+      '@id': `${siteUrl}/#profile`,
+      url: siteUrl,
+      name: title,
+      isPartOf: { '@id': `${siteUrl}/#website` },
+      about: { '@id': `${siteUrl}/#mukesh-khadka` },
+      mainEntity: { '@id': `${siteUrl}/#mukesh-khadka` },
+      inLanguage: 'en',
+    },
+    {
       '@type': 'ProfessionalService',
       '@id': `${siteUrl}/#professional-service`,
       name: 'Mukesh Khadka Digital Systems',
@@ -88,6 +98,15 @@ const structuredData = {
         { '@type': 'Country', name: 'Nepal' },
         { '@type': 'City', name: 'Kathmandu' },
       ],
+      availableLanguage: ['English', 'Nepali'],
+      email: 'khadkamukesh423@gmail.com',
+      telephone: '+977 985-1241656',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Kathmandu',
+        addressRegion: 'Bagmati Province',
+        addressCountry: 'NP',
+      },
       serviceType: [
         'Website development',
         'Custom software development',
@@ -95,36 +114,6 @@ const structuredData = {
         'Business process automation',
         'UI/UX design',
         'Mobile app solutions',
-      ],
-    },
-    {
-      '@type': 'FAQPage',
-      '@id': `${siteUrl}/#faq`,
-      mainEntity: [
-        {
-          '@type': 'Question',
-          name: 'What services does Mukesh Khadka provide?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'Mukesh Khadka provides website development, custom software systems, ERP and CRM platforms, business automation, UI/UX design, mobile app solutions, and file or billing systems.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: 'Who does Mukesh Khadka work with?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'He works with businesses, institutions, municipalities, schools, and growth-focused teams that need practical digital products and operational systems.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: 'Where is Mukesh Khadka based?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'Mukesh Khadka is based in Kathmandu, Bagmati Province, Nepal, and can work with teams locally and remotely.',
-          },
-        },
       ],
     },
   ],
@@ -165,6 +154,13 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
   },
 }
 

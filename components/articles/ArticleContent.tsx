@@ -136,6 +136,8 @@ export default function ArticleContent({ initialSlug, articles }: { initialSlug:
             <img
               src={article.image || article.cover || ''}
               alt={article.caption || article.title}
+              width={1600}
+              height={900}
               className="field-feature__image"
               loading="lazy"
             />

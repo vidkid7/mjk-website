@@ -169,7 +169,7 @@ export default function SignalRail({ context, desktopLinks, site, navigation }: 
     <header className={`signal-rail fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? 'signal-rail--scrolled' : ''}`}>
       <nav className="signal-rail__nav portfolio-container">
         <a href="/" className="signal-rail__brand" aria-label={`${localizedName} — home`}>
-          <span className="signal-rail__mark"><img src="/heritage-mark-generated-v2.png" alt="" /></span>
+          <span className="signal-rail__mark"><img src="/heritage-mark-v2.webp" alt="" width={64} height={64} /></span>
           <span className="signal-rail__name">{localizedFirstName}<span>.</span></span>
         </a>
 

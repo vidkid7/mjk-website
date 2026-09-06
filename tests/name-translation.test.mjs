@@ -101,7 +101,8 @@ test('homepage exposes the authorized instrumental player and visible sound cont
 
   assert.match(page, /SiteAudio/)
   assert.match(player, /mukesh-khadka-by-madhav-prasad-ghimire\.mp3/)
-  assert.match(player, /autoPlay/)
+  assert.match(player, /preload="none"/)
+  assert.match(player, /pointerdown/)
   assert.match(player, /data-site-audio-control/)
   assert.match(player, /aria-label/)
 })

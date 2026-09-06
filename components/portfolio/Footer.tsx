@@ -3,7 +3,7 @@ import type { PublicService, PublicSite, PublicUiCopy } from '@/lib/public-conte
 
 const navigationLinks = [
   { label: 'About', code: '01', href: '#about' },
-  { label: 'Work', code: '02', href: '#work' },
+  { label: 'Work', code: '02', href: '/work' },
   { label: 'Skills', code: '03', href: '#skills' },
   { label: 'Experience', code: '04', href: '#experience' },
   { label: 'Reports', code: '05', href: '#testimonials' },

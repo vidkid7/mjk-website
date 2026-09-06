@@ -14,6 +14,14 @@ export const metadata: Metadata = {
   description:
     'Curated field notes on workflow design, public-sector software, Nepali context, and the craft of building systems that quietly keep working.',
   alternates: { canonical: `${siteUrl}/articles` },
+  openGraph: {
+    type: 'website',
+    url: `${siteUrl}/articles`,
+    title: 'Field Notes — Articles on Software, Workflow & Nepal',
+    description: 'Curated field notes on workflow design, public-sector software, Nepali context, and the craft of building systems that quietly keep working.',
+    images: [{ url: '/hero-himalayan-peaks.jpg', width: 1920, height: 1149, alt: 'Himalayan landscape used on the Mukesh Khadka portfolio' }],
+  },
+  twitter: { card: 'summary_large_image', title: 'Field Notes — Articles on Software, Workflow & Nepal', description: 'Curated field notes on workflow design, public-sector software, Nepali context, and the craft of building systems that quietly keep working.', images: ['/hero-himalayan-peaks.jpg'] },
 }
 
 const featuredCopy = {
@@ -40,19 +48,27 @@ export default async function ArticlesPage() {
 
   const structuredData = {
     '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: 'Field Notes',
-    url: `${siteUrl}/articles`,
-    description: featuredCopy.lede,
-    mainEntity: {
-      '@type': 'ItemList',
-      itemListElement: articles.map((article, index) => ({
-        '@type': 'ListItem',
-        position: index + 1,
-        name: article.title,
-        url: `${siteUrl}/articles/${article.slug}`,
-      })),
-    },
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': `${siteUrl}/articles#collection`,
+        name: 'Field Notes',
+        url: `${siteUrl}/articles`,
+        description: featuredCopy.lede,
+        isPartOf: { '@id': `${siteUrl}/#website` },
+        inLanguage: 'en',
+      },
+      {
+        '@type': 'ItemList',
+        '@id': `${siteUrl}/articles#items`,
+        itemListElement: articles.map((article, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: article.title,
+          url: `${siteUrl}/articles/${article.slug}`,
+        })),
+      },
+    ],
   }
 
   const categoryColors: Record<string, string> = {
@@ -270,6 +286,8 @@ export default async function ArticlesPage() {
                   <img
                     src={feature.image}
                     alt={feature.caption}
+                    width={1600}
+                    height={900}
                     className="field-feature__image"
                     loading="lazy"
                   />
@@ -643,6 +661,8 @@ export default async function ArticlesPage() {
                     <img
                       src={article.image}
                       alt={article.caption}
+                      width={1600}
+                      height={900}
                       className="field-card__image"
                       loading="lazy"
                     />

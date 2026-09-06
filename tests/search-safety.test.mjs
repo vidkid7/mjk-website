@@ -129,3 +129,39 @@ test('the editorial field notes use the four supplied portrait assets', async ()
     assert.match(story, new RegExp(`/assets/portraits/${asset}`))
   }
 })
+
+test('selected work has stable crawlable hub and detail routes', async () => {
+  const [workData, workIndex, workDetail, sitemap, projects] = await Promise.all([
+    read('lib/work-pages.ts'),
+    read('app/work/page.tsx'),
+    read('app/work/[slug]/page.tsx'),
+    read('app/sitemap.ts'),
+    read('components/portfolio/Projects.tsx'),
+  ])
+
+  assert.match(workData, /export const workPages/)
+  assert.match(workIndex, /'@type': 'CollectionPage'/)
+  assert.match(workDetail, /generateStaticParams/)
+  assert.match(workDetail, /'@type': 'CreativeWork'/)
+  assert.match(workDetail, /'@type': 'BreadcrumbList'/)
+  assert.match(sitemap, /import \{ workPages \} from '@\/lib\/work-pages'/)
+  assert.match(sitemap, /url: `\$\{siteUrl\}\/work`/)
+  assert.match(sitemap, /\.\.\.workPages\.map/)
+  assert.match(projects, /\/work\/\$\{getWorkPageByTitle\(item\.title\)\?\.slug\}/)
+})
+
+test('the production article feed uses the same slugs as article routes', async () => {
+  const feed = await read('app/feed.xml/route.ts')
+
+  assert.match(feed, /getArticles\(\)/)
+  assert.match(feed, /\/articles\/\$\{article\.slug\}/)
+  assert.match(feed, /application\/rss\+xml/)
+})
+
+test('public metadata uses profile schema without publishing hidden FAQ markup', async () => {
+  const layout = await read('app/layout.tsx')
+
+  assert.match(layout, /'@type': 'ProfilePage'/)
+  assert.match(layout, /max-image-preview/)
+  assert.doesNotMatch(layout, /'@type': 'FAQPage'/)
+})

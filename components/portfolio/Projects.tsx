@@ -6,6 +6,7 @@ import CaseVisual from '@/components/portfolio/CaseVisual'
 import Reveal from '@/components/portfolio/Reveal'
 import SectionHeader from '@/components/portfolio/SectionHeader'
 import type { PublicProject, PublicUiCopy } from '@/lib/public-content'
+import { getWorkPageByTitle } from '@/lib/work-pages'
 
 type ProjectView = 'grid' | 'focus'
 
@@ -64,6 +65,9 @@ export default function Projects({ projects, copy }: { projects: PublicProject[]
                     <span className="case-index">0{i + 1} / {item.category}</span>
                     <h3 className="noir-display">{item.title}</h3>
                     <p>{item.outcome}</p>
+                    {getWorkPageByTitle(item.title) && <a href={`/work/${getWorkPageByTitle(item.title)?.slug}`} className="case-card__open" aria-label={`Read the ${item.title} project overview`}>
+                      Read project overview <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                    </a>}
                     <button type="button" onClick={() => { setSelected(i); setView('focus') }} className="case-card__open">
                       {copy.openLabel} <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
                       <span className="sr-only">VIEW FILE</span>

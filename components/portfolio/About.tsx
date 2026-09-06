@@ -56,6 +56,8 @@ export default function About({ content, site }: { content: PublicAbout; site: P
                     <img
                       src={content.portrait}
                       alt={`Portrait of ${site.name}`}
+                      width={900}
+                      height={1200}
                       className="about-cutout-portrait relative z-10 h-[26rem] w-full object-contain object-bottom sm:h-[31rem]"
                     />
                   </div>

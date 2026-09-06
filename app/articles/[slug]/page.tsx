@@ -26,6 +26,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   if (!article) return {}
 
   const url = `${siteUrl}/articles/${article.slug}`
+  const image = article.image || article.cover || '/hero-himalayan-peaks.jpg'
 
   return {
     title: `${article.title} — Field Notes`,
@@ -38,7 +39,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       description: article.excerpt,
       publishedTime: article.date,
       authors: ['Mukesh Khadka'],
+      images: [{ url: image, alt: article.caption || article.title }],
     },
+    twitter: { card: 'summary_large_image', title: `${article.title} — Field Notes`, description: article.excerpt, images: [image] },
   }
 }
 
@@ -54,32 +57,44 @@ export default async function ArticlePage({ params }: { params: { slug: string }
   if (!article) notFound()
 
   const url = `${siteUrl}/articles/${article.slug}`
+  const image = article.image || article.cover || '/hero-himalayan-peaks.jpg'
   const structuredData = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: article.title,
-    description: article.excerpt,
-    url,
-    mainEntityOfPage: url,
-    datePublished: article.date,
-    dateModified: article.date,
-    author: {
-      '@type': 'Person',
-      name: 'Mukesh Khadka',
-      url: siteUrl,
-      jobTitle: 'Founder & Independent Software Consultant',
-      worksFor: {
-        '@type': 'Organization',
-        name: 'Aasha Tech Pvt. Ltd.',
-        url: 'https://aashatech.com/',
+    '@graph': [
+      {
+        '@type': 'BlogPosting',
+        '@id': `${url}#article`,
+        headline: article.title,
+        description: article.excerpt,
+        image: [image],
+        url,
+        mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+        datePublished: article.date,
+        dateModified: article.date,
+        articleSection: article.category,
+        inLanguage: 'en',
+        wordCount: article.body.trim().split(/\s+/).length,
+        timeRequired: article.readMinutes ? `PT${article.readMinutes}M` : undefined,
+        author: {
+          '@type': 'Person',
+          '@id': `${siteUrl}/#mukesh-khadka`,
+          name: 'Mukesh Khadka',
+          url: siteUrl,
+        },
+        publisher: { '@id': `${siteUrl}/#mukesh-khadka` },
+        isPartOf: { '@id': `${siteUrl}/articles#collection` },
+        keywords: article.tags.join(', '),
       },
-    },
-    publisher: {
-      '@type': 'Person',
-      name: 'Mukesh Khadka',
-      url: siteUrl,
-    },
-    keywords: article.tags.join(', '),
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${url}#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+          { '@type': 'ListItem', position: 2, name: 'Field Notes', item: `${siteUrl}/articles` },
+          { '@type': 'ListItem', position: 3, name: article.title, item: url },
+        ],
+      },
+    ],
   }
 
   return (
